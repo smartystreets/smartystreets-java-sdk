@@ -1,17 +1,12 @@
 package com.smartystreets.api.us_street;
 
 
-import com.smartystreets.api.Request;
-import com.smartystreets.api.Credentials;
-import com.smartystreets.api.Response;
-import com.smartystreets.api.Sender;
-import com.sun.deploy.net.URLEncoder;
+import com.smartystreets.api.*;
 
 import javax.json.*;
 import javax.json.stream.JsonGenerator;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -25,22 +20,22 @@ public class Client {
 
     public Client (Credentials signer) {
         this.signer = signer;
-//        this.inner = new Sender();
+        this.inner = new HttpSender();
     }
 
-    // Sends lookup to the US street API
+    // Wraps address in a batch and calls the other send method
     public void send(AddressLookup lookup) throws Exception{
         Batch batch = new Batch();
         batch.add(lookup);
         this.send(batch);
     }
 
+    // Sends lookup to the US street API
     public void send(Batch batch) throws Exception{
         // New Request
         Request request = new Request("https://api.smartystreets.com/street-address?");
 
-
-        // Determine single address or not, set method and serialize
+        // Determine if it is a single address or not, set method and serialize
         if (batch.size() == 0)
             return;
         if (batch.size() == 1) {
@@ -58,11 +53,12 @@ public class Client {
 
         copyHeaders(batch, request);
 
+        // Send request to API, and interpret the response
         Response response = this.inner.send(request); // can throw exceptions
         this.deserializeResponse(response.getRawJSON(), batch);
     }
 
-    private String serializeGET(Batch batch) throws UnsupportedEncodingException{
+    private String serializeGET(Batch batch){
         String serializedAddress = "";
         AddressLookup address = batch.get(0);
 
@@ -88,8 +84,6 @@ public class Client {
             serializedAddress += "&urbanization=" + address.getUrbanization();
         if (address.getMaxCandidates() != 1)
             serializedAddress += "&candidates=" + address.getMaxCandidates();
-
-//        serializedAddress = URLEncoder.encode(serializedAddress, "UTF-8"); // We'll sanitize later
 
         return serializedAddress;
     }
@@ -137,6 +131,7 @@ public class Client {
         return payload;
     }
 
+    // Loads the raw JSON response into Candidate objects, and puts those into the appropriate AddressLookups
     private void deserializeResponse(String rawJSON, Batch batch) {
         JsonArray array = Json.createReader(new StringReader(rawJSON)).readArray();
 
