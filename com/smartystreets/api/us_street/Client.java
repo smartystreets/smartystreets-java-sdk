@@ -7,6 +7,8 @@ import javax.json.*;
 import javax.json.stream.JsonGenerator;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 /**
@@ -47,7 +49,7 @@ public class Client {
             request.setMethod("POST");
             // Add credentials to url
             this.signer.sign(request); // throws when signing a POST request using website key authentication credentials
-            request.addHeader("Content-Type: application/json");
+            request.addHeader("Content-Type", "application/json");
             request.setJsonPayload(this.serializePOST(batch));
         }
 
@@ -58,30 +60,30 @@ public class Client {
         this.deserializeResponse(response.getRawJSON(), batch);
     }
 
-    private String serializeGET(Batch batch){
+    private String serializeGET(Batch batch) throws UnsupportedEncodingException {
         String serializedAddress = "";
         AddressLookup address = batch.get(0);
 
         if (address.getInputId() != null)
-            serializedAddress += "&input_id=" + address.getInputId();
+            serializedAddress += "&input_id=" + URLEncoder.encode(address.getInputId(), "UTF-8");
         if (address.getStreet() != null)
-            serializedAddress += "&street=" + address.getStreet();
+            serializedAddress += "&street=" + URLEncoder.encode(address.getStreet(), "UTF-8");
         if (address.getStreet2() != null)
-            serializedAddress += "&street2=" + address.getStreet2();
+            serializedAddress += "&street2=" + URLEncoder.encode(address.getStreet2(), "UTF-8");
         if (address.getSecondary() != null)
-            serializedAddress += "&secondary=" + address.getSecondary();
+            serializedAddress += "&secondary=" + URLEncoder.encode(address.getSecondary(), "UTF-8");
         if (address.getCity() != null)
-            serializedAddress += "&city=" + address.getCity();
+            serializedAddress += "&city=" + URLEncoder.encode(address.getCity(), "UTF-8");
         if (address.getState() != null)
-            serializedAddress += "&state=" + address.getState();
+            serializedAddress += "&state=" + URLEncoder.encode(address.getState(), "UTF-8");
         if (address.getZipcode() != null)
-            serializedAddress += "&zipcode=" + address.getZipcode();
+            serializedAddress += "&zipcode=" + URLEncoder.encode(address.getZipcode(), "UTF-8");
         if (address.getLastline() != null)
-            serializedAddress += "&lastline=" + address.getLastline();
+            serializedAddress += "&lastline=" + URLEncoder.encode(address.getLastline(), "UTF-8");
         if (address.getAddressee() != null)
-            serializedAddress += "&addressee=" + address.getAddressee();
+            serializedAddress += "&addressee=" + URLEncoder.encode(address.getAddressee(), "UTF-8");
         if (address.getUrbanization() != null)
-            serializedAddress += "&urbanization=" + address.getUrbanization();
+            serializedAddress += "&urbanization=" + URLEncoder.encode(address.getUrbanization(), "UTF-8");
         if (address.getMaxCandidates() != 1)
             serializedAddress += "&candidates=" + address.getMaxCandidates();
 
@@ -147,9 +149,9 @@ public class Client {
 
     private void copyHeaders(Batch batch, Request request) {
         if (batch.getIncludeInvalid())
-            request.addHeader("X-Include-Invalid: true");
+            request.addHeader("X-Include-Invalid", "true");
         else if (batch.getStandardizeOnly())
-            request.addHeader("X-Standardize-Only: true");
+            request.addHeader("X-Standardize-Only", "true");
 
     }
 }
