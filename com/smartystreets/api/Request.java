@@ -1,6 +1,8 @@
 package com.smartystreets.api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Neo on 4/25/16.
@@ -9,17 +11,20 @@ public class Request {
 
     private String urlString;
     private String method;
-    private ArrayList<String> headers;
+    private Map<String, String> headers;
     private String jsonPayload;
 
-    public Request(){}
+    public Request(){
+        this.headers = new HashMap<>();
+    }
 
     public Request(String urlString) {
+        this.headers = new HashMap<>();
         this.urlString = urlString;
     }
 
-    public void addHeader(String header){
-        this.headers.add(header);
+    public void addHeader(String name, String value){
+        this.headers.put(name, value);
     }
 
     /**** Getters ********************************************************************************/
@@ -32,7 +37,7 @@ public class Request {
         return method;
     }
 
-    public ArrayList<String> getHeaders() {
+    public Map<String, String> getHeaders() {
         return this.headers;
     }
 
@@ -50,7 +55,7 @@ public class Request {
         this.method = method;
     }
 
-    public void setHeaders(ArrayList<String> headers) {
+    public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
     }
 
