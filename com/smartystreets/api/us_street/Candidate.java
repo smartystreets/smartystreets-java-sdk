@@ -92,7 +92,7 @@ public class Candidate {
     }
 
 
-    private class Components {
+    public class Components {
         private String urbanization;
         private String primaryNumber;
         private String streetName;
@@ -190,7 +190,7 @@ public class Candidate {
         }
     }
 
-    private class Metadata {
+    public class Metadata {
         private String recordType;
         private String ZIPType;
         private String countyFIPS;
@@ -273,7 +273,7 @@ public class Candidate {
         }
     }
 
-    private class Analysis{
+    public class Analysis{
         private String DPVMatchCode;
         private String DPVFootnotes;
         private String CMRA;
@@ -375,7 +375,192 @@ public class Candidate {
         return this.deliveryPointBarcode;
     }
 
+    // Components ---------------------------------------------------------------------------------
+
+    public String getUrbanization() {
+        return this.components.urbanization;
+    }
+
+    public String getPrimaryNumber() {
+        return this.components.primaryNumber;
+    }
+
+    public String getStreetName() {
+        return this.components.streetName;
+    }
+
+    public String getStreetPredirection() {
+        return this.components.streetPredirection;
+    }
+
+    public String getStreetPostdirection() {
+        return this.components.streetPostdirection;
+    }
+
+    public String getStreetSuffix() {
+        return this.components.streetSuffix;
+    }
+
+    public String getSecondaryNumber() {
+        return this.components.secondaryNumber;
+    }
+
+    public String getSecondaryDesignator() {
+        return this.components.secondaryDesignator;
+    }
+
+    public String getExtraSecondaryNumber() {
+        return this.components.extraSecondaryNumber;
+    }
+
+    public String getExtraSecondaryDesignator() {
+        return this.components.extraSecondaryDesignator;
+    }
+
+    public String getPMBDesignator() {
+        return this.components.PMBDesignator;
+    }
+
+    public String getPMBNumber() {
+        return this.components.PMBNumber;
+    }
+
+    public String getCityName() {
+        return this.components.cityName;
+    }
+
+    public String getDefaultCityName() {
+        return this.components.defaultCityName;
+    }
+
+    public String getState() {
+        return this.components.state;
+    }
+
+    public String getZIPCode() {
+        return this.components.ZIPCode;
+    }
+
+    public String getPlus4Code() {
+        return this.components.plus4Code;
+    }
+
+    public String getDeliveryPoint() {
+        return this.components.deliveryPoint;
+    }
+
+    public String getDeliveryPointCheckDigit() {
+        return this.components.deliveryPointCheckDigit;
+    }
+
+    // Metadata -----------------------------------------------------------------------------------
+
+    public String getRecordType() {
+        return this.metadata.recordType;
+    }
+
+    public String getZIPType() {
+        return this.metadata.ZIPType;
+    }
+
+    public String getCountyFIPS() {
+        return this.metadata.countyFIPS;
+    }
+
+    public String getCountyName() {
+        return this.metadata.countyName;
+    }
+
+    public String getCarrierRoute() {
+        return this.metadata.carrierRoute;
+    }
+
+    public String getCongressionalDistrict() {
+        return this.metadata.congressionalDistrict;
+    }
+
+    public String getBuildingDefaultIndicator() {
+        return this.metadata.buildingDefaultIndicator;
+    }
+
+    public String getRDI() {
+        return this.metadata.RDI;
+    }
+
+    public String getELOTSequence() {
+        return this.metadata.ELOTSequence;
+    }
+
+    public String getELOTSort() {
+        return this.metadata.ELOTSort;
+    }
+
+    public double getLatitude() {
+        return this.metadata.latitude;
+    }
+
+    public double getLongitude() {
+        return this.metadata.longitude;
+    }
+
+    public String getPrecision() {
+        return this.metadata.precision;
+    }
+
+    public String getTimeZone() {
+        return this.metadata.timeZone;
+    }
+
+    public double getUTCOffset() {
+        return this.metadata.UTCOffset;
+    }
+
+    public boolean usesDST() {
+        return this.metadata.usesDST;
+    }
+
     // Analysis -----------------------------------------------------------------------------------
+
+    public String getDPVMatchCode() {
+        return this.analysis.DPVMatchCode;
+    }
+
+    public String getDPVFootnotes() {
+        return this.analysis.DPVFootnotes;
+    }
+
+    public String getCMRA() {
+        return this.analysis.CMRA;
+    }
+
+    public String getVacant() {
+        return this.analysis.vacant;
+    }
+
+    public String getActive() {
+        return this.analysis.active;
+    }
+
+    public boolean isEWSMatch() {
+        return this.analysis.isEWSMatch;
+    }
+
+    public String getFootnotes() {
+        return this.analysis.footnotes;
+    }
+
+    public String getLACSLinkCode() {
+        return this.analysis.LACSLinkCode;
+    }
+
+    public String getLACSLinkIndicator() {
+        return this.analysis.LACSLinkIndicator;
+    }
+
+    public boolean isSuiteLinkMatch() {
+        return this.analysis.isSuiteLinkMatch;
+    }
+
 
     public boolean isValid() {
         String value = this.analysis.getDPVMatchCode();

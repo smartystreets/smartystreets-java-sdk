@@ -3,6 +3,7 @@
  */
 
 import com.smartystreets.api.us_street.*;
+import com.smartystreets.api.Credentials;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -12,19 +13,20 @@ public class SmartyStreetsSDKexample {
         ArrayList<AddressLookup> addressesToVerify = getAddressesFromCSV("/all-them-addresses.csv");
         Client client = new Client(credentials); // Alternate constructor accepts Id and token as separate parameters
 
-        AddressLookup firstLookup = new AddressLookup("1600 amphitheatre parkway, Mountain View, California"); // Different signature for freeform
-        client.send(firstLookup);
-        ArrayList<Candidate> result = firstLookup.getResult();
-
-        if (!result.isEmpty())
-            assert result.get(0).getZIPCode() == THE_RIGHT_ZIPCODE;
-
-        Batch batch = new Batch();
-
-        batch.setIncludeInvalid(true);
-        boolean success = batch.add(addressesToVerify.get(0)); // Just one address
-
         try {
+            AddressLookup firstLookup = new AddressLookup("1600 amphitheatre parkway, Mountain View, California"); // Different signature for freeform
+            client.send(firstLookup);
+            ArrayList<Candidate> result = firstLookup.getResult();
+
+            if (!result.isEmpty())
+                assert result.get(0).getZIPCode() == THE_RIGHT_ZIPCODE;
+
+            Batch batch = new Batch();
+
+            batch.setIncludeInvalid(true);
+            boolean success = batch.add(addressesToVerify.get(0)); // Just one address
+
+
             if (!success)
                 throw new Exception("Something awful has happened.");
 
