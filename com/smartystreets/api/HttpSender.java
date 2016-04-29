@@ -3,6 +3,7 @@ package com.smartystreets.api;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.URL;
+import java.nio.CharBuffer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,18 +25,26 @@ public class HttpSender implements Sender {
             connection.setRequestProperty(headerName, headers.get(headerName));
         }
 
+        System.out.println(connection.getRequestProperty("X-Include-Invalid"));
+
         //write the bytes of JSON payload to the output stream
         if (request.getJsonPayload() != null) {
             connection.setDoOutput(true);
             //create output stream
             OutputStream output = connection.getOutputStream();
             output.write(request.getJsonPayload().getBytes(CHARSET));
+            output.close();
         }
 
         //create an input stream for the response
         InputStream input = connection.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(input, CHARSET));
+
         String rawJSON = reader.readLine();
+
+        reader.close();
+        input.close();
+        connection.disconnect(); // TODO: try/catch/finally
 
         //build response object from the input stream
         Response response = new Response();
@@ -54,22 +63,3 @@ public class HttpSender implements Sender {
         return response;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

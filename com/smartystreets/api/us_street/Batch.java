@@ -9,29 +9,30 @@ import java.util.*;
 public class Batch {
 
     private final int MAX_BATCH_SIZE = 100;
-    private Map<String, AddressLookup> lookups;
+    private Map<String, AddressLookup> namedLookups;
+    private Vector<AddressLookup> allLookups;
     private boolean standardizeOnly, includeInvalid;
  //   private javax.net.Request request;
 
     public Batch(){
         this.standardizeOnly = false;
         this.includeInvalid = false;
-        this.lookups = new LinkedHashMap<>();
+        this.namedLookups = new LinkedHashMap<>();
+        this.allLookups = new Vector<>();
     }
 
     public boolean add(AddressLookup newAddress){
-        if (this.lookups.size() >= MAX_BATCH_SIZE) {
+        if (this.namedLookups.size() >= MAX_BATCH_SIZE) {
             return false;
         }
 
         String key = newAddress.getInputId();
 
-        if (key == null)                                // Use index (as a string) if no input id is given
-            key = Integer.toString(this.lookups.size());
+        if (key != null)
+            this.namedLookups.put(key, newAddress);
 
-        this.lookups.put(key, newAddress);
+        this.allLookups.add(newAddress);
         return true;
-
     }
 
     public int add(Collection<AddressLookup> newAddresses){
@@ -47,7 +48,8 @@ public class Batch {
     }
 
     public void clear(){
-        this.lookups.clear();
+        this.namedLookups.clear();
+        this.allLookups.clear();
     }
 
     public void reset() {
@@ -66,24 +68,28 @@ public class Batch {
         return this.includeInvalid;
     }
 
-    public Map getLookups() {
-        return this.lookups;
+    public Map<String, AddressLookup> getNamedLookups() {
+        return this.namedLookups;
     }
 
     public AddressLookup get(String inputId){
-        return this.lookups.get(inputId);
+        return this.namedLookups.get(inputId);
     }
 
-    public AddressLookup get(int index){
-        return (AddressLookup) this.lookups.values().toArray()[index];
+    public AddressLookup get(int index) {
+        return this.allLookups.get(index);
     }
 
     public Iterator<AddressLookup> iterator(){
-        return this.lookups.values().iterator();
+        return this.allLookups.iterator();
     }
 
     public int size() {
-        return this.lookups.size();
+        return this.allLookups.size();
+    }
+
+    public Vector<AddressLookup> getAllLookups() {
+        return this.allLookups;
     }
 
     /***** Setters *******************************************************************************/

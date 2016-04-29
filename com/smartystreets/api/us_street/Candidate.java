@@ -29,9 +29,9 @@ public class Candidate {
         this.candidateIndex = obj.getInt("candidate_index", 0);
         this.addressee = obj.getString("addressee", null);
         this.deliveryLine1 = obj.getString("delivery_line_1", null);
-        this. deliveryLine2 = obj.getString("delivery_line_2", null);
-        this. lastLine = obj.getString("last_line", null);
-        this. deliveryPointBarcode = obj.getString("delivery_point_barcode", null);
+        this.deliveryLine2 = obj.getString("delivery_line_2", null);
+        this.lastLine = obj.getString("last_line", null);
+        this.deliveryPointBarcode = obj.getString("delivery_point_barcode", null);
 
         this.components = new Components();
         this.components.urbanization = components.getString("urbanization", null);
@@ -560,7 +560,6 @@ public class Candidate {
     public boolean isSuiteLinkMatch() {
         return this.analysis.isSuiteLinkMatch;
     }
-
 
     public boolean isValid() {
         String value = this.analysis.getDPVMatchCode();

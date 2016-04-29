@@ -1,5 +1,7 @@
 package com.smartystreets.api;
 
+import com.smartystreets.api.exceptions.MissingAuthTokenOnPOSTException;
+
 /**
  * Created by Neo on 4/25/16.
  */
@@ -17,9 +19,9 @@ public class StaticCredentials implements Credentials{
         this.authToken = authToken;
     }
 
-    @Override
-    public void sign(Request request) throws Exception{
-        if (request.getMethod() == "POST" && this.authToken == null) throw new Exception();
+    public void sign(Request request) throws MissingAuthTokenOnPOSTException {
+        if (request.getMethod() == "POST" && this.authToken == null)
+            throw new MissingAuthTokenOnPOSTException("POSTs require both an Auth Id and an Auth Token");
 
         String urlString = request.getUrlString();
 

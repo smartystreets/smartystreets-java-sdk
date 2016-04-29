@@ -24,10 +24,11 @@ public class AddressLookup {
 
     public AddressLookup(){
         this.maxCandidates = 1;
+        this.result = new ArrayList<>();
     }
 
     public AddressLookup(String freeformAddress) {
-        this.maxCandidates = 1;
+        this();
         this.street = freeformAddress;
     }
 
@@ -141,7 +142,7 @@ public class AddressLookup {
             this.maxCandidates = maxCandidates;
         }
         else {
-            throw new InvalidInputValueException();
+            throw new InvalidInputValueException("Max candidates must be a positive integer.");
         }
     }
 }

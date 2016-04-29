@@ -2,15 +2,40 @@
  * Created by Neo on 4/7/16.
  */
 
+import com.smartystreets.api.StaticCredentials;
+import com.smartystreets.api.exceptions.InvalidInputValueException;
+import com.smartystreets.api.exceptions.MissingAuthTokenOnPOSTException;
 import com.smartystreets.api.us_street.*;
 import com.smartystreets.api.Credentials;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SmartyStreetsSDKexample {
+
     public static void main(String args[]) {
-        Credentials credentials = getSSCredentialsFromFile("/ss-credentials.txt");
-        ArrayList<AddressLookup> addressesToVerify = getAddressesFromCSV("/all-them-addresses.csv");
+        final String THE_RIGHT_ZIPCODE = "84606";
+
+//        Credentials credentials = getSSCredentialsFromFile("/ss-credentials.txt");
+        Credentials credentials = new StaticCredentials("authId", "authToken");
+        ArrayList<AddressLookup> addressesToVerify = new ArrayList<>();
+
+        AddressLookup validAddress = new AddressLookup("1600 Amphitheatre Parkway, Mountain View, California");
+        validAddress.setInputId("address 1");
+        AddressLookup almostValidAddress = new AddressLookup("160 Amphitheatre Parkway, Mountain View, California");
+        AddressLookup invalidAddress = new AddressLookup("150 Park Road, Gotham City, New York");
+        AddressLookup invalidAddress2 = new AddressLookup();
+        invalidAddress2.setStreet("150 Park Road");
+        invalidAddress2.setCity("Gotham City");
+        invalidAddress2.setState("New York");
+
+        addressesToVerify.add(validAddress);
+        addressesToVerify.add(almostValidAddress);
+        addressesToVerify.add(invalidAddress);
+        addressesToVerify.add(invalidAddress2);
+
+//        ArrayList<AddressLookup> addressesToVerify = getAddressesFromCSV("/all-them-addresses.csv");
         Client client = new Client(credentials); // Alternate constructor accepts Id and token as separate parameters
 
         try {
@@ -25,18 +50,18 @@ public class SmartyStreetsSDKexample {
 
             batch.setIncludeInvalid(true);
             boolean success = batch.add(addressesToVerify.get(0)); // Just one address
-
-
-            if (!success)
-                throw new Exception("Something awful has happened.");
+//
+//            if (!success)
+//                throw new Exception("Something awful has happened.");
 
             client.send(batch);
 
             Candidate outputAddress = batch.get("address 1").getResult(0); // Get by input_id, or input_index?
 
             if (outputAddress.isValid())
-                shoutForJoy();
-            else cry();
+                say(outputAddress.getDeliveryLine1() + " is valid");
+            else
+                say(outputAddress.getDeliveryLine1() + " is not valid");
 
             batch.clear(); // Clears input and output, but not settings
             int numAdded = batch.add(addressesToVerify); // Multiple addresses
@@ -56,22 +81,28 @@ public class SmartyStreetsSDKexample {
 
                 Candidate cleanAddress = candidates.get(0);
 
-                if (cleanAddress.isValid() && cleanAddress.isActive() && !cleanAddress.getState().equals("HI")) {
-                    singHappySong();
-                } else {
-                    badAddresses.add(cleanAddress);
-                }
+                if (cleanAddress.isValid() && cleanAddress.isActive() && cleanAddress.getState().equals("CA"))
+                    say(cleanAddress.getDeliveryLine1() + " is a valid California address");
+                else
+                    say(cleanAddress.getDeliveryLine1() + " is not a valid California address");
             }
+            say("I'm done");
         }
-        catch(BadCredentialsException ex){
-            // stuff
+        catch(MissingAuthTokenOnPOSTException ex){ // These aren't the only Exceptions, just a couple.
+            say(ex.getMessage());
         }
-        catch(NoActiveSubscriptionException ex){ // These aren't the only Exceptions, just a couple.
-            // different stuff
+        catch (IOException ex) {
+            say(ex.getMessage());
+            ex.printStackTrace();
         }
-        catch(Exception ex){
-            // other stuff
-        }
+
+//        catch(Exception ex){
+//            say(ex.getMessage());
+//        }
+    }
+
+    private static void say(String message) {
+        System.out.println(message);
     }
 }
 

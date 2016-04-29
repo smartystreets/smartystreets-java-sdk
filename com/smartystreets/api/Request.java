@@ -1,5 +1,7 @@
 package com.smartystreets.api;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +15,7 @@ public class Request {
     private String method;
     private Map<String, String> headers;
     private String jsonPayload;
+    private final String CHARSET = "UTF-8";
 
     public Request(){
         this.headers = new HashMap<>();
@@ -28,6 +31,21 @@ public class Request {
     }
 
     /**** Getters ********************************************************************************/
+
+    public void appendParameter(String name, String value) throws UnsupportedEncodingException {
+        if (name == null || value == null)
+            return;
+
+        if (name.length() == 0)
+            return;
+
+        if (!this.urlString.endsWith("?"))
+            this.urlString += "&";
+
+        String encodedName = URLEncoder.encode(name, CHARSET);
+        String encodedValue = URLEncoder.encode(value, CHARSET);
+        this.urlString += encodedName + "=" + encodedValue;
+    }
 
     public String getUrlString() {
         return urlString;

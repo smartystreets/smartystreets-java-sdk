@@ -2,9 +2,11 @@ package com.smartystreets.api.us_street;
 
 
 import com.smartystreets.api.*;
+import com.smartystreets.api.exceptions.MissingAuthTokenOnPOSTException;
 
 import javax.json.*;
 import javax.json.stream.JsonGenerator;
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -26,14 +28,14 @@ public class Client {
     }
 
     // Wraps address in a batch and calls the other send method
-    public void send(AddressLookup lookup) throws Exception{
+    public void send(AddressLookup lookup) throws MissingAuthTokenOnPOSTException, IOException {
         Batch batch = new Batch();
         batch.add(lookup);
         this.send(batch);
     }
 
     // Sends lookup to the US street API
-    public void send(Batch batch) throws Exception{
+    public void send(Batch batch) throws MissingAuthTokenOnPOSTException, IOException {
         // New Request
         Request request = new Request("https://api.smartystreets.com/street-address?");
 
@@ -43,12 +45,14 @@ public class Client {
         if (batch.size() == 1) {
             request.setMethod("GET");
             // Add credentials to url
-            this.signer.sign(request); // throws when signing a POST request using website key authentication credentials
-            request.setUrlString(request.getUrlString() + this.serializeGET(batch));
+
+            // this.serializeGET(request)
+            this.signer.sign(request);
+            this.serializeGET(batch, request);
         } else {
             request.setMethod("POST");
             // Add credentials to url
-            this.signer.sign(request); // throws when signing a POST request using website key authentication credentials
+            this.signer.sign(request);
             request.addHeader("Content-Type", "application/json");
             request.setJsonPayload(this.serializePOST(batch));
         }
@@ -60,34 +64,23 @@ public class Client {
         this.deserializeResponse(response.getRawJSON(), batch);
     }
 
-    private String serializeGET(Batch batch) throws UnsupportedEncodingException {
-        String serializedAddress = "";
+    private void serializeGET(Batch batch, Request request) throws UnsupportedEncodingException {
         AddressLookup address = batch.get(0);
 
-        if (address.getInputId() != null)
-            serializedAddress += "&input_id=" + URLEncoder.encode(address.getInputId(), "UTF-8");
-        if (address.getStreet() != null)
-            serializedAddress += "&street=" + URLEncoder.encode(address.getStreet(), "UTF-8");
-        if (address.getStreet2() != null)
-            serializedAddress += "&street2=" + URLEncoder.encode(address.getStreet2(), "UTF-8");
-        if (address.getSecondary() != null)
-            serializedAddress += "&secondary=" + URLEncoder.encode(address.getSecondary(), "UTF-8");
-        if (address.getCity() != null)
-            serializedAddress += "&city=" + URLEncoder.encode(address.getCity(), "UTF-8");
-        if (address.getState() != null)
-            serializedAddress += "&state=" + URLEncoder.encode(address.getState(), "UTF-8");
-        if (address.getZipcode() != null)
-            serializedAddress += "&zipcode=" + URLEncoder.encode(address.getZipcode(), "UTF-8");
-        if (address.getLastline() != null)
-            serializedAddress += "&lastline=" + URLEncoder.encode(address.getLastline(), "UTF-8");
-        if (address.getAddressee() != null)
-            serializedAddress += "&addressee=" + URLEncoder.encode(address.getAddressee(), "UTF-8");
-        if (address.getUrbanization() != null)
-            serializedAddress += "&urbanization=" + URLEncoder.encode(address.getUrbanization(), "UTF-8");
-        if (address.getMaxCandidates() != 1)
-            serializedAddress += "&candidates=" + address.getMaxCandidates();
+        request.appendParameter("input_id", address.getInputId());
+        request.appendParameter("input_id", address.getInputId());
+        request.appendParameter("street", address.getStreet());
+        request.appendParameter("street2",address.getStreet2());
+        request.appendParameter("secondary", address.getSecondary());
+        request.appendParameter("city", address.getCity());
+        request.appendParameter("state", address.getState());
+        request.appendParameter("zipcode", address.getZipcode());
+        request.appendParameter("lastline", address.getLastline());
+        request.appendParameter("addressee", address.getAddressee());
+        request.appendParameter("urbanization", address.getUrbanization());
 
-        return serializedAddress;
+        if (address.getMaxCandidates() != 1)
+            request.appendParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
 
     private String serializePOST(Batch batch) {
@@ -97,7 +90,7 @@ public class Client {
 
         generator.writeStartArray();
 
-        for (AddressLookup address : (AddressLookup[]) batch.getLookups().values().toArray()){
+        for (AddressLookup address : batch.getAllLookups()){
             generator.writeStartObject();
 
             if (address.getInputId() != null)
@@ -127,8 +120,10 @@ public class Client {
         }
 
         generator.writeEnd();
-        payload = jsonWriter.toString();
         generator.close();
+        payload = jsonWriter.toString();
+
+//        System.out.println("payload: " + payload);
 
         return payload;
     }
@@ -152,6 +147,5 @@ public class Client {
             request.addHeader("X-Include-Invalid", "true");
         else if (batch.getStandardizeOnly())
             request.addHeader("X-Standardize-Only", "true");
-
     }
 }
