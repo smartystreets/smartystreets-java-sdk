@@ -2,9 +2,6 @@ package com.smartystreets.api;
 
 import java.util.Map;
 
-/**
- * Created by Neo on 4/27/16.
- */
 public class Response {
 
     private int statusCode = 0;

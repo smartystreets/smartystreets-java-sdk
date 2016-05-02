@@ -1,9 +1,5 @@
 package com.smartystreets.api.us_street;
 
-/**
- * Created by Neo on 4/19/16.
- */
-
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 

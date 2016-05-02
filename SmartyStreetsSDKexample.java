@@ -1,12 +1,9 @@
-/**
- * Created by Neo on 4/7/16.
- */
-
+import com.smartystreets.api.HttpSender;
 import com.smartystreets.api.StaticCredentials;
-import com.smartystreets.api.exceptions.InvalidInputValueException;
-import com.smartystreets.api.exceptions.MissingAuthTokenOnPOSTException;
+import com.smartystreets.api.exceptions.SmartyStreetsException;
 import com.smartystreets.api.us_street.*;
 import com.smartystreets.api.Credentials;
+import com.smartystreets.api.RetrySender;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +15,7 @@ public class SmartyStreetsSDKexample {
         final String THE_RIGHT_ZIPCODE = "84606";
 
 //        Credentials credentials = getSSCredentialsFromFile("/ss-credentials.txt");
-        Credentials credentials = new StaticCredentials("authId", "authToken");
+        Credentials credentials = new StaticCredentials("2e277d7d-e46f-481a-ad58-7e6a9e4ccf4d", "ASuzBSi3vD0iIjGSc9cR");  //TODO: Delete these
         ArrayList<AddressLookup> addressesToVerify = new ArrayList<>();
 
         AddressLookup validAddress = new AddressLookup("1600 Amphitheatre Parkway, Mountain View, California");
@@ -36,7 +33,7 @@ public class SmartyStreetsSDKexample {
         addressesToVerify.add(invalidAddress2);
 
 //        ArrayList<AddressLookup> addressesToVerify = getAddressesFromCSV("/all-them-addresses.csv");
-        Client client = new Client(credentials); // Alternate constructor accepts Id and token as separate parameters
+        Client client = new Client(credentials, new RetrySender(5, new MockSender())); // Alternate constructor accepts Id and token as separate parameters
 
         try {
             AddressLookup firstLookup = new AddressLookup("1600 amphitheatre parkway, Mountain View, California"); // Different signature for freeform
@@ -48,13 +45,13 @@ public class SmartyStreetsSDKexample {
 
             Batch batch = new Batch();
 
-            batch.setIncludeInvalid(true);
             boolean success = batch.add(addressesToVerify.get(0)); // Just one address
 //
 //            if (!success)
 //                throw new Exception("Something awful has happened.");
 
             client.send(batch);
+            batch.setIncludeInvalid(true);
 
             Candidate outputAddress = batch.get("address 1").getResult(0); // Get by input_id, or input_index?
 
@@ -75,7 +72,6 @@ public class SmartyStreetsSDKexample {
                 AddressLookup current = iterator.next();
                 ArrayList<Candidate> candidates = current.getResult();
 
-
                 if (candidates.isEmpty())
                     continue;
 
@@ -86,14 +82,18 @@ public class SmartyStreetsSDKexample {
                 else
                     say(cleanAddress.getDeliveryLine1() + " is not a valid California address");
             }
-            say("I'm done");
+
+            AddressLookup secondLookup = new AddressLookup("ServiceUnavailable 555 E 555 N Provo, Utah");
+            client.send(secondLookup);
         }
-        catch(MissingAuthTokenOnPOSTException ex){ // These aren't the only Exceptions, just a couple.
+        catch(SmartyStreetsException ex){ // These aren't the only Exceptions, just a couple.
             say(ex.getMessage());
         }
         catch (IOException ex) {
             say(ex.getMessage());
-            ex.printStackTrace();
+        }
+        finally {
+            say("I'm done");
         }
 
 //        catch(Exception ex){

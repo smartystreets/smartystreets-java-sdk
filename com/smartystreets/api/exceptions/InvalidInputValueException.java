@@ -1,9 +1,6 @@
 package com.smartystreets.api.exceptions;
 
-/**
- * Created by oshion on 4/28/16.
- */
-public class InvalidInputValueException extends Exception {
+public class InvalidInputValueException extends SmartyStreetsException {
     public InvalidInputValueException() {
         super();
     }

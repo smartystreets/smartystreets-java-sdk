@@ -1,8 +1,7 @@
 package com.smartystreets.api.us_street;
 
-
 import com.smartystreets.api.*;
-import com.smartystreets.api.exceptions.MissingAuthTokenOnPOSTException;
+import com.smartystreets.api.exceptions.SmartyStreetsException;
 
 import javax.json.*;
 import javax.json.stream.JsonGenerator;
@@ -10,32 +9,25 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-
-/**
- * Created by Neo on 4/6/16.
- */
-
 
 public class Client {
     private Credentials signer;
     private Sender inner;
 
-    public Client (Credentials signer) {
+    public Client (Credentials signer, Sender inner) {
         this.signer = signer;
-        this.inner = new HttpSender();
+        this.inner = inner;
     }
 
     // Wraps address in a batch and calls the other send method
-    public void send(AddressLookup lookup) throws MissingAuthTokenOnPOSTException, IOException {
+    public void send(AddressLookup lookup) throws SmartyStreetsException, IOException {
         Batch batch = new Batch();
         batch.add(lookup);
         this.send(batch);
     }
 
     // Sends lookup to the US street API
-    public void send(Batch batch) throws MissingAuthTokenOnPOSTException, IOException {
+    public void send(Batch batch) throws IOException, SmartyStreetsException {
         // New Request
         Request request = new Request("https://api.smartystreets.com/street-address?");
 

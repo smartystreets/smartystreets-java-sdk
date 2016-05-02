@@ -2,9 +2,6 @@ package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.MissingAuthTokenOnPOSTException;
 
-/**
- * Created by Neo on 4/25/16.
- */
 public class StaticCredentials implements Credentials{
 
     private String authId;

@@ -4,9 +4,6 @@ import com.smartystreets.api.exceptions.InvalidInputValueException;
 
 import java.util.ArrayList;
 
-/**
- * Created by Neo on 4/19/16.
- */
 public class AddressLookup {
 
     private ArrayList<Candidate> result;

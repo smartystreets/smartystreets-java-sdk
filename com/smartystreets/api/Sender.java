@@ -1,12 +1,12 @@
 package com.smartystreets.api;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
+import com.smartystreets.api.exceptions.SmartyStreetsException;
 
-/**
- * Created by Neo on 4/25/16.
- */
+import java.io.IOException;
+
 public interface Sender {
-    Response send(Request request) throws IOException;
+    Response send(Request request) throws SmartyStreetsException, IOException;
+
+    int getMaxTimeOut();
+    void setMaxTimeOut(int maxTimeOut);
 }

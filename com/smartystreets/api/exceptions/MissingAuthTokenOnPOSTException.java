@@ -1,9 +1,6 @@
 package com.smartystreets.api.exceptions;
 
-/**
- * Created by oshion on 4/29/16.
- */
-public class MissingAuthTokenOnPOSTException extends Exception {
+public class MissingAuthTokenOnPOSTException extends SmartyStreetsException {
     public MissingAuthTokenOnPOSTException() {
         super();
     }

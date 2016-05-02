@@ -2,13 +2,9 @@ package com.smartystreets.api;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Neo on 4/25/16.
- */
 public class Request {
 
     private String urlString;
