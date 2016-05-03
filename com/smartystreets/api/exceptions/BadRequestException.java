@@ -1,6 +1,6 @@
 package com.smartystreets.api.exceptions;
 
-public class BadRequestException extends SmartyStreetsException {
+public class BadRequestException extends SmartyException {
     public BadRequestException() {
         super();
     }

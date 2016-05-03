@@ -1,6 +1,6 @@
 import com.smartystreets.api.HttpSender;
 import com.smartystreets.api.StaticCredentials;
-import com.smartystreets.api.exceptions.SmartyStreetsException;
+import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
 import com.smartystreets.api.Credentials;
 import com.smartystreets.api.RetrySender;
@@ -33,7 +33,10 @@ public class SmartyStreetsSDKexample {
         addressesToVerify.add(invalidAddress2);
 
 //        ArrayList<AddressLookup> addressesToVerify = getAddressesFromCSV("/all-them-addresses.csv");
-        Client client = new Client(credentials, new RetrySender(5, new MockSender())); // Alternate constructor accepts Id and token as separate parameters
+        Client client = new ClientBuilder(credentials)
+                .withMaxTimeout(10000)
+                .retryAtMost(3)
+                .build();
 
         try {
             AddressLookup firstLookup = new AddressLookup("1600 amphitheatre parkway, Mountain View, California"); // Different signature for freeform
@@ -86,7 +89,7 @@ public class SmartyStreetsSDKexample {
             AddressLookup secondLookup = new AddressLookup("ServiceUnavailable 555 E 555 N Provo, Utah");
             client.send(secondLookup);
         }
-        catch(SmartyStreetsException ex){ // These aren't the only Exceptions, just a couple.
+        catch(SmartyException ex){ // These aren't the only Exceptions, just a couple.
             say(ex.getMessage());
         }
         catch (IOException ex) {

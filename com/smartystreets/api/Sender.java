@@ -1,12 +1,9 @@
 package com.smartystreets.api;
 
-import com.smartystreets.api.exceptions.SmartyStreetsException;
+import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
 
 public interface Sender {
-    Response send(Request request) throws SmartyStreetsException, IOException;
-
-    int getMaxTimeOut();
-    void setMaxTimeOut(int maxTimeOut);
+    Response send(Request request) throws SmartyException, IOException;
 }

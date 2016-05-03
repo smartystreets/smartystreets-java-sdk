@@ -1,6 +1,6 @@
 package com.smartystreets.api.exceptions;
 
-public class TooManyRequestsException extends SmartyStreetsException {
+public class TooManyRequestsException extends SmartyException {
     public TooManyRequestsException() {
         super();
     }

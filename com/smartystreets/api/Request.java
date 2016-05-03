@@ -28,7 +28,7 @@ public class Request {
 
     /**** Getters ********************************************************************************/
 
-    public void appendParameter(String name, String value) throws UnsupportedEncodingException {
+    public void appendParameter(String name, String value) {
         if (name == null || value == null)
             return;
 
@@ -38,9 +38,18 @@ public class Request {
         if (!this.urlString.endsWith("?"))
             this.urlString += "&";
 
-        String encodedName = URLEncoder.encode(name, CHARSET);
-        String encodedValue = URLEncoder.encode(value, CHARSET);
+        String encodedName = this.encode(name);
+        String encodedValue = this.encode(value);
         this.urlString += encodedName + "=" + encodedValue;
+    }
+
+    private String encode(String value) {
+        try {
+            return URLEncoder.encode(value, CHARSET);
+        }
+        catch (Exception ex){
+            return "";
+        }
     }
 
     public String getUrlString() {

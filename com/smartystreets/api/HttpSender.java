@@ -10,14 +10,22 @@ import java.util.List;
 import java.util.Map;
 
 public class HttpSender implements Sender {
-    private int maxTimeOut = 10000;
+    private int maxTimeOut;
 
-    public Response send(Request request) throws SmartyStreetsException, IOException{
+    public HttpSender() {
+        this.maxTimeOut = 10000;
+    }
+
+    public HttpSender(int maxTimeout) {
+        this.maxTimeOut = maxTimeout;
+    }
+
+    public Response send(Request request) throws SmartyException, IOException{
         Response response = new Response();
 
         //open the url connection
         HttpsURLConnection connection = (HttpsURLConnection) new URL(request.getUrlString()).openConnection();
-        connection.setConnectTimeout(getMaxTimeOut());
+        connection.setConnectTimeout(this.maxTimeOut);
 
         try {
             //set headers
@@ -79,13 +87,5 @@ public class HttpSender implements Sender {
         }
 
         return response;
-    }
-
-    public int getMaxTimeOut() {
-        return this.maxTimeOut;
-    }
-
-    public void setMaxTimeOut(int maxTimeOut) {
-        this.maxTimeOut = maxTimeOut;
     }
 }

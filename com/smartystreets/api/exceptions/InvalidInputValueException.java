@@ -1,6 +1,6 @@
 package com.smartystreets.api.exceptions;
 
-public class InvalidInputValueException extends SmartyStreetsException {
+public class InvalidInputValueException extends SmartyException {
     public InvalidInputValueException() {
         super();
     }

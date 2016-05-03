@@ -4,20 +4,22 @@ import com.smartystreets.api.*;
 
 public class ClientBuilder {
     private Credentials signer;
-    private int maxRetries = 5;
-    private int maxTimeOut = 10000;
-    private Sender httpSender = new HttpSender();
+    private Sender httpSender;
+    private int maxRetries;
+    private int maxTimeout;
 
     public ClientBuilder() {
-
+        this.maxRetries = 5;
+        this.maxTimeout = 10000;
     }
 
     public ClientBuilder(Credentials signer) {
+        this();
         this.signer = signer;
     }
 
     public ClientBuilder(String authId, String authToken) {
-        this.signer = new StaticCredentials(authId, authToken);
+        this(new StaticCredentials(authId, authToken));
     }
 
     public ClientBuilder retryAtMost(int maxRetries) {
@@ -26,7 +28,7 @@ public class ClientBuilder {
     }
 
     public ClientBuilder withMaxTimeout(int maxTimeout) {
-        this.maxTimeOut = maxTimeout;
+        this.maxTimeout = maxTimeout;
         return this;
     }
 
@@ -36,9 +38,18 @@ public class ClientBuilder {
     }
 
     public Client build() {
-        httpSender.setMaxTimeOut(maxTimeOut);
-        Client client = new Client(this.signer, new RetrySender(maxRetries, httpSender));
-            
-        return client;
+        return new Client(this.signer, this.buildSender());
+    }
+
+    public Sender buildSender() {
+        if (this.httpSender != null)
+            return this.httpSender;
+
+        Sender sender = new HttpSender(this.maxTimeout);
+
+        if (this.maxRetries > 0)
+            sender = new RetrySender(this.maxRetries, sender);
+
+        return sender;
     }
 }

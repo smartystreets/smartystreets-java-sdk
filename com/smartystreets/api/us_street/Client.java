@@ -1,7 +1,7 @@
 package com.smartystreets.api.us_street;
 
 import com.smartystreets.api.*;
-import com.smartystreets.api.exceptions.SmartyStreetsException;
+import com.smartystreets.api.exceptions.SmartyException;
 
 import javax.json.*;
 import javax.json.stream.JsonGenerator;
@@ -20,14 +20,14 @@ public class Client {
     }
 
     // Wraps address in a batch and calls the other send method
-    public void send(AddressLookup lookup) throws SmartyStreetsException, IOException {
+    public void send(AddressLookup lookup) throws SmartyException, IOException {
         Batch batch = new Batch();
         batch.add(lookup);
         this.send(batch);
     }
 
     // Sends lookup to the US street API
-    public void send(Batch batch) throws IOException, SmartyStreetsException {
+    public void send(Batch batch) throws IOException, SmartyException {
         // New Request
         Request request = new Request("https://api.smartystreets.com/street-address?");
 

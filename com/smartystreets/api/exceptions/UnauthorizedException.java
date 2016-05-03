@@ -1,6 +1,6 @@
 package com.smartystreets.api.exceptions;
 
-public class UnauthorizedException extends SmartyStreetsException {
+public class UnauthorizedException extends SmartyException {
     public UnauthorizedException() {
         super();
     }
