@@ -15,7 +15,7 @@ public class SmartyStreetsSDKexample {
         final String THE_RIGHT_ZIPCODE = "84606";
 
 //        Credentials credentials = getSSCredentialsFromFile("/ss-credentials.txt");
-        Credentials credentials = new StaticCredentials("2e277d7d-e46f-481a-ad58-7e6a9e4ccf4d", "ASuzBSi3vD0iIjGSc9cR");  //TODO: Delete these
+        Credentials credentials = new StaticCredentials("auth-id", "auth-token");
         ArrayList<AddressLookup> addressesToVerify = new ArrayList<>();
 
         AddressLookup validAddress = new AddressLookup("1600 Amphitheatre Parkway, Mountain View, California");

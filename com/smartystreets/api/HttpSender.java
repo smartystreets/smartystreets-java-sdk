@@ -17,6 +17,7 @@ public class HttpSender implements Sender {
 
         //open the url connection
         HttpsURLConnection connection = (HttpsURLConnection) new URL(request.getUrlString()).openConnection();
+        connection.setConnectTimeout(getMaxTimeOut());
 
         try {
             //set headers

@@ -38,7 +38,7 @@ public class ClientBuilder {
     public Client build() {
         httpSender.setMaxTimeOut(maxTimeOut);
         Client client = new Client(this.signer, new RetrySender(maxRetries, httpSender));
-
+            
         return client;
     }
 }
