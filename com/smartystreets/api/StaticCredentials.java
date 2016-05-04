@@ -1,6 +1,6 @@
 package com.smartystreets.api;
 
-public class StaticCredentials implements Credentials{
+public class StaticCredentials implements Credentials {
     private String authId;
     private String authToken;
 
