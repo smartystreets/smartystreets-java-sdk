@@ -62,11 +62,8 @@ public class HttpSender implements Sender {
             response.setStatus(connection.getResponseMessage());
             response.setRawJSON(rawJSON);
 
-
             Map<String, List<String>> rawResponseHeaders = connection.getHeaderFields();
             Map<String, String> responseHeaders = new HashMap<>();
-
-
 
             for (String headerName : rawResponseHeaders.keySet()) {
                 responseHeaders.put(headerName, rawResponseHeaders.get(headerName).get(0));

@@ -14,7 +14,7 @@ public class RetrySender implements Sender {
     }
 
     public Response send(Request request) throws SmartyException, IOException {
-        for (int i = 0; i < this.maxRetries; i++) {
+        for (int i = 0; i <= this.maxRetries; i++) {
             Response response = this.trySend(request, i);
 
             if (response != null) {
