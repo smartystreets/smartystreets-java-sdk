@@ -1,5 +1,6 @@
 .DS_Store
-out
+/out
+/.old
 /.idea
 /smartystreets-java-sdk.iml
 
