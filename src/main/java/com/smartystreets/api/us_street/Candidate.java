@@ -2,6 +2,8 @@ package com.smartystreets.api.us_street;
 
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
+import com.google.api.client.json.JsonObjectParser;
+import com.google.api.client.json.jackson2.JacksonFactory;
 
 public class Candidate {
     private String inputId;

@@ -1,39 +1,40 @@
 package com.smartystreets.api.us_zipcode;
 
-import javax.json.JsonObject;
 import java.util.ArrayList;
+import com.google.api.client.json.JsonObjectParser;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.Key;
 
 public class Result {
-
     private boolean isValid;
-    private String status;
-    private String reason;
 
-    private String inputIndex;
-    private String inputId;
-    private ArrayList<CityState> cityStates;
-    private ArrayList<Zipcode> zipcodes;
+    @Key                private String status;
+    @Key                private String reason;
+    @Key("input_index") private int inputIndex;
+    @Key("input_id")    private String inputId;
+    @Key("city_states") private ArrayList<CityState> cityStates;
+    @Key                private ArrayList<Zipcode> zipcodes;
 
-    public Result(/*JsonObject obj*/) {
+    public Result() {
 
     }
 
     public class CityState {
-        private String city;
-        private String mailableCity;
-        private String stateAbbreviation;
-        private String state;
+        @Key                        private String city;
+        @Key("mailable_city")       private String mailableCity;
+        @Key("state_abbreviation")  private String stateAbbreviation;
+        @Key                        private String state;
 
     }
 
     public class Zipcode {
-        private String zipcode;
-        private String zipcodeType;
-        private String defaultCity;
-        private String countyFips;
-        private String countyName;
-        private String latitude;
-        private String longitude;
-        private String precision;
+        @Key                    private String zipcode;
+        @Key("zipcode_type")    private String zipcodeType;
+        @Key("default_city")    private String defaultCity;
+        @Key("county_fips")     private String countyFips;
+        @Key("county_name")     private String countyName;
+        @Key                    private String latitude;
+        @Key                    private String longitude;
+        @Key                    private String precision;
     }
 }

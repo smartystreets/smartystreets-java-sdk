@@ -1,5 +1,7 @@
 package com.smartystreets.api.us_street;
 
+import com.smartystreets.api.exceptions.BatchFullException;
+
 import java.util.*;
 
 public class Batch {
@@ -15,9 +17,9 @@ public class Batch {
         this.allLookups = new Vector<>();
     }
 
-    public boolean add(AddressLookup newAddress){
+    public void add(AddressLookup newAddress) throws BatchFullException{
         if (this.allLookups.size() >= MAX_BATCH_SIZE)
-            return false;
+            throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);
 
         String key = newAddress.getInputId();
 
@@ -25,19 +27,6 @@ public class Batch {
             this.namedLookups.put(key, newAddress);
 
         this.allLookups.add(newAddress);
-        return true;
-    }
-
-    public int add(Collection<AddressLookup> newAddresses){
-        int numAdded = 0;
-
-        for (AddressLookup current : newAddresses) {
-            if (this.add(current))
-                numAdded++;
-            else return numAdded;
-        }
-
-        return numAdded;
     }
 
     public void clear(){
