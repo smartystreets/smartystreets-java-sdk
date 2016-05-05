@@ -55,7 +55,7 @@ public class HttpSender implements Sender {
 
             reader.close();
             input.close();
-            connection.disconnect(); // TODO: try/catch/finally
+            connection.disconnect();
 
             //build response object from the input stream
             response.setStatusCode(connection.getResponseCode());

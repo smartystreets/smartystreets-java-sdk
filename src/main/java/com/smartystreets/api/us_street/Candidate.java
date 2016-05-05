@@ -17,9 +17,6 @@ public class Candidate {
     private Analysis analysis;
 
     public Candidate(JsonObject obj) {
-        JsonObject components = obj.getJsonObject("components");
-        JsonObject metadata = obj.getJsonObject("metadata");
-        JsonObject analysis = obj.getJsonObject("analysis");
         this.inputId = obj.getString("input_id", null);
         this.inputIndex = obj.getInt("input_index", 0);
         this.candidateIndex = obj.getInt("candidate_index", 0);
@@ -29,62 +26,9 @@ public class Candidate {
         this.lastLine = obj.getString("last_line", null);
         this.deliveryPointBarcode = obj.getString("delivery_point_barcode", null);
 
-        this.components = new Components();
-        this.components.urbanization = components.getString("urbanization", null);
-        this.components.primaryNumber = components.getString("primary_number", null);
-        this.components.streetName = components.getString("street_name", null);
-        this.components.streetPredirection = components.getString("street_predirection", null);
-        this.components.streetPostdirection = components.getString("street_postdirection", null);
-        this.components.streetSuffix = components.getString("street_suffix", null);
-        this.components.secondaryNumber = components.getString("secondary_number", null);
-        this.components.secondaryDesignator = components.getString("secondary_designator", null);
-        this.components.extraSecondaryNumber = components.getString("extra_secondary_number", null);
-        this.components.extraSecondaryDesignator = components.getString("extra_secondary_designator", null);
-        this.components.PMBDesignator = components.getString("pmb_designator", null);
-        this.components.PMBNumber = components.getString("pmb_number", null);
-        this.components.cityName = components.getString("city_name", null);
-        this.components.defaultCityName = components.getString("default_city_name", null);
-        this.components.state = components.getString("state_abbreviation", null);
-        this.components.ZIPCode = components.getString("zipcode", null);
-        this.components.plus4Code = components.getString("plus4_code", null);
-        this.components.deliveryPoint = components.getString("delivery_point", null);
-        this.components.deliveryPointCheckDigit = components.getString("delivery_point_check_digit", null);
-
-        this.metadata = new Metadata();
-        this.metadata.recordType = metadata.getString("record_type", null);
-        this.metadata.ZIPType =  metadata.getString("zip_type", null);
-        this.metadata.countyFIPS = metadata.getString("county_fips", null);
-        this.metadata.countyName = metadata.getString("county_name", null);
-        this.metadata.carrierRoute = metadata.getString("carrier_route", null);
-        this.metadata.congressionalDistrict = metadata.getString("congressional_district", null);
-        this.metadata.buildingDefaultIndicator = metadata.getString("building_default_indicator", null);
-        this.metadata.RDI = metadata.getString("rdi", null);
-        this.metadata.ELOTSequence = metadata.getString("elot_sequence", null);
-        this.metadata.ELOTSort = metadata.getString("elot_sort", null);
-        JsonNumber number = metadata.getJsonNumber("latitude");
-        this.metadata.latitude = number == null ? 0 : number.doubleValue();
-        number = metadata.getJsonNumber("longitude");
-        this.metadata.longitude = number == null ? 0 : number.doubleValue();
-        this.metadata.precision = metadata.getString("precision", null);
-        this.metadata.timeZone = metadata.getString("time_zone", null);
-        number = metadata.getJsonNumber("utc_offset");
-        this.metadata.UTCOffset = number == null ? 0 : number.doubleValue();
-        String value = metadata.getString("dst", null);
-        this.metadata.usesDST = (value != null && value.equals("true"));
-
-        this.analysis = new Analysis();
-        this.analysis.DPVMatchCode = analysis.getString("dpv_match_code", null);
-        this.analysis.DPVFootnotes = analysis.getString("dpv_footnotes", null);
-        this.analysis.CMRA = analysis.getString("dpv_cmra", null);
-        this.analysis.vacant = analysis.getString("dpv_vacant", null);
-        this.analysis.active = analysis.getString("active", null);
-        value = analysis.getString("ews_match", null);
-        this.analysis.isEWSMatch = (value != null && value.equals("true"));
-        this.analysis.footnotes = analysis.getString("footnotes", null);
-        this.analysis.LACSLinkCode = analysis.getString("lacslink_code", null);
-        this.analysis.LACSLinkIndicator = analysis.getString("lacslink_indicator", null);
-        value = analysis.getString("suitelink_match", null);
-        this.analysis.isSuiteLinkMatch = (value != null && value.equals("true"));
+        this.components = new Components(obj.getJsonObject("components"));
+        this.metadata = new Metadata(obj.getJsonObject("metadata"));
+        this.analysis = new Analysis(obj.getJsonObject("analysis"));
     }
 
 
@@ -108,6 +52,28 @@ public class Candidate {
         private String plus4Code;
         private String deliveryPoint;
         private String deliveryPointCheckDigit;
+
+        public Components(JsonObject components) {
+            this.urbanization = components.getString("urbanization", null);
+            this.primaryNumber = components.getString("primary_number", null);
+            this.streetName = components.getString("street_name", null);
+            this.streetPredirection = components.getString("street_predirection", null);
+            this.streetPostdirection = components.getString("street_postdirection", null);
+            this.streetSuffix = components.getString("street_suffix", null);
+            this.secondaryNumber = components.getString("secondary_number", null);
+            this.secondaryDesignator = components.getString("secondary_designator", null);
+            this.extraSecondaryNumber = components.getString("extra_secondary_number", null);
+            this.extraSecondaryDesignator = components.getString("extra_secondary_designator", null);
+            this.PMBDesignator = components.getString("pmb_designator", null);
+            this.PMBNumber = components.getString("pmb_number", null);
+            this.cityName = components.getString("city_name", null);
+            this.defaultCityName = components.getString("default_city_name", null);
+            this.state = components.getString("state_abbreviation", null);
+            this.ZIPCode = components.getString("zipcode", null);
+            this.plus4Code = components.getString("plus4_code", null);
+            this.deliveryPoint = components.getString("delivery_point", null);
+            this.deliveryPointCheckDigit = components.getString("delivery_point_check_digit", null);
+        }
 
         public String getUrbanization() {
             return this.urbanization;
@@ -204,6 +170,29 @@ public class Candidate {
         private double UTCOffset;
         private boolean usesDST;
 
+        public Metadata(JsonObject metadata) {
+            this.recordType = metadata.getString("record_type", null);
+            this.ZIPType =  metadata.getString("zip_type", null);
+            this.countyFIPS = metadata.getString("county_fips", null);
+            this.countyName = metadata.getString("county_name", null);
+            this.carrierRoute = metadata.getString("carrier_route", null);
+            this.congressionalDistrict = metadata.getString("congressional_district", null);
+            this.buildingDefaultIndicator = metadata.getString("building_default_indicator", null);
+            this.RDI = metadata.getString("rdi", null);
+            this.ELOTSequence = metadata.getString("elot_sequence", null);
+            this.ELOTSort = metadata.getString("elot_sort", null);
+            JsonNumber number = metadata.getJsonNumber("latitude");
+            this.latitude = number == null ? 0 : number.doubleValue();
+            number = metadata.getJsonNumber("longitude");
+            this.longitude = number == null ? 0 : number.doubleValue();
+            this.precision = metadata.getString("precision", null);
+            this.timeZone = metadata.getString("time_zone", null);
+            number = metadata.getJsonNumber("utc_offset");
+            this.UTCOffset = number == null ? 0 : number.doubleValue();
+            String value = metadata.getString("dst", null);
+            this.usesDST = (value != null && value.equals("true"));
+        }
+
         public String getRecordType() {
             return this.recordType;
         }
@@ -280,6 +269,21 @@ public class Candidate {
         private String LACSLinkCode;
         private String LACSLinkIndicator;
         private boolean isSuiteLinkMatch;
+
+        public Analysis(JsonObject analysis) {
+            this.DPVMatchCode = analysis.getString("dpv_match_code", null);
+            this.DPVFootnotes = analysis.getString("dpv_footnotes", null);
+            this.CMRA = analysis.getString("dpv_cmra", null);
+            this.vacant = analysis.getString("dpv_vacant", null);
+            this.active = analysis.getString("active", null);
+            String value = analysis.getString("ews_match", null);
+            this.isEWSMatch = (value != null && value.equals("true"));
+            this.footnotes = analysis.getString("footnotes", null);
+            this.LACSLinkCode = analysis.getString("lacslink_code", null);
+            this.LACSLinkIndicator = analysis.getString("lacslink_indicator", null);
+            value = analysis.getString("suitelink_match", null);
+            this.isSuiteLinkMatch = (value != null && value.equals("true"));
+        }
 
         public String getDPVMatchCode() {
             return this.DPVMatchCode;

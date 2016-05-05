@@ -3,12 +3,10 @@ package com.smartystreets.api.us_street;
 import java.util.*;
 
 public class Batch {
-
-    private final int MAX_BATCH_SIZE = 100;
+    public final int MAX_BATCH_SIZE = 100;
     private Map<String, AddressLookup> namedLookups;
     private Vector<AddressLookup> allLookups;
     private boolean standardizeOnly, includeInvalid;
- //   private javax.net.Request request;
 
     public Batch(){
         this.standardizeOnly = false;
@@ -18,9 +16,8 @@ public class Batch {
     }
 
     public boolean add(AddressLookup newAddress){
-        if (this.namedLookups.size() >= MAX_BATCH_SIZE) {
+        if (this.allLookups.size() >= MAX_BATCH_SIZE)
             return false;
-        }
 
         String key = newAddress.getInputId();
 
@@ -54,6 +51,14 @@ public class Batch {
         this.includeInvalid = false;
     }
 
+    public int size() {
+        return this.allLookups.size();
+    }
+
+    public Iterator<AddressLookup> iterator(){
+        return this.allLookups.iterator();
+    }
+
     /***** Getters *******************************************************************************/
 
     public boolean getStandardizeOnly(){
@@ -72,16 +77,8 @@ public class Batch {
         return this.namedLookups.get(inputId);
     }
 
-    public AddressLookup get(int index) {
-        return this.allLookups.get(index);
-    }
-
-    public Iterator<AddressLookup> iterator(){
-        return this.allLookups.iterator();
-    }
-
-    public int size() {
-        return this.allLookups.size();
+    public AddressLookup get(int inputIndex) {
+        return this.allLookups.get(inputIndex);
     }
 
     public Vector<AddressLookup> getAllLookups() {

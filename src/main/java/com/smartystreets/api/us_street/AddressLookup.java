@@ -2,6 +2,7 @@ package com.smartystreets.api.us_street;
 
 import com.smartystreets.api.exceptions.InvalidInputValueException;
 
+import javax.management.DescriptorKey;
 import java.util.ArrayList;
 
 public class AddressLookup {
