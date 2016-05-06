@@ -56,7 +56,7 @@ public class Client {
         this.deserializeResponse(response.getRawJSON(), batch);
     }
 
-    private void serializeGET(Batch batch, Request request) throws UnsupportedEncodingException {
+    static void serializeGET(Batch batch, Request request) throws UnsupportedEncodingException {
         AddressLookup address = batch.get(0);
 
         request.appendParameter("input_id", address.getInputId());
@@ -75,7 +75,7 @@ public class Client {
             request.appendParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
 
-    private String serializePOST(Batch batch) {
+    static String serializePOST(Batch batch) {
         String payload;
         StringWriter jsonWriter = new StringWriter();
         JsonGenerator generator = Json.createGenerator(jsonWriter);

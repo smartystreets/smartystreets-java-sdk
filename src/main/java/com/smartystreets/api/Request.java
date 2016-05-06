@@ -1,5 +1,8 @@
 package com.smartystreets.api;
 
+
+import com.google.api.client.http.HttpRequest;
+
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +14,14 @@ public class Request {
     private Map<String, String> headers;
     private String jsonPayload;
     private final String CHARSET = "UTF-8";
+    private HttpRequest request;
 
     public Request(){
         this.headers = new HashMap<>();
     }
 
     public Request(String urlString) {
-        this.headers = new HashMap<>();
+        this();
         this.urlString = urlString;
     }
 
@@ -67,6 +71,10 @@ public class Request {
         return jsonPayload;
     }
 
+    public HttpRequest getRequest() {
+        return this.request;
+    }
+
     /**** Setters ********************************************************************************/
 
     public void setUrlString(String urlString) {
@@ -83,5 +91,9 @@ public class Request {
 
     public void setJsonPayload(String jsonPayload) {
         this.jsonPayload = jsonPayload;
+    }
+
+    public void setRequest(HttpRequest request) {
+        this.request = request;
     }
 }

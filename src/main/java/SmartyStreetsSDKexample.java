@@ -48,10 +48,7 @@ public class SmartyStreetsSDKexample {
 
             Batch batch = new Batch();
 
-            boolean success = batch.add(addressesToVerify.get(0)); // Just one address
-//
-//            if (!success)
-//                throw new Exception("Something awful has happened.");
+            batch.add(addressesToVerify.get(0)); // Just one address
 
             client.send(batch);
             batch.setIncludeInvalid(true);
@@ -64,8 +61,9 @@ public class SmartyStreetsSDKexample {
                 say(outputAddress.getDeliveryLine1() + " is not valid");
 
             batch.clear(); // Clears input and output, but not settings
-            int numAdded = batch.add(addressesToVerify); // Multiple addresses
-            assert numAdded > 0;
+            batch.add(addressesToVerify.get(0));
+            batch.add(addressesToVerify.get(1));
+            assert batch.size() == 2;
 
             client.send(batch);
 
