@@ -1,13 +1,13 @@
 package com.smartystreets.api.us_zipcode;
 
-import javax.json.JsonObject;
+import com.google.api.client.util.Key;
 
 public class Lookup {
     private Result result;
-    private String inputId;
-    private String city;
-    private String state;
-    private String zipcode;
+    @Key("input_id") private String inputId;
+    @Key private String city;
+    @Key private String state;
+    @Key private String zipcode;
 
     public Lookup() {
         this.result = new Result();

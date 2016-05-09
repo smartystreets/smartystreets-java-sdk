@@ -34,7 +34,6 @@ public class Result {
         @Key("state_abbreviation")  private String stateAbbreviation;
         @Key                        private String state;
 
-
         public String getCity() {
             return this.city;
         }

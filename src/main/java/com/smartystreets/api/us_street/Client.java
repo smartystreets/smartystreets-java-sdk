@@ -121,7 +121,7 @@ public class Client {
     }
 
     // Loads the raw JSON response into Candidate objects, and puts those into the appropriate AddressLookups
-    private void deserializeResponse(String rawJSON, Batch batch) {
+    static void deserializeResponse(String rawJSON, Batch batch) {
         JsonArray array = Json.createReader(new StringReader(rawJSON)).readArray();
 
         for (JsonValue val : array) {
