@@ -1,5 +1,7 @@
 package com.smartystreets.api.us_street;
 
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
@@ -27,7 +29,7 @@ public class Client {
     }
 
     // Sends lookup to the US street API
-    public void send(Batch batch) throws IOException, SmartyException {
+    public void send(Batch batch) throws SmartyException, IOException {
         // New Request
         Request request = new Request("https://api.smartystreets.com/street-address?");
 
@@ -36,9 +38,8 @@ public class Client {
             return;
         if (batch.size() == 1) {
             request.setMethod("GET");
-            // Add credentials to url
 
-            // this.serializeGET(request)
+            // Add credentials to url
             this.signer.sign(request);
             this.serializeGET(batch, request);
         } else {
@@ -49,7 +50,7 @@ public class Client {
             request.setJsonPayload(this.serializePOST(batch));
         }
 
-        copyHeaders(batch, request);
+        this.copyHeaders(batch, request);
 
         // Send request to API, and interpret the response
         Response response = this.inner.send(request); // can throw exceptions

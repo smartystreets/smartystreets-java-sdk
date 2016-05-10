@@ -29,8 +29,6 @@ public class Request {
         this.headers.put(name, value);
     }
 
-    /**** Getters ********************************************************************************/
-
     public void appendParameter(String name, String value) {
         if (name == null || value == null)
             return;
@@ -54,6 +52,8 @@ public class Request {
             return "";
         }
     }
+
+    /**** Getters ********************************************************************************/
 
     public String getUrlString() {
         return urlString;

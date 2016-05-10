@@ -1,5 +1,7 @@
 package com.smartystreets.api;
 
+import com.google.api.client.http.HttpResponse;
+
 import java.util.Map;
 
 public class Response {
@@ -8,6 +10,7 @@ public class Response {
     private String status;
     private Map<String, String> headers;
     private String rawJSON;
+    private HttpResponse innerResponse;
 
     public Response(){}
 
@@ -35,6 +38,10 @@ public class Response {
         return this.rawJSON;
     }
 
+    public HttpResponse getInnerResponse() {
+        return this.innerResponse;
+    }
+
     /**** Setters ********************************************************************************/
 
     public void setStatusCode(int statusCode) {
@@ -51,5 +58,9 @@ public class Response {
 
     public void setRawJSON(String rawJSON) {
         this.rawJSON = rawJSON;
+    }
+
+    public void setInnerResponse(HttpResponse innerResponse) {
+        this.innerResponse = innerResponse;
     }
 }
