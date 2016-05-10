@@ -1,7 +1,9 @@
 package com.smartystreets.api.us_zipcode;
 
 import com.google.api.client.http.*;
+import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.Json;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.testing.http.HttpTesting;
 import com.google.api.client.testing.http.MockHttpTransport;
 import com.google.api.client.testing.http.MockLowLevelHttpRequest;
@@ -28,13 +30,13 @@ public class ClientTest {
     public void setData() throws Exception {
         this.batch = new Batch();
         this.lookup1 = new Lookup("Provo", "Utah", "84606");
-        this.lookup2 = new Lookup("Salt Lake City", "Utah");
+        this.lookup2 = new Lookup("Salt Lake City", "Utah").setInputId("test id");
         this.lookup3 = new Lookup("54321");
         this.batch.add(lookup1);
         this.batch.add(lookup2);
         this.batch.add(lookup3);
-        this.expectedJsonPayload = "[{\"city\":\"Provo\",\"state\":\"Utah\",\"zipcode\":\"84606\"},{\"city\":\"Salt Lake City\",\"state\":\"Utah\"},{\"zipcode\":\"54321\"}]";
-        this.expectedJsonResponse = "[{\"input_index\":0,\"city_states\":[{\"city\":\"Washington\",\"state_abbreviation\":\"DC\",\"state\":\"District of Columbia\",\"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"20500\",\"zipcode_type\":\"S\",\"county_fips\":\"11001\",\"county_name\":\"District of Columbia\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":1,\"city_states\":[{\"city\":\"Provo\",\"state_abbreviation\":\"UT\",\"state\":\"Utah\",\"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"84606\",\"zipcode_type\":\"S\",\"county_fips\":\"11501\",\"county_name\":\"Utah\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":2,\"status\":\"invalid_zipcode\",\"reason\":\"Invalid ZIP Code.\"}]";
+        this.expectedJsonPayload = "[{\"city\":\"Provo\",\"state\":\"Utah\",\"zipcode\":\"84606\"},{\"city\":\"Salt Lake City\",\"input_id\":\"test id\",\"state\":\"Utah\"},{\"zipcode\":\"54321\"}]";
+        this.expectedJsonResponse = "[{\"input_index\":0,\"city_states\":[{\"city\":\"Washington\",\"state_abbreviation\":\"DC\",\"state\":\"District of Columbia\",\"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"20500\",\"zipcode_type\":\"S\",\"county_fips\":\"11001\",\"county_name\":\"District of Columbia\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":1,\"input_id\":\"test id\",\"city_states\":[{\"city\":\"Provo\",\"state_abbreviation\":\"UT\",\"state\":\"Utah\",\"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"84606\",\"zipcode_type\":\"S\",\"county_fips\":\"11501\",\"county_name\":\"Utah\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":2,\"status\":\"invalid_zipcode\",\"reason\":\"Invalid ZIP Code.\"}]";
         this.request = new Request();
         this.request.setUrlString("https://api.smartystreets.com/street-address?");
     }
@@ -56,8 +58,6 @@ public class ClientTest {
     @Test
     public void testDeserializeResponse() throws Exception {
         /**Setup*/
-//        MockLowLevelHttpResponse lowResponse = new MockLowLevelHttpResponse().setContent(this.expectedJsonResponse);
-
         HttpTransport transport = new MockHttpTransport() {
             @Override
             public LowLevelHttpRequest buildRequest(String method, String url) throws IOException {
@@ -66,7 +66,6 @@ public class ClientTest {
                     @Override
                     public LowLevelHttpResponse execute() throws IOException {
                         MockLowLevelHttpResponse response = new MockLowLevelHttpResponse();
-//                        response.addHeader("Content-Type", "application/json");
                         response.setStatusCode(200);
                         response.setContentType(Json.MEDIA_TYPE);
                         response.setContent(expectedJsonResponse);
@@ -76,10 +75,9 @@ public class ClientTest {
             }
         };
         HttpRequest request = transport.createRequestFactory().buildPostRequest(HttpTesting.SIMPLE_GENERIC_URL, null);
+        request.setParser(new JacksonFactory().createJsonObjectParser());
         HttpResponse response = request.execute();
 
-//        HttpResponseFactory response = new HttpResponse(null, lowResponse);
-//        HttpResponse response = new HttpResponse(null, lowResponse);
         Client.deserializeResponse(this.batch, response);
         Result result1 = this.batch.get(0).getResult();
         Result result2 = this.batch.get(1).getResult();
@@ -92,8 +90,15 @@ public class ClientTest {
         assertEquals("Washington", result1.getCityState(0).getCity());
         assertEquals("20500", result1.getZipCode(0).getZipcode());
 
+        assertNotNull(result2);
+        assertNull(result2.getStatus());
+        assertEquals("test id", result2.getInputId());
         assertEquals("Utah", result2.getCityState(0).getState());
-        assertEquals(38.89769, result2.getZipCode(0).getLatitude());
+        assertEquals(38.89769, result2.getZipCode(0).getLatitude(), .00001);
 
+        assertNotNull(result3);
+        assertNull(result3.getCityStates());
+        assertEquals("invalid_zipcode", result3.getStatus());
+        assertEquals("Invalid ZIP Code.", result3.getReason());
     }
 }

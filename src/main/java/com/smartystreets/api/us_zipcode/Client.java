@@ -42,11 +42,10 @@ public class Client {
     }
 
     static void deserializeResponse(Batch batch, HttpResponse response) throws IOException {
-        ArrayList<Result> results = new ArrayList<>();
-        results = response.parseAs(ArrayList.class);
+        Result[] results = response.parseAs(Result[].class);
 
-        for (int i = 0; i < results.size(); i++) {
-            batch.get(i).setResult(results.get(i));
+        for (int i = 0; i < results.length; i++) {
+            batch.get(i).setResult(results[i]);
         }
 
     }
