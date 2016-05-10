@@ -14,7 +14,7 @@ public class Request {
     private Map<String, String> headers;
     private String jsonPayload;
     private final String CHARSET = "UTF-8";
-    private HttpRequest request;
+    private HttpRequest innerRequest;
 
     public Request(){
         this.headers = new HashMap<>();
@@ -71,8 +71,8 @@ public class Request {
         return jsonPayload;
     }
 
-    public HttpRequest getRequest() {
-        return this.request;
+    public HttpRequest getInnerRequest() {
+        return this.innerRequest;
     }
 
     /**** Setters ********************************************************************************/
@@ -93,7 +93,7 @@ public class Request {
         this.jsonPayload = jsonPayload;
     }
 
-    public void setRequest(HttpRequest request) {
-        this.request = request;
+    public void setInnerRequest(HttpRequest innerRequest) {
+        this.innerRequest = innerRequest;
     }
 }

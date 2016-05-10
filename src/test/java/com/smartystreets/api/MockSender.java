@@ -31,8 +31,8 @@ public class MockSender implements Sender {
             throw new IOException("503 - Service unavailable");
         }
 
-        if (request.getRequest().getHeaders().containsKey("Content-Type"))
-            System.out.println("Content-Type: " + request.getRequest().getHeaders().get("Content-Type"));
+        if (request.getInnerRequest().getHeaders().containsKey("Content-Type"))
+            System.out.println("Content-Type: " + request.getInnerRequest().getHeaders().get("Content-Type"));
 
         if (request.getHeaders().containsKey("X-Include-Invalid")) {
             response.setRawJSON(this.includeInvalidResponse);

@@ -14,7 +14,6 @@ import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
 
 public class Client {
     private Credentials signer;
@@ -47,7 +46,7 @@ public class Client {
             this.signer.sign(request);
             this.serializeIntoRequestUrl(batch, request);
 
-            request.setRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
+            request.setInnerRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
         }
         else {
             request.setMethod("POST");
@@ -56,11 +55,11 @@ public class Client {
 
             this.serializeIntoRequestBody(batch, request);
 
-            request.setRequest(factory.buildPostRequest(new GenericUrl(baseUrl),
+            request.setInnerRequest(factory.buildPostRequest(new GenericUrl(baseUrl),
                     new JsonHttpContent(new JacksonFactory(),
                     batch.getAllLookups()).setMediaType(new HttpMediaType(Json.MEDIA_TYPE))));
 
-         //   System.out.println(request.getRequest().getHeaders().getContentType());
+         //   System.out.println(request.getInnerRequest().getHeaders().getContentType());
         }
 
         Response response = this.inner.send(request);
