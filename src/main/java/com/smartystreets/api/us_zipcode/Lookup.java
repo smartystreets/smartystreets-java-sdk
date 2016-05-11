@@ -3,11 +3,23 @@ package com.smartystreets.api.us_zipcode;
 import com.google.api.client.util.Key;
 
 public class Lookup {
+    //region [ Fields ]
+
     private Result result;
-    @Key("input_id") private String inputId;
-    @Key private String city;
-    @Key private String state;
-    @Key private String zipcode;
+
+    @Key("input_id")
+    private String inputId;
+
+    @Key("city")
+    private String city;
+
+    @Key("state")
+    private String state;
+
+    @Key("zipcode")
+    private String zipcode;
+
+    //endregion
 
     public Lookup() {
         this.result = new Result();
@@ -31,7 +43,7 @@ public class Lookup {
         this.zipcode = zipcode;
     }
 
-    /**** Getters ********************************************************************************/
+    //region [ Getters ]
 
     public Result getResult() {
         return this.result;
@@ -53,7 +65,9 @@ public class Lookup {
         return this.inputId;
     }
 
-    /**** Setters ********************************************************************************/
+    //endregion
+
+    //region [ Setters ]
 
     public void setResult(Result result) {
         this.result = result;
@@ -75,4 +89,6 @@ public class Lookup {
         this.inputId = inputId;
         return this;
     }
+
+    //endregion
 }

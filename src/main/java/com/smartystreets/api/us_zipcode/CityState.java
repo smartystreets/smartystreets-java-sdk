@@ -3,13 +3,23 @@ package com.smartystreets.api.us_zipcode;
 import com.google.api.client.util.Key;
 
 public class CityState {
-    public CityState() {
-    }
+    //region [ Fields ]
 
-    @Key                        private String city;
-    @Key("mailable_city")       private boolean mailableCity;
-    @Key("state_abbreviation")  private String stateAbbreviation;
-    @Key                        private String state;
+    @Key("city")
+    private String city;
+
+    @Key("mailable_city")
+    private boolean mailableCity;
+
+    @Key("state_abbreviation")
+    private String stateAbbreviation;
+
+    @Key("state")
+    private String state;
+
+    //endregion
+
+    //region [ Getters ]
 
     public String getCity() {
         return this.city;
@@ -26,4 +36,6 @@ public class CityState {
     public String getState() {
         return this.state;
     }
+
+    //endregion
 }

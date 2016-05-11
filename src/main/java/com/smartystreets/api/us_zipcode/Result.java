@@ -1,18 +1,31 @@
 package com.smartystreets.api.us_zipcode;
 
-import java.util.ArrayList;
 import com.google.api.client.util.Key;
 
 public class Result {
-    @Key                private String status;
-    @Key                private String reason;
-    @Key("input_index") private int inputIndex;
-    @Key("input_id")    private String inputId;
-    @Key("city_states") CityState[] cityStates;
-    @Key                ZipCode[] zipcodes;
+    //region [ Fields ]
 
-    public Result() {
-    }
+    @Key("status")
+    private String status;
+
+    @Key("reason")
+    private String reason;
+
+    @Key("input_index")
+    private int inputIndex;
+
+    @Key("input_id")
+    private String inputId;
+
+    @Key("city_states")
+    private CityState[] cityStates;
+
+    @Key("zipcodes")
+    private ZipCode[] zipcodes;
+
+    //endregion
+
+    public Result() {}
 
     public boolean isValid() {
         return (this.status == null && this.reason == null);
@@ -26,9 +39,7 @@ public class Result {
         return this.zipcodes[index];
     }
 
-    /**********************************************************************************************
-     * Getters
-     **********************************************************************************************/
+    //region [ Getters ]
 
     public String getStatus() {
         return this.status;
@@ -53,4 +64,6 @@ public class Result {
     public ZipCode[] getZipcodes() {
         return this.zipcodes;
     }
+
+    //endregion
 }

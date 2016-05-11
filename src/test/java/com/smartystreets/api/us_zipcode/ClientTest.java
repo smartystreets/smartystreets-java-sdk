@@ -37,8 +37,7 @@ public class ClientTest {
         this.batch.add(lookup3);
         this.expectedJsonPayload = "[{\"city\":\"Washington\",\"state\":\"District of Columbia\",\"zipcode\":\"20500\"},{\"city\":\"Provo\",\"input_id\":\"test id\",\"state\":\"Utah\"},{\"zipcode\":\"54321\"}]";
         this.expectedJsonResponse = "[{\"input_index\":0,\"city_states\":[{\"city\":\"Washington\",\"state_abbreviation\":\"DC\",\"state\":\"District of Columbia\",\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"20500\",\"zipcode_type\":\"S\",\"default_city\":\"Washington\",\"county_fips\":\"11001\",\"county_name\":\"District of Columbia\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":1,\"input_id\":\"test id\",\"city_states\":[{\"city\":\"Provo\",\"state_abbreviation\":\"UT\",\"state\":\"Utah\",\"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"84606\",\"zipcode_type\":\"S\",\"county_fips\":\"11501\",\"county_name\":\"Utah\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":2,\"status\":\"invalid_zipcode\",\"reason\":\"Invalid ZIP Code.\"}]";
-        this.request = new Request();
-        this.request.setUrlString("https://api.smartystreets.com/street-address?");
+        this.request = new Request("https://api.smartystreets.com/street-address?");
     }
 
     @Test
@@ -47,11 +46,11 @@ public class ClientTest {
         Sender inner = new MockSender();
         Client client = new Client(signer, inner);
 
+        /**Case 1*/
         client.send(this.lookup2);
 
         Result result = this.lookup2.getResult();
 
-        /**Case 1*/
         assertNotNull(result);
         assertEquals("test id", result.getInputId());
         assertEquals("Salt Lake City", result.getCityState(0).getCity());
@@ -70,7 +69,6 @@ public class ClientTest {
         assertNotNull(result);
         assertEquals("test id", result.getInputId());
         assertEquals("Salt Lake City", result.getCityState(0).getCity());
-
 
         result = this.lookup3.getResult();
 

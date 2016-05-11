@@ -9,14 +9,12 @@ import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 
 public class Client {
     private Credentials signer;
     private Sender inner;
-    HttpTransport transport;
+    private HttpTransport transport;
 
     public Client (Credentials signer, Sender inner) {
         this.signer = signer;

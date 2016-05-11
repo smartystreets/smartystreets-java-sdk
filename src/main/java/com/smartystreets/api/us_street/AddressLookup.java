@@ -1,26 +1,52 @@
 package com.smartystreets.api.us_street;
 
+import com.google.api.client.util.Key;
 import com.smartystreets.api.exceptions.InvalidInputValueException;
 
 import javax.management.DescriptorKey;
 import java.util.ArrayList;
 
 public class AddressLookup {
+    //region [ Fields ]
 
     private ArrayList<Candidate> result;
+
+    @Key("input_id")
     private String inputId;
+
+    @Key("street")
     private String street;
+
+    @Key("street2")
     private String street2;
+
+    @Key("secondary")
     private String secondary;
+
+    @Key("city")
     private String city;
+
+    @Key("state")
     private String state;
+
+    @Key("zipcode")
     private String zipcode;
+
+    @Key("lastline")
     private String lastline;
+
+    @Key("addressee")
     private String addressee;
+
+    @Key("urbanization")
     private String urbanization;
+
+    @Key("candidates")
     private int maxCandidates;
 
-    public AddressLookup(){
+    //endregion
+
+    public AddressLookup() {
         this.maxCandidates = 1;
         this.result = new ArrayList<>();
     }
@@ -34,7 +60,7 @@ public class AddressLookup {
         this.result.add(newCandidate);
     }
 
-    /**** Getters ********************************************************************************/
+    //region [ Getters ]
 
     public ArrayList<Candidate> getResult() {
         return this.result;
@@ -88,7 +114,9 @@ public class AddressLookup {
         return this.maxCandidates;
     }
 
-    /**** Setters ********************************************************************************/
+    //endregion
+
+    //region [ Setters ]
 
     public void setResult(ArrayList<Candidate> result) {
         this.result = result;
@@ -137,9 +165,10 @@ public class AddressLookup {
     public void setMaxCandidates(int maxCandidates) throws InvalidInputValueException {
         if (maxCandidates > 0) {
             this.maxCandidates = maxCandidates;
-        }
-        else {
+        } else {
             throw new InvalidInputValueException("Max candidates must be a positive integer.");
         }
     }
+
+    //endregion
 }

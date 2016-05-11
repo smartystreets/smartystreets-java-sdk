@@ -3,15 +3,35 @@ package com.smartystreets.api.us_zipcode;
 import com.google.api.client.util.Key;
 
 public class ZipCode {
-    @Key
+    //region [ fields ]
+
+    @Key("zipcode")
     private String zipcode;
-    @Key("zipcode_type")    private String zipcodeType;
-    @Key("default_city")    private String defaultCity;
-    @Key("county_fips")     private String countyFips;
-    @Key("county_name")     private String countyName;
-    @Key                    private double latitude;
-    @Key                    private double longitude;
-    @Key                    private String precision;
+
+    @Key("zipcode_type")
+    private String zipcodeType;
+
+    @Key("default_city")
+    private String defaultCity;
+
+    @Key("county_fips")
+    private String countyFips;
+
+    @Key("county_name")
+    private String countyName;
+
+    @Key("latitude")
+    private double latitude;
+
+    @Key("longitude")
+    private double longitude;
+
+    @Key("precision")
+    private String precision;
+
+    //endregion
+
+    //region [ Getter ]
 
     public String getZipcode() {
         return this.zipcode;
@@ -44,4 +64,6 @@ public class ZipCode {
     public String getPrecision() {
         return this.precision;
     }
+
+    //endregion
 }
