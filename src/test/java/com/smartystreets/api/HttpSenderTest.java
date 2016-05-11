@@ -10,6 +10,8 @@ import com.google.api.client.testing.http.HttpTesting;
 import com.google.api.client.testing.http.MockHttpTransport;
 import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
+import com.smartystreets.api.exceptions.BadRequestException;
+import com.smartystreets.api.exceptions.SmartyException;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -37,20 +39,63 @@ public class HttpSenderTest {
                 };
             }
         };
+
+        HttpTransport errorTransport = new MockHttpTransport() {
+            @Override
+            public LowLevelHttpRequest buildRequest(String method, String url) throws IOException {
+
+                return new MockLowLevelHttpRequest() {
+                    @Override
+                    public LowLevelHttpResponse execute() throws IOException {
+                        MockLowLevelHttpResponse response = new MockLowLevelHttpResponse();
+                        response.setStatusCode(400);
+                        response.setContent("Bad request test.");
+                        return response;
+                    }
+                };
+            }
+        };
+
+        /**Case 1: Test GET with custom header*/
         HttpRequest innerRequest = transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
         innerRequest.setParser(new JacksonFactory().createJsonObjectParser());
         Request request = new Request();
         request.setInnerRequest(innerRequest);
         request.setMethod("GET");
-        request.addHeader("Content-Type","application/json");
+        request.addHeader("X-Include-Invalid","true");
 
         Response response = sender.send(request);
 
         assertNotNull(response);
         assertNotNull(response.getInnerResponse());
-        assertEquals("application/json ", innerRequest.getHeaders().getContentType());
-        assertEquals("This is the response.", response.getRawJSON());
+        assertEquals("true", innerRequest.getHeaders().get("X-Include-Invalid"));
+        assertEquals("This is the response.", response.getInnerResponse().parseAsString());
 
+        /**Case 2: Test POST*/
+        innerRequest = transport.createRequestFactory().buildPostRequest(HttpTesting.SIMPLE_GENERIC_URL, null);
+        innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
+        request.setMethod("POST");
 
+        response = sender.send(request);
+
+        assertNotNull(response);
+        assertNotNull(response.getInnerResponse());
+        assertEquals("This is the response.", response.getInnerResponse().parseAsString());
+        assertEquals("application/json; charset=UTF-8", innerRequest.getHeaders().getContentType());
+
+        /**Case 3: Test handling error codes*/
+        innerRequest = errorTransport.createRequestFactory().buildPostRequest(HttpTesting.SIMPLE_GENERIC_URL, null);
+        request.setInnerRequest(innerRequest);
+
+        boolean threwException = false;
+        try {
+            response = sender.send(request);
+        }
+        catch (BadRequestException ex) {
+            threwException = true;
+        }
+        finally {
+            assertTrue(threwException);
+        }
     }
 }
