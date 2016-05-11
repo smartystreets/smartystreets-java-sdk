@@ -88,7 +88,6 @@ public class AddressLookup {
         return this.maxCandidates;
     }
 
-
     /**** Setters ********************************************************************************/
 
     public void setResult(ArrayList<Candidate> result) {

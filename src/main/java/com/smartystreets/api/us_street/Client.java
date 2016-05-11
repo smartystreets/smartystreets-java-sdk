@@ -1,12 +1,13 @@
 package com.smartystreets.api.us_street;
 
-import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.http.json.JsonHttpContent;
+import com.google.api.client.json.*;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
-import javax.json.*;
-import javax.json.stream.JsonGenerator;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -15,10 +16,12 @@ import java.io.UnsupportedEncodingException;
 public class Client {
     private Credentials signer;
     private Sender inner;
+    HttpTransport transport;
 
     public Client (Credentials signer, Sender inner) {
         this.signer = signer;
         this.inner = inner;
+        this.transport = new NetHttpTransport();
     }
 
     // Wraps address in a batch and calls the other send method
@@ -30,8 +33,9 @@ public class Client {
 
     // Sends lookup to the US street API
     public void send(Batch batch) throws SmartyException, IOException {
-        // New Request
-        Request request = new Request("https://api.smartystreets.com/street-address?");
+        HttpRequestFactory factory = this.transport.createRequestFactory();
+        String baseUrl = "https://api.smartystreets.com/street-address?";
+        Request request = new Request(baseUrl);
 
         // Determine if it is a single address or not, set method and serialize
         if (batch.size() == 0)
@@ -41,23 +45,30 @@ public class Client {
 
             // Add credentials to url
             this.signer.sign(request);
-            this.serializeGET(batch, request);
+            this.serializeIntoRequestUrl(batch, request);
+
+            request.setInnerRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
         } else {
             request.setMethod("POST");
-            // Add credentials to url
+
             this.signer.sign(request);
-            request.addHeader("Content-Type", "application/json");
-            request.setJsonPayload(this.serializePOST(batch));
+            this.serializeIntoRequestBody(batch, request);
+
+            HttpRequest innerRequest = factory.buildPostRequest(new GenericUrl(baseUrl),
+                    new JsonHttpContent(new JacksonFactory(), batch.getAllLookups()));
+            innerRequest.getHeaders().setContentType(com.google.api.client.json.Json.MEDIA_TYPE);
+
+            request.setInnerRequest(innerRequest);
         }
 
         this.copyHeaders(batch, request);
 
         // Send request to API, and interpret the response
         Response response = this.inner.send(request); // can throw exceptions
-        this.deserializeResponse(response.getRawJSON(), batch);
+        this.deserializeResponse(batch, response.getInnerResponse());
     }
 
-    static void serializeGET(Batch batch, Request request) throws UnsupportedEncodingException {
+    static void serializeIntoRequestUrl(Batch batch, Request request) {
         AddressLookup address = batch.get(0);
 
         request.appendParameter("input_id", address.getInputId());
@@ -76,62 +87,28 @@ public class Client {
             request.appendParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
 
-    static String serializePOST(Batch batch) {
-        String payload;
+    //TODO consider getting rid of serializeIntoRequestBody() on both us_street and us_zipcode
+    static void serializeIntoRequestBody(Batch batch, Request request) throws IOException {
+        JacksonFactory jacksonFactory = new JacksonFactory();
         StringWriter jsonWriter = new StringWriter();
-        JsonGenerator generator = Json.createGenerator(jsonWriter);
+        JsonGenerator generator = jacksonFactory.createJsonGenerator(jsonWriter);
 
-        generator.writeStartArray();
-
-        for (AddressLookup address : batch.getAllLookups()){
-            generator.writeStartObject();
-
-            if (address.getInputId() != null)
-                generator.write("input_id", address.getInputId());
-            if (address.getStreet() != null)
-                generator.write("street", address.getStreet());
-            if (address.getStreet2() != null)
-                generator.write("street2", address.getStreet2());
-            if (address.getSecondary() != null)
-                generator.write("secondary", address.getSecondary());
-            if (address.getCity() != null)
-                generator.write("city", address.getCity());
-            if (address.getState() != null)
-                generator.write("state", address.getState());
-            if (address.getZipcode() != null)
-                generator.write("zipcode", address.getZipcode());
-            if (address.getLastline() != null)
-                generator.write("lastline", address.getLastline());
-            if (address.getAddressee() != null)
-                generator.write("addressee", address.getAddressee());
-            if (address.getUrbanization() != null)
-                generator.write("urbanization", address.getUrbanization());
-            if (address.getMaxCandidates() != 1)
-                generator.write("candidates", address.getMaxCandidates());
-
-            generator.writeEnd();
-        }
-
-        generator.writeEnd();
+        generator.serialize(batch.getAllLookups());
         generator.close();
-        payload = jsonWriter.toString();
 
-//        System.out.println("payload: " + payload);
-
-        return payload;
+        request.setJsonPayload(jsonWriter.toString());
     }
 
     // Loads the raw JSON response into Candidate objects, and puts those into the appropriate AddressLookups
-    static void deserializeResponse(String rawJSON, Batch batch) {
-        JsonArray array = Json.createReader(new StringReader(rawJSON)).readArray();
+    static void deserializeResponse(Batch batch, HttpResponse response) throws IOException {
+        Candidate[] candidates = response.parseAs(Candidate[].class);
 
-        for (JsonValue val : array) {
-            JsonObject obj = (JsonObject) val;
-
-            Candidate candidate = new Candidate(obj);
-
-            int index = candidate.getInputIndex();
-            batch.get(index).addToResult(candidate);
+        for (int i = 0; i < batch.size(); i++) {
+            for (int j = 0; j < candidates.length; j++) {
+                if (candidates[j].getInputIndex() == i) {
+                    batch.get(i).addToResult(candidates[j]);
+                }
+            }
         }
     }
 
