@@ -7,9 +7,9 @@ import com.smartystreets.api.exceptions.SmartyException;
 public class Client {
     private final String urlPrefix;
     private final Sender sender;
-    private final Serializer<Candidate[]> serializer;
+    private final Serializer serializer;
 
-    public Client (String urlPrefix, Sender sender, Serializer<Candidate[]> serializer) {
+    public Client (String urlPrefix, Sender sender, Serializer serializer) {
         this.urlPrefix = urlPrefix;
         this.sender = sender;
         this.serializer = serializer;
@@ -35,7 +35,7 @@ public class Client {
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
         Response response = this.sender.send(request);
-        Candidate[] candidates = this.serializer.deserialize(response.getRawResponse());
+        Candidate[] candidates = (Candidate[]) this.serializer.deserialize(response.getPayload(), Candidate[].class);
         assignCandidatesToLookups(batch, candidates);
     }
 
@@ -63,7 +63,7 @@ public class Client {
         if (address.getMaxCandidates() != 1)
             request.appendParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
-    
+
     private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
         for (int i = 0; i < batch.size(); i++) {
             for (int j = 0; j < candidates.length; j++) {

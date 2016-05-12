@@ -1,23 +1,17 @@
 package com.smartystreets.api;
 
-import com.google.api.client.http.HttpResponse;
-
 import java.util.Map;
 
 public class Response {
 
-    private int statusCode = 0;
-    private String status;
+    private int statusCode;
     private Map<String, String> headers;
-    private byte[] rawResponse;
-    private HttpResponse innerResponse;
+    private byte[] payload;
 
-    public Response(){}
-
-    public Response(int statusCode, Map<String, String> headers, byte[] rawResponse) {
+    public Response(int statusCode, Map<String, String> headers, byte[] payload) {
         this.statusCode = statusCode;
         this.headers = headers;
-        this.rawResponse = rawResponse;
+        this.payload = payload;
     }
 
     //region [ Getters ]
@@ -26,20 +20,12 @@ public class Response {
         return this.statusCode;
     }
 
-    public String getStatus() {
-        return this.status;
-    }
-
     public Map<String, String> getHeaders() {
         return this.headers;
     }
 
-    public byte[] getRawResponse() {
-        return this.rawResponse;
-    }
-
-    public HttpResponse getInnerResponse() {
-        return this.innerResponse;
+    public byte[] getPayload() {
+        return this.payload;
     }
 
     //endregion
@@ -50,20 +36,8 @@ public class Response {
         this.statusCode = statusCode;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
-    public void setRawResponse(byte[] rawResponse) {
-        this.rawResponse = rawResponse;
-    }
-
-    public void setInnerResponse(HttpResponse innerResponse) {
-        this.innerResponse = innerResponse;
+    public void setPayload(byte[] payload) {
+        this.payload = payload;
     }
 
     //endregion

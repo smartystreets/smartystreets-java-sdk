@@ -72,11 +72,11 @@ public class Request {
 
     public void setUrlString(String urlString) {
         this.urlString = urlString;
-    }
+    } //TODO: delete
 
     public void setPayload(byte[] payload) {
         this.method = "POST";
-         this.payload = payload;
+        this.payload = payload;
     }
 
     //endregion
