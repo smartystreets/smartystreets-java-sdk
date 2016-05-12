@@ -18,6 +18,7 @@ public class HttpSender implements Sender {
     }
 
     public Response send(Request request) throws SmartyException, IOException {
+        //TODO: Re-work this so it builds the HttpRequest itself and sets the response data to jsonResponse as a String or byte stream
         Response response = new Response();
         HttpRequest innerRequest = request.getInnerRequest();
 
