@@ -35,11 +35,11 @@ public class MockSender implements Sender {
             System.out.println("Content-Type: " + request.getInnerRequest().getHeaders().get("Content-Type"));
 
         if (request.getHeaders().containsKey("X-Include-Invalid")) {
-            response.setRawJSON(this.includeInvalidResponse);
+            response.setRawResponse(this.includeInvalidResponse);
             this.responseJson = this.includeInvalidResponse;
         }
         else {
-            response.setRawJSON(this.validResponse);
+            response.setRawResponse(this.validResponse);
             this.responseJson = this.includeInvalidResponse;
         }
 

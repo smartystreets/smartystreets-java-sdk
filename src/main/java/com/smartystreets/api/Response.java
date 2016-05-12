@@ -9,18 +9,18 @@ public class Response {
     private int statusCode = 0;
     private String status;
     private Map<String, String> headers;
-    private String rawJSON; // TODO: byte[] payload
+    private byte[] rawResponse;
     private HttpResponse innerResponse;
 
     public Response(){}
 
-    public Response(int statusCode, Map<String, String> headers, String rawJSON) {
+    public Response(int statusCode, Map<String, String> headers, byte[] rawResponse) {
         this.statusCode = statusCode;
         this.headers = headers;
-        this.rawJSON = rawJSON;
+        this.rawResponse = rawResponse;
     }
 
-    /**** Getters ********************************************************************************/
+    //region [ Getters ]
 
     public int getStatusCode() {
         return this.statusCode;
@@ -34,15 +34,17 @@ public class Response {
         return this.headers;
     }
 
-    public String getRawJSON() {
-        return this.rawJSON;
+    public byte[] getRawResponse() {
+        return this.rawResponse;
     }
 
     public HttpResponse getInnerResponse() {
         return this.innerResponse;
     }
 
-    /**** Setters ********************************************************************************/
+    //endregion
+
+    //region [ Setters ]
 
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
@@ -56,11 +58,15 @@ public class Response {
         this.headers = headers;
     }
 
-    public void setRawJSON(String rawJSON) {
-        this.rawJSON = rawJSON;
+    public void setRawResponse(byte[] rawResponse) {
+        this.rawResponse = rawResponse;
     }
 
     public void setInnerResponse(HttpResponse innerResponse) {
         this.innerResponse = innerResponse;
     }
+
+    //endregion
 }
+
+

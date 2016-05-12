@@ -37,11 +37,11 @@ public class MockSender implements Sender {
             System.out.println("Content-Type: " + request.getInnerRequest().getHeaders().get("Content-Type"));
 
         if (request.getMethod().equals("GET")) {
-            response.setRawJSON(this.SINGLE_RESPONSE);
+            response.setRawResponse(this.SINGLE_RESPONSE);
             this.responseJson = this.SINGLE_RESPONSE;
         }
         else if (request.getMethod().equals("POST")) {
-            response.setRawJSON(this.BATCH_RESPONSE);
+            response.setRawResponse(this.BATCH_RESPONSE);
             this.responseJson = this.BATCH_RESPONSE;
         }
 

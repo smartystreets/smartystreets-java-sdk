@@ -35,7 +35,7 @@ public class Client {
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
         Response response = this.sender.send(request);
-        Candidate[] candidates = this.serializer.deserialize(response.getPayload());
+        Candidate[] candidates = this.serializer.deserialize(response.getRawResponse());
         assignCandidatesToLookups(batch, candidates);
     }
 
@@ -45,6 +45,7 @@ public class Client {
         else if (batch.getStandardizeOnly())
             request.addHeader("X-Standardize-Only", "true");
     }
+
     private static void populateQueryString(Batch batch, Request request) {
         AddressLookup address = batch.get(0);
         request.appendParameter("input_id", address.getInputId());
@@ -62,6 +63,7 @@ public class Client {
         if (address.getMaxCandidates() != 1)
             request.appendParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
+    
     private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
         for (int i = 0; i < batch.size(); i++) {
             for (int j = 0; j < candidates.length; j++) {

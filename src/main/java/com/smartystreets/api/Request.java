@@ -1,8 +1,5 @@
 package com.smartystreets.api;
 
-
-import com.google.api.client.http.HttpRequest;
-
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,9 +9,8 @@ public class Request {
     private String urlString;
     private String method;
     private Map<String, String> headers;
-    private String jsonPayload; // TODO: byte[] payload
+    private byte[] payload;
     private final String CHARSET = "UTF-8";
-    //private HttpRequest innerRequest;
 
     public Request(){
         this.method = "GET";
@@ -54,7 +50,7 @@ public class Request {
         }
     }
 
-    /**** Getters ********************************************************************************/
+    //region [ Getters ]
 
     public String getUrlString() {
         return urlString;
@@ -68,32 +64,20 @@ public class Request {
         return this.headers;
     }
 
-    public String getJsonPayload() {
-        return jsonPayload;
-    }
-//    public byte[] getPayload { return this.payload; } // TODO
+    public byte[] getPayload() { return this.payload; }
 
-    //public HttpRequest getInnerRequest() {
-    //    return this.innerRequest;
-    //}
+    //endregion
 
-    /**** Setters ********************************************************************************/
+    //region [ Setters ]
 
-    // TODO: remove this, they shouldn't be able to set the URL string, only append parameters...
     public void setUrlString(String urlString) {
         this.urlString = urlString;
     }
 
-    // TODO:
-    public void setJsonPayload(String jsonPayload) {
-        this.jsonPayload = jsonPayload;
-    }
     public void setPayload(byte[] payload) {
         this.method = "POST";
-        // this.payload = payload; // TODO
+         this.payload = payload;
     }
 
-    //public void setInnerRequest(HttpRequest innerRequest) {
-    //    this.innerRequest = innerRequest;
-    //}
+    //endregion
 }
