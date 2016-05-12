@@ -5,8 +5,8 @@ import com.smartystreets.api.exceptions.SmartyException;
 import java.io.IOException;
 
 public class RetrySender implements Sender {
-    Sender inner;
-    int maxRetries;
+    private Sender inner;
+    private int maxRetries;
 
     public RetrySender(int maxRetries, Sender inner) {
         this.inner = inner;

@@ -9,7 +9,7 @@ public class Response {
     private int statusCode = 0;
     private String status;
     private Map<String, String> headers;
-    private String rawJSON;
+    private String rawJSON; // TODO: byte[] payload
     private HttpResponse innerResponse;
 
     public Response(){}

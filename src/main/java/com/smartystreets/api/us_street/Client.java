@@ -1,75 +1,88 @@
 package com.smartystreets.api.us_street;
 
-import com.google.api.client.http.*;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.http.json.JsonHttpContent;
-import com.google.api.client.json.*;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import java.io.IOException;
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
 public class Client {
-    private Credentials signer;
-    private Sender inner;
-    //private HttpTransport transport;
+    private final String urlPrefix;
+    private final Sender sender;
+    private final Serializer<Candidate[]> serializer;
 
-    public Client (Credentials signer, Sender inner) {
-        this.signer = signer;
-        this.inner = inner;
-        //this.transport = new NetHttpTransport();
+    public Client (String urlPrefix, Sender sender, Serializer<Candidate[]> serializer) {
+        this.urlPrefix = urlPrefix;
+        this.sender = sender;
+        this.serializer = serializer;
     }
 
-    // Wraps address in a batch and calls the other send method
     public void send(AddressLookup lookup) throws SmartyException, IOException {
         Batch batch = new Batch();
         batch.add(lookup);
         this.send(batch);
     }
 
-    // Sends lookup to the US street API
     public void send(Batch batch) throws SmartyException, IOException {
-        Request request = new Request("https://api.smartystreets.com/street-address?");
+        Request request = new Request(this.urlPrefix);
 
         if (batch.size() == 0)
             return;
 
-        // Add credentials to query
-        this.signer.sign(request);
+        this.appendHeaders(batch, request);
 
-        // Determine if it is a single address or not, set method and serialize
-        if (batch.size() == 1) {
-            request.setMethod("GET");
+        if (batch.size() == 1)
+            populateQueryString(batch, request);
+        else
+            request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
-            GoogleInterpreter.serializeIntoRequestUrl(batch, request);
-
-           // request.setInnerRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
-        } else {
-            request.setMethod("POST");
-
-
-            GoogleInterpreter.serializeIntoRequestBody(batch, request);
-
-           /* HttpRequest innerRequest = factory.buildPostRequest(new GenericUrl(baseUrl),
-                    new JsonHttpContent(new JacksonFactory(), batch.getAllLookups()));
-            innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
-
-            request.setInnerRequest(innerRequest);*/
-        }
-
-        this.copyHeaders(batch, request);
-
-        // Send request to API, and interpret the response
-        Response response = this.inner.send(request); // can throw exceptions
-        GoogleInterpreter.deserializeResponse(batch, response.getInnerResponse());
+        Response response = this.sender.send(request);
+        Candidate[] candidates = this.serializer.deserialize(response.getPayload());
+        assignCandidatesToLookups(batch, candidates);
     }
 
-    private void copyHeaders(Batch batch, Request request) {
+    private void appendHeaders(Batch batch, Request request) {
         if (batch.getIncludeInvalid())
             request.addHeader("X-Include-Invalid", "true");
         else if (batch.getStandardizeOnly())
             request.addHeader("X-Standardize-Only", "true");
     }
+    private static void populateQueryString(Batch batch, Request request) {
+        AddressLookup address = batch.get(0);
+        request.appendParameter("input_id", address.getInputId());
+        request.appendParameter("input_id", address.getInputId());
+        request.appendParameter("street", address.getStreet());
+        request.appendParameter("street2",address.getStreet2());
+        request.appendParameter("secondary", address.getSecondary());
+        request.appendParameter("city", address.getCity());
+        request.appendParameter("state", address.getState());
+        request.appendParameter("zipcode", address.getZipCode());
+        request.appendParameter("lastline", address.getLastline());
+        request.appendParameter("addressee", address.getAddressee());
+        request.appendParameter("urbanization", address.getUrbanization());
+
+        if (address.getMaxCandidates() != 1)
+            request.appendParameter("candidates", Integer.toString(address.getMaxCandidates()));
+    }
+    private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
+        for (int i = 0; i < batch.size(); i++) {
+            for (int j = 0; j < candidates.length; j++) {
+                if (candidates[j].getInputIndex() == i) {
+                    batch.get(i).addToResult(candidates[j]);
+                }
+            }
+        }
+    }
 }
+
+
+
+
+//private HttpTransport transport;
+//this.transport = new NetHttpTransport();
+
+// request.setInnerRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
+               /* HttpRequest innerRequest = factory.buildPostRequest(new GenericUrl(baseUrl),
+                new JsonHttpContent(new JacksonFactory(), batch.getAllLookups()));
+        innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
+        request.setInnerRequest(innerRequest);*/
+
+

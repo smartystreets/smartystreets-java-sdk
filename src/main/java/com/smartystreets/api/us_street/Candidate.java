@@ -40,7 +40,7 @@ public class Candidate {
 
     //endregion
 
-    //region [ Candidate Getters ]
+    //region [ Getters ]
 
     public Components getComponents() {
         return this.components;
@@ -88,7 +88,7 @@ public class Candidate {
 
     //endregion
 
-    //region [ Components Getters ]
+    //region [ Components Helpers ]
 
     public String getUrbanization() {
         return this.components.getUrbanization();
@@ -130,11 +130,11 @@ public class Candidate {
         return this.components.getExtraSecondaryDesignator();
     }
 
-    public String getPMBDesignator() {
+    public String getPmbDesignator() {
         return this.components.getPmbDesignator();
     }
 
-    public String getPMBNumber() {
+    public String getPmbNumber() {
         return this.components.getPmbNumber();
     }
 
@@ -150,7 +150,7 @@ public class Candidate {
         return this.components.getState();
     }
 
-    public String getZIPCode() {
+    public String getZipCode() {
         return this.components.getZipCode();
     }
 
@@ -168,18 +168,18 @@ public class Candidate {
 
     //endregion
 
-    //region [ Metadata Getters ]
+    //region [ Metadata Helpers ]
 
     public String getRecordType() {
         return this.metadata.getRecordType();
     }
 
-    public String getZIPType() {
+    public String getZipType() {
         return this.metadata.getZipType();
     }
 
-    public String getCountyFIPS() {
-        return this.metadata.getCountyFIPS();
+    public String getCountyFips() {
+        return this.metadata.getCountyFips();
     }
 
     public String getCountyName() {
@@ -198,15 +198,15 @@ public class Candidate {
         return this.metadata.getBuildingDefaultIndicator();
     }
 
-    public String getRDI() {
+    public String getRdi() {
         return this.metadata.getRdi();
     }
 
-    public String getELOTSequence() {
+    public String getElotSequence() {
         return this.metadata.getElotSequence();
     }
 
-    public String getELOTSort() {
+    public String getElotSort() {
         return this.metadata.getElotSort();
     }
 
@@ -226,27 +226,27 @@ public class Candidate {
         return this.metadata.getTimeZone();
     }
 
-    public double getUTCOffset() {
+    public double getUtcOffset() {
         return this.metadata.getUtcOffset();
     }
 
-    public boolean usesDST() {
-        return this.metadata.usesDST();
+    public boolean usesDst() {
+        return this.metadata.usesDst();
     }
 
     //endregion
 
     //region [ Analysis Getters ]
 
-    public String getDPVMatchCode() {
+    public String getDpvMatchCode() {
         return this.analysis.getDPVMatchCode();
     }
 
-    public String getDPVFootnotes() {
+    public String getDpvFootnotes() {
         return this.analysis.getDPVFootnotes();
     }
 
-    public String getCMRA() {
+    public String getCmra() {
         return this.analysis.getCMRA();
     }
 
@@ -258,7 +258,7 @@ public class Candidate {
         return this.analysis.getActive();
     }
 
-    public boolean isEWSMatch() {
+    public boolean isEwsMatch() {
         return this.analysis.isEWSMatch();
     }
 
@@ -266,11 +266,11 @@ public class Candidate {
         return this.analysis.getFootnotes();
     }
 
-    public String getLACSLinkCode() {
+    public String getLacsLinkCode() {
         return this.analysis.getLACSLinkCode();
     }
 
-    public String getLACSLinkIndicator() {
+    public String getLacsLinkIndicator() {
         return this.analysis.getLACSLinkIndicator();
     }
 
@@ -283,7 +283,7 @@ public class Candidate {
         return (value != null && (value.equals("Y") || value.equals("S") || value.equals("D")));
     }
 
-    public boolean CMRA() {
+    public boolean Cmra() {
         String value = this.analysis.getCMRA();
         return (value != null && value.equals("Y"));
     }

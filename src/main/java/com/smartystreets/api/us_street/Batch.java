@@ -21,17 +21,14 @@ public class Batch {
         if (this.allLookups.size() >= MAX_BATCH_SIZE)
             throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);
 
-        String key = newAddress.getInputId();
-
-        if (key != null)
-            this.namedLookups.put(key, newAddress);
-
         this.allLookups.add(newAddress);
-    }
 
-    public void clear(){
-        this.namedLookups.clear();
-        this.allLookups.clear();
+        String key = newAddress.getInputId();
+        if (key == null)
+            return;
+
+        this.namedLookups.put(key, newAddress);
+
     }
 
     public void reset() {
@@ -39,6 +36,13 @@ public class Batch {
         this.standardizeOnly = false;
         this.includeInvalid = false;
     }
+
+    public void clear(){
+        this.namedLookups.clear();
+        this.allLookups.clear();
+    }
+
+    //region [ Iterator ]
 
     public int size() {
         return this.allLookups.size();
@@ -48,7 +52,9 @@ public class Batch {
         return this.allLookups.iterator();
     }
 
-    /***** Getters *******************************************************************************/
+    //endregion
+
+    //region [ Getters ]
 
     public boolean getStandardizeOnly(){
         return this.standardizeOnly;
@@ -74,7 +80,9 @@ public class Batch {
         return this.allLookups;
     }
 
-    /***** Setters *******************************************************************************/
+    //endregion
+
+    //region [ Setters ]
 
     public void setStandardizeOnly(boolean newValue){
         this.standardizeOnly = newValue;
@@ -83,4 +91,6 @@ public class Batch {
     public void setIncludeInvalid(boolean newValue){
         this.includeInvalid = newValue;
     }
+
+    //endregion
 }

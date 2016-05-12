@@ -1,9 +1,7 @@
-import com.smartystreets.api.HttpSender;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
 import com.smartystreets.api.Credentials;
-import com.smartystreets.api.RetrySender;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ public class SmartyStreetsSDKexample {
             ArrayList<Candidate> result = firstLookup.getResult();
 
             if (!result.isEmpty())
-                assert result.get(0).getZIPCode() == THE_RIGHT_ZIPCODE;
+                assert result.get(0).getZipCode() == THE_RIGHT_ZIPCODE;
 
             Batch batch = new Batch();
 

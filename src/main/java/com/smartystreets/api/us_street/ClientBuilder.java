@@ -38,7 +38,8 @@ public class ClientBuilder {
     }
 
     public Client build() {
-        return new Client(this.signer, this.buildSender());
+        // TODO: make URL configurable
+        return new Client("https://api.smartystreets.com/street-address?", this.buildSender());
     }
 
     public Sender buildSender() {
@@ -46,6 +47,9 @@ public class ClientBuilder {
             return this.httpSender;
 
         Sender sender = new HttpSender(this.maxTimeout);
+
+        if (this.signer != null)
+            sender = new SigningSender(this.signer, sender);
 
         if (this.maxRetries > 0)
             sender = new RetrySender(this.maxRetries, sender);

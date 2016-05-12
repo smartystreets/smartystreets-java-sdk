@@ -12,7 +12,7 @@ public class Metadata {
     private String zipType;
 
     @Key("county_fips")
-    private String countyFIPS;
+    private String countyFips;
 
     @Key("county_name")
     private String countyName;
@@ -51,7 +51,7 @@ public class Metadata {
     private double utcOffset;
 
     @Key("dst")
-    private boolean usesDST;
+    private boolean usesDst; //TODO: rename - obeysDst?
 
     //endregion
 
@@ -65,8 +65,8 @@ public class Metadata {
         return this.zipType;
     }
 
-    public String getCountyFIPS() {
-        return this.countyFIPS;
+    public String getCountyFips() {
+        return this.countyFips;
     }
 
     public String getCountyName() {
@@ -117,8 +117,8 @@ public class Metadata {
         return this.utcOffset;
     }
 
-    public boolean usesDST() {
-        return this.usesDST;
+    public boolean usesDst() {
+        return this.usesDst;
     }
 
     //endregion

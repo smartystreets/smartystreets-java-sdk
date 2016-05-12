@@ -6,7 +6,7 @@ public class Analysis {
     //region [ Fields ]
 
     @Key("dpv_match_code")
-    private String DPVMatchCode;
+    private String DPVMatchCode; //TODO field in-casing
 
     @Key("dpv_footnotes")
     private String DPVFootnotes;

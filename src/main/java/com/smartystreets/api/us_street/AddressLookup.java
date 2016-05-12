@@ -3,7 +3,6 @@ package com.smartystreets.api.us_street;
 import com.google.api.client.util.Key;
 import com.smartystreets.api.exceptions.InvalidInputValueException;
 
-import javax.management.DescriptorKey;
 import java.util.ArrayList;
 
 public class AddressLookup {
@@ -30,7 +29,7 @@ public class AddressLookup {
     private String state;
 
     @Key("zipcode")
-    private String zipcode;
+    private String zipCode;
 
     @Key("lastline")
     private String lastline;
@@ -46,6 +45,8 @@ public class AddressLookup {
 
     //endregion
 
+    //region [ Constructors ]
+
     public AddressLookup() {
         this.maxCandidates = 1;
         this.result = new ArrayList<>();
@@ -56,9 +57,15 @@ public class AddressLookup {
         this.street = freeformAddress;
     }
 
+    //endregion
+
+    //region [ Methods ]
+
     public void addToResult(Candidate newCandidate) {
         this.result.add(newCandidate);
     }
+
+    //endregion
 
     //region [ Getters ]
 
@@ -94,8 +101,8 @@ public class AddressLookup {
         return this.state;
     }
 
-    public String getZipcode() {
-        return this.zipcode;
+    public String getZipCode() {
+        return this.zipCode;
     }
 
     public String getLastline() {
@@ -146,8 +153,8 @@ public class AddressLookup {
         this.state = state;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public void setLastline(String lastline) {
