@@ -47,4 +47,8 @@ public class HttpSender implements Sender {
 
         return response;
     }
+
+    public int getMaxTimeOut() {
+        return this.maxTimeOut;
+    }
 }

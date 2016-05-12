@@ -54,7 +54,7 @@ public class Client {
 
             HttpRequest innerRequest = factory.buildPostRequest(new GenericUrl(baseUrl),
                     new JsonHttpContent(new JacksonFactory(), batch.getAllLookups()));
-            innerRequest.getHeaders().setContentType(com.google.api.client.json.Json.MEDIA_TYPE);
+            innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
 
             request.setInnerRequest(innerRequest);
         }

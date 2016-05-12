@@ -35,4 +35,12 @@ public class RetrySender implements Sender {
 
         return null;
     }
+
+    public int getMaxRetries() {
+        return this.maxRetries;
+    }
+
+    public Sender getInner() {
+        return this.inner;
+    }
 }

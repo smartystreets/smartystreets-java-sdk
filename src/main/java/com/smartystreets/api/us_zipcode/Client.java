@@ -21,7 +21,7 @@ import java.io.StringWriter;
 
 public class Client {
     private Credentials signer;
-    private Sender inner;
+    Sender inner;
     HttpTransport transport;
 
     public Client(Credentials signer, Sender inner) {

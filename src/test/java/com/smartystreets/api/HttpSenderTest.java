@@ -11,7 +11,6 @@ import com.google.api.client.testing.http.MockHttpTransport;
 import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
 import com.smartystreets.api.exceptions.BadRequestException;
-import com.smartystreets.api.exceptions.SmartyException;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -89,7 +88,7 @@ public class HttpSenderTest {
 
         boolean threwException = false;
         try {
-            response = sender.send(request);
+            sender.send(request);
         }
         catch (BadRequestException ex) {
             threwException = true;
