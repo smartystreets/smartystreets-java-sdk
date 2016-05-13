@@ -18,7 +18,7 @@ public class GoogleSerializer implements Serializer {
         return this.factory.toByteArray(obj);
     }
 
-    public Object deserialize(byte[] payload, Class type) throws IOException {
+    public <T> T deserialize(byte[] payload, Class<T> type) throws IOException {
         InputStream inputStream = new ByteArrayInputStream(payload);
         return this.factory.fromInputStream(inputStream, type);
     }

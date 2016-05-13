@@ -6,5 +6,5 @@ public interface Serializer {
 
     byte[] serialize(Object obj) throws IOException;
 
-    Object deserialize(byte[] payload, Class type) throws IOException ;
+    <T> T deserialize(byte[] payload, Class<T> type) throws IOException ;
 }

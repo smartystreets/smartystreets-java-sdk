@@ -90,7 +90,7 @@ public class ClientTest {
     public void testSerializeIntoRequestBody() throws Exception {
         Client.serializeIntoRequestBody(this.batch, this.request);
 
-        assertEquals(this.expectedJsonPayload, this.request.getJsonPayload());
+        assertEquals(this.expectedJsonPayload.getBytes(), this.request.getPayload());
     }
 
     @Test

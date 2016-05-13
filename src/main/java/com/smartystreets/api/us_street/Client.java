@@ -35,7 +35,7 @@ public class Client {
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
         Response response = this.sender.send(request);
-        Candidate[] candidates = (Candidate[]) this.serializer.deserialize(response.getPayload(), Candidate[].class);
+        Candidate[] candidates = this.serializer.deserialize(response.getPayload(), Candidate[].class);
         assignCandidatesToLookups(batch, candidates);
     }
 
