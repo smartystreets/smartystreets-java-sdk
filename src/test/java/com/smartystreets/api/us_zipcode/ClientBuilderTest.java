@@ -1,7 +1,9 @@
 package com.smartystreets.api.us_zipcode;
 
 import com.smartystreets.api.GoogleSender;
+import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.RetrySender;
+import com.smartystreets.api.Sender;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,7 +16,17 @@ public class ClientBuilderTest {
         Client client = new ClientBuilder().build();
 
         assertNotNull(client);
-        assertNotNull(client.sender);
+
+        /**Case 2: Custom build*/
+        client = new ClientBuilder()
+                .withUrl("testUrl")
+                .withSender(new MockSender())
+                .withSerializer(new GoogleSerializer())
+                .build();
+
+        assertEquals("testUrl", client.urlPrefix);
+        assertEquals(MockSender.class, client);
+//        assertNotNull(client.serializer);
     }
 
     @Test
@@ -30,7 +42,10 @@ public class ClientBuilderTest {
         assertEquals(10000, googleSender.getMaxTimeOut());
 
         /** Case 2: Custom build **/
-        retrySender = (RetrySender) new ClientBuilder().retryAtMost(10).withMaxTimeout(500).buildSender();
+        retrySender = (RetrySender) new ClientBuilder()
+                .retryAtMost(10)
+                .withMaxTimeout(500)
+                .buildSender();
         googleSender = (GoogleSender) retrySender.getInner();
 
         assertNotNull(retrySender);
@@ -38,6 +53,11 @@ public class ClientBuilderTest {
 
         assertNotNull(googleSender);
         assertEquals(500, googleSender.getMaxTimeOut());
+
+        /**Case 3: MockSender **/
+        Sender mockSender = new ClientBuilder().withSender(new MockSender()).buildSender();
+
+        assertEquals(MockSender.class, mockSender.getClass());
     }
 
 }

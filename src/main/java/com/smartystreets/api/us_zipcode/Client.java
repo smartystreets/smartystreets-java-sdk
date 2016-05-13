@@ -6,9 +6,9 @@ import com.smartystreets.api.exceptions.SmartyException;
 import java.io.IOException;
 
 public class Client {
-    private final String urlPrefix;
+    final String urlPrefix;
     private final Sender sender;
-    private final Serializer serializer;
+    final Serializer serializer;
 
     public Client(String urlPrefix, Sender sender, Serializer serializer) {
         this.urlPrefix = urlPrefix;

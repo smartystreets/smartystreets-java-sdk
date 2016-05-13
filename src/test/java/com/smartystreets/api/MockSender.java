@@ -10,6 +10,8 @@ import com.google.api.client.testing.http.MockLowLevelHttpResponse;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 //TODO: Move to /us_street
 public class MockSender implements Sender {
@@ -21,9 +23,7 @@ public class MockSender implements Sender {
     private String responseJson = "";
 
     public Response send(Request request) throws SmartyException, IOException {
-        Response response = new Response();
-        response.setStatusCode(this.statusCode);
-        response.setStatus("OK");
+        byte[] payload = new byte[includeInvalidResponse.length()*2];
 
         this.sendCount++;
 
@@ -31,16 +31,13 @@ public class MockSender implements Sender {
             throw new IOException("503 - Service unavailable");
         }
 
-        if (request.getInnerRequest().getHeaders().containsKey("Content-Type"))
-            System.out.println("Content-Type: " + request.getInnerRequest().getHeaders().get("Content-Type"));
-
         if (request.getHeaders().containsKey("X-Include-Invalid")) {
-            response.setPayload(this.includeInvalidResponse);
+            payload = this.includeInvalidResponse.getBytes();
             this.responseJson = this.includeInvalidResponse;
         }
         else {
-            response.setPayload(this.validResponse);
-            this.responseJson = this.includeInvalidResponse;
+            payload = this.validResponse.getBytes();
+            this.responseJson = this.validResponse;
         }
 
         if (request.getUrlString().contains("RetryThreeTimes")) {
@@ -72,10 +69,15 @@ public class MockSender implements Sender {
 
         HttpRequest innerRequest = transport.createRequestFactory().buildPostRequest(HttpTesting.SIMPLE_GENERIC_URL, null);
         innerRequest.setParser(new JacksonFactory().createJsonObjectParser());
-        HttpResponse innerResponse = innerRequest.execute();
-        response.setInnerResponse(innerResponse);
+        HttpResponse httpResponse = innerRequest.execute();
 
-        return response;
+        Map<String, String> responseHeaders = new HashMap<>();
+        HttpHeaders httpHeaders = httpResponse.getHeaders();
+        for (String headerName : httpHeaders.keySet()) {
+            responseHeaders.put(headerName, (String) httpHeaders.get(headerName));
+        }
+
+        return new Response(this.statusCode, responseHeaders, payload);
     }
 
     public int getSendCount() {
