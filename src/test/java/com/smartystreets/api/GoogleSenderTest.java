@@ -17,10 +17,10 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class HttpSenderTest {
+public class GoogleSenderTest {
     @Test
     public void testSend() throws Exception {
-        HttpSender sender = new HttpSender();
+        GoogleSender sender = new GoogleSender();
 
         HttpTransport transport = new MockHttpTransport() {
             @Override

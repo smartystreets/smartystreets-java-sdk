@@ -30,13 +30,13 @@ public class Client {
         this.appendHeaders(batch, request);
 
         if (batch.size() == 1)
-            populateQueryString(batch, request);
+            this.populateQueryString(batch, request);
         else
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
         Response response = this.sender.send(request);
         Candidate[] candidates = this.serializer.deserialize(response.getPayload(), Candidate[].class);
-        assignCandidatesToLookups(batch, candidates);
+        this.assignCandidatesToLookups(batch, candidates);
     }
 
     private void appendHeaders(Batch batch, Request request) {
@@ -46,7 +46,7 @@ public class Client {
             request.addHeader("X-Standardize-Only", "true");
     }
 
-    private static void populateQueryString(Batch batch, Request request) {
+    private void populateQueryString(Batch batch, Request request) {
         AddressLookup address = batch.get(0);
         request.appendParameter("input_id", address.getInputId());
         request.appendParameter("input_id", address.getInputId());
@@ -66,9 +66,9 @@ public class Client {
 
     private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
         for (int i = 0; i < batch.size(); i++) {
-            for (int j = 0; j < candidates.length; j++) {
-                if (candidates[j].getInputIndex() == i) {
-                    batch.get(i).addToResult(candidates[j]);
+            for (Candidate candidate : candidates) {
+                if (candidate.getInputIndex() == i) {
+                    batch.get(i).addToResult(candidate);
                 }
             }
         }
@@ -81,10 +81,10 @@ public class Client {
 //private HttpTransport transport;
 //this.transport = new NetHttpTransport();
 
-// request.setInnerRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
-               /* HttpRequest innerRequest = factory.buildPostRequest(new GenericUrl(baseUrl),
-                new JsonHttpContent(new JacksonFactory(), batch.getAllLookups()));
-        innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
-        request.setInnerRequest(innerRequest);*/
+//request.setInnerRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
+//        HttpRequest innerRequest = factory.buildPostRequest(new GenericUrl(baseUrl),
+//        new JsonHttpContent(new JacksonFactory(), batch.getAllLookups()));
+//        innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
+//        request.setInnerRequest(innerRequest);
 
 

@@ -81,7 +81,7 @@ public class ClientTest {
 
     @Test
     public void testSerializeIntoRequestUrl() throws Exception {
-        Client.serializeIntoRequestUrl(this.batch, this.request);
+        Client.populateQueryString(this.batch, this.request);
 
         assertEquals("https://api.smartystreets.com/street-address?city=Washington&state=District+of+Columbia&zipcode=20500", request.getUrlString());
     }

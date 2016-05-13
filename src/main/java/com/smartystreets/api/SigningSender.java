@@ -12,7 +12,6 @@ public class SigningSender implements Sender {
         this.inner = inner;
     }
 
-    @Override
     public Response send(Request request) throws SmartyException, IOException {
         this.signer.sign(request);
         return this.inner.send(request);

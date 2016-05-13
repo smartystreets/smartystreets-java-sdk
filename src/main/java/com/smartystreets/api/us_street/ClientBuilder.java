@@ -4,13 +4,17 @@ import com.smartystreets.api.*;
 
 public class ClientBuilder {
     private Credentials signer;
+    private Serializer serializer;
     private Sender httpSender;
     private int maxRetries;
     private int maxTimeout;
+    private String url;
 
     public ClientBuilder() {
+        this.serializer = new GoogleSerializer();
         this.maxRetries = 5;
         this.maxTimeout = 10000;
+        this.url = "https://api.smartystreets.com/street-address?";
     }
 
     public ClientBuilder(Credentials signer) {
@@ -37,16 +41,25 @@ public class ClientBuilder {
         return this;
     }
 
+    public ClientBuilder withSerializer(Serializer serializer) {
+        this.serializer = serializer;
+        return this;
+    }
+
+    public ClientBuilder withUrl(String url) {
+        this.url = url;
+        return this;
+    }
+
     public Client build() {
-        // TODO: make URL configurable
-        return new Client("https://api.smartystreets.com/street-address?", this.buildSender());
+        return new Client(this.url, this.buildSender(), this.serializer);
     }
 
     public Sender buildSender() {
         if (this.httpSender != null)
             return this.httpSender;
 
-        Sender sender = new HttpSender(this.maxTimeout);
+        Sender sender = new GoogleSender(this.maxTimeout);
 
         if (this.signer != null)
             sender = new SigningSender(this.signer, sender);
