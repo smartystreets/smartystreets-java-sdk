@@ -283,7 +283,7 @@ public class Candidate {
         return (value != null && (value.equals("Y") || value.equals("S") || value.equals("D")));
     }
 
-    public boolean Cmra() {
+    public boolean cmra() {
         String value = this.analysis.getCmra();
         return (value != null && value.equals("Y"));
     }

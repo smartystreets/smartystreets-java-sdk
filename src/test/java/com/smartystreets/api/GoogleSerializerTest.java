@@ -1,6 +1,5 @@
 package com.smartystreets.api;
 
-import com.smartystreets.api.us_zipcode.Client;
 import com.smartystreets.api.us_zipcode.Lookup;
 import com.smartystreets.api.us_zipcode.Result;
 import org.junit.Before;

@@ -74,17 +74,3 @@ public class Client {
         }
     }
 }
-
-
-
-
-//private HttpTransport transport;
-//this.transport = new NetHttpTransport();
-
-//request.setInnerRequest(factory.buildGetRequest(new GenericUrl(request.getUrlString())));
-//        HttpRequest innerRequest = factory.buildPostRequest(new GenericUrl(baseUrl),
-//        new JsonHttpContent(new JacksonFactory(), batch.getAllLookups()));
-//        innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
-//        request.setInnerRequest(innerRequest);
-
-
