@@ -6,13 +6,13 @@ public class Analysis {
     //region [ Fields ]
 
     @Key("dpv_match_code")
-    private String DPVMatchCode; //TODO field in-casing
+    private String dpvMatchCode;
 
     @Key("dpv_footnotes")
-    private String DPVFootnotes;
+    private String dpvFootnotes;
 
     @Key("dpv_cmra")
-    private String CMRA;
+    private String cmra;
 
     @Key("dpv_vacant")
     private String vacant;
@@ -21,16 +21,16 @@ public class Analysis {
     private String active;
 
     @Key("ews_match")
-    private boolean isEWSMatch;
+    private boolean isEwsMatch;
 
     @Key("footnotes")
     private String footnotes;
 
     @Key("lacslink_code")
-    private String LACSLinkCode;
+    private String lacsLinkCode;
 
     @Key("lacslink_indicator")
-    private String LACSLinkIndicator;
+    private String lacsLinkIndicator;
 
     @Key("suitelink_match")
     private boolean isSuiteLinkMatch;
@@ -39,16 +39,16 @@ public class Analysis {
 
     //region [ Getters ]
 
-    public String getDPVMatchCode() {
-        return this.DPVMatchCode;
+    public String getDpvMatchCode() {
+        return this.dpvMatchCode;
     }
 
-    public String getDPVFootnotes() {
-        return this.DPVFootnotes;
+    public String getDpvFootnotes() {
+        return this.dpvFootnotes;
     }
 
-    public String getCMRA() {
-        return this.CMRA;
+    public String getCmra() {
+        return this.cmra;
     }
 
     public String getVacant() {
@@ -59,20 +59,20 @@ public class Analysis {
         return this.active;
     }
 
-    public boolean isEWSMatch() {
-        return this.isEWSMatch;
+    public boolean isEwsMatch() {
+        return this.isEwsMatch;
     }
 
     public String getFootnotes() {
         return this.footnotes;
     }
 
-    public String getLACSLinkCode() {
-        return this.LACSLinkCode;
+    public String getLacsLinkCode() {
+        return this.lacsLinkCode;
     }
 
-    public String getLACSLinkIndicator() {
-        return this.LACSLinkIndicator;
+    public String getLacsLinkIndicator() {
+        return this.lacsLinkIndicator;
     }
 
     public boolean isSuiteLinkMatch() {

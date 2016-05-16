@@ -239,15 +239,15 @@ public class Candidate {
     //region [ Analysis Getters ]
 
     public String getDpvMatchCode() {
-        return this.analysis.getDPVMatchCode();
+        return this.analysis.getDpvMatchCode();
     }
 
     public String getDpvFootnotes() {
-        return this.analysis.getDPVFootnotes();
+        return this.analysis.getDpvFootnotes();
     }
 
     public String getCmra() {
-        return this.analysis.getCMRA();
+        return this.analysis.getCmra();
     }
 
     public String getVacant() {
@@ -259,7 +259,7 @@ public class Candidate {
     }
 
     public boolean isEwsMatch() {
-        return this.analysis.isEWSMatch();
+        return this.analysis.isEwsMatch();
     }
 
     public String getFootnotes() {
@@ -267,11 +267,11 @@ public class Candidate {
     }
 
     public String getLacsLinkCode() {
-        return this.analysis.getLACSLinkCode();
+        return this.analysis.getLacsLinkCode();
     }
 
     public String getLacsLinkIndicator() {
-        return this.analysis.getLACSLinkIndicator();
+        return this.analysis.getLacsLinkIndicator();
     }
 
     public boolean isSuiteLinkMatch() {
@@ -279,12 +279,12 @@ public class Candidate {
     }
 
     public boolean isValid() {
-        String value = this.analysis.getDPVMatchCode();
+        String value = this.analysis.getDpvMatchCode();
         return (value != null && (value.equals("Y") || value.equals("S") || value.equals("D")));
     }
 
     public boolean Cmra() {
-        String value = this.analysis.getCMRA();
+        String value = this.analysis.getCmra();
         return (value != null && value.equals("Y"));
     }
 
