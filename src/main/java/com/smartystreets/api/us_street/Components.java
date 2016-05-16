@@ -100,7 +100,7 @@ public class Components {
     }
 
     public String getExtraSecondaryNumber() {
-        return this.extraSecondaryNumber; //TODO: Why is this never called?
+        return this.extraSecondaryNumber;
     }
 
     public String getExtraSecondaryDesignator() {

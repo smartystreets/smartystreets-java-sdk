@@ -14,18 +14,26 @@ import org.omg.CORBA_2_3.portable.*;
 
 import java.io.*;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GoogleSender implements Sender {
     private int maxTimeOut;
+    private HttpTransport httpTransport;
 
     public GoogleSender() {
         this.maxTimeOut = 10000;
+        this.httpTransport = new NetHttpTransport();
     }
 
     public GoogleSender(int maxTimeout) {
+        this();
         this.maxTimeOut = maxTimeout;
+    }
+
+    public void setHttpTransport(HttpTransport httpTransport) {
+        this.httpTransport = httpTransport;
     }
 
     public Response send(Request request) throws SmartyException, IOException {
@@ -37,7 +45,7 @@ public class GoogleSender implements Sender {
                 httpHeaders.set(headerName, headers.get(headerName));
             }
 
-            HttpRequestFactory factory = new NetHttpTransport().createRequestFactory();
+            HttpRequestFactory factory = this.httpTransport.createRequestFactory();
 
             HttpRequest httpRequest;
 
@@ -58,8 +66,9 @@ public class GoogleSender implements Sender {
 
             HttpHeaders responseHttpHeaders = httpResponse.getHeaders();
             Map<String, String> responseHeaders = new HashMap<>();
-            for (String headerName : httpHeaders.keySet()) {
-                responseHeaders.put(headerName, (String) responseHttpHeaders.get(headerName));
+            for (String headerName : responseHttpHeaders.keySet()) {
+                ArrayList<String> values = (ArrayList<String>) responseHttpHeaders.get(headerName);
+                responseHeaders.put(headerName, values.get(0));
             }
             int statusCode = httpResponse.getStatusCode();
             InputStream inputStream = httpResponse.getContent();

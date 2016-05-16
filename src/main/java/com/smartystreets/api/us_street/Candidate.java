@@ -123,7 +123,7 @@ public class Candidate {
     }
 
     public String getExtraSecondaryNumber() {
-        return this.components.getSecondaryNumber();
+        return this.components.getExtraSecondaryNumber();
     }
 
     public String getExtraSecondaryDesignator() {
@@ -231,7 +231,7 @@ public class Candidate {
     }
 
     public boolean usesDst() {
-        return this.metadata.usesDst();
+        return this.metadata.obeysDst();
     }
 
     //endregion

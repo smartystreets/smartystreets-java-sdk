@@ -17,7 +17,7 @@ public class StaticCredentialsTest {
 
         /**Case 2: test for proper URL encoding*/
         StaticCredentials weirdCredentials = new StaticCredentials("as3$d8+56d9", "d8j#ds'dfe2");
-        request.setUrlString("https://api.smartystreets.com/street-address?");
+        request = new Request("https://api.smartystreets.com/street-address?");
         weirdCredentials.sign(request);
         urlStringExpected = "https://api.smartystreets.com/street-address?auth-id=as3%24d8%2B56d9&auth-token=d8j%23ds%27dfe2";
         assertEquals(urlStringExpected, request.getUrlString());

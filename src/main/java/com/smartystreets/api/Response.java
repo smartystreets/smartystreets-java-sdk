@@ -5,7 +5,7 @@ import java.util.Map;
 public class Response {
 
     private int statusCode;
-    private Map<String, String> headers;
+    private Map<String, String> headers; //TODO: is this necessary to have?
     private byte[] payload;
 
     public Response(int statusCode, Map<String, String> headers, byte[] payload) {

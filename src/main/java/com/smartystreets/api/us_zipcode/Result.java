@@ -6,10 +6,10 @@ public class Result {
     //region [ Fields ]
 
     @Key("status")
-    private String status;
+    String status;
 
     @Key("reason")
-    private String reason;
+    String reason;
 
     @Key("input_index")
     private int inputIndex;

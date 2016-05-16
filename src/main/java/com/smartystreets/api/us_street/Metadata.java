@@ -51,7 +51,7 @@ public class Metadata {
     private double utcOffset;
 
     @Key("dst")
-    private boolean usesDst; //TODO: rename - obeysDst?
+    private boolean obeysDst;
 
     //endregion
 
@@ -117,8 +117,8 @@ public class Metadata {
         return this.utcOffset;
     }
 
-    public boolean usesDst() {
-        return this.usesDst;
+    public boolean obeysDst() {
+        return this.obeysDst;
     }
 
     //endregion

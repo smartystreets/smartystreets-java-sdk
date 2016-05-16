@@ -1,5 +1,6 @@
 package com.smartystreets.api;
 
+import com.smartystreets.api.us_street.MockSender;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class RetrySenderTest {
         assertEquals(1, inner.getSendCount());
 
         /**Case 2: Retries until no exception is thrown - doesn't max out*/
-        request.setUrlString("RetryThreeTimes");
+        request = new Request("RetryThreeTimes");
         inner.resetSendCount();
 
         retrySender.send(request);
@@ -27,7 +28,7 @@ public class RetrySenderTest {
         assertEquals(4, inner.getSendCount());
 
         /**Case 3: Retry the max number of tries before throwing the exception*/
-        request.setUrlString("RetryMaxTimes");
+        request = new Request("RetryMaxTimes");
         inner.resetSendCount();
 
         String exMessage = "";

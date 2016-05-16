@@ -68,16 +68,8 @@ public class Request {
 
     //endregion
 
-    //region [ Setters ]
-
-    public void setUrlString(String urlString) {
-        this.urlString = urlString;
-    } //TODO: delete
-
     public void setPayload(byte[] payload) {
         this.method = "POST";
         this.payload = payload;
     }
-
-    //endregion
 }

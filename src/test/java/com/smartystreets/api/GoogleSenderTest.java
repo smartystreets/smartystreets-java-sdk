@@ -24,15 +24,21 @@ public class GoogleSenderTest {
 
         HttpTransport transport = new MockHttpTransport() {
             @Override
-            public LowLevelHttpRequest buildRequest(String method, String url) throws IOException {
+            public LowLevelHttpRequest buildRequest(final String method, String url) throws IOException {
 
                 return new MockLowLevelHttpRequest() {
                     @Override
                     public LowLevelHttpResponse execute() throws IOException {
+
                         MockLowLevelHttpResponse response = new MockLowLevelHttpResponse();
                         response.setStatusCode(200);
-                        response.setContentType(Json.MEDIA_TYPE);
-                        response.setContent("This is the response.");
+
+                        if (method.equals("GET"))
+                            response.setContent("This is a GET response.");
+                        else
+                            response.setContent("This is a POST response.");
+
+                        response.addHeader("X-Test-Header", "Test header");
                         return response;
                     }
                 };
@@ -48,6 +54,7 @@ public class GoogleSenderTest {
                     public LowLevelHttpResponse execute() throws IOException {
                         MockLowLevelHttpResponse response = new MockLowLevelHttpResponse();
                         response.setStatusCode(400);
+                        response.setContentType(Json.MEDIA_TYPE);
                         response.setContent("Bad request test.");
                         return response;
                     }
@@ -55,48 +62,40 @@ public class GoogleSenderTest {
             }
         };
 
-        //TODO: Uncomment lines below, and fix the errors
+        /**Case 1: Test GET*/
+        Request request = new Request("https://api.smartystreets.com/street-address?");
+        sender.setHttpTransport(transport);
 
-//        /**Case 1: Test GET with custom header*/
-//        HttpRequest innerRequest = transport.createRequestFactory().buildGetRequest(HttpTesting.SIMPLE_GENERIC_URL);
-//        innerRequest.setParser(new JacksonFactory().createJsonObjectParser());
-//        Request request = new Request();
-//        request.setInnerRequest(innerRequest);
-//        request.setMethod("GET");
-//        request.addHeader("X-Include-Invalid","true");
-//
-//        Response response = sender.send(request);
-//
-//        assertNotNull(response);
-//        assertNotNull(response.getInnerResponse());
-//        assertEquals("true", innerRequest.getHeaders().get("X-Include-Invalid"));
-//        assertEquals("This is the response.", response.getInnerResponse().parseAsString());
-//
-//        /**Case 2: Test POST*/
+        Response response = sender.send(request);
+
+        assertNotNull(response);
+        assertArrayEquals("This is a GET response.".getBytes(), response.getPayload());
+
+        /**Case 2: Test POST*/
 //        innerRequest = transport.createRequestFactory().buildPostRequest(HttpTesting.SIMPLE_GENERIC_URL, null);
 //        innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
 //        request.setMethod("POST");
-//
-//        response = sender.send(request);
-//
-//        assertNotNull(response);
-//        assertNotNull(response.getInnerResponse());
-//        assertEquals("This is the response.", response.getInnerResponse().parseAsString());
-//        assertEquals("application/json; charset=UTF-8", innerRequest.getHeaders().getContentType());
-//
-//        /**Case 3: Test handling error codes*/
-//        innerRequest = errorTransport.createRequestFactory().buildPostRequest(HttpTesting.SIMPLE_GENERIC_URL, null);
-//        request.setInnerRequest(innerRequest);
-//
-//        boolean threwException = false;
-//        try {
-//            sender.send(request);
-//        }
-//        catch (BadRequestException ex) {
-//            threwException = true;
-//        }
-//        finally {
-//            assertTrue(threwException);
-//        }
+        request.setPayload(new byte[]{});
+
+        response = sender.send(request);
+
+        assertNotNull(response);
+        assertArrayEquals("This is a POST response.".getBytes(), response.getPayload());
+//        assertEquals("Test header", response.getHeaders().get("X-Test-Header")); //TODO: is this assert necessary?
+
+
+        /**Case 3: Test handling error codes*/
+        sender.setHttpTransport(errorTransport);
+
+        boolean threwException = false;
+        try {
+            sender.send(request);
+        }
+        catch (BadRequestException ex) {
+            threwException = true;
+        }
+        finally {
+            assertTrue(threwException);
+        }
     }
 }

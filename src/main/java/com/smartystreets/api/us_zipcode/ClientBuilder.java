@@ -10,7 +10,7 @@ public class ClientBuilder {
     private int maxTimeout;
     private String url;
 
-    public ClientBuilder() {
+    ClientBuilder() {
         this.serializer = new GoogleSerializer();
         this.maxRetries = 5;
         this.maxTimeout = 10000;
