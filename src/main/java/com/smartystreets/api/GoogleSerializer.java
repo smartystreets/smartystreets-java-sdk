@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 
 public class GoogleSerializer implements Serializer {
-    private JacksonFactory factory;
+    private final JacksonFactory factory;
 
     public GoogleSerializer() {
         this.factory = new JacksonFactory();
