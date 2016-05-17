@@ -1,20 +1,8 @@
 package com.smartystreets.api.us_zipcode;
 
-import com.google.api.client.http.*;
-import com.google.api.client.json.Json;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.testing.http.HttpTesting;
-import com.google.api.client.testing.http.MockHttpTransport;
-import com.google.api.client.testing.http.MockLowLevelHttpRequest;
-import com.google.api.client.testing.http.MockLowLevelHttpResponse;
-import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Request;
-import com.smartystreets.api.Sender;
-import com.smartystreets.api.StaticCredentials;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -42,10 +30,9 @@ public class ClientTest {
     }
 
     @Test
-    public void testSend() throws Exception {
+    public void testSending1Lookup() throws Exception {
         Client client = new ClientBuilder().withSender(new MockSender()).build();
 
-        /**Case 1: Sending 1 lookup*/
         client.send(this.lookup2);
 
         Result result = this.lookup2.getResult();
@@ -53,11 +40,14 @@ public class ClientTest {
         assertNotNull(result);
         assertEquals("test id", result.getInputId());
         assertEquals("Salt Lake City", result.getCityState(0).getCity());
+    }
 
-        /**Case 2: Sending a batch of lookups*/
+    @Test
+    public void testSendingBatchOfLookups() throws Exception {
+        Client client = new ClientBuilder().withSender(new MockSender()).build();
         client.send(this.batch);
 
-        result = this.lookup1.getResult();
+        Result result = this.lookup1.getResult();
 
         assertNotNull(result);
         assertEquals("District of Columbia", result.getCityState(0).getState());

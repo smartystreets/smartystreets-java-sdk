@@ -25,7 +25,8 @@ public class Client {
     public void send(Batch batch) throws SmartyException, IOException {
         Request request = new Request(this.urlPrefix);
 
-        if (batch.size() == 0) return;
+        if (batch.size() == 0)
+            return;
 
         if (batch.size() == 1)
             this.populateQueryString(batch.get(0), request);

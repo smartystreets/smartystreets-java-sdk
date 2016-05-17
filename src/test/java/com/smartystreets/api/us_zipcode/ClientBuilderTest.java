@@ -54,7 +54,7 @@ public class ClientBuilderTest {
         assertNotNull(googleSender);
         assertEquals(500, googleSender.getMaxTimeOut());
 
-        /**Case 3: MockStatusCodeSender **/
+        /** Case 3: MockStatusCodeSender **/
         Sender mockSender = new ClientBuilder().withSender(new MockSender()).buildSender();
 
         assertEquals(MockSender.class, mockSender.getClass());
