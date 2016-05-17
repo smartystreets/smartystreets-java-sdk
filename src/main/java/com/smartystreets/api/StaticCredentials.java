@@ -4,10 +4,6 @@ public class StaticCredentials implements Credentials {
     private String authId;
     private String authToken;
 
-    public StaticCredentials(String websiteKey) {
-        this.authId = websiteKey;
-    }
-
     public StaticCredentials(String authId, String authToken) {
         this.authId = authId;
         this.authToken = authToken;
