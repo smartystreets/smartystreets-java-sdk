@@ -41,8 +41,8 @@ public class SmartyStreetsSDKexample {
             client.send(firstLookup);
             ArrayList<Candidate> result = firstLookup.getResult();
 
-            if (!result.isEmpty())
-                assert result.get(0).getZipCode() == THE_RIGHT_ZIPCODE;
+//            if (!result.isEmpty())
+//                assert result.get(0).getZipCode() == THE_RIGHT_ZIPCODE;
 
             Batch batch = new Batch();
 
@@ -53,10 +53,10 @@ public class SmartyStreetsSDKexample {
 
             Candidate outputAddress = batch.get("address 1").getResult(0); // Get by input_id, or input_index?
 
-            if (outputAddress.isValid())
-                say(outputAddress.getDeliveryLine1() + " is valid");
-            else
-                say(outputAddress.getDeliveryLine1() + " is not valid");
+//            if (outputAddress.isValid())
+//                say(outputAddress.getDeliveryLine1() + " is valid");
+//            else
+//                say(outputAddress.getDeliveryLine1() + " is not valid");
 
             batch.clear(); // Clears input and output, but not settings
             batch.add(addressesToVerify.get(0));
@@ -76,10 +76,10 @@ public class SmartyStreetsSDKexample {
 
                 Candidate cleanAddress = candidates.get(0);
 
-                if (cleanAddress.isValid() && cleanAddress.isActive() && cleanAddress.getState().equals("CA"))
-                    say(cleanAddress.getDeliveryLine1() + " is a valid California address");
-                else
-                    say(cleanAddress.getDeliveryLine1() + " is not a valid California address");
+//                if (cleanAddress.isValid() && cleanAddress.isActive() && cleanAddress.getState().equals("CA"))
+//                    say(cleanAddress.getDeliveryLine1() + " is a valid California address");
+//                else
+//                    say(cleanAddress.getDeliveryLine1() + " is not a valid California address");
             }
 
             AddressLookup secondLookup = new AddressLookup("ServiceUnavailable 555 E 555 N Provo, Utah");
