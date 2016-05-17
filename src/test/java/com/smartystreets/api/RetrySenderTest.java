@@ -1,6 +1,7 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.us_street.MockSender;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -8,38 +9,46 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 public class RetrySenderTest {
+
+    private MockSender mockSender;
+
+    @Before
+    public void setup() {
+        this.mockSender = new MockSender();
+    }
+
     @Test
-    public void testSend() throws Exception {
-        /**Case 1: Make sure it doesn't retry if there are no exceptions*/
-        Request request = new Request("DoNotRetry");
-        MockSender inner = new MockSender();
-        RetrySender retrySender = new RetrySender(5, inner);
+    public void testSuccessDoesNotRetry() throws Exception {
+        this.sendRequest("DoNotRetry");
 
-        retrySender.send(request);
+        assertEquals(1, this.mockSender.getSendCount());
+    }
 
-        assertEquals(1, inner.getSendCount());
+    @Test
+    public void testRetryUntilSuccess() throws Exception {
+        this.sendRequest("RetryThreeTimes");
 
-        /**Case 2: Retries until no exception is thrown - doesn't max out*/
-        request = new Request("RetryThreeTimes");
-        inner.resetSendCount();
+        assertEquals(4, this.mockSender.getSendCount());
+    }
 
-        retrySender.send(request);
+    @Test
+    public void testRetryUntilMaxAttempts() throws Exception {
+        String message = "";
 
-        assertEquals(4, inner.getSendCount());
-
-        /**Case 3: Retry the max number of tries before throwing the exception*/
-        request = new Request("RetryMaxTimes");
-        inner.resetSendCount();
-
-        String exMessage = "";
         try {
-            retrySender.send(request);
+            this.sendRequest("RetryMaxTimes");
         } catch (IOException ex) {
-            exMessage = ex.getMessage();
+            message = ex.getMessage();
         } finally {
-            assertEquals("Retrying won't help", exMessage);
-            assertEquals(6, inner.getSendCount());
+            assertEquals("Retrying won't help", message);
+            assertEquals(6, this.mockSender.getSendCount());
         }
     }
 
+    private void sendRequest(String requestBehavior) throws Exception {
+        Request request = new Request(requestBehavior);
+        RetrySender retrySender = new RetrySender(5, this.mockSender);
+
+        retrySender.send(request);
+    }
 }
