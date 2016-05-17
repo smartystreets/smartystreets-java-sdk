@@ -33,7 +33,7 @@ public class GoogleSerializerTest {
         assertEquals(0, results[0].getInputIndex());
         assertNotNull(results[0].getCityState(0));
         assertEquals("Washington", results[0].getCityState(0).getCity());
-        assertEquals("20500", results[0].getZipCode(0).getZipcode());
+        assertEquals("20500", results[0].getZipCode(0).getZipCode());
 
         assertNotNull(results[1]);
         assertNull(results[1].getStatus());

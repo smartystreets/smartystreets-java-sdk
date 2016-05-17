@@ -7,7 +7,6 @@ public class Lookup {
 
     private Result result;
 
-    @Key("input_id")
     private String inputId;
 
     @Key("city")
@@ -57,7 +56,7 @@ public class Lookup {
         return this.state;
     }
 
-    public String getZipcode() {
+    public String getZipCode() {
         return this.zipcode;
     }
 
@@ -81,7 +80,7 @@ public class Lookup {
         this.state = state;
     }
 
-    public void setZipcode(String zipcode) {
+    public void setZipCode(String zipcode) {
         this.zipcode = zipcode;
     }
 

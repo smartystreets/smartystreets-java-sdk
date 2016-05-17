@@ -45,7 +45,7 @@ public class Client {
         request.appendParameter("input_id", lookup.getInputId());
         request.appendParameter("city", lookup.getCity());
         request.appendParameter("state", lookup.getState());
-        request.appendParameter("zipcode", lookup.getZipcode());
+        request.appendParameter("zipcode", lookup.getZipCode());
     }
 
     void assignResultsToLookups(Batch batch, Result[] results) {

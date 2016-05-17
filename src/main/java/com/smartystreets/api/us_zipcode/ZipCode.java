@@ -33,7 +33,7 @@ public class ZipCode {
 
     //region [ Getter ]
 
-    public String getZipcode() {
+    public String getZipCode() {
         return this.zipcode;
     }
 
