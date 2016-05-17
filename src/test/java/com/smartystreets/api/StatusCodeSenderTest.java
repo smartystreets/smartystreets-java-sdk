@@ -22,41 +22,42 @@ public class StatusCodeSenderTest {
 
     @Test
     public void test401ResponseThrowsBadCredentialsException() throws Exception {
-        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(401));
-
-        exception.expect(BadCredentialsException.class);
-        sender.send(new Request());
+        this.assertSend(401, BadCredentialsException.class);
     }
 
     @Test
-    public void test402ResponsePaymentRequiredException() throws Exception {
-        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(402));
-
-        exception.expect(PaymentRequiredException.class);
-        sender.send(new Request());
+    public void test402ResponsePThrowsPaymentRequiredException() throws Exception {
+        this.assertSend(402, PaymentRequiredException.class);
     }
 
     @Test
-    public void test413RequestEntityTooLargeException() throws Exception {
-        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(413));
-
-        exception.expect(RequestEntityTooLargeException.class);
-        sender.send(new Request());
+    public void test413ResponseThrowsRequestEntityTooLargeException() throws Exception {
+        this.assertSend(413, RequestEntityTooLargeException.class);
     }
 
     @Test
-    public void test400BadRequestException() throws Exception {
-        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(400));
-
-        exception.expect(BadRequestException.class);
-        sender.send(new Request());
+    public void test400ResponseThrowsBadRequestException() throws Exception {
+        this.assertSend(400, BadRequestException.class);
     }
 
     @Test
-    public void test429ResponseTooManyRequestsException() throws Exception {
-        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(429));
+    public void test429ResponseThrowsTooManyRequestsException() throws Exception {
+        this.assertSend(429, TooManyRequestsException.class);
+    }
 
-        exception.expect(TooManyRequestsException.class);
+    @Test
+    public void test500ResponseThrowsInternalServerErrorException() throws Exception {
+        this.assertSend(500, InternalServerErrorException.class);
+    }
+
+    @Test
+    public void test503ResponseThrowsServiceUnavailableException() throws Exception {
+        this.assertSend(503, ServiceUnavailableException.class);
+    }
+
+    private void assertSend(int statusCode, Class<? extends Throwable> exceptionType) throws Exception {
+        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(statusCode));
+        exception.expect(exceptionType);
         sender.send(new Request());
     }
 }

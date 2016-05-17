@@ -16,6 +16,8 @@ public class StatusCodeSender implements Sender {
         Response response = this.inner.send(request);
 
         switch (response.getStatusCode()) {
+            case 200:
+                return response;
             case 401:
                 throw new BadCredentialsException();
             case 402:
@@ -26,9 +28,12 @@ public class StatusCodeSender implements Sender {
                 throw new BadRequestException();
             case 429:
                 throw new TooManyRequestsException();
-
+            case 500:
+                throw new InternalServerErrorException();
+            case 503:
+                throw new ServiceUnavailableException();
             default:
-                return response;
+                return null;
         }
     }
 }
