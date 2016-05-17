@@ -5,9 +5,6 @@ import com.google.api.client.util.Key;
 public class Candidate {
     //region [ Fields ]
 
-    @Key("input_id")
-    private String inputId;
-
     @Key("input_index")
     private int inputIndex;
 
@@ -52,10 +49,6 @@ public class Candidate {
 
     public Analysis getAnalysis() {
         return this.analysis;
-    }
-
-    public String getInputId() {
-        return this.inputId;
     }
 
     public int getInputIndex() {

@@ -72,17 +72,12 @@ public class GoogleSenderTest {
         assertArrayEquals("This is a GET response.".getBytes(), response.getPayload());
 
         /**Case 2: Test POST*/
-//        innerRequest = transport.createRequestFactory().buildPostRequest(HttpTesting.SIMPLE_GENERIC_URL, null);
-//        innerRequest.getHeaders().setContentType(Json.MEDIA_TYPE);
-//        request.setMethod("POST");
         request.setPayload(new byte[]{});
 
         response = sender.send(request);
 
         assertNotNull(response);
         assertArrayEquals("This is a POST response.".getBytes(), response.getPayload());
-//        assertEquals("Test header", response.getHeaders().get("X-Test-Header")); //TODO: is this assert necessary?
-
 
         /**Case 3: Test handling error codes*/
         sender.setHttpTransport(errorTransport);

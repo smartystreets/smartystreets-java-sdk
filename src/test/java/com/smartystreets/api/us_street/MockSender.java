@@ -79,7 +79,7 @@ public class MockSender implements Sender {
             responseHeaders.put(headerName, (String) httpHeaders.get(headerName));
         }
 
-        return new Response(this.STATUS_CODE, responseHeaders, payload);
+        return new Response(this.STATUS_CODE, payload);
     }
 
     public int getSendCount() {

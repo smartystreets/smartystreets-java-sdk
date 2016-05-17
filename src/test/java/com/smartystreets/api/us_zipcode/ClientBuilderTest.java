@@ -25,7 +25,7 @@ public class ClientBuilderTest {
                 .build();
 
         assertEquals("testUrl", client.urlPrefix);
-//        assertEquals(MockSender.class, );
+//        assertEquals(MockStatusCodeSender.class, );
 //        assertNotNull(client.serializer);
     }
 
@@ -54,7 +54,7 @@ public class ClientBuilderTest {
         assertNotNull(googleSender);
         assertEquals(500, googleSender.getMaxTimeOut());
 
-        /**Case 3: MockSender **/
+        /**Case 3: MockStatusCodeSender **/
         Sender mockSender = new ClientBuilder().withSender(new MockSender()).buildSender();
 
         assertEquals(MockSender.class, mockSender.getClass());

@@ -1,7 +1,6 @@
 package com.smartystreets.api.us_street;
 
 import com.google.api.client.util.Key;
-import com.smartystreets.api.exceptions.InvalidInputValueException;
 
 import java.util.ArrayList;
 
@@ -169,11 +168,11 @@ public class AddressLookup {
         this.urbanization = urbanization;
     }
 
-    public void setMaxCandidates(int maxCandidates) throws InvalidInputValueException {
+    public void setMaxCandidates(int maxCandidates) throws IllegalArgumentException {
         if (maxCandidates > 0) {
             this.maxCandidates = maxCandidates;
         } else {
-            throw new InvalidInputValueException("Max candidates must be a positive integer.");
+            throw new IllegalArgumentException("Max candidates must be a positive integer.");
         }
     }
 

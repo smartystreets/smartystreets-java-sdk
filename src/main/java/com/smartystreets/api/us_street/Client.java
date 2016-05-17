@@ -48,8 +48,6 @@ public class Client {
 
     private void populateQueryString(Batch batch, Request request) {
         AddressLookup address = batch.get(0);
-        request.appendParameter("input_id", address.getInputId());
-        request.appendParameter("input_id", address.getInputId());
         request.appendParameter("street", address.getStreet());
         request.appendParameter("street2",address.getStreet2());
         request.appendParameter("secondary", address.getSecondary());
