@@ -1,9 +1,6 @@
 package com.smartystreets.api;
 
-import com.smartystreets.api.exceptions.BadCredentialsException;
-import com.smartystreets.api.exceptions.PaymentRequiredException;
-import com.smartystreets.api.exceptions.SmartyException;
-import com.smartystreets.api.exceptions.TooManyRequestsException;
+import com.smartystreets.api.exceptions.*;
 
 import java.io.IOException;
 
@@ -23,6 +20,10 @@ public class StatusCodeSender implements Sender {
                 throw new BadCredentialsException();
             case 402:
                 throw new PaymentRequiredException();
+            case 413:
+                throw new RequestEntityTooLargeException();
+            case 400:
+                throw new BadRequestException();
             case 429:
                 throw new TooManyRequestsException();
 

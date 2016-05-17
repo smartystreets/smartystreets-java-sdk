@@ -3,14 +3,16 @@ package com.smartystreets.api.us_zipcode;
 import com.smartystreets.api.exceptions.BatchFullException;
 import org.junit.Test;
 
+import javax.swing.plaf.basic.BasicTableHeaderUI;
+
 import static org.junit.Assert.*;
 
 public class BatchTest {
+
     @Test
-    public void add() throws Exception {
+    public void testAddingLookups() throws BatchFullException {
         Batch batch = new Batch();
 
-        /**Case 1: Test adding lookups*/
         Lookup hasInputId = new Lookup().setInputId("hasInputId");
         Lookup noInputId = new Lookup();
         noInputId.setCity("Provo");
@@ -21,12 +23,17 @@ public class BatchTest {
         assertEquals(2, batch.size());
         assertNotNull(batch.get("hasInputId"));
         assertEquals("Provo", batch.get(1).getCity());
+    }
 
-        /**Case 2: Test adding when it's full*/
+    @Test
+    public void testAddingALookupWhenBatchIsFull() {
+        Batch batch = new Batch();
+        Lookup lookup = new Lookup();
+
         String exMessage = "";
         try {
             for (int i = 0; i < 100; i++) {
-                batch.add(noInputId);
+                batch.add(lookup);
             }
         }
         catch (BatchFullException ex) {

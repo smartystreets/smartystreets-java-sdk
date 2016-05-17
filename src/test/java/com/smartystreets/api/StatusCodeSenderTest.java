@@ -1,8 +1,6 @@
 package com.smartystreets.api;
 
-import com.smartystreets.api.exceptions.BadCredentialsException;
-import com.smartystreets.api.exceptions.PaymentRequiredException;
-import com.smartystreets.api.exceptions.TooManyRequestsException;
+import com.smartystreets.api.exceptions.*;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -35,6 +33,22 @@ public class StatusCodeSenderTest {
         StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(402));
 
         exception.expect(PaymentRequiredException.class);
+        sender.send(new Request());
+    }
+
+    @Test
+    public void test413RequestEntityTooLargeException() throws Exception {
+        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(413));
+
+        exception.expect(RequestEntityTooLargeException.class);
+        sender.send(new Request());
+    }
+
+    @Test
+    public void test400BadRequestException() throws Exception {
+        StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(400));
+
+        exception.expect(BadRequestException.class);
         sender.send(new Request());
     }
 
