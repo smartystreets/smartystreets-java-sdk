@@ -9,7 +9,6 @@ public class AddressLookup {
 
     private ArrayList<Candidate> result;
 
-    @Key("input_id")
     private String inputId;
 
     @Key("street")
