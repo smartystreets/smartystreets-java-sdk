@@ -36,8 +36,7 @@ public class MockSender implements Sender {
         if (request.getMethod().equals("GET")) {
             payload = this.SINGLE_RESPONSE.getBytes();
             this.responseJson = this.SINGLE_RESPONSE;
-        }
-        else {
+        } else {
             payload = this.BATCH_RESPONSE.getBytes();
             this.responseJson = this.BATCH_RESPONSE;
         }

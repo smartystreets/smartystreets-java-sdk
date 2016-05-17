@@ -1,15 +1,19 @@
 package com.smartystreets.api.us_street;
 
-import java.io.IOException;
-import com.smartystreets.api.*;
+import com.smartystreets.api.Request;
+import com.smartystreets.api.Response;
+import com.smartystreets.api.Sender;
+import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
+
+import java.io.IOException;
 
 public class Client {
     private final String urlPrefix;
     private final Sender sender;
     private final Serializer serializer;
 
-    public Client (String urlPrefix, Sender sender, Serializer serializer) {
+    public Client(String urlPrefix, Sender sender, Serializer serializer) {
         this.urlPrefix = urlPrefix;
         this.sender = sender;
         this.serializer = serializer;
@@ -49,7 +53,7 @@ public class Client {
     private void populateQueryString(Batch batch, Request request) {
         AddressLookup address = batch.get(0);
         request.appendParameter("street", address.getStreet());
-        request.appendParameter("street2",address.getStreet2());
+        request.appendParameter("street2", address.getStreet2());
         request.appendParameter("secondary", address.getSecondary());
         request.appendParameter("city", address.getCity());
         request.appendParameter("state", address.getState());

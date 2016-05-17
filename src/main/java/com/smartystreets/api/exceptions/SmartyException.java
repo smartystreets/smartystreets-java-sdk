@@ -1,6 +1,6 @@
 package com.smartystreets.api.exceptions;
 
-public class SmartyException extends Exception{
+public class SmartyException extends Exception {
     public SmartyException() {
         super();
     }

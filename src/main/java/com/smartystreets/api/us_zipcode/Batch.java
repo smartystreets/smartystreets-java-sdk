@@ -38,11 +38,13 @@ public class Batch {
         return this.allLookups.size();
     }
 
-    public Iterator<Lookup> iterator(){
+    public Iterator<Lookup> iterator() {
         return this.allLookups.iterator();
     }
 
-    /***** Getters *******************************************************************************/
+    /*****
+     * Getters
+     *******************************************************************************/
 
     public Map<String, Lookup> getNamedLookups() {
         return this.namedLookups;

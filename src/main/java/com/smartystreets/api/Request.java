@@ -12,7 +12,7 @@ public class Request {
     private byte[] payload;
     private final String CHARSET = "UTF-8";
 
-    public Request(){
+    public Request() {
         this.method = "GET";
         this.headers = new HashMap<>();
     }
@@ -22,7 +22,7 @@ public class Request {
         this.urlString = urlString;
     }
 
-    public void addHeader(String name, String value){
+    public void addHeader(String name, String value) {
         this.headers.put(name, value);
     }
 
@@ -44,8 +44,7 @@ public class Request {
     private String encode(String value) {
         try {
             return URLEncoder.encode(value, CHARSET);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             return "";
         }
     }
@@ -64,7 +63,9 @@ public class Request {
         return this.headers;
     }
 
-    public byte[] getPayload() { return this.payload; }
+    public byte[] getPayload() {
+        return this.payload;
+    }
 
     //endregion
 

@@ -27,8 +27,7 @@ public class RetrySender implements Sender {
     private Response trySend(Request request, int attempt) throws SmartyException, IOException {
         try {
             return this.inner.send(request);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             if (attempt >= this.maxRetries)
                 throw ex;
         }

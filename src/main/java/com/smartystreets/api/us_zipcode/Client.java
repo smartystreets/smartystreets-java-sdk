@@ -1,6 +1,9 @@
 package com.smartystreets.api.us_zipcode;
 
-import com.smartystreets.api.*;
+import com.smartystreets.api.Request;
+import com.smartystreets.api.Response;
+import com.smartystreets.api.Sender;
+import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;

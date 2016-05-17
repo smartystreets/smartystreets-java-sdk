@@ -1,12 +1,9 @@
 package com.smartystreets.api;
 
-import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.LowLevelHttpRequest;
 import com.google.api.client.http.LowLevelHttpResponse;
 import com.google.api.client.json.Json;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.testing.http.HttpTesting;
 import com.google.api.client.testing.http.MockHttpTransport;
 import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
@@ -85,11 +82,9 @@ public class GoogleSenderTest {
         boolean threwException = false;
         try {
             sender.send(request);
-        }
-        catch (BadRequestException ex) {
+        } catch (BadRequestException ex) {
             threwException = true;
-        }
-        finally {
+        } finally {
             assertTrue(threwException);
         }
     }

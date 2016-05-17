@@ -25,7 +25,8 @@ public class Result {
 
     //endregion
 
-    public Result() {}
+    public Result() {
+    }
 
     public boolean isValid() {
         return (this.status == null && this.reason == null);

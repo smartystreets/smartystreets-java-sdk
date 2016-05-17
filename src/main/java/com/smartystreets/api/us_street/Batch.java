@@ -2,7 +2,10 @@ package com.smartystreets.api.us_street;
 
 import com.smartystreets.api.exceptions.BatchFullException;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Vector;
 
 public class Batch {
     public final int MAX_BATCH_SIZE = 100;
@@ -10,14 +13,14 @@ public class Batch {
     private Vector<AddressLookup> allLookups;
     private boolean standardizeOnly, includeInvalid;
 
-    public Batch(){
+    public Batch() {
         this.standardizeOnly = false;
         this.includeInvalid = false;
         this.namedLookups = new LinkedHashMap<>();
         this.allLookups = new Vector<>();
     }
 
-    public void add(AddressLookup newAddress) throws BatchFullException{
+    public void add(AddressLookup newAddress) throws BatchFullException {
         if (this.allLookups.size() >= MAX_BATCH_SIZE)
             throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);
 
@@ -37,7 +40,7 @@ public class Batch {
         this.includeInvalid = false;
     }
 
-    public void clear(){
+    public void clear() {
         this.namedLookups.clear();
         this.allLookups.clear();
     }
@@ -48,7 +51,7 @@ public class Batch {
         return this.allLookups.size();
     }
 
-    public Iterator<AddressLookup> iterator(){
+    public Iterator<AddressLookup> iterator() {
         return this.allLookups.iterator();
     }
 
@@ -56,11 +59,11 @@ public class Batch {
 
     //region [ Getters ]
 
-    public boolean getStandardizeOnly(){
+    public boolean getStandardizeOnly() {
         return this.standardizeOnly;
     }
 
-    public boolean getIncludeInvalid(){
+    public boolean getIncludeInvalid() {
         return this.includeInvalid;
     }
 
@@ -68,7 +71,7 @@ public class Batch {
         return this.namedLookups;
     }
 
-    public AddressLookup get(String inputId){
+    public AddressLookup get(String inputId) {
         return this.namedLookups.get(inputId);
     }
 
@@ -84,11 +87,11 @@ public class Batch {
 
     //region [ Setters ]
 
-    public void setStandardizeOnly(boolean newValue){
+    public void setStandardizeOnly(boolean newValue) {
         this.standardizeOnly = newValue;
     }
 
-    public void setIncludeInvalid(boolean newValue){
+    public void setIncludeInvalid(boolean newValue) {
         this.includeInvalid = newValue;
     }
 

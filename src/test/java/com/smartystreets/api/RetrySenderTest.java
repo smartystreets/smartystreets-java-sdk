@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RetrySenderTest {
     @Test
@@ -34,11 +34,9 @@ public class RetrySenderTest {
         String exMessage = "";
         try {
             retrySender.send(request);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             exMessage = ex.getMessage();
-        }
-        finally {
+        } finally {
             assertEquals("Retrying won't help", exMessage);
             assertEquals(6, inner.getSendCount());
         }

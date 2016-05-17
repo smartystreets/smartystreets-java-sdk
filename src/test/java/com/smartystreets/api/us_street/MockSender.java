@@ -36,8 +36,7 @@ public class MockSender implements Sender {
         if (request.getHeaders().containsKey("X-Include-Invalid")) {
             payload = this.INCLUDE_INVALID_RESPONSE.getBytes();
             this.responseJson = this.INCLUDE_INVALID_RESPONSE;
-        }
-        else {
+        } else {
             payload = this.VALID_RESPONSE.getBytes();
             this.responseJson = this.VALID_RESPONSE;
         }

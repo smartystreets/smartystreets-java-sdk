@@ -1,7 +1,5 @@
 package com.smartystreets.api;
 
-import java.util.Map;
-
 public class Response {
 
     private int statusCode;

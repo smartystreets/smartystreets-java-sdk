@@ -3,9 +3,8 @@ package com.smartystreets.api.us_zipcode;
 import com.smartystreets.api.exceptions.BatchFullException;
 import org.junit.Test;
 
-import javax.swing.plaf.basic.BasicTableHeaderUI;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class BatchTest {
 
@@ -35,11 +34,9 @@ public class BatchTest {
             for (int i = 0; i < 100; i++) {
                 batch.add(lookup);
             }
-        }
-        catch (BatchFullException ex) {
+        } catch (BatchFullException ex) {
             exMessage = ex.getMessage();
-        }
-        finally {
+        } finally {
             assertEquals(batch.MAX_BATCH_SIZE, batch.size());
             assertEquals("Batch size cannot exceed " + batch.MAX_BATCH_SIZE, exMessage);
         }

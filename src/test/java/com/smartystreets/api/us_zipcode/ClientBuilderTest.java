@@ -6,7 +6,8 @@ import com.smartystreets.api.RetrySender;
 import com.smartystreets.api.Sender;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ClientBuilderTest {
 

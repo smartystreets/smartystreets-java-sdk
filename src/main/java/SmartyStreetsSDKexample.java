@@ -1,7 +1,7 @@
+import com.smartystreets.api.Credentials;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
-import com.smartystreets.api.Credentials;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,14 +84,11 @@ public class SmartyStreetsSDKexample {
 
             AddressLookup secondLookup = new AddressLookup("ServiceUnavailable 555 E 555 N Provo, Utah");
             client.send(secondLookup);
-        }
-        catch(SmartyException ex){ // These aren't the only Exceptions, just a couple.
+        } catch (SmartyException ex) { // These aren't the only Exceptions, just a couple.
             say(ex.getMessage());
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             say(ex.getMessage());
-        }
-        finally {
+        } finally {
             say("I'm done");
         }
 

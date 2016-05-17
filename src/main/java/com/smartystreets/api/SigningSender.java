@@ -1,6 +1,7 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.SmartyException;
+
 import java.io.IOException;
 
 public class SigningSender implements Sender {
