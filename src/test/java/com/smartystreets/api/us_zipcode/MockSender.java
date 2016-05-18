@@ -29,7 +29,7 @@ public class MockSender implements Sender {
 
         this.sendCount++;
 
-        if (request.getUrlString().contains("ServiceUnavailable")) {
+        if (request.getUrl().contains("ServiceUnavailable")) {
             throw new IOException("503 - Service unavailable");
         }
 
@@ -41,13 +41,13 @@ public class MockSender implements Sender {
             this.responseJson = this.BATCH_RESPONSE;
         }
 
-        if (request.getUrlString().contains("RetryThreeTimes")) {
+        if (request.getUrl().contains("RetryThreeTimes")) {
             if (this.sendCount <= 3) {
                 throw new IOException("You need to retry");
             }
         }
 
-        if (request.getUrlString().contains("RetryMaxTimes")) {
+        if (request.getUrl().contains("RetryMaxTimes")) {
             throw new IOException("Retrying won't help");
         }
 

@@ -10,7 +10,7 @@ public class StaticCredentials implements Credentials {
     }
 
     public void sign(Request request) {
-        request.appendParameter("auth-id", this.authId);
-        request.appendParameter("auth-token", this.authToken);
+        request.putParameter("auth-id", this.authId);
+        request.putParameter("auth-token", this.authToken);
     }
 }

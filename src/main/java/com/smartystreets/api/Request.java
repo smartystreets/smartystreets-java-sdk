@@ -8,39 +8,30 @@ public class Request {
 
     private static final String CHARSET = "UTF-8";
     private final Map<String, String> headers;
-    private String urlString;
+    private final Map<String, String> parameters;
+    private String urlPrefix;
     private String method;
     private byte[] payload;
 
     public Request() {
         this.method = "GET";
         this.headers = new HashMap<>();
+        this.parameters = new HashMap<>(); //TODO: should we use an ordered map for this? (to keep the parameters in a consistent order for testing)
     }
-    public Request(String urlString) {
+    public Request(String urlPrefix) {
         this();
-        this.urlString = urlString;
+        this.urlPrefix = urlPrefix;
     }
 
-    public void addHeader(String name, String value) {
+    public void putHeader(String name, String value) {
         this.headers.put(name, value);
     }
 
-    //TODO: change appendParameter to putParameter (put on a map instead)
-    public void appendParameter(String name, String value) {
-        if (name == null || value == null)
+    public void putParameter(String name, String value) {
+        if (name == null || value == null || name.length() == 0)
             return;
 
-        if (name.length() == 0)
-            return;
-
-        if (this.urlString.contains("?"))
-            this.urlString += "&";
-        else
-            this.urlString += "?";
-
-        String encodedName = urlEncode(name);
-        String encodedValue = urlEncode(value);
-        this.urlString += encodedName + "=" + encodedValue;
+        parameters.put(name, value);
     }
     private static String urlEncode(String value) {
         try {
@@ -52,8 +43,22 @@ public class Request {
 
     //region [ Getters ]
 
-    public String getUrlString() {
-        return urlString;
+    public String getUrl() {
+        String url = this.urlPrefix;
+
+        if (!url.contains("?"))
+            url += "?";
+
+        for (String value : parameters.keySet()) {
+            if (!url.endsWith("?"))
+                url += "&";
+
+            String encodedName = urlEncode(value);
+            String encodedValue = urlEncode(parameters.get(value));
+            url += encodedName + "=" + encodedValue;
+        }
+
+        return url;
     }
 
     public String getMethod() {

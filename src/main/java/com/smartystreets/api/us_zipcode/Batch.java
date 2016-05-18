@@ -42,9 +42,7 @@ public class Batch {
         return this.allLookups.iterator();
     }
 
-    /*****
-     * Getters
-     *******************************************************************************/
+    //region [ Getters ]
 
     public Map<String, Lookup> getNamedLookups() {
         return this.namedLookups;
@@ -61,4 +59,6 @@ public class Batch {
     public Lookup get(int inputIndex) {
         return this.allLookups.get(inputIndex);
     }
+
+    //endregion
 }

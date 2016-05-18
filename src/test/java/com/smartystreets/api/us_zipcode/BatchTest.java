@@ -5,27 +5,48 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class BatchTest {
-
     @Test
-    public void testAddingLookups() throws BatchFullException {
+    public void testGetsLookupsByInputId() throws Exception {
         Batch batch = new Batch();
+        Lookup lookup = new Lookup().setInputId("hasInputId");
 
-        Lookup hasInputId = new Lookup().setInputId("hasInputId");
-        Lookup noInputId = new Lookup();
-        noInputId.setCity("Provo");
+        batch.add(lookup);
 
-        batch.add(hasInputId);
-        batch.add(noInputId);
-
-        assertEquals(2, batch.size());
         assertNotNull(batch.get("hasInputId"));
-        assertEquals("Provo", batch.get(1).getCity());
     }
 
     @Test
-    public void testAddingALookupWhenBatchIsFull() {
+    public void testGetsLookupsByIndex() throws Exception {
+        Batch batch = new Batch();
+        Lookup lookup = new Lookup();
+        lookup.setCity("Provo");
+
+        batch.add(lookup);
+
+        assertNull(batch.get(1));
+        assertEquals("Provo", batch.get(0).getCity());
+    }
+
+    @Test
+    public void testReturnsCorrectSize() throws Exception {
+        Batch batch = new Batch();
+
+        Lookup lookup = new Lookup().setInputId("inputId");
+        Lookup lookup1 = new Lookup();
+        Lookup lookup2 = new Lookup();
+
+        batch.add(lookup);
+        batch.add(lookup1);
+        batch.add(lookup2);
+
+        assertEquals(3, batch.size());
+    }
+
+    @Test
+    public void testAddingALookupWhenBatchIsFullThrowsException() {
         Batch batch = new Batch();
         Lookup lookup = new Lookup();
 
@@ -43,7 +64,7 @@ public class BatchTest {
     }
 
     @Test
-    public void clear() throws Exception {
+    public void testClearMethodClearsBothLookupCollections() throws Exception {
         Batch batch = new Batch();
         Lookup lookup = new Lookup();
         batch.add(lookup);

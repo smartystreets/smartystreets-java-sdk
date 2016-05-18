@@ -42,10 +42,10 @@ public class Client {
     }
 
     void populateQueryString(Lookup lookup, Request request) {
-        request.appendParameter("input_id", lookup.getInputId());
-        request.appendParameter("city", lookup.getCity());
-        request.appendParameter("state", lookup.getState());
-        request.appendParameter("zipcode", lookup.getZipCode());
+        request.putParameter("input_id", lookup.getInputId());
+        request.putParameter("city", lookup.getCity());
+        request.putParameter("state", lookup.getState());
+        request.putParameter("zipcode", lookup.getZipCode());
     }
 
     void assignResultsToLookups(Batch batch, Result[] results) {

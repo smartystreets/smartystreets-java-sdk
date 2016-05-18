@@ -73,7 +73,7 @@ public class ClientTest {
         Client client = new ClientBuilder().build();
         client.populateQueryString(this.batch.get(0), this.request);
 
-        assertEquals("https://api.smartystreets.com/street-address?city=Washington&state=District+of+Columbia&zipcode=20500", request.getUrlString());
+        assertEquals("https://api.smartystreets.com/street-address?city=Washington&state=District+of+Columbia&zipcode=20500", request.getUrl());
     }
 
     @Test

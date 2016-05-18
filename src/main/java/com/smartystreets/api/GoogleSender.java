@@ -44,9 +44,9 @@ public class GoogleSender implements Sender {
             HttpRequest httpRequest;
 
             if (request.getMethod().equals("GET")) {
-                httpRequest = factory.buildGetRequest(new GenericUrl(request.getUrlString()));
+                httpRequest = factory.buildGetRequest(new GenericUrl(request.getUrl()));
             } else { //POST
-                httpRequest = factory.buildPostRequest(new GenericUrl(request.getUrlString()), new JsonHttpContent(new JacksonFactory(), request.getPayload()));
+                httpRequest = factory.buildPostRequest(new GenericUrl(request.getUrl()), new JsonHttpContent(new JacksonFactory(), request.getPayload()));
             }
 
             httpRequest.setHeaders(httpHeaders);

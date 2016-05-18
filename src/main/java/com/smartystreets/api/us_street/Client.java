@@ -45,25 +45,25 @@ public class Client {
 
     private void appendHeaders(Batch batch, Request request) {
         if (batch.getIncludeInvalid())
-            request.addHeader("X-Include-Invalid", "true");
+            request.putHeader("X-Include-Invalid", "true");
         else if (batch.getStandardizeOnly())
-            request.addHeader("X-Standardize-Only", "true");
+            request.putHeader("X-Standardize-Only", "true");
     }
 
     private void populateQueryString(Batch batch, Request request) {
         AddressLookup address = batch.get(0);
-        request.appendParameter("street", address.getStreet());
-        request.appendParameter("street2", address.getStreet2());
-        request.appendParameter("secondary", address.getSecondary());
-        request.appendParameter("city", address.getCity());
-        request.appendParameter("state", address.getState());
-        request.appendParameter("zipcode", address.getZipCode());
-        request.appendParameter("lastline", address.getLastline());
-        request.appendParameter("addressee", address.getAddressee());
-        request.appendParameter("urbanization", address.getUrbanization());
+        request.putParameter("street", address.getStreet());
+        request.putParameter("street2", address.getStreet2());
+        request.putParameter("secondary", address.getSecondary());
+        request.putParameter("city", address.getCity());
+        request.putParameter("state", address.getState());
+        request.putParameter("zipcode", address.getZipCode());
+        request.putParameter("lastline", address.getLastline());
+        request.putParameter("addressee", address.getAddressee());
+        request.putParameter("urbanization", address.getUrbanization());
 
         if (address.getMaxCandidates() != 1)
-            request.appendParameter("candidates", Integer.toString(address.getMaxCandidates()));
+            request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
 
     private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {

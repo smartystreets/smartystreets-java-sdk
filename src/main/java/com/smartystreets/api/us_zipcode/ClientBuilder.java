@@ -8,13 +8,13 @@ public class ClientBuilder {
     private Sender httpSender;
     private int maxRetries;
     private int maxTimeout;
-    private String url;
+    private String urlPrefix;
 
     ClientBuilder() {
         this.serializer = new GoogleSerializer();
         this.maxRetries = 5;
         this.maxTimeout = 10000;
-        this.url = "https://us-zipcode.api.smartystreets.com/lookup?";
+        this.urlPrefix = "https://us-zipcode.api.smartystreets.com/lookup";
     }
 
     public ClientBuilder(Credentials signer) {
@@ -46,13 +46,13 @@ public class ClientBuilder {
         return this;
     }
 
-    public ClientBuilder withUrl(String url) {
-        this.url = url;
+    public ClientBuilder withUrl(String urlPrefix) {
+        this.urlPrefix = urlPrefix;
         return this;
     }
 
     public Client build() {
-        return new Client(this.url, this.buildSender(), this.serializer);
+        return new Client(this.urlPrefix, this.buildSender(), this.serializer);
     }
 
     public Sender buildSender() {

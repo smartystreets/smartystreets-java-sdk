@@ -28,41 +28,41 @@ public class RequestTest {
     private void assertQueryStringParameters(String name, String value, String expected) throws Exception {
         Request request = new Request("http://localhost/?");
 
-        request.appendParameter(name, value);
+        request.putParameter(name, value);
 
-        assertEquals(expected, request.getUrlString());
+        assertEquals(expected, request.getUrl());
     }
 
     @Test
     public void testMultipleQueryStringParameters() throws Exception {
         Request request = new Request("http://localhost/?");
 
-        request.appendParameter("name1", "value1");
-        request.appendParameter("name2", "value2");
-        request.appendParameter("name3", "value3");
+        request.putParameter("name1", "value1");
+        request.putParameter("name2", "value2");
+        request.putParameter("name3", "value3");
 
-        final String expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
-        assertEquals(expected, request.getUrlString());
+        final String expected = "http://localhost/?name3=value3&name1=value1&name2=value2";
+        assertEquals(expected, request.getUrl());
     }
 
     @Test
     public void testUrlEncodingOfQueryStringParameters() throws Exception {
         Request request = new Request("http://localhost/?");
 
-        request.appendParameter("name&", "value");
-        request.appendParameter("name1", "other !value$");
+        request.putParameter("name&", "value");
+        request.putParameter("name1", "other !value$");
 
-        final String expected = "http://localhost/?name%26=value&name1=other+%21value%24";
+        final String expected = "http://localhost/?name1=other+%21value%24&name%26=value";
 
-        assertEquals(expected, request.getUrlString());
+        assertEquals(expected, request.getUrl());
     }
 
     @Test
     public void testHeadersAddedToRequest() throws Exception {
         Request request = new Request("http://localhost/?");
 
-        request.addHeader("header1", "value1");
-        request.addHeader("header2", "value2");
+        request.putHeader("header1", "value1");
+        request.putHeader("header2", "value2");
 
         assertEquals("value1", request.getHeaders().get("header1"));
         assertEquals("value2", request.getHeaders().get("header2"));
@@ -90,11 +90,11 @@ public class RequestTest {
     public void testUrlWithoutTrailingQuestionMark() {
         Request request = new Request("http://localhost/");
 
-        request.appendParameter("name1", "value1");
-        request.appendParameter("name2", "value2");
-        request.appendParameter("name3", "value3");
+        request.putParameter("name1", "value1");
+        request.putParameter("name2", "value2");
+        request.putParameter("name3", "value3");
 
-        final String expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
-        assertEquals(expected, request.getUrlString());
+        final String expected = "http://localhost/?name3=value3&name1=value1&name2=value2";
+        assertEquals(expected, request.getUrl());
     }
 }
