@@ -33,8 +33,10 @@ public class Request {
         if (name.length() == 0)
             return;
 
-        if (!this.urlString.endsWith("?"))
+        if (this.urlString.contains("?"))
             this.urlString += "&";
+        else
+            this.urlString += "?";
 
         String encodedName = urlEncode(name);
         String encodedValue = urlEncode(value);

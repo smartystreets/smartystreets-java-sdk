@@ -86,4 +86,15 @@ public class RequestTest {
         assertArrayEquals(new byte[]{0,1,2}, actualPayload);
     }
 
+    @Test
+    public void testUrlWithoutTrailingQuestionMark() {
+        Request request = new Request("http://localhost/");
+
+        request.appendParameter("name1", "value1");
+        request.appendParameter("name2", "value2");
+        request.appendParameter("name3", "value3");
+
+        final String expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
+        assertEquals(expected, request.getUrlString());
+    }
 }
