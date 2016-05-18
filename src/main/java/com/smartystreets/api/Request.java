@@ -25,6 +25,7 @@ public class Request {
         this.headers.put(name, value);
     }
 
+    //TODO: change appendParameter to putParameter (put on a map instead)
     public void appendParameter(String name, String value) {
         if (name == null || value == null)
             return;
