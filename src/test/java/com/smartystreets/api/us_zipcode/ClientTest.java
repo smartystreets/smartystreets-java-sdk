@@ -1,5 +1,6 @@
 package com.smartystreets.api.us_zipcode;
 
+import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Request;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,8 +12,8 @@ public class ClientTest {
     private Lookup lookup1;
     private Lookup lookup2;
     private Lookup lookup3;
-    private String expectedJsonPayload;
-    private String expectedJsonResponse;
+    private final String expectedJsonPayload = "[{\"city\":\"Washington\",\"state\":\"District of Columbia\",\"zipcode\":\"20500\"},{\"city\":\"Provo\",\"input_id\":\"test id\",\"state\":\"Utah\"},{\"zipcode\":\"54321\"}]";
+    private final String expectedJsonResponse = "[{\"input_index\":0,\"city_states\":[{\"city\":\"Washington\",\"state_abbreviation\":\"DC\",\"state\":\"District of Columbia\",\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"20500\",\"zipcode_type\":\"S\",\"default_city\":\"Washington\",\"county_fips\":\"11001\",\"county_name\":\"District of Columbia\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":1,\"input_id\":\"test id\",\"city_states\":[{\"city\":\"Provo\",\"state_abbreviation\":\"UT\",\"state\":\"Utah\",\"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"84606\",\"zipcode_type\":\"S\",\"county_fips\":\"11501\",\"county_name\":\"Utah\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":2,\"status\":\"invalid_zipcode\",\"reason\":\"Invalid ZIP Code.\"}]";
     Request request;
 
     @Before
@@ -24,9 +25,7 @@ public class ClientTest {
         this.batch.add(lookup1);
         this.batch.add(lookup2);
         this.batch.add(lookup3);
-        this.expectedJsonPayload = "[{\"city\":\"Washington\",\"state\":\"District of Columbia\",\"zipcode\":\"20500\"},{\"city\":\"Provo\",\"input_id\":\"test id\",\"state\":\"Utah\"},{\"zipcode\":\"54321\"}]";
-        this.expectedJsonResponse = "[{\"input_index\":0,\"city_states\":[{\"city\":\"Washington\",\"state_abbreviation\":\"DC\",\"state\":\"District of Columbia\",\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"20500\",\"zipcode_type\":\"S\",\"default_city\":\"Washington\",\"county_fips\":\"11001\",\"county_name\":\"District of Columbia\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":1,\"input_id\":\"test id\",\"city_states\":[{\"city\":\"Provo\",\"state_abbreviation\":\"UT\",\"state\":\"Utah\",\"default_city\":true,\"mailable_city\":true}],\"zipcodes\":[{\"zipcode\":\"84606\",\"zipcode_type\":\"S\",\"county_fips\":\"11501\",\"county_name\":\"Utah\",\"latitude\":38.89769,\"longitude\":-77.03869}]},{\"input_index\":2,\"status\":\"invalid_zipcode\",\"reason\":\"Invalid ZIP Code.\"}]";
-        this.request = new Request("https://api.smartystreets.com/street-address?");
+        this.request = new Request("https://api.smartystreets.com/street-address");
     }
 
     @Test
@@ -38,12 +37,11 @@ public class ClientTest {
         Result result = this.lookup2.getResult();
 
         assertNotNull(result);
-        assertEquals("test id", result.getInputId());
         assertEquals("Salt Lake City", result.getCityState(0).getCity());
     }
 
     @Test
-    public void testSendingBatchOfLookups() throws Exception {
+    public void testSuccessfullySendsBatchOfLookups() throws Exception {
         Client client = new ClientBuilder().withSender(new MockSender()).build();
         client.send(this.batch);
 
@@ -56,7 +54,6 @@ public class ClientTest {
         result = this.lookup2.getResult();
 
         assertNotNull(result);
-        assertEquals("test id", result.getInputId());
         assertEquals("Salt Lake City", result.getCityState(0).getCity());
 
         result = this.lookup3.getResult();
@@ -69,7 +66,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testPopulateQueryString() throws Exception {
+    public void testCorrectlyPopulatesQueryString() throws Exception {
         Client client = new ClientBuilder().build();
         client.populateQueryString(this.batch.get(0), this.request);
 
@@ -77,7 +74,12 @@ public class ClientTest {
     }
 
     @Test
-    public void testAssignResultsToLookups() throws Exception {
+    public void testCorrectlyAssignsResultsToLookups() throws Exception {
+        Result[] results = new GoogleSerializer().deserialize(this.expectedJsonResponse.getBytes(), Result[].class);
+        Client client = new ClientBuilder().build();
 
+        client.assignResultsToLookups(this.batch, results);
+
+        //TODO: assert that the fields look right
     }
 }
