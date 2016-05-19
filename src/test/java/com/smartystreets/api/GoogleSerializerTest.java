@@ -37,7 +37,6 @@ public class GoogleSerializerTest {
 
         assertNotNull(results[1]);
         assertNull(results[1].getStatus());
-        assertEquals("test id", results[1].getInputId());
         assertEquals("Utah", results[1].getCityState(0).getState());
         assertEquals(38.89769, results[1].getZipCode(0).getLatitude(), .00001);
 

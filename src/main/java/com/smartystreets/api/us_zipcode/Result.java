@@ -14,9 +14,6 @@ public class Result {
     @Key("input_index")
     private int inputIndex;
 
-    @Key("input_id") // TODO: remove
-    private String inputId;
-
     @Key("city_states")
     private CityState[] cityStates;
 
@@ -53,10 +50,6 @@ public class Result {
     public int getInputIndex() {
         return this.inputIndex;
     }
-
-    public String getInputId() {
-        return this.inputId;
-    } // TODO: remove
 
     public CityState[] getCityStates() {
         return this.cityStates;

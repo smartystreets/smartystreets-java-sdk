@@ -1,17 +1,16 @@
-package com.smartystreets.api.us_zipcode;
+package com.smartystreets.api.us_street;
 
 import com.smartystreets.api.exceptions.BatchFullException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class BatchTest {
+
     @Test
     public void testGetsLookupsByInputId() throws Exception {
         Batch batch = new Batch();
-        Lookup lookup = new Lookup().setInputId("hasInputId");
+        AddressLookup lookup = new AddressLookup().setInputId("hasInputId");
 
         batch.add(lookup);
 
@@ -21,7 +20,7 @@ public class BatchTest {
     @Test
     public void testGetsLookupsByIndex() throws Exception {
         Batch batch = new Batch();
-        Lookup lookup = new Lookup();
+        AddressLookup lookup = new AddressLookup();
         lookup.setCity("Provo");
 
         batch.add(lookup);
@@ -34,9 +33,9 @@ public class BatchTest {
     public void testReturnsCorrectSize() throws Exception {
         Batch batch = new Batch();
 
-        Lookup lookup = new Lookup().setInputId("inputId");
-        Lookup lookup1 = new Lookup();
-        Lookup lookup2 = new Lookup();
+        AddressLookup lookup = new AddressLookup().setInputId("inputId");
+        AddressLookup lookup1 = new AddressLookup();
+        AddressLookup lookup2 = new AddressLookup();
 
         batch.add(lookup);
         batch.add(lookup1);
@@ -48,7 +47,7 @@ public class BatchTest {
     @Test
     public void testAddingALookupWhenBatchIsFullThrowsException() {
         Batch batch = new Batch();
-        Lookup lookup = new Lookup();
+        AddressLookup lookup = new AddressLookup();
 
         String exMessage = "";
         try {
@@ -64,9 +63,26 @@ public class BatchTest {
     }
 
     @Test
+    public void testResetMethodResetsHeadersAndLookups() throws Exception {
+        Batch batch = new Batch();
+        batch.setIncludeInvalid(true);
+        batch.setStandardizeOnly(true);
+        AddressLookup lookup = new AddressLookup();
+        batch.add(lookup);
+        batch.add(lookup);
+
+        batch.reset();
+
+        assertEquals(0, batch.getAllLookups().size());
+        assertEquals(0, batch.getNamedLookups().size());
+        assertFalse(batch.getIncludeInvalid());
+        assertFalse(batch.getStandardizeOnly());
+    }
+
+    @Test
     public void testClearMethodClearsBothLookupCollections() throws Exception {
         Batch batch = new Batch();
-        Lookup lookup = new Lookup();
+        AddressLookup lookup = new AddressLookup();
         batch.add(lookup);
         batch.add(lookup);
 
@@ -75,4 +91,5 @@ public class BatchTest {
         assertEquals(0, batch.getAllLookups().size());
         assertEquals(0, batch.getNamedLookups().size());
     }
+
 }

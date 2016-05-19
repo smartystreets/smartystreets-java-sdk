@@ -5,6 +5,7 @@ import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
+import com.smartystreets.api.us_zipcode.Lookup;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public class Client {
         this.appendHeaders(batch, request);
 
         if (batch.size() == 1)
-            this.populateQueryString(batch, request);
+            this.populateQueryString(batch.get(0), request);
         else
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
@@ -50,8 +51,7 @@ public class Client {
             request.putHeader("X-Standardize-Only", "true");
     }
 
-    private void populateQueryString(Batch batch, Request request) {
-        AddressLookup address = batch.get(0);
+    void populateQueryString(AddressLookup address, Request request) { //TODO: should we have this private and not test it directly? Or have it package local (to test it)?
         request.putParameter("street", address.getStreet());
         request.putParameter("street2", address.getStreet2());
         request.putParameter("secondary", address.getSecondary());
@@ -66,7 +66,7 @@ public class Client {
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
 
-    private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
+    void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
         for (int i = 0; i < batch.size(); i++) {
             for (Candidate candidate : candidates) {
                 if (candidate.getInputIndex() == i) {

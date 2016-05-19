@@ -2,6 +2,7 @@ package com.smartystreets.api;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Request {
@@ -16,7 +17,7 @@ public class Request {
     public Request() {
         this.method = "GET";
         this.headers = new HashMap<>();
-        this.parameters = new HashMap<>(); //TODO: should we use an ordered map for this? (to keep the parameters in a consistent order for testing)
+        this.parameters = new LinkedHashMap<>(); //TODO: should we use an ordered map for this? (to keep the parameters in a consistent order for testing)
     }
     public Request(String urlPrefix) {
         this();

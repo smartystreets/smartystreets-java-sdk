@@ -45,6 +45,31 @@ public class ClientTest {
         Client client = new ClientBuilder().withSender(new MockSender()).build();
         client.send(this.batch);
 
+        this.assertFieldsAreCorrect();
+    }
+
+    @Test
+    public void testCorrectlyPopulatesQueryString() throws Exception {
+        Client client = new ClientBuilder().build();
+        client.populateQueryString(this.batch.get(0), this.request);
+
+        assertEquals("https://api.smartystreets.com/street-address?city=Washington&state=District+of+Columbia&zipcode=20500", request.getUrl());
+    }
+
+    @Test
+    public void testCorrectlyAssignsResultsToLookups() throws Exception {
+        Result[] results = new GoogleSerializer().deserialize(this.expectedJsonResponse.getBytes(), Result[].class);
+        Client client = new ClientBuilder().build();
+
+        client.assignResultsToLookups(this.batch, results);
+
+        this.assertFieldsAreCorrect();
+    }
+
+    private void assertFieldsAreCorrect() throws Exception {
+        Client client = new ClientBuilder().withSender(new MockSender()).build();
+        client.send(this.batch);
+
         Result result = this.lookup1.getResult();
 
         assertNotNull(result);
@@ -63,23 +88,5 @@ public class ClientTest {
         assertEquals(2, result.getInputIndex());
         assertEquals("invalid_zipcode", result.getStatus());
         assertEquals("Invalid ZIP Code.", result.getReason());
-    }
-
-    @Test
-    public void testCorrectlyPopulatesQueryString() throws Exception {
-        Client client = new ClientBuilder().build();
-        client.populateQueryString(this.batch.get(0), this.request);
-
-        assertEquals("https://api.smartystreets.com/street-address?city=Washington&state=District+of+Columbia&zipcode=20500", request.getUrl());
-    }
-
-    @Test
-    public void testCorrectlyAssignsResultsToLookups() throws Exception {
-        Result[] results = new GoogleSerializer().deserialize(this.expectedJsonResponse.getBytes(), Result[].class);
-        Client client = new ClientBuilder().build();
-
-        client.assignResultsToLookups(this.batch, results);
-
-        //TODO: assert that the fields look right
     }
 }

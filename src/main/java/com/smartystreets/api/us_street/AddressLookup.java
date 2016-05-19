@@ -127,8 +127,9 @@ public class AddressLookup {
         this.result = result;
     }
 
-    public void setInputId(String inputId) {
+    public AddressLookup setInputId(String inputId) {
         this.inputId = inputId;
+        return this;
     }
 
     public void setStreet(String street) {

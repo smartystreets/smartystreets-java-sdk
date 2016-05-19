@@ -41,7 +41,7 @@ public class RequestTest {
         request.putParameter("name2", "value2");
         request.putParameter("name3", "value3");
 
-        final String expected = "http://localhost/?name3=value3&name1=value1&name2=value2";
+        final String expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
         assertEquals(expected, request.getUrl());
     }
 
@@ -52,7 +52,7 @@ public class RequestTest {
         request.putParameter("name&", "value");
         request.putParameter("name1", "other !value$");
 
-        final String expected = "http://localhost/?name1=other+%21value%24&name%26=value";
+        final String expected = "http://localhost/?name%26=value&name1=other+%21value%24";
 
         assertEquals(expected, request.getUrl());
     }
@@ -94,7 +94,7 @@ public class RequestTest {
         request.putParameter("name2", "value2");
         request.putParameter("name3", "value3");
 
-        final String expected = "http://localhost/?name3=value3&name1=value1&name2=value2";
+        final String expected = "http://localhost/?name1=value1&name2=value2&name3=value3";
         assertEquals(expected, request.getUrl());
     }
 }
