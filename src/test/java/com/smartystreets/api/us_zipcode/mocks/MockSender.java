@@ -1,4 +1,4 @@
-package com.smartystreets.api.us_zipcode;
+package com.smartystreets.api.us_zipcode.mocks;
 
 import com.google.api.client.http.*;
 import com.google.api.client.json.Json;
