@@ -3,14 +3,17 @@ package com.smartystreets.api;
 import com.smartystreets.api.mocks.MockCrashingSender;
 import com.smartystreets.api.us_street.mocks.MockSender;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
 public class RetrySenderTest {
-
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
     private MockCrashingSender mockCrashingSender;
 
     @Before
@@ -34,16 +37,9 @@ public class RetrySenderTest {
 
     @Test
     public void testRetryUntilMaxAttempts() throws Exception {
-        String message = "";
+        exception.expect(IOException.class);
 
-        try {
-            this.sendRequest("RetryMaxTimes");
-        } catch (IOException ex) {
-            message = ex.getMessage();
-        } finally {
-            assertEquals("Retrying won't help", message);
-            assertEquals(6, this.mockCrashingSender.getSendCount());
-        }
+        this.sendRequest("RetryMaxTimes");
     }
 
     private void sendRequest(String requestBehavior) throws Exception {

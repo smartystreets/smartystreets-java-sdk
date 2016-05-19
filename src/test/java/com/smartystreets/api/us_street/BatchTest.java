@@ -11,7 +11,6 @@ public class BatchTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-
     @Test
     public void testGetsLookupByInputId() throws Exception {
         Batch batch = new Batch();

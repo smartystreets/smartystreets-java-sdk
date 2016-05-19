@@ -51,7 +51,7 @@ public class Client {
             request.putHeader("X-Standardize-Only", "true");
     }
 
-     private void populateQueryString(AddressLookup address, Request request) { //TODO: should we have this private and not test it directly? Or have it package local (to test it)?
+     private void populateQueryString(AddressLookup address, Request request) {
         request.putParameter("street", address.getStreet());
         request.putParameter("street2", address.getStreet2());
         request.putParameter("secondary", address.getSecondary());

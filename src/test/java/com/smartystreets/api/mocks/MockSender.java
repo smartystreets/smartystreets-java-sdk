@@ -8,7 +8,6 @@ import com.smartystreets.api.exceptions.SmartyException;
 import java.io.IOException;
 
 public class MockSender implements Sender {
-
     private final Response response;
     private Request request;
 

@@ -17,7 +17,7 @@ public class Request {
     public Request() {
         this.method = "GET";
         this.headers = new HashMap<>();
-        this.parameters = new LinkedHashMap<>(); //TODO: should we use an ordered map for this? (to keep the parameters in a consistent order for testing)
+        this.parameters = new LinkedHashMap<>();
     }
     public Request(String urlPrefix) {
         this();

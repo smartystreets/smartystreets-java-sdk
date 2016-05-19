@@ -8,7 +8,6 @@ import com.smartystreets.api.exceptions.SmartyException;
 import java.io.IOException;
 
 public class MockStatusCodeSender implements Sender {
-
     private final int statusCode;
 
     public MockStatusCodeSender(int statusCode) {

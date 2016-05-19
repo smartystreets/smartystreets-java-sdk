@@ -13,7 +13,7 @@ public class SigningSenderTest {
         MockSender mockSender = new MockSender(null);
         SigningSender sender = new SigningSender(signer, mockSender);
 
-        sender.send(new Request("http://localhost/?")); // TODO: don't add ? here...
+        sender.send(new Request("http://localhost/"));
 
         Request request = mockSender.getRequest();
         assertEquals("http://localhost/?auth-id=id&auth-token=secret", request.getUrl());

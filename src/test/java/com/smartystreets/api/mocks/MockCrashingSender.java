@@ -11,7 +11,6 @@ public class MockCrashingSender implements Sender {
     private int sendCount = 0;
     private final int STATUS_CODE = 200;
 
-
     @Override
     public Response send(Request request) throws SmartyException, IOException {
         this.sendCount++;
@@ -31,9 +30,5 @@ public class MockCrashingSender implements Sender {
 
     public int getSendCount() {
         return this.sendCount;
-    }
-
-    public void resetSendCount() {
-        this.sendCount = 0;
     }
 }
