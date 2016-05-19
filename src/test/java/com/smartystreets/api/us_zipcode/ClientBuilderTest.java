@@ -4,6 +4,7 @@ import com.smartystreets.api.GoogleSender;
 import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.RetrySender;
 import com.smartystreets.api.Sender;
+import com.smartystreets.api.us_zipcode.mocks.MockSender;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

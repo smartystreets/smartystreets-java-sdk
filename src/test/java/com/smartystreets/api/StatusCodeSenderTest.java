@@ -1,6 +1,7 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.*;
+import com.smartystreets.api.mocks.MockStatusCodeSender;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

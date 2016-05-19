@@ -2,6 +2,7 @@ package com.smartystreets.api.us_zipcode;
 
 import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Request;
+import com.smartystreets.api.us_zipcode.mocks.MockSender;
 import org.junit.Before;
 import org.junit.Test;
 

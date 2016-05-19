@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Vector;
 
 public class Batch {
-    public final int MAX_BATCH_SIZE = 100;
+    public static final int MAX_BATCH_SIZE = 100;
     private Map<String, Lookup> namedLookups;
     private Vector<Lookup> allLookups;
 

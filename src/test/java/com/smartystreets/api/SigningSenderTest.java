@@ -1,5 +1,6 @@
 package com.smartystreets.api;
 
+import com.smartystreets.api.mocks.MockSender;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

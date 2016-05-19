@@ -52,7 +52,7 @@ public class BatchTest {
 
         String exMessage = "";
         try {
-            for (int i = 0; i < 101; i++) {
+            for (int i = 0; i < Batch.MAX_BATCH_SIZE + 1; i++) {
                 batch.add(lookup);
             }
         } catch (BatchFullException ex) {

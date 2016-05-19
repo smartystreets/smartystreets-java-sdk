@@ -1,6 +1,6 @@
 package com.smartystreets.api;
 
-import com.smartystreets.api.us_street.MockSender;
+import com.smartystreets.api.us_street.mocks.MockSender;
 import org.junit.Before;
 import org.junit.Test;
 
