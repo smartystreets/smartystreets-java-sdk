@@ -37,6 +37,15 @@ public class Candidate {
 
     //endregion
 
+
+    public Candidate() {
+    }
+
+    public Candidate(int inputIndex) {
+        this.inputIndex = inputIndex;
+    }
+
+
     //region [ Getters ]
 
     public Components getComponents() {
