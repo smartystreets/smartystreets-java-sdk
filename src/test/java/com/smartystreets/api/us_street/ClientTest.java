@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,6 +34,8 @@ public class ClientTest {
         this.batch.add(lookup3);
         this.request = new Request("https://api.smartystreets.com/street-address");
     }
+
+    //region [ Single Lookup ]
 
     @Test
     public void testSendingSingleFreeformLookup() throws Exception {
@@ -66,6 +70,20 @@ public class ClientTest {
         assertEquals("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", sender.getRequest().getUrl());
     }
 
+    //endregion
+
+    //region [ Batch Lookup ]
+
+    @Test
+    public void testEmptyBatchNotSent() throws Exception {
+        RequestCapturingSender sender = new RequestCapturingSender();
+        Client client = new Client("/", sender, null);
+
+        client.send(new Batch());
+
+        assertNull(sender.getRequest());
+    }
+
     @Test
     public void testSuccessfullySendsBatchOfAddressLookups() throws Exception {
         byte[] expectedPayload = "Hello, World!".getBytes();
@@ -80,6 +98,58 @@ public class ClientTest {
 
         assertArrayEquals(expectedPayload, sender.getRequest().getPayload());
     }
+
+    //endregion
+
+    //region [ Request Headers ]
+
+    @Test
+    public void testNoHeadersAddedToRequest() throws Exception {
+        this.assertHeadersSetCorrectly(false, false);
+    }
+
+    @Test
+    public void testIncludeInvalidHeaderCorrectlyAddedToRequest() throws Exception {
+        this.assertHeadersSetCorrectly(true, false);
+    }
+
+    @Test
+    public void testStandardizeOnlyHeaderCorrectlyAddedToRequest() throws Exception {
+        this.assertHeadersSetCorrectly(false, true);
+    }
+
+    @Test
+    public void testIncludeInvalidHeaderCorrectlyAddedToRequestWhenBothBatchOptionsAreSet() throws Exception {
+        this.assertHeadersSetCorrectly(true, true);
+    }
+
+    private void assertHeadersSetCorrectly(boolean includeInvalid, boolean standardizeOnly) throws Exception {
+        RequestCapturingSender sender = new RequestCapturingSender();
+        Client client = new Client("http://localhost/", sender, new FakeSerializer(new byte[0]));
+        Batch batch = new Batch();
+        batch.add(new AddressLookup());
+
+        batch.setStandardizeOnly(standardizeOnly);
+        batch.setIncludeInvalid(includeInvalid);
+        client.send(batch);
+
+        Request request = sender.getRequest();
+        Map<String, String> headers = request.getHeaders();
+
+        if (includeInvalid) {
+            assertEquals("true", headers.get("X-Include-Invalid"));
+            assertNull(headers.get("X-Standardize-Only"));
+        } else if (standardizeOnly) {
+            assertEquals("true", headers.get("X-Standardize-Only"));
+            assertNull(headers.get("X-Include-Invalid"));
+        } else {
+            assertNull(headers.get("X-Include-Invalid"));
+            assertNull(headers.get("X-Standardize-Only"));
+        }
+    }
+
+    //endregion
+
 
 //    @Test
 //    public void testCorrectlyAssignsResultsToAddressLookups() throws Exception {
