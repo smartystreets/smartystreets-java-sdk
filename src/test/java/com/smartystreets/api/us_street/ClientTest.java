@@ -1,13 +1,14 @@
 package com.smartystreets.api.us_street;
 
 import com.smartystreets.api.Request;
-import com.smartystreets.api.us_street.mocks.MockSender;
+import com.smartystreets.api.us_street.mocks.FakeSerializer;
 import com.smartystreets.api.us_street.mocks.RequestCapturingSender;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -33,41 +34,51 @@ public class ClientTest {
     }
 
     @Test
-    public void testSending1AddressLookup() throws Exception {
-        Client client = new ClientBuilder().withSender(new MockSender()).withUrl("singleAddressLookup").build();
+    public void testSendingSingleFreeformLookup() throws Exception {
+        RequestCapturingSender sender = new RequestCapturingSender();
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client("http://localhost/", sender, serializer);
 
-        client.send(this.lookup1);
+        client.send(new AddressLookup("freeform"));
 
-        ArrayList<Candidate> result = this.lookup1.getResult();
+        assertEquals("http://localhost/?street=freeform", sender.getRequest().getUrl());
+    }
 
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals("Mountain View", result.get(0).getComponents().getCityName());
+    @Test
+    public void testSendingSingleFullyPopulatedLookup() throws Exception {
+        RequestCapturingSender sender = new RequestCapturingSender();
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client("http://localhost/", sender, serializer);
+        AddressLookup lookup = new AddressLookup();
+        lookup.setAddressee("0");
+        lookup.setStreet("1");
+        lookup.setSecondary("2");
+        lookup.setStreet2("3");
+        lookup.setUrbanization("4");
+        lookup.setCity("5");
+        lookup.setState("6");
+        lookup.setZipCode("7");
+        lookup.setLastline("8");
+        lookup.setMaxCandidates(9);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", sender.getRequest().getUrl());
     }
 
     @Test
     public void testSuccessfullySendsBatchOfAddressLookups() throws Exception {
-        Client client = new ClientBuilder().withSender(new MockSender()).build();
-        client.send(this.batch);
+        byte[] expectedPayload = "Hello, World!".getBytes();
+        RequestCapturingSender sender = new RequestCapturingSender();
+        FakeSerializer serializer = new FakeSerializer(expectedPayload);
+        Client client = new Client("http://localhost/", sender, serializer);
+        Batch batch = new Batch();
+        batch.add(new AddressLookup());
+        batch.add(new AddressLookup());
 
-        this.assertFieldsAreCorrect();
-    }
+        client.send(batch);
 
-    @Test
-    public void testCorrectlyPopulatesQueryString() throws Exception {
-        AddressLookup addressLookup = new AddressLookup();
-        addressLookup.setCity("Provo");
-        addressLookup.setStreet("555 N 358 S #2");
-        addressLookup.setState("Utah");
-        addressLookup.setZipCode("84664");
-        RequestCapturingSender requestCapturingSender = new RequestCapturingSender();
-        Client client = new ClientBuilder().withSender(requestCapturingSender).build();
-
-        client.send(addressLookup);
-        String expected = "https://api.smartystreets.com/street-address?street=555+N+358+S+%232&city=Provo&state=Utah&zipcode=84664";
-
-        String url = requestCapturingSender.getRequest().getUrl();
-        assertEquals(expected, url);
+        assertArrayEquals(expectedPayload, sender.getRequest().getPayload());
     }
 
 //    @Test
