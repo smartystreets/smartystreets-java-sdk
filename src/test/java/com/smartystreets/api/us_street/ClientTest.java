@@ -1,15 +1,13 @@
 package com.smartystreets.api.us_street;
 
-import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Request;
-import com.smartystreets.api.us_street.mocks.FakeDeserializer;
-import com.smartystreets.api.us_street.mocks.FakeSerializer;
-import com.smartystreets.api.us_street.mocks.MockSender;
-import com.smartystreets.api.us_street.mocks.RequestCapturingSender;
-import org.junit.Before;
+import com.smartystreets.api.Response;
+import com.smartystreets.api.mocks.FakeDeserializer;
+import com.smartystreets.api.mocks.FakeSerializer;
+import com.smartystreets.api.mocks.MockSender;
+import com.smartystreets.api.mocks.RequestCapturingSender;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertNull;
@@ -137,14 +135,14 @@ public class ClientTest {
 
     @Test
     public void testDeserializeCalledWithResponseBody() throws Exception {
-        byte[] expectedBytes = "Hello, World!".getBytes();
-        MockSender sender = new MockSender(expectedBytes);
+        Response response = new Response(0, "Hello, World!".getBytes());
+        MockSender sender = new MockSender(response);
         FakeDeserializer deserializer = new FakeDeserializer(null);
         Client client = new Client("/", sender, deserializer);
 
         client.send(new AddressLookup());
 
-        assertEquals(expectedBytes, deserializer.getPayload());
+        assertEquals(response.getPayload(), deserializer.getPayload());
     }
 
     @Test
@@ -157,7 +155,7 @@ public class ClientTest {
         batch.add(new AddressLookup());
         batch.add(new AddressLookup());
 
-        MockSender sender = new MockSender(null);
+        MockSender sender = new MockSender(new Response(0, "[]".getBytes()));
         FakeDeserializer deserializer = new FakeDeserializer(expectedCandidates);
         Client client = new Client("/", sender, deserializer);
 

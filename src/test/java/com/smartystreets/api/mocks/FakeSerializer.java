@@ -1,4 +1,4 @@
-package com.smartystreets.api.us_street.mocks;
+package com.smartystreets.api.mocks;
 
 import com.smartystreets.api.Serializer;
 import java.io.IOException;

@@ -4,7 +4,7 @@ import com.smartystreets.api.GoogleSender;
 import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.RetrySender;
 import com.smartystreets.api.Sender;
-import com.smartystreets.api.us_zipcode.mocks.MockSender;
+import com.smartystreets.api.mocks.MockSender;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -22,7 +22,7 @@ public class ClientBuilderTest {
         /**Case 2: Custom build*/
         client = new ClientBuilder()
                 .withUrl("testUrl")
-                .withSender(new MockSender())
+                .withSender(new MockSender(null))
                 .withSerializer(new GoogleSerializer())
                 .build();
 
@@ -57,7 +57,7 @@ public class ClientBuilderTest {
         assertEquals(500, googleSender.getMaxTimeOut());
 
         /** Case 3: MockStatusCodeSender **/
-        Sender mockSender = new ClientBuilder().withSender(new MockSender()).buildSender();
+        Sender mockSender = new ClientBuilder().withSender(new MockSender(null)).buildSender();
 
         assertEquals(MockSender.class, mockSender.getClass());
     }
