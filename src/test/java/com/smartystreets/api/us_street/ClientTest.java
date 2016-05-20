@@ -1,7 +1,9 @@
 package com.smartystreets.api.us_street;
 
 import com.smartystreets.api.Request;
+import com.smartystreets.api.us_street.mocks.FakeDeserializer;
 import com.smartystreets.api.us_street.mocks.FakeSerializer;
+import com.smartystreets.api.us_street.mocks.MockSender;
 import com.smartystreets.api.us_street.mocks.RequestCapturingSender;
 import org.junit.Before;
 import org.junit.Test;
@@ -146,6 +148,22 @@ public class ClientTest {
             assertNull(headers.get("X-Include-Invalid"));
             assertNull(headers.get("X-Standardize-Only"));
         }
+    }
+
+    //endregion
+
+    //region [ Response Handling ]
+
+    @Test
+    public void testDeserializeCalledWithResponseBody() throws Exception {
+        byte[] expectedBytes = "Hello, World!".getBytes();
+        MockSender sender = new MockSender(expectedBytes);
+        FakeDeserializer deserializer = new FakeDeserializer(null);
+        Client client = new Client("/", sender, deserializer);
+
+        client.send(new AddressLookup());
+
+        assertEquals(expectedBytes, deserializer.getPayload());
     }
 
     //endregion

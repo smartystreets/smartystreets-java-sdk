@@ -1,7 +1,6 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.mocks.MockCrashingSender;
-import com.smartystreets.api.us_street.mocks.MockSender;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
