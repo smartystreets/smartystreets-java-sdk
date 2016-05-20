@@ -5,7 +5,6 @@ import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
-import com.smartystreets.api.us_zipcode.Lookup;
 
 import java.io.IOException;
 
@@ -32,7 +31,7 @@ public class Client {
         if (batch.size() == 0)
             return;
 
-        this.appendHeaders(batch, request);
+        this.putHeaders(batch, request);
 
         if (batch.size() == 1)
             this.populateQueryString(batch.get(0), request);
@@ -44,7 +43,7 @@ public class Client {
         this.assignCandidatesToLookups(batch, candidates);
     }
 
-    private void appendHeaders(Batch batch, Request request) {
+    private void putHeaders(Batch batch, Request request) {
         if (batch.getIncludeInvalid())
             request.putHeader("X-Include-Invalid", "true");
         else if (batch.getStandardizeOnly())
