@@ -1,6 +1,5 @@
 package com.smartystreets.api.us_street;
 
-import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Request;
 import com.smartystreets.api.us_street.mocks.MockSender;
 import com.smartystreets.api.us_street.mocks.RequestCapturingSender;
