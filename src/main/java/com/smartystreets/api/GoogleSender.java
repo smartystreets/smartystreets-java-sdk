@@ -71,8 +71,4 @@ public class GoogleSender implements Sender {
         inputStream.read(payload);
         return payload;
     }
-
-//    public int getMaxTimeOut() {
-//        return this.maxTimeOut;
-//    }
 }
