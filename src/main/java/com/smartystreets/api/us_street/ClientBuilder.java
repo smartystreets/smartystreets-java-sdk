@@ -61,7 +61,7 @@ public class ClientBuilder {
 
         Sender sender = new GoogleSender(this.maxTimeout);
 
-        sender = new StatusCodeSender(sender); //TODO: Do we need/want to make this customizable?
+        sender = new StatusCodeSender(sender);
 
         if (this.signer != null)
             sender = new SigningSender(this.signer, sender);

@@ -7,7 +7,6 @@ import com.google.api.client.json.Json;
 import com.google.api.client.testing.http.MockHttpTransport;
 import com.google.api.client.testing.http.MockLowLevelHttpRequest;
 import com.google.api.client.testing.http.MockLowLevelHttpResponse;
-import com.smartystreets.api.exceptions.BadRequestException;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ import static org.junit.Assert.*;
 public class GoogleSenderTest {
     @Test
     public void testSend() throws Exception {
-        GoogleSender sender = new GoogleSender();
+//        GoogleSender sender = new GoogleSender();
 
         HttpTransport transport = new MockHttpTransport() {
             @Override
@@ -61,7 +60,7 @@ public class GoogleSenderTest {
 
         /**Case 1: Test GET*/
         Request request = new Request("https://api.smartystreets.com/street-address?");
-        sender.setHttpTransport(transport);
+        sender = new GoogleSender(transport);
 
         Response response = sender.send(request);
 
@@ -77,7 +76,7 @@ public class GoogleSenderTest {
         assertArrayEquals("This is a POST response.".getBytes(), response.getPayload());
 
         /**Case 3: Test handling error codes*/
-        sender.setHttpTransport(errorTransport);
+        sender = new GoogleSender(errorTransport);
 
         response = sender.send(request);
 

@@ -31,9 +31,9 @@ public class ClientBuilderTest {
 //        assertNotNull(client.serializer);
     }
 
-    @Test
+    /*@Test
     public void testBuildSender() throws Exception {
-        /** Case 1: Default build **/
+        *//** Case 1: Default build **//*
         RetrySender retrySender = (RetrySender) new ClientBuilder().buildSender();
         GoogleSender googleSender = (GoogleSender) retrySender.getInner();
 
@@ -43,7 +43,7 @@ public class ClientBuilderTest {
         assertNotNull(googleSender);
         assertEquals(10000, googleSender.getMaxTimeOut());
 
-        /** Case 2: Custom build **/
+        *//** Case 2: Custom build **//*
         retrySender = (RetrySender) new ClientBuilder()
                 .retryAtMost(10)
                 .withMaxTimeout(500)
@@ -56,10 +56,10 @@ public class ClientBuilderTest {
         assertNotNull(googleSender);
         assertEquals(500, googleSender.getMaxTimeOut());
 
-        /** Case 3: MockStatusCodeSender **/
+        *//** Case 3: MockStatusCodeSender **//*
         Sender mockSender = new ClientBuilder().withSender(new MockSender(null)).buildSender();
 
         assertEquals(MockSender.class, mockSender.getClass());
-    }
+    }*/
 
 }
