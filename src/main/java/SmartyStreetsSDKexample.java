@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 public class SmartyStreetsSDKexample {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         final String THE_RIGHT_ZIPCODE = "84606";
 
 //        Credentials credentials = getSSCredentialsFromFile("/ss-credentials.txt");
