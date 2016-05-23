@@ -1,7 +1,6 @@
 package com.smartystreets.api;
 
 public class Response {
-
     private int statusCode;
     private byte[] payload;
 

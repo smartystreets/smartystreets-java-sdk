@@ -79,13 +79,8 @@ public class GoogleSenderTest {
         /**Case 3: Test handling error codes*/
         sender.setHttpTransport(errorTransport);
 
-        boolean threwException = false;
-        try {
-            sender.send(request);
-        } catch (BadRequestException ex) {
-            threwException = true;
-        } finally {
-            assertTrue(threwException);
-        }
+        response = sender.send(request);
+
+        assertEquals(400, response.getStatusCode());
     }
 }

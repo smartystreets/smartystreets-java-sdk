@@ -5,7 +5,6 @@ import com.smartystreets.api.exceptions.*;
 import java.io.IOException;
 
 public class StatusCodeSender implements Sender {
-
     private final Sender inner;
 
     public StatusCodeSender(Sender inner) {

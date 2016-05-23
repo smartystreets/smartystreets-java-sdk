@@ -18,7 +18,7 @@ public class Result {
     private CityState[] cityStates;
 
     @Key("zipcodes")
-    private ZipCode[] zipcodes;
+    private ZipCode[] zipCodes;
 
     //endregion
 
@@ -34,7 +34,7 @@ public class Result {
     }
 
     public ZipCode getZipCode(int index) {
-        return this.zipcodes[index];
+        return this.zipCodes[index];
     }
 
     //region [ Getters ]
@@ -55,8 +55,8 @@ public class Result {
         return this.cityStates;
     }
 
-    public ZipCode[] getZipcodes() {
-        return this.zipcodes;
+    public ZipCode[] getZipCodes() {
+        return this.zipCodes;
     }
 
     //endregion

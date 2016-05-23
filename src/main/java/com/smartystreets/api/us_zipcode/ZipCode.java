@@ -6,10 +6,10 @@ public class ZipCode {
     //region [ fields ]
 
     @Key("zipcode")
-    private String zipcode;
+    private String zipCode;
 
     @Key("zipcode_type")
-    private String zipcodeType;
+    private String zipCodeType;
 
     @Key("default_city")
     private String defaultCity;
@@ -34,11 +34,11 @@ public class ZipCode {
     //region [ Getter ]
 
     public String getZipCode() {
-        return this.zipcode;
+        return this.zipCode;
     }
 
-    public String getZipcodeType() {
-        return this.zipcodeType;
+    public String getZipCodeType() {
+        return this.zipCodeType;
     }
 
     public String getDefaultCity() {

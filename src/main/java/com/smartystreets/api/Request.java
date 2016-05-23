@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Request {
-
     private static final String CHARSET = "UTF-8";
     private final Map<String, String> headers;
     private final Map<String, String> parameters;
@@ -75,6 +74,7 @@ public class Request {
     }
 
     //endregion
+
     //region [ Setters ]
 
     public void setPayload(byte[] payload) {

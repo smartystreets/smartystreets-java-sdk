@@ -6,7 +6,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 public class GoogleSerializer implements Serializer {
     private final JacksonFactory factory;
 

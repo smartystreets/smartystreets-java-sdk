@@ -57,12 +57,6 @@ public class GoogleSender implements Sender {
 
             //region [ Response ]
 
-            HttpHeaders responseHttpHeaders = httpResponse.getHeaders();
-            Map<String, String> responseHeaders = new HashMap<>();
-            for (String headerName : responseHttpHeaders.keySet()) {
-                ArrayList<String> values = (ArrayList<String>) responseHttpHeaders.get(headerName);
-                responseHeaders.put(headerName, values.get(0));
-            }
             int statusCode = httpResponse.getStatusCode();
             InputStream inputStream = httpResponse.getContent();
             byte[] payload = new byte[inputStream.available()];
@@ -72,20 +66,7 @@ public class GoogleSender implements Sender {
 
             return new Response(statusCode, payload);
         } catch (HttpResponseException ex) {
-            switch (ex.getStatusCode()) {
-                case 400:
-                    throw new BadRequestException("Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a POST request contained malformed JSON.");
-                case 401:
-                    throw new BadCredentialsException("Unauthorized: The credentials were provided incorrectly or did not match any existing, active credentials.");
-                case 402:
-                    throw new PaymentRequiredException("Payment Required: There is no active subscription for the account associated with the credentials submitted with the request.");
-                case 413:
-                    throw new RequestEntityTooLargeException("Request Entity Too Large: The maximum size for a request body to this API is 32K (32,768 bytes).");
-                case 429:
-                    throw new TooManyRequestsException("Too Many Requests: When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.");
-                default:
-                    throw ex;
-            }
+            return new Response(ex.getStatusCode(), new byte[0]);
         }
     }
 

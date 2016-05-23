@@ -9,9 +9,9 @@ import com.smartystreets.api.exceptions.SmartyException;
 import java.io.IOException;
 
 public class Client {
-    final String urlPrefix;
+    private final String urlPrefix;
     private final Sender sender;
-    final Serializer serializer;
+    private final Serializer serializer;
 
     public Client(String urlPrefix, Sender sender, Serializer serializer) {
         this.urlPrefix = urlPrefix;
@@ -43,14 +43,14 @@ public class Client {
         this.assignResultsToLookups(batch, results);
     }
 
-    void populateQueryString(Lookup lookup, Request request) {
+    private void populateQueryString(Lookup lookup, Request request) {
         request.putParameter("input_id", lookup.getInputId());
         request.putParameter("city", lookup.getCity());
         request.putParameter("state", lookup.getState());
         request.putParameter("zipcode", lookup.getZipCode());
     }
 
-    void assignResultsToLookups(Batch batch, Result[] results) {
+    private void assignResultsToLookups(Batch batch, Result[] results) {
         for (int i = 0; i < results.length; i++) {
             batch.get(i).setResult(results[i]);
         }
