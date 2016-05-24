@@ -29,8 +29,8 @@ public class UsStreetGetExample {
 
         ArrayList<Candidate> results = lookup.getResult();
 
-        if (results.size() == 0) {
-            System.out.println("No candidates. This means the address is not valid");
+        if (results.isEmpty()) {
+            System.out.println("No candidates. This means the address is not valid.");
             return;
         }
 
@@ -38,7 +38,7 @@ public class UsStreetGetExample {
 
         System.out.println("Address is valid. (There is at least one candidate)\n");
         System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
-        System.out.println("County Name: " + firstCandidate.getMetadata().getCountyName());
+        System.out.println("County: " + firstCandidate.getMetadata().getCountyName());
         System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
         System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
 
