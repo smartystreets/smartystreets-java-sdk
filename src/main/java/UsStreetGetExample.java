@@ -21,10 +21,10 @@ public class UsStreetGetExample {
         }
         catch (SmartyException ex) {
             System.out.println(ex.getMessage());
-
+            ex.printStackTrace();
         }
         catch (IOException ex) {
-            // Handle this
+            ex.printStackTrace();
         }
 
         ArrayList<Candidate> results = lookup.getResult();
