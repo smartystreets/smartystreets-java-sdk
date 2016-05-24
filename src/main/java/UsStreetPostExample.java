@@ -10,7 +10,7 @@ import java.util.Vector;
 
 public class UsStreetPostExample {
     public static void main(String[] args) {
-        Credentials credentials = new StaticCredentials("ac73c78f-b01a-3fbf-0cd8-b124db98fc28", "1G3uMAKDNSTtevgFM9U9");
+        Credentials credentials = new StaticCredentials("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE");
         Client client = new ClientBuilder(credentials).build();
         Batch batch = new Batch();
 
