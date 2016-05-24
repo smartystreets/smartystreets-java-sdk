@@ -1,5 +1,4 @@
 import com.smartystreets.api.Credentials;
-import com.smartystreets.api.Response;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
@@ -22,20 +21,26 @@ public class UsStreetGetExample {
         }
         catch (SmartyException ex) {
             System.out.println(ex.getMessage());
+
         }
         catch (IOException ex) {
             // Handle this
         }
 
         ArrayList<Candidate> results = lookup.getResult();
+
+        if (results.size() == 0) {
+            System.out.println("No candidates. This means the address is not valid");
+            return;
+        }
+
         Candidate firstCandidate = results.get(0);
 
+        System.out.println("Address is valid. (There is at least one candidate)\n");
         System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
         System.out.println("County Name: " + firstCandidate.getMetadata().getCountyName());
         System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
         System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
-
-
 
     }
 }
