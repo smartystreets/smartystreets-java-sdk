@@ -10,7 +10,7 @@ import java.util.Vector;
 
 public class UsZipCodePostExample {
     public static void main(String[] args) {
-        Credentials credentials = new StaticCredentials("1c457ace-567f-c4bf-a925-abd57cfdb0b9", "IBrfg7Yvs3xs4qN4SILY");
+        Credentials credentials = new StaticCredentials("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE");
         Client client = new ClientBuilder(credentials).build();
         Batch batch = new Batch();
 
