@@ -1,5 +1,5 @@
-import com.smartystreets.api.Credentials;
-import com.smartystreets.api.StaticCredentials;
+package examples;
+
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_zipcode.*;
 
@@ -7,8 +7,7 @@ import java.io.IOException;
 
 public class UsZipCodeGetExample {
     public static void main(String[] args) {
-        Credentials credentials = new StaticCredentials("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE");
-        Client client = new ClientBuilder(credentials).build();
+        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
 
         Lookup lookup = new Lookup();
         lookup.setCity("Mountain View");

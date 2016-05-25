@@ -1,5 +1,5 @@
-import com.smartystreets.api.Credentials;
-import com.smartystreets.api.StaticCredentials;
+package examples;
+
 import com.smartystreets.api.exceptions.BatchFullException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
@@ -10,8 +10,7 @@ import java.util.Vector;
 
 public class UsStreetPostExample {
     public static void main(String[] args) {
-        Credentials credentials = new StaticCredentials("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE");
-        Client client = new ClientBuilder(credentials).build();
+        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
         Batch batch = new Batch();
 
         AddressLookup address0 = new AddressLookup();
