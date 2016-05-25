@@ -1,5 +1,5 @@
-import com.smartystreets.api.Credentials;
-import com.smartystreets.api.StaticCredentials;
+package examples;
+
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
 
@@ -8,8 +8,7 @@ import java.util.ArrayList;
 
 public class UsStreetGetExample {
     public static void main(String[] args) {
-        Credentials credentials = new StaticCredentials("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE");
-        Client client = new ClientBuilder(credentials).build();
+        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
 
         AddressLookup lookup = new AddressLookup();
         lookup.setStreet("1600 Amphitheatre Pkwy");

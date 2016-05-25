@@ -17,8 +17,8 @@ public class UsZipCodePostExample {
         lookup0.setZipCode("12345");   // A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
 
         Lookup lookup1 = new Lookup();
-        lookup1.setCity("Houston");
-        lookup1.setState("TX");
+        lookup1.setCity("Phoenix");
+        lookup1.setState("Arizona");
 
         Lookup lookup2 = new Lookup("cupertino", "CA", "95014"); // You can also set these with arguments
 
