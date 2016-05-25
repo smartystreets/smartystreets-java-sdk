@@ -39,13 +39,14 @@ public class Client {
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
         Response response = this.sender.send(request);
+
         Candidate[] candidates = this.serializer.deserialize(response.getPayload(), Candidate[].class);
         if (candidates == null)
             candidates = new Candidate[0];
         this.assignCandidatesToLookups(batch, candidates);
     }
 
-    private void putHeaders(Batch batch, Request request) { // TODO: Shouldn't we add the special tracking header?
+    private void putHeaders(Batch batch, Request request) {
         if (batch.getIncludeInvalid())
             request.putHeader("X-Include-Invalid", "true");
         else if (batch.getStandardizeOnly())

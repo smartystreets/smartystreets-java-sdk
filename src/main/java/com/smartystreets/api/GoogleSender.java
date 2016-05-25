@@ -59,6 +59,8 @@ public class GoogleSender implements Sender {
         Map<String, String> headers = request.getHeaders();
         for (String headerName : headers.keySet())
             httpHeaders.set(headerName, headers.get(headerName));
+
+        httpHeaders.setUserAgent("smartystreets sdk:java@" + this.VERSION);
     }
 
     private Response buildResponse(HttpResponse httpResponse) throws IOException {

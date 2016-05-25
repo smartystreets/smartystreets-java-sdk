@@ -37,6 +37,7 @@ public class Client {
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
         Response response = this.sender.send(request);
+
         Result[] results = this.serializer.deserialize(response.getPayload(), Result[].class);
         if (results == null)
             results = new Result[0];
