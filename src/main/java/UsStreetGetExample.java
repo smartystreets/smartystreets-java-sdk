@@ -41,6 +41,5 @@ public class UsStreetGetExample {
         System.out.println("County: " + firstCandidate.getMetadata().getCountyName());
         System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
         System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
-
     }
 }

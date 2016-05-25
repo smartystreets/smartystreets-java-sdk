@@ -1,4 +1,3 @@
-import com.google.api.client.json.Json;
 import com.smartystreets.api.Credentials;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.BatchFullException;
