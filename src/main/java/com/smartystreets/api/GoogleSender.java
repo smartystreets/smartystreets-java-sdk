@@ -4,12 +4,17 @@ import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.Json;
 import com.smartystreets.api.exceptions.*;
+import com.sun.javafx.tools.packager.bundlers.IOUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Vector;
 
 public class GoogleSender implements Sender {
+    private final int BUFFER_SIZE = 16384;
     private int maxTimeOut;
     private HttpTransport transport;
 
@@ -67,8 +72,15 @@ public class GoogleSender implements Sender {
 
     private byte[] readResponseBody(HttpResponse httpResponse) throws IOException {
         InputStream inputStream = httpResponse.getContent();
-        byte[] payload = new byte[inputStream.available()];
-        inputStream.read(payload);
-        return payload;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        int totalBytesRead = 0;
+        byte[] buffer = new byte[BUFFER_SIZE];
+
+        while ((totalBytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
+            outputStream.write(buffer, 0, totalBytesRead);
+        }
+
+        return outputStream.toByteArray();
     }
 }

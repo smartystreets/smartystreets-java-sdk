@@ -27,6 +27,13 @@ public class UsZipCodeGetExample {
 
         Result result = lookup.getResult();
         ZipCode[] zipCodes = result.getZipCodes();
+        CityState[] cityStates = result.getCityStates(); // TODO: Should we rename CityState to CityAndState, or something?
+
+        for (CityState cityState : cityStates) {
+            System.out.println("\nCity: " + cityState.getCity());
+            System.out.println("State: " + cityState.getState());
+            System.out.println("Mailable City: " + cityState.getMailableCity());
+        }
 
         for (ZipCode zip : zipCodes) {
             System.out.println("\nZIP Code: " + zip.getZipCode());

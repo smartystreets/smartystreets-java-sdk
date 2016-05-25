@@ -45,7 +45,7 @@ public class Client {
         this.assignCandidatesToLookups(batch, candidates);
     }
 
-    private void putHeaders(Batch batch, Request request) {
+    private void putHeaders(Batch batch, Request request) { // TODO: Shouldn't we add the special tracking header?
         if (batch.getIncludeInvalid())
             request.putHeader("X-Include-Invalid", "true");
         else if (batch.getStandardizeOnly())
