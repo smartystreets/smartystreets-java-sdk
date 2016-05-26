@@ -13,7 +13,6 @@ import java.util.Map;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class ClientTest {
     //region [ Single Lookup ]
