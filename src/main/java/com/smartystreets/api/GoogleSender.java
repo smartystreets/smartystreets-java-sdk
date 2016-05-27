@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.util.Map;
 
 public class GoogleSender implements Sender {
-    private final int BUFFER_SIZE = 16384;
     private int maxTimeOut;
     private HttpTransport transport;
 
@@ -32,7 +31,7 @@ public class GoogleSender implements Sender {
 
     public Response send(Request request) throws SmartyException, IOException {
         HttpRequest httpRequest = buildHttpRequest(request);
-        copyHeaders(request, httpRequest);
+        this.copyHeaders(request, httpRequest);
 
         try {
             return buildResponse(httpRequest.execute());
@@ -60,7 +59,7 @@ public class GoogleSender implements Sender {
         for (String headerName : headers.keySet())
             httpHeaders.set(headerName, headers.get(headerName));
 
-        httpHeaders.setUserAgent("smartystreets sdk:java@" + this.VERSION);
+        httpHeaders.setUserAgent("smartystreets sdk:java@" + VERSION);
     }
 
     private Response buildResponse(HttpResponse httpResponse) throws IOException {
@@ -74,6 +73,7 @@ public class GoogleSender implements Sender {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         int totalBytesRead;
+        final int BUFFER_SIZE = 16384;
         byte[] buffer = new byte[BUFFER_SIZE];
 
         while ((totalBytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {

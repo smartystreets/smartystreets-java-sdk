@@ -6,15 +6,32 @@
 
     <groupId>com.smartystreets.api</groupId>
     <artifactId>smartystreets-java-sdk</artifactId>
-    <version>1.0</version>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
+    <name>SmartyStreets Java SDK</name>
+    <description>A library for Java developers to help them easily access the SmartyStreets APIs.</description>
+    <url>The Github Repository</url> <!-- TODO: Put in the real Github repo URL -->
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers> <!-- TODO: Should we do it this way, or list the individuals who worked on it? -->
+        <developer>
+            <name>SmartyStreets SDK Team</name>
+            <email>support@smartystreets.com</email>
+            <organization>SmartyStreets</organization>
+        </developer>
+    </developers>
+
+    <scm> <!-- TODO: Set up the Github repo and fill this in -->
+        <connection></connection>
+        <developerConnection></developerConnection>
+        <url></url>
+    </scm>
 
 </project>
