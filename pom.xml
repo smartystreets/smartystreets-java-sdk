@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>SmartyStreets Java SDK</name>
-    <description>A library for Java developers to help them easily access the SmartyStreets APIs.</description>
+    <description>A library for Java developers to use to help them easily access the SmartyStreets APIs.</description>
     <url>https://github.com/smartystreets/smartystreets-java-sdk</url>
 
     <licenses>
@@ -32,7 +32,7 @@
     <scm>
         <connection>scm:git:git@github.com:smartystreets/smartystreets-java-sdk.git</connection>
         <developerConnection>scm:git:git@github.com:smartystreets/smartystreets-java-sdk.git</developerConnection>
-        <url>git@github.com:smartystreets/smartystreets-java-sdk.git</url>
+        <url>https://github.com/smartystreets/smartystreets-java-sdk.git</url>
     </scm>
 
     <distributionManagement>
