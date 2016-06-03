@@ -59,7 +59,7 @@ public class GoogleSender implements Sender {
         for (String headerName : headers.keySet())
             httpHeaders.set(headerName, headers.get(headerName));
 
-        httpHeaders.setUserAgent("smartystreets sdk:java@" + Version.CURRENT);
+        httpHeaders.setUserAgent("smartystreets (sdk:java@" + Version.CURRENT + ")");
     }
 
     private Response buildResponse(HttpResponse httpResponse) throws IOException {
