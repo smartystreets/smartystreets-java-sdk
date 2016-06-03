@@ -10,7 +10,7 @@ public class UsStreetGetExample {
     public static void main(String[] args) {
         Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
 
-        AddressLookup lookup = new AddressLookup();
+        Lookup lookup = new Lookup();
         lookup.setStreet("1600 Amphitheatre Pkwy");
         lookup.setCity("Mountain View");
         lookup.setState("CA");

@@ -13,17 +13,17 @@ public class UsStreetPostExample {
         Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
         Batch batch = new Batch();
 
-        AddressLookup address0 = new AddressLookup();
+        Lookup address0 = new Lookup();
         address0.setStreet("1600 amphitheatre parkway");
         address0.setCity("Mountain view");
         address0.setState("california");
 
-        AddressLookup address1 = new AddressLookup("1 Rosedale, Baltimore, Maryland"); // Freeform addresses work too.
+        Lookup address1 = new Lookup("1 Rosedale, Baltimore, Maryland"); // Freeform addresses work too.
         address1.setMaxCandidates(10); // Allows up to ten possible matches to be returned (default is 1).
 
-        AddressLookup address2 = new AddressLookup("123 Bogus Street, Pretend Lake, Oklahoma");
+        Lookup address2 = new Lookup("123 Bogus Street, Pretend Lake, Oklahoma");
 
-        AddressLookup address3 = new AddressLookup();
+        Lookup address3 = new Lookup();
         address3.setStreet("1 Infinite Loop");
         address3.setZipCode("95014"); // You can just input the street and ZIP if you want.
 
@@ -46,7 +46,7 @@ public class UsStreetPostExample {
             ex.printStackTrace();
         }
 
-        Vector<AddressLookup> lookups = batch.getAllLookups();
+        Vector<Lookup> lookups = batch.getAllLookups();
 
         for (int i=0; i < batch.size(); i++) {
             ArrayList<Candidate> candidates = lookups.get(i).getResult();

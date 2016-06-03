@@ -9,8 +9,8 @@ import java.util.Vector;
 
 public class Batch {
     public static final int MAX_BATCH_SIZE = 100;
-    private Map<String, AddressLookup> namedLookups;
-    private Vector<AddressLookup> allLookups;
+    private Map<String, Lookup> namedLookups;
+    private Vector<Lookup> allLookups;
     private boolean standardizeOnly, includeInvalid;
 
     public Batch() {
@@ -20,7 +20,7 @@ public class Batch {
         this.allLookups = new Vector<>();
     }
 
-    public void add(AddressLookup newAddress) throws BatchFullException {
+    public void add(Lookup newAddress) throws BatchFullException {
         if (this.allLookups.size() >= MAX_BATCH_SIZE)
             throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);
 
@@ -51,7 +51,7 @@ public class Batch {
         return this.allLookups.size();
     }
 
-    public Iterator<AddressLookup> iterator() {
+    public Iterator<Lookup> iterator() {
         return this.allLookups.iterator();
     }
 
@@ -67,19 +67,19 @@ public class Batch {
         return this.includeInvalid;
     }
 
-    public Map<String, AddressLookup> getNamedLookups() {
+    public Map<String, Lookup> getNamedLookups() {
         return this.namedLookups;
     }
 
-    public AddressLookup get(String inputId) {
+    public Lookup get(String inputId) {
         return this.namedLookups.get(inputId);
     }
 
-    public AddressLookup get(int inputIndex) {
+    public Lookup get(int inputIndex) {
         return this.allLookups.get(inputIndex);
     }
 
-    public Vector<AddressLookup> getAllLookups() {
+    public Vector<Lookup> getAllLookups() {
         return this.allLookups;
     }
 

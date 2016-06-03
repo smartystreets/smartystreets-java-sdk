@@ -51,10 +51,10 @@ public class UsZipCodePostExample {
                 continue;
             }
 
-            CityState[] cityStates = result.getCityStates();
+            CityAndState[] cityStates = result.getCityAndStates();
             System.out.println(cityStates.length + " City and State match(es):");
 
-            for (CityState cityState : cityStates) {
+            for (CityAndState cityState : cityStates) {
                 System.out.println("City: " + cityState.getCity());
                 System.out.println("State: " + cityState.getState());
                 System.out.println("Mailable City: " + cityState.getMailableCity());

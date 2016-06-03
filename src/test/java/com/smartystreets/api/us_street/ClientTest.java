@@ -23,7 +23,7 @@ public class ClientTest {
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client("http://localhost/", sender, serializer);
 
-        client.send(new AddressLookup("freeform"));
+        client.send(new Lookup("freeform"));
 
         assertEquals("http://localhost/?street=freeform", sender.getRequest().getUrl());
     }
@@ -33,7 +33,7 @@ public class ClientTest {
         RequestCapturingSender sender = new RequestCapturingSender();
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client("http://localhost/", sender, serializer);
-        AddressLookup lookup = new AddressLookup();
+        Lookup lookup = new Lookup();
         lookup.setAddressee("0");
         lookup.setStreet("1");
         lookup.setSecondary("2");
@@ -71,8 +71,8 @@ public class ClientTest {
         FakeSerializer serializer = new FakeSerializer(expectedPayload);
         Client client = new Client("http://localhost/", sender, serializer);
         Batch batch = new Batch();
-        batch.add(new AddressLookup());
-        batch.add(new AddressLookup());
+        batch.add(new Lookup());
+        batch.add(new Lookup());
 
         client.send(batch);
 
@@ -107,7 +107,7 @@ public class ClientTest {
         RequestCapturingSender sender = new RequestCapturingSender();
         Client client = new Client("http://localhost/", sender, new FakeSerializer(new byte[0]));
         Batch batch = new Batch();
-        batch.add(new AddressLookup());
+        batch.add(new Lookup());
 
         batch.setStandardizeOnly(standardizeOnly);
         batch.setIncludeInvalid(includeInvalid);
@@ -139,7 +139,7 @@ public class ClientTest {
         FakeDeserializer deserializer = new FakeDeserializer(null);
         Client client = new Client("/", sender, deserializer);
 
-        client.send(new AddressLookup());
+        client.send(new Lookup());
 
         assertEquals(response.getPayload(), deserializer.getPayload());
     }
@@ -151,8 +151,8 @@ public class ClientTest {
         expectedCandidates[1] = new Candidate(1);
         expectedCandidates[2] = new Candidate(1);
         Batch batch = new Batch();
-        batch.add(new AddressLookup());
-        batch.add(new AddressLookup());
+        batch.add(new Lookup());
+        batch.add(new Lookup());
 
         MockSender sender = new MockSender(new Response(0, "[]".getBytes()));
         FakeDeserializer deserializer = new FakeDeserializer(expectedCandidates);

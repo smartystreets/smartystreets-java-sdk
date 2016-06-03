@@ -19,7 +19,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public void send(AddressLookup lookup) throws SmartyException, IOException {
+    public void send(Lookup lookup) throws SmartyException, IOException {
         Batch batch = new Batch();
         batch.add(lookup);
         this.send(batch);
@@ -53,7 +53,7 @@ public class Client {
             request.putHeader("X-Standardize-Only", "true");
     }
 
-     private void populateQueryString(AddressLookup address, Request request) {
+     private void populateQueryString(Lookup address, Request request) {
         request.putParameter("street", address.getStreet());
         request.putParameter("street2", address.getStreet2());
         request.putParameter("secondary", address.getSecondary());

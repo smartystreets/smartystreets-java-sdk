@@ -4,7 +4,7 @@ import com.google.api.client.util.Key;
 
 import java.util.ArrayList;
 
-public class AddressLookup {
+public class Lookup {
     //region [ Fields ]
 
     private ArrayList<Candidate> result;
@@ -45,12 +45,12 @@ public class AddressLookup {
 
     //region [ Constructors ]
 
-    public AddressLookup() {
+    public Lookup() {
         this.maxCandidates = 1;
         this.result = new ArrayList<>();
     }
 
-    public AddressLookup(String freeformAddress) {
+    public Lookup(String freeformAddress) {
         this();
         this.street = freeformAddress;
     }
@@ -127,7 +127,7 @@ public class AddressLookup {
         this.result = result;
     }
 
-    public AddressLookup setInputId(String inputId) {
+    public Lookup setInputId(String inputId) {
         this.inputId = inputId;
         return this;
     }

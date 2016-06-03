@@ -14,7 +14,7 @@ public class BatchTest {
     @Test
     public void testGetsLookupByInputId() throws Exception {
         Batch batch = new Batch();
-        AddressLookup lookup = new AddressLookup().setInputId("hasInputId");
+        Lookup lookup = new Lookup().setInputId("hasInputId");
 
         batch.add(lookup);
 
@@ -24,7 +24,7 @@ public class BatchTest {
     @Test
     public void testGetsLookupByIndex() throws Exception {
         Batch batch = new Batch();
-        AddressLookup lookup = new AddressLookup();
+        Lookup lookup = new Lookup();
 
         batch.add(lookup);
 
@@ -35,9 +35,9 @@ public class BatchTest {
     public void testReturnsCorrectSize() throws Exception {
         Batch batch = new Batch();
 
-        batch.add(new AddressLookup());
-        batch.add(new AddressLookup());
-        batch.add(new AddressLookup());
+        batch.add(new Lookup());
+        batch.add(new Lookup());
+        batch.add(new Lookup());
 
         assertEquals(3, batch.size());
     }
@@ -45,7 +45,7 @@ public class BatchTest {
     @Test
     public void testAddingALookupWhenBatchIsFullThrowsException() throws Exception {
         Batch batch = new Batch();
-        AddressLookup lookup = new AddressLookup();
+        Lookup lookup = new Lookup();
 
         exception.expect(BatchFullException.class);
 
@@ -58,7 +58,7 @@ public class BatchTest {
         Batch batch = new Batch();
         batch.setIncludeInvalid(true);
         batch.setStandardizeOnly(true);
-        batch.add(new AddressLookup());
+        batch.add(new Lookup());
 
         batch.reset();
 
@@ -73,7 +73,7 @@ public class BatchTest {
         Batch batch = new Batch();
         batch.setIncludeInvalid(true);
         batch.setStandardizeOnly(true);
-        batch.add(new AddressLookup());
+        batch.add(new Lookup());
 
         batch.clear();
 
