@@ -15,7 +15,9 @@ sign:
 	mvn verify
 
 publish: tag
+    git push origin --tags
 	mvn clean deploy
+	git checkout pom.xml src/main/java/com/smartystreets/api/Version.java
 
 tag: version
 	@sed -i "" "s/0\.0\.0/$(shell git describe)/" pom.xml
