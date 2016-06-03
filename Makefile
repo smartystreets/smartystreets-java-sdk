@@ -5,8 +5,14 @@ SOURCE_VERSION := 1.0
 build:
 	mvn compile
 
+jar:
+	mvn package
+
 test:
 	mvn test
+
+sign:
+	mvn verify
 
 publish: tag
 	mvn clean deploy
