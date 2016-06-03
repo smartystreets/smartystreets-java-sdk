@@ -15,7 +15,7 @@ sign:
 	mvn verify
 
 publish: tag
-    git push origin --tags
+	git push origin --tags
 	mvn clean deploy
 	git checkout pom.xml src/main/java/com/smartystreets/api/Version.java
 
