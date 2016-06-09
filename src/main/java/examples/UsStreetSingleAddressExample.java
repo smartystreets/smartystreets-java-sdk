@@ -6,7 +6,7 @@ import com.smartystreets.api.us_street.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class UsStreetGetExample {
+public class UsStreetSingleAddressExample {
     public static void main(String[] args) {
         Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
 

@@ -31,17 +31,17 @@ public class GoogleSerializerTest {
 
         assertNotNull(results[0]);
         assertEquals(0, results[0].getInputIndex());
-        assertNotNull(results[0].getCityAndState(0));
-        assertEquals("Washington", results[0].getCityAndState(0).getCity());
+        assertNotNull(results[0].getCity(0));
+        assertEquals("Washington", results[0].getCity(0).getCity());
         assertEquals("20500", results[0].getZipCode(0).getZipCode());
 
         assertNotNull(results[1]);
         assertNull(results[1].getStatus());
-        assertEquals("Utah", results[1].getCityAndState(0).getState());
+        assertEquals("Utah", results[1].getCity(0).getState());
         assertEquals(38.89769, results[1].getZipCode(0).getLatitude(), .00001);
 
         assertNotNull(results[2]);
-        assertNull(results[2].getCityAndStates());
+        assertNull(results[2].getCities());
         assertEquals("invalid_zipcode", results[2].getStatus());
         assertEquals("Invalid ZIP Code.", results[2].getReason());
     }

@@ -2,7 +2,7 @@ package com.smartystreets.api.us_zipcode;
 
 import com.google.api.client.util.Key;
 
-public class CityAndState {
+public class City {
     //region [ Fields ]
 
     @Key("city")

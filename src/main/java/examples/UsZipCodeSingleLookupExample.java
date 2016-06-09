@@ -5,7 +5,7 @@ import com.smartystreets.api.us_zipcode.*;
 
 import java.io.IOException;
 
-public class UsZipCodeGetExample {
+public class UsZipCodeSingleLookupExample {
     public static void main(String[] args) {
         Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
 
@@ -26,12 +26,12 @@ public class UsZipCodeGetExample {
 
         Result result = lookup.getResult();
         ZipCode[] zipCodes = result.getZipCodes();
-        CityAndState[] cityStates = result.getCityAndStates();
+        City[] cities = result.getCities();
 
-        for (CityAndState cityState : cityStates) {
-            System.out.println("\nCity: " + cityState.getCity());
-            System.out.println("State: " + cityState.getState());
-            System.out.println("Mailable City: " + cityState.getMailableCity());
+        for (City city : cities) {
+            System.out.println("\nCity: " + city.getCity());
+            System.out.println("State: " + city.getState());
+            System.out.println("Mailable City: " + city.getMailableCity());
         }
 
         for (ZipCode zip : zipCodes) {

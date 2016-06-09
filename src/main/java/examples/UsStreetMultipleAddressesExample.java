@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class UsStreetPostExample {
+public class UsStreetMultipleAddressesExample {
     public static void main(String[] args) {
         Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
         Batch batch = new Batch();

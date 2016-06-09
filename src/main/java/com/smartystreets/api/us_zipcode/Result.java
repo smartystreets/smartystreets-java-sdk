@@ -15,7 +15,7 @@ public class Result {
     private int inputIndex;
 
     @Key("city_states")
-    private CityAndState[] cityStates;
+    private City[] cities;
 
     @Key("zipcodes")
     private ZipCode[] zipCodes;
@@ -29,8 +29,8 @@ public class Result {
         return (this.status == null && this.reason == null);
     }
 
-    public CityAndState getCityAndState(int index) {
-        return this.cityStates[index];
+    public City getCity(int index) {
+        return this.cities[index];
     }
 
     public ZipCode getZipCode(int index) {
@@ -51,8 +51,8 @@ public class Result {
         return this.inputIndex;
     }
 
-    public CityAndState[] getCityAndStates() {
-        return this.cityStates;
+    public City[] getCities() {
+        return this.cities;
     }
 
     public ZipCode[] getZipCodes() {

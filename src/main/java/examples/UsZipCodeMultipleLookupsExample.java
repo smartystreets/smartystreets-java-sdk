@@ -7,7 +7,7 @@ import com.smartystreets.api.us_zipcode.*;
 import java.io.IOException;
 import java.util.Vector;
 
-public class UsZipCodePostExample {
+public class UsZipCodeMultipleLookupsExample {
     public static void main(String[] args) {
         Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
         Batch batch = new Batch();
@@ -51,13 +51,13 @@ public class UsZipCodePostExample {
                 continue;
             }
 
-            CityAndState[] cityStates = result.getCityAndStates();
-            System.out.println(cityStates.length + " City and State match(es):");
+            City[] cities = result.getCities();
+            System.out.println(cities.length + " City and State match(es):");
 
-            for (CityAndState cityState : cityStates) {
-                System.out.println("City: " + cityState.getCity());
-                System.out.println("State: " + cityState.getState());
-                System.out.println("Mailable City: " + cityState.getMailableCity());
+            for (City city : cities) {
+                System.out.println("City: " + city.getCity());
+                System.out.println("State: " + city.getState());
+                System.out.println("Mailable City: " + city.getMailableCity());
                 System.out.println();
             }
 
