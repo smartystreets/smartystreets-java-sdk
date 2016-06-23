@@ -2,6 +2,9 @@
 
 SOURCE_VERSION := 1.0
 
+clean:
+	mvn clean
+
 build:
 	mvn compile
 
