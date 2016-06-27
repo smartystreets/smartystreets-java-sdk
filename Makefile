@@ -2,6 +2,9 @@
 
 SOURCE_VERSION := 1.0
 
+clean:
+	mvn clean
+
 build:
 	mvn compile
 
@@ -20,8 +23,8 @@ publish: tag
 	git checkout pom.xml src/main/java/com/smartystreets/api/Version.java
 
 tag: version
-	@sed -i "" "s/0\.0\.0/$(shell git describe)/" pom.xml
-	@sed -i "" "s/0\.0\.0/$(shell git describe)/" src/main/java/com/smartystreets/api/Version.java
+	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" pom.xml
+	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/main/java/com/smartystreets/api/Version.java
 
 version:
 	$(eval PREFIX := $(SOURCE_VERSION).)

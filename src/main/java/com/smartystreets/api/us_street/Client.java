@@ -68,13 +68,8 @@ public class Client {
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
     }
 
-     private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
-        for (int i = 0; i < batch.size(); i++) {
-            for (Candidate candidate : candidates) {
-                if (candidate.getInputIndex() == i) {
-                    batch.get(i).addToResult(candidate);
-                }
-            }
-        }
+    private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
+        for (Candidate candidate : candidates)
+            batch.get(candidate.getInputIndex()).addToResult(candidate);
     }
 }
