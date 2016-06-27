@@ -4,3 +4,4 @@
 /smartystreets-java-sdk.iml
 
 target
+.vagrant/machines/default/virtualbox
