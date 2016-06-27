@@ -11,6 +11,7 @@ public class Request {
     private final Map<String, String> parameters;
     private String urlPrefix;
     private String method;
+    private String hostname;
     private byte[] payload;
 
     public Request() {
@@ -73,6 +74,10 @@ public class Request {
         return this.payload;
     }
 
+    public String getHostname() {
+        return hostname;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -80,6 +85,10 @@ public class Request {
     public void setPayload(byte[] payload) {
         this.method = "POST";
         this.payload = payload;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 
     //endregion
