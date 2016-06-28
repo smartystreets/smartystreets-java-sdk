@@ -13,7 +13,7 @@ public class SharedCredentialsTest {
         assertEquals(expected, request.getUrl());
     }
 
-    @Test public void assertRefererHeaderHasCorrectUrl() {
+    @Test public void assertReferringHeader() {
         Request request = this.createSignedRequest();
 
         assertEquals("https://example.com", request.getHeaders().get("Referer"));

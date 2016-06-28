@@ -11,7 +11,6 @@ public class Request {
     private final Map<String, String> parameters;
     private String urlPrefix;
     private String method;
-    private String referrer;
     private byte[] payload;
 
     public Request() {
