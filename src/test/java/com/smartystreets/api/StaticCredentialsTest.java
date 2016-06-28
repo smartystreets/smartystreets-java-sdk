@@ -22,6 +22,5 @@ public class StaticCredentialsTest {
         Request request = new Request("https://api.smartystreets.com/street-address?");
         credentials.sign(request);
         assertEquals(expected, request.getUrl());
-
     }
 }
