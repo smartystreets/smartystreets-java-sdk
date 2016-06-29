@@ -15,11 +15,13 @@ end
 
 $provision = <<-EOF
   apt-get install -y maven openjdk-7-jdk
+
+  sed -i -r "s/#default-key 621CC013/default-key F39CD1E9/g" /home/vagrant/.gnupg/gpg.conf
+
   sed -i -r "s%<servers>%<servers>\
   <server>\
     <id>ossr</id>\
     <username>smartystreets</username>\
     <password>$OSSRH_PASSWORD</password>\
   </server>%g" /etc/maven/settings.xml
-  sed -i -r "s%<profiles>%<profiles><profile><id>ossrh</id><activation><activeByDefault>true</activeByDefault></activation><properties><gpg.executable>gpg</gpg.executable><gpg.passphrase>password</gpg.passphrase></properties></profile>%g" /etc/maven/settings.xml
 EOF
