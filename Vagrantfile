@@ -20,8 +20,19 @@ $provision = <<-EOF
 
   sed -i -r "s%<servers>%<servers>\
   <server>\
-    <id>ossr</id>\
+    <id>ossrh</id>\
     <username>smartystreets</username>\
     <password>$OSSRH_PASSWORD</password>\
   </server>%g" /etc/maven/settings.xml
+
+  sed -i -r "s%<profiles>%<profiles>\
+  <profile>\
+    <id>ossrh</id>\
+    <activation>\
+      <activeByDefault>true</activeByDefault>\
+    </activation>\
+    <properties>\
+      <gpg.executable>gpg</gpg.executable>\
+    </properties>\
+  </profile>%g" /etc/maven/settings.xml
 EOF
