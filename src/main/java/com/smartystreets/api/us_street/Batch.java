@@ -21,7 +21,7 @@ public class Batch {
     }
 
     public void add(Lookup newAddress) throws BatchFullException {
-        if (this.allLookups.size() >= MAX_BATCH_SIZE)
+        if (this.isFull())
             throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);
 
         this.allLookups.add(newAddress);
@@ -45,10 +45,14 @@ public class Batch {
         this.allLookups.clear();
     }
 
-    //region [ Iterator ]
+    //region [ Helpers ]
 
     public int size() {
         return this.allLookups.size();
+    }
+
+    public boolean isFull() {
+        return (this.size() >= MAX_BATCH_SIZE);
     }
 
     public Iterator<Lookup> iterator() {
