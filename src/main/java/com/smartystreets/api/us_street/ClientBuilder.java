@@ -14,7 +14,7 @@ public class ClientBuilder {
         this.serializer = new GoogleSerializer();
         this.maxRetries = 5;
         this.maxTimeout = 10000;
-        this.urlPrefix = "https://api.smartystreets.com/street-address";
+        this.urlPrefix = "https://us-street.api.smartystreets.com/street-address";
     }
 
     public ClientBuilder(Credentials signer) {
