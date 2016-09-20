@@ -1,6 +1,8 @@
 package com.smartystreets.api.us_street;
 
 import com.google.api.client.util.Key;
+import com.google.api.client.util.Strings;
+import com.smartystreets.api.MatchType;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,9 @@ public class Lookup {
 
     @Key("urbanization")
     private String urbanization;
+
+    @Key("match")
+    private String match;
 
     @Key("candidates")
     private int maxCandidates;
@@ -115,6 +120,16 @@ public class Lookup {
         return this.urbanization;
     }
 
+    public MatchType getMatch() {
+        if (this.match.equals("strict") )
+            return MatchType.STRICT;
+        if (this.match.equals("range") )
+            return MatchType.RANGE;
+        if (this.match.equals("invalid") )
+            return MatchType.INVALID;
+        return null;
+    }
+
     public int getMaxCandidates() {
         return this.maxCandidates;
     }
@@ -168,6 +183,10 @@ public class Lookup {
         this.urbanization = urbanization;
     }
 
+    public void setMatch(MatchType match) {
+        this.match = match.getName();
+    }
+
     public void setMaxCandidates(int maxCandidates) throws IllegalArgumentException {
         if (maxCandidates > 0) {
             this.maxCandidates = maxCandidates;
@@ -178,3 +197,5 @@ public class Lookup {
 
     //endregion
 }
+
+
