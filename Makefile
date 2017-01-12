@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-SOURCE_VERSION := 1.0
+SOURCE_VERSION := 1.1
 
 clean:
 	mvn clean
