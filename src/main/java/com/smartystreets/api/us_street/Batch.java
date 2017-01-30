@@ -11,11 +11,8 @@ public class Batch {
     public static final int MAX_BATCH_SIZE = 100;
     private Map<String, Lookup> namedLookups;
     private Vector<Lookup> allLookups;
-    private boolean standardizeOnly, includeInvalid;
 
     public Batch() {
-        this.standardizeOnly = false;
-        this.includeInvalid = false;
         this.namedLookups = new LinkedHashMap<>();
         this.allLookups = new Vector<>();
     }
@@ -36,8 +33,6 @@ public class Batch {
 
     public void reset() {
         this.clear();
-        this.standardizeOnly = false;
-        this.includeInvalid = false;
     }
 
     public void clear() {
@@ -63,14 +58,6 @@ public class Batch {
 
     //region [ Getters ]
 
-    public boolean getStandardizeOnly() {
-        return this.standardizeOnly;
-    }
-
-    public boolean getIncludeInvalid() {
-        return this.includeInvalid;
-    }
-
     public Map<String, Lookup> getNamedLookups() {
         return this.namedLookups;
     }
@@ -85,18 +72,6 @@ public class Batch {
 
     public Vector<Lookup> getAllLookups() {
         return this.allLookups;
-    }
-
-    //endregion
-
-    //region [ Setters ]
-
-    public void setStandardizeOnly(boolean newValue) {
-        this.standardizeOnly = newValue;
-    }
-
-    public void setIncludeInvalid(boolean newValue) {
-        this.includeInvalid = newValue;
     }
 
     //endregion
