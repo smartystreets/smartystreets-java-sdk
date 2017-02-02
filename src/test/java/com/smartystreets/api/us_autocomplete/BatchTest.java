@@ -1,25 +1,16 @@
-package com.smartystreets.api.us_street;
+package com.smartystreets.api.us_autocomplete;
+
 
 import com.smartystreets.api.exceptions.BatchFullException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class BatchTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
-
-    @Test
-    public void testGetsLookupByInputId() throws Exception {
-        Batch batch = new Batch();
-        Lookup lookup = new Lookup().setInputId("hasInputId");
-
-        batch.add(lookup);
-
-        assertEquals(lookup, batch.get("hasInputId"));
-    }
 
     @Test
     public void testGetsLookupByIndex() throws Exception {
@@ -52,5 +43,4 @@ public class BatchTest {
         for (int i = 0; i < Batch.MAX_BATCH_SIZE + 1; i++)
             batch.add(lookup);
     }
-
 }
