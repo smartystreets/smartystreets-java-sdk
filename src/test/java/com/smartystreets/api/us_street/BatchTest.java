@@ -52,34 +52,5 @@ public class BatchTest {
         for (int i = 0; i < Batch.MAX_BATCH_SIZE + 1; i++)
             batch.add(lookup);
     }
-
-    @Test
-    public void testResetMethodResetsHeadersAndLookups() throws Exception {
-        Batch batch = new Batch();
-        batch.setIncludeInvalid(true);
-        batch.setStandardizeOnly(true);
-        batch.add(new Lookup());
-
-        batch.reset();
-
-        assertEquals(0, batch.getAllLookups().size());
-        assertEquals(0, batch.getNamedLookups().size());
-        assertFalse(batch.getIncludeInvalid());
-        assertFalse(batch.getStandardizeOnly());
-    }
-
-    @Test
-    public void testClearMethodClearsBothLookupCollectionsButNotHeaders() throws Exception {
-        Batch batch = new Batch();
-        batch.setIncludeInvalid(true);
-        batch.setStandardizeOnly(true);
-        batch.add(new Lookup());
-
-        batch.clear();
-
-        assertEquals(0, batch.getAllLookups().size());
-        assertEquals(0, batch.getNamedLookups().size());
-        assertTrue(batch.getIncludeInvalid());
-        assertTrue(batch.getStandardizeOnly());
-    }
+    
 }

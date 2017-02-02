@@ -31,8 +31,6 @@ public class Client {
         if (batch.size() == 0)
             return;
 
-        this.putHeaders(batch, request);
-
         if (batch.size() == 1)
             this.populateQueryString(batch.get(0), request);
         else
@@ -46,12 +44,6 @@ public class Client {
         this.assignCandidatesToLookups(batch, candidates);
     }
 
-    private void putHeaders(Batch batch, Request request) {
-        if (batch.getIncludeInvalid())
-            request.putHeader("X-Include-Invalid", "true");
-        else if (batch.getStandardizeOnly())
-            request.putHeader("X-Standardize-Only", "true");
-    }
 
      private void populateQueryString(Lookup address, Request request) {
         request.putParameter("street", address.getStreet());

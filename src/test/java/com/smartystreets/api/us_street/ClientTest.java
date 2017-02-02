@@ -1,14 +1,11 @@
 package com.smartystreets.api.us_street;
 
-import com.smartystreets.api.Request;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
 import org.junit.Test;
-
-import java.util.Map;
 
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertArrayEquals;
@@ -77,55 +74,6 @@ public class ClientTest {
         client.send(batch);
 
         assertArrayEquals(expectedPayload, sender.getRequest().getPayload());
-    }
-
-    //endregion
-
-    //region [ Request Headers ]
-
-    @Test
-    public void testNoHeadersAddedToRequest() throws Exception {
-        this.assertHeadersSetCorrectly(false, false);
-    }
-
-    @Test
-    public void testIncludeInvalidHeaderCorrectlyAddedToRequest() throws Exception {
-        this.assertHeadersSetCorrectly(true, false);
-    }
-
-    @Test
-    public void testStandardizeOnlyHeaderCorrectlyAddedToRequest() throws Exception {
-        this.assertHeadersSetCorrectly(false, true);
-    }
-
-    @Test
-    public void testIncludeInvalidHeaderCorrectlyAddedToRequestWhenBothBatchOptionsAreSet() throws Exception {
-        this.assertHeadersSetCorrectly(true, true);
-    }
-
-    private void assertHeadersSetCorrectly(boolean includeInvalid, boolean standardizeOnly) throws Exception {
-        RequestCapturingSender sender = new RequestCapturingSender();
-        Client client = new Client("http://localhost/", sender, new FakeSerializer(new byte[0]));
-        Batch batch = new Batch();
-        batch.add(new Lookup());
-
-        batch.setStandardizeOnly(standardizeOnly);
-        batch.setIncludeInvalid(includeInvalid);
-        client.send(batch);
-
-        Request request = sender.getRequest();
-        Map<String, String> headers = request.getHeaders();
-
-        if (includeInvalid) {
-            assertEquals("true", headers.get("X-Include-Invalid"));
-            assertNull(headers.get("X-Standardize-Only"));
-        } else if (standardizeOnly) {
-            assertEquals("true", headers.get("X-Standardize-Only"));
-            assertNull(headers.get("X-Include-Invalid"));
-        } else {
-            assertNull(headers.get("X-Include-Invalid"));
-            assertNull(headers.get("X-Standardize-Only"));
-        }
     }
 
     //endregion
