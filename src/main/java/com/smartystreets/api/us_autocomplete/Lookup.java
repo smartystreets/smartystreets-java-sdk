@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Lookup {
     //region [ Fields ]
 
-    private ArrayList<Suggestion> result;
+    private Result result;
 
     @Key("prefix")
     private String prefix;
@@ -36,7 +36,7 @@ public class Lookup {
 
     public Lookup() {
         this.maxSuggestions = 10;
-        this.result = new ArrayList<Suggestion>();
+        this.result = new Result();
     }
 
     public Lookup(String prefix) {
@@ -46,18 +46,14 @@ public class Lookup {
 
     //endregion
 
-    public void addToResult(Suggestion newSuggestion) {
-        this.result.add(newSuggestion);
-    }
-
     //region [ Getters ]
 
-    public ArrayList<Suggestion> getResult() {
-        return result;
+    public Result getResult() {
+        return this.result;
     }
 
     public Suggestion getResult(int index) {
-        return this.result.get(index);
+        return this.result.getSuggestions()[index];
     }
 
     public String getPrefix() {
@@ -92,7 +88,7 @@ public class Lookup {
 
     //region [ Setters ]
 
-    public void setResult(ArrayList<Suggestion> result) {
+    public void setResult(Result result) {
         this.result = result;
     }
 
