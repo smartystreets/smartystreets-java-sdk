@@ -2,7 +2,6 @@ package com.smartystreets.api.us_autocomplete;
 
 import com.google.api.client.util.Key;
 
-import java.util.ArrayList;
 
 public class Lookup {
     //region [ Fields ]
@@ -36,6 +35,7 @@ public class Lookup {
 
     public Lookup() {
         this.maxSuggestions = 10;
+        this.geolocate = true;
         this.result = new Result();
     }
 
@@ -72,7 +72,7 @@ public class Lookup {
         return prefer;
     }
 
-    public boolean isGeolocate() {
+    public boolean getGeolocate() {
         return geolocate;
     }
 

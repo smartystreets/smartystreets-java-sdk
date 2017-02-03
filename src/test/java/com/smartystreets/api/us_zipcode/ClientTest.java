@@ -85,7 +85,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testCandidatesCorrectlyAssignedToCorrespondingLookup() throws Exception {
+    public void testResultsCorrectlyAssignedToCorrespondingLookups() throws Exception {
         Result[] expectedCandidates = new Result[2];
         expectedCandidates[0] = new Result();
         expectedCandidates[1] = new Result();
