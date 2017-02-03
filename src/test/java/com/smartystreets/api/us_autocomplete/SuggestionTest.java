@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class SuggestionTest {
     private final GoogleSerializer googleSerializer = new GoogleSerializer();
-    private static final String responsePayload = "{\"suggestions\":[{\"text\":\"1\"}]}";
+    private static final String responsePayload = "{\"suggestions\":[{\"text\":\"1\",\"street_line\":\"2\",\"city\":\"3\",\"state\":\"4\"}]}";
 
     @Test
     public void testAllFieldGetFilledInCorrectly() throws IOException {
@@ -18,6 +18,8 @@ public class SuggestionTest {
 
         assertNotNull(result.getSuggestions()[0]);
         assertEquals("1", result.getSuggestion(0).getText());
-        //TODO: assert everything got assigned correctly
+        assertEquals("2", result.getSuggestion(0).getStreetLine());
+        assertEquals("3", result.getSuggestion(0).getCity());
+        assertEquals("4", result.getSuggestion(0).getState());
     }
 }
