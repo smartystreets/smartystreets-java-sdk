@@ -19,7 +19,8 @@ public class StaticCredentialsTest {
 
     private static void assertSignedRequest(String id, String secret, String expected) {
         StaticCredentials credentials = new StaticCredentials(id, secret);
-        Request request = new Request("https://us-street.api.smartystreets.com/street-address?");
+        Request request = new Request();
+        request.setUrlPrefix("https://us-street.api.smartystreets.com/street-address?");
         credentials.sign(request);
         assertEquals(expected, request.getUrl());
     }

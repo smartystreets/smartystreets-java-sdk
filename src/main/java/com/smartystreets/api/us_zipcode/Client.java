@@ -9,12 +9,10 @@ import com.smartystreets.api.exceptions.SmartyException;
 import java.io.IOException;
 
 public class Client {
-    private final String urlPrefix;
     private final Sender sender;
     private final Serializer serializer;
 
-    public Client(String urlPrefix, Sender sender, Serializer serializer) {
-        this.urlPrefix = urlPrefix;
+    public Client(Sender sender, Serializer serializer) {
         this.sender = sender;
         this.serializer = serializer;
     }
@@ -26,7 +24,7 @@ public class Client {
     }
 
     public void send(Batch batch) throws SmartyException, IOException {
-        Request request = new Request(this.urlPrefix);
+        Request request = new Request();
 
         if (batch.size() == 0)
             return;

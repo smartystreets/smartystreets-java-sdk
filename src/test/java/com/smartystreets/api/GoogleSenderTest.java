@@ -22,7 +22,8 @@ public class GoogleSenderTest {
     @Test
     public void testHttpRequestContainsCorrectHeaders() throws Exception {
         GoogleSender sender = new GoogleSender(this.getMockTransport());
-        Request request = new Request("http://localhost");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
         request.putHeader("X-name1", "value1");
         request.putHeader("X-name2", "value2");
 
@@ -36,7 +37,8 @@ public class GoogleSenderTest {
     @Test
     public void testHttpRequestContainsGetWhenAppropriate() throws Exception {
         GoogleSender sender = new GoogleSender(this.getMockTransport());
-        Request request = new Request("http://localhost");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
 
         Response response = sender.send(request);
 
@@ -46,7 +48,8 @@ public class GoogleSenderTest {
     @Test
     public void testHttpRequestContainsPostWhenAppropriate() throws Exception {
         GoogleSender sender = new GoogleSender(this.getMockTransport());
-        Request request = new Request("http://localhost");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
 
         request.setPayload(new byte[0]);
         Response response = sender.send(request);
@@ -57,7 +60,8 @@ public class GoogleSenderTest {
     @Test
     public void testHttpRequestContainsCorrectContent() throws Exception {
         GoogleSender sender = new GoogleSender(this.getMockTransport());
-        Request request = new Request("http://localhost");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
 
         request.setPayload("This is the test content.".getBytes());
         sender.send(request);
@@ -72,7 +76,8 @@ public class GoogleSenderTest {
     @Test
     public void testResponseContainsCorrectPayload() throws Exception {
         GoogleSender sender = new GoogleSender(this.getMockTransport());
-        Request request = new Request("http://localhost");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
 
         Response response = sender.send(request);
 
@@ -82,7 +87,8 @@ public class GoogleSenderTest {
     @Test
     public void testResponseContainsStatusCode200OnSuccess() throws Exception {
         GoogleSender sender = new GoogleSender(this.getMockTransport());
-        Request request = new Request("http://localhost");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
 
         Response response = sender.send(request);
 
@@ -92,7 +98,8 @@ public class GoogleSenderTest {
     @Test
     public void testResponseContainsStatusCode400WhenA400IsThrown() throws Exception {
         GoogleSender sender = new GoogleSender(this.getErrorTransport());
-        Request request = new Request("http://localhost");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
 
         Response response = sender.send(request);
 

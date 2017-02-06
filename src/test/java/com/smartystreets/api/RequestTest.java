@@ -26,7 +26,8 @@ public class RequestTest {
     }
 
     private void assertQueryStringParameters(String name, String value, String expected) throws Exception {
-        Request request = new Request("http://localhost/?");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/?");
 
         request.putParameter(name, value);
 
@@ -35,7 +36,8 @@ public class RequestTest {
 
     @Test
     public void testMultipleQueryStringParameters() throws Exception {
-        Request request = new Request("http://localhost/?");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/?");
 
         request.putParameter("name1", "value1");
         request.putParameter("name2", "value2");
@@ -47,7 +49,8 @@ public class RequestTest {
 
     @Test
     public void testUrlEncodingOfQueryStringParameters() throws Exception {
-        Request request = new Request("http://localhost/?");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/?");
 
         request.putParameter("name&", "value");
         request.putParameter("name1", "other !value$");
@@ -59,7 +62,8 @@ public class RequestTest {
 
     @Test
     public void testHeadersAddedToRequest() throws Exception {
-        Request request = new Request("http://localhost/?");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/?");
 
         request.putHeader("header1", "value1");
         request.putHeader("header2", "value2");
@@ -70,14 +74,16 @@ public class RequestTest {
 
     @Test
     public void testGet() throws Exception {
-        Request request = new Request("http://localhost/?");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/?");
         assertEquals("GET", request.getMethod());
         assertNull(request.getPayload());
     }
 
     @Test
     public void testPost() throws Exception {
-        Request request = new Request("http://localhost/?");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/?");
 
         request.setPayload(new byte[]{0,1,2});
         byte[] actualPayload = request.getPayload();
@@ -88,7 +94,8 @@ public class RequestTest {
 
     @Test
     public void testUrlWithoutTrailingQuestionMark() {
-        Request request = new Request("http://localhost/");
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/");
 
         request.putParameter("name1", "value1");
         request.putParameter("name2", "value2");

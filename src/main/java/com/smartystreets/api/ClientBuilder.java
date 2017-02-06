@@ -54,17 +54,17 @@ public class ClientBuilder {
 
     public com.smartystreets.api.us_autocomplete.Client buildUSAutocompleteAPIClient() {
         this.ensureURLPrefixNotNull(this.defaultURLPrefix_USAutocompleteAPI);
-        return new com.smartystreets.api.us_autocomplete.Client(this.urlPrefix, this.buildSender(), this.serializer);
+        return new com.smartystreets.api.us_autocomplete.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_street.Client buildUSStreetAPIClient() {
         this.ensureURLPrefixNotNull(this.defaultURLPrefix_USStreetAPI);
-        return new com.smartystreets.api.us_street.Client(this.urlPrefix, this.buildSender(), this.serializer);
+        return new com.smartystreets.api.us_street.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_zipcode.Client buildUSZIPCodeAPIClient() {
         this.ensureURLPrefixNotNull(this.defaultURLPrefix_USZIPCodeAPI);
-        return new com.smartystreets.api.us_zipcode.Client(this.urlPrefix, this.buildSender(), this.serializer);
+        return new com.smartystreets.api.us_zipcode.Client(this.buildSender(), this.serializer);
     }
 
     public Sender buildSender() {
@@ -77,6 +77,8 @@ public class ClientBuilder {
 
         if (this.signer != null)
             sender = new SigningSender(this.signer, sender);
+
+        sender = new URLPrefixSender(this.urlPrefix, sender);
 
         if (this.maxRetries > 0)
             sender = new RetrySender(this.maxRetries, sender);

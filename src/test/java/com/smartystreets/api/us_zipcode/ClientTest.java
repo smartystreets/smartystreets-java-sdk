@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_zipcode;
 
 import com.smartystreets.api.Response;
+import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
@@ -15,20 +16,22 @@ public class ClientTest {
 
     @Test
     public void testSendingSingleZipOnlyLookup() throws Exception {
-        RequestCapturingSender sender = new RequestCapturingSender();
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(null);
-        Client client = new Client("http://localhost/", sender, serializer);
+        Client client = new Client(sender, serializer);
 
         client.send(new Lookup("1"));
 
-        assertEquals("http://localhost/?zipcode=1", sender.getRequest().getUrl());
+        assertEquals("http://localhost/?zipcode=1", capturingSender.getRequest().getUrl());
     }
 
     @Test
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
-        RequestCapturingSender sender = new RequestCapturingSender();
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(null);
-        Client client = new Client("http://localhost/", sender, serializer);
+        Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
         lookup.setCity("1");
         lookup.setState("2");
@@ -36,7 +39,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?city=1&state=2&zipcode=3", sender.getRequest().getUrl());
+        assertEquals("http://localhost/?city=1&state=2&zipcode=3", capturingSender.getRequest().getUrl());
     }
 
     //endregion
@@ -46,7 +49,7 @@ public class ClientTest {
     @Test
     public void testEmptyBatchNotSent() throws Exception {
         RequestCapturingSender sender = new RequestCapturingSender();
-        Client client = new Client("/", sender, null);
+        Client client = new Client(sender, null);
 
         client.send(new Batch());
 
@@ -58,7 +61,7 @@ public class ClientTest {
         byte[] expectedPayload = "Hello, World!".getBytes();
         RequestCapturingSender sender = new RequestCapturingSender();
         FakeSerializer serializer = new FakeSerializer(expectedPayload);
-        Client client = new Client("http://localhost/", sender, serializer);
+        Client client = new Client(sender, serializer);
         Batch batch = new Batch();
         batch.add(new Lookup());
         batch.add(new Lookup());
@@ -77,7 +80,7 @@ public class ClientTest {
         Response response = new Response(0, "Hello, World!".getBytes());
         MockSender sender = new MockSender(response);
         FakeDeserializer deserializer = new FakeDeserializer(null);
-        Client client = new Client("/", sender, deserializer);
+        Client client = new Client(sender, deserializer);
 
         client.send(new Lookup());
 
@@ -95,7 +98,7 @@ public class ClientTest {
 
         MockSender sender = new MockSender(new Response(0, "[]".getBytes()));
         FakeDeserializer deserializer = new FakeDeserializer(expectedCandidates);
-        Client client = new Client("/", sender, deserializer);
+        Client client = new Client(sender, deserializer);
 
         client.send(batch);
 

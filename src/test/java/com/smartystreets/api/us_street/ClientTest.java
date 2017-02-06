@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_street;
 
 import com.smartystreets.api.Response;
+import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
@@ -16,20 +17,22 @@ public class ClientTest {
 
     @Test
     public void testSendingSingleFreeformLookup() throws Exception {
-        RequestCapturingSender sender = new RequestCapturingSender();
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(null);
-        Client client = new Client("http://localhost/", sender, serializer);
+        Client client = new Client(sender, serializer);
 
         client.send(new Lookup("freeform"));
 
-        assertEquals("http://localhost/?street=freeform", sender.getRequest().getUrl());
+        assertEquals("http://localhost/?street=freeform", capturingSender.getRequest().getUrl());
     }
 
     @Test
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
-        RequestCapturingSender sender = new RequestCapturingSender();
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(null);
-        Client client = new Client("http://localhost/", sender, serializer);
+        Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
         lookup.setAddressee("0");
         lookup.setStreet("1");
@@ -44,7 +47,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", sender.getRequest().getUrl());
+        assertEquals("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", capturingSender.getRequest().getUrl());
     }
 
     //endregion
@@ -54,7 +57,7 @@ public class ClientTest {
     @Test
     public void testEmptyBatchNotSent() throws Exception {
         RequestCapturingSender sender = new RequestCapturingSender();
-        Client client = new Client("/", sender, null);
+        Client client = new Client(sender, null);
 
         client.send(new Batch());
 
@@ -66,7 +69,7 @@ public class ClientTest {
         byte[] expectedPayload = "Hello, World!".getBytes();
         RequestCapturingSender sender = new RequestCapturingSender();
         FakeSerializer serializer = new FakeSerializer(expectedPayload);
-        Client client = new Client("http://localhost/", sender, serializer);
+        Client client = new Client(sender, serializer);
         Batch batch = new Batch();
         batch.add(new Lookup());
         batch.add(new Lookup());
@@ -85,7 +88,7 @@ public class ClientTest {
         Response response = new Response(0, "Hello, World!".getBytes());
         MockSender sender = new MockSender(response);
         FakeDeserializer deserializer = new FakeDeserializer(null);
-        Client client = new Client("/", sender, deserializer);
+        Client client = new Client(sender, deserializer);
 
         client.send(new Lookup());
 
@@ -104,7 +107,7 @@ public class ClientTest {
 
         MockSender sender = new MockSender(new Response(0, "[]".getBytes()));
         FakeDeserializer deserializer = new FakeDeserializer(expectedCandidates);
-        Client client = new Client("/", sender, deserializer);
+        Client client = new Client(sender, deserializer);
 
         client.send(batch);
 

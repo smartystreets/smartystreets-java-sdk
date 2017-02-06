@@ -14,13 +14,10 @@ public class Request {
     private byte[] payload;
 
     public Request() {
+        this.urlPrefix = "";
         this.method = "GET";
         this.headers = new HashMap<>();
         this.parameters = new LinkedHashMap<>();
-    }
-    public Request(String urlPrefix) {
-        this();
-        this.urlPrefix = urlPrefix;
     }
 
     public void putHeader(String name, String value) {
@@ -80,6 +77,10 @@ public class Request {
     public void setPayload(byte[] payload) {
         this.method = "POST";
         this.payload = payload;
+    }
+
+    public void setUrlPrefix(String urlPrefix) {
+        this.urlPrefix = urlPrefix;
     }
 
     //endregion

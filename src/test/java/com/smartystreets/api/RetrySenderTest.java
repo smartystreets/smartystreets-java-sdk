@@ -42,7 +42,8 @@ public class RetrySenderTest {
     }
 
     private void sendRequest(String requestBehavior) throws Exception {
-        Request request = new Request(requestBehavior);
+        Request request = new Request();
+        request.setUrlPrefix(requestBehavior);
         RetrySender retrySender = new RetrySender(5, this.mockCrashingSender);
 
         retrySender.send(request);
