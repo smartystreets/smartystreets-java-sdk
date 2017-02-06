@@ -3,13 +3,14 @@ package examples;
 import com.smartystreets.api.exceptions.BatchFullException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_zipcode.*;
+import com.smartystreets.api.ClientBuilder;
 
 import java.io.IOException;
 import java.util.Vector;
 
 public class UsZipCodeMultipleLookupsExample {
     public static void main(String[] args) {
-        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
+        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").buildUSZIPCodeAPIClient();
         Batch batch = new Batch();
 
         Lookup lookup0 = new Lookup();

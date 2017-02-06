@@ -3,6 +3,7 @@ package examples;
 import com.smartystreets.api.exceptions.BatchFullException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
+import com.smartystreets.api.ClientBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Vector;
 
 public class UsStreetMultipleAddressesExample {
     public static void main(String[] args) {
-        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").build();
+        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").buildUSStreetAPIClient();
         Batch batch = new Batch();
 
         Lookup address0 = new Lookup();
