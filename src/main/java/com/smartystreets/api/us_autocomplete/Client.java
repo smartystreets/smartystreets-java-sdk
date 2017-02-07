@@ -30,13 +30,14 @@ public class Client {
 
         request.putParameter("prefix", lookup.getPrefix());
         request.putParameter("suggestions", Integer.toString(lookup.getMaxSuggestions()));
-        request.putParameter("city_filter", buildFilterString(lookup.getCityFilter()));
-        request.putParameter("state_filter", buildFilterString(lookup.getStateFilter()));
-        request.putParameter("prefer", buildFilterString(lookup.getPrefer()));
+        request.putParameter("city_filter", this.buildFilterString(lookup.getCityFilter()));
+        request.putParameter("state_filter", this.buildFilterString(lookup.getStateFilter()));
+        request.putParameter("prefer", this.buildFilterString(lookup.getPrefer()));
         if (lookup.getGeolocateType() != GeolocateType.NONE) {
             request.putParameter("geolocate", "true");
             request.putParameter("geolocate_precision", lookup.getGeolocateType().getName());
         }
+        else request.putParameter("geolocate", "false");
 
         return request;
     }
