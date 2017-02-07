@@ -1,10 +1,7 @@
 package com.smartystreets.api.us_autocomplete;
 
 
-import com.smartystreets.api.Request;
-import com.smartystreets.api.Response;
-import com.smartystreets.api.Sender;
-import com.smartystreets.api.Serializer;
+import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
@@ -36,8 +33,10 @@ public class Client {
         request.putParameter("city_filter", buildFilterString(lookup.getCityFilter()));
         request.putParameter("state_filter", buildFilterString(lookup.getStateFilter()));
         request.putParameter("prefer", buildFilterString(lookup.getPrefer()));
-        request.putParameter("geolocate", Boolean.toString(lookup.getGeolocate()));
-        request.putParameter("geolocate_precision", lookup.getGeolocatePrecision());
+        if (lookup.getGeolocateType() != GeolocateType.NONE) {
+            request.putParameter("geolocate", "true");
+            request.putParameter("geolocate_precision", lookup.getGeolocateType().getName());
+        }
 
         return request;
     }

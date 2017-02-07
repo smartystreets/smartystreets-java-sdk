@@ -1,7 +1,8 @@
 package com.smartystreets.api.us_autocomplete;
 
-import java.util.ArrayList;
+import com.smartystreets.api.GeolocateType;
 
+import java.util.ArrayList;
 
 public class Lookup {
     //region [ Fields ]
@@ -18,9 +19,7 @@ public class Lookup {
 
     private ArrayList<String> prefer;
 
-    private boolean geolocate;
-
-    private String geolocatePrecision;
+    private GeolocateType geolocateType;
 
     //endregion
 
@@ -28,7 +27,7 @@ public class Lookup {
 
     public Lookup() {
         this.maxSuggestions = 10;
-        this.geolocate = true;
+        this.geolocateType = GeolocateType.CITY;
         this.result = new Result();
         this.cityFilter = new ArrayList<>();
         this.stateFilter = new ArrayList<>();
@@ -68,13 +67,10 @@ public class Lookup {
         return prefer;
     }
 
-    public boolean getGeolocate() {
-        return geolocate;
+    public GeolocateType getGeolocateType() {
+        return geolocateType;
     }
 
-    public String getGeolocatePrecision() {
-        return geolocatePrecision;
-    }
 
     public int getMaxSuggestions() {
         return maxSuggestions;
@@ -104,13 +100,10 @@ public class Lookup {
         this.prefer = prefer;
     }
 
-    public void setGeolocate(boolean geolocate) {
-        this.geolocate = geolocate;
+    public void setGeolocateType(GeolocateType geolocateType) {
+        this.geolocateType = geolocateType;
     }
 
-    public void setGeolocatePrecision(String geolocatePrecision) {
-        this.geolocatePrecision = geolocatePrecision;
-    }
 
     public void setMaxSuggestions(int maxSuggestions) throws IllegalArgumentException{
         if (maxSuggestions > 0 && maxSuggestions <= 10) {
