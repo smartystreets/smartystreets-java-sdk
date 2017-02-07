@@ -1,7 +1,5 @@
 package com.smartystreets.api.us_autocomplete;
 
-import com.smartystreets.api.GeolocateType;
-
 import java.util.ArrayList;
 
 public class Lookup {

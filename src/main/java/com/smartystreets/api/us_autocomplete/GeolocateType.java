@@ -1,4 +1,4 @@
-package com.smartystreets.api;
+package com.smartystreets.api.us_autocomplete;
 
 public enum GeolocateType {
     CITY("city"), STATE("state"), NONE("null");

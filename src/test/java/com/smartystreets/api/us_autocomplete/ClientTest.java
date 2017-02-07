@@ -1,7 +1,6 @@
 package com.smartystreets.api.us_autocomplete;
 
 
-import com.smartystreets.api.GeolocateType;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.mocks.FakeDeserializer;
