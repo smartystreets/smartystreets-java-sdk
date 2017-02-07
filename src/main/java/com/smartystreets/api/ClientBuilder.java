@@ -81,7 +81,7 @@ public class ClientBuilder {
         sender = new URLPrefixSender(this.urlPrefix, sender);
 
         if (this.maxRetries > 0)
-            sender = new RetrySender(this.maxRetries, sender);
+            sender = new RetrySender(this.maxRetries, new MySleeper(), new MyLogger(), sender);
 
         return sender;
     }
