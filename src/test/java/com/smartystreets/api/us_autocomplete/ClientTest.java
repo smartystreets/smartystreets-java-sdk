@@ -9,6 +9,8 @@ import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
@@ -36,9 +38,9 @@ public class ClientTest {
         Lookup lookup = new Lookup();
         lookup.setPrefix("1");
         lookup.setMaxSuggestions(2);
-        lookup.setCityFilter("3");
-        lookup.setStateFilter("4");
-        lookup.setPrefer("5");
+        lookup.addCityFilter("3");
+        lookup.addStateFilter("4");
+        lookup.addPrefer("5");
         lookup.setGeolocate(false);
         lookup.setGeolocatePrecision("6");
 

@@ -1,6 +1,6 @@
 package com.smartystreets.api.us_autocomplete;
 
-import com.google.api.client.util.Key;
+import java.util.ArrayList;
 
 
 public class Lookup {
@@ -8,25 +8,18 @@ public class Lookup {
 
     private Result result;
 
-    @Key("prefix")
     private String prefix;
 
-    @Key("suggestions")
     private int maxSuggestions;
 
-    @Key("city_filter")
-    private String cityFilter;
+    private ArrayList<String> cityFilter;
 
-    @Key("state_filter")
-    private String stateFilter;
+    private ArrayList<String> stateFilter;
 
-    @Key("prefer")
-    private String prefer;
+    private ArrayList<String> prefer;
 
-    @Key("geolocate")
     private boolean geolocate;
 
-    @Key("geolocate_precision")
     private String geolocatePrecision;
 
     //endregion
@@ -37,6 +30,9 @@ public class Lookup {
         this.maxSuggestions = 10;
         this.geolocate = true;
         this.result = new Result();
+        this.cityFilter = new ArrayList<>();
+        this.stateFilter = new ArrayList<>();
+        this.prefer = new ArrayList<>();
     }
 
     public Lookup(String prefix) {
@@ -60,15 +56,15 @@ public class Lookup {
         return prefix;
     }
 
-    public String getCityFilter() {
+    public ArrayList<String> getCityFilter() {
         return cityFilter;
     }
 
-    public String getStateFilter() {
+    public ArrayList<String> getStateFilter() {
         return stateFilter;
     }
 
-    public String getPrefer() {
+    public ArrayList<String> getPrefer() {
         return prefer;
     }
 
@@ -96,15 +92,15 @@ public class Lookup {
         this.prefix = prefix;
     }
 
-    public void setCityFilter(String cityFilter) {
+    public void setCityFilter(ArrayList<String> cityFilter) {
         this.cityFilter = cityFilter;
     }
 
-    public void setStateFilter(String stateFilter) {
+    public void setStateFilter(ArrayList<String> stateFilter) {
         this.stateFilter = stateFilter;
     }
 
-    public void setPrefer(String prefer) {
+    public void setPrefer(ArrayList<String> prefer) {
         this.prefer = prefer;
     }
 
@@ -124,6 +120,17 @@ public class Lookup {
         }
     }
 
+    public void addCityFilter(String city) {
+        this.cityFilter.add(city);
+    }
+
+    public void addStateFilter(String stateAbbreviation) {
+        this.stateFilter.add(stateAbbreviation);
+    }
+
+    public void addPrefer(String cityOrState) {
+        this.prefer.add(cityOrState);
+    }
 
     //endregion
 }

@@ -8,6 +8,7 @@ import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Client {
     private final Sender sender;
@@ -32,12 +33,28 @@ public class Client {
 
         request.putParameter("prefix", lookup.getPrefix());
         request.putParameter("suggestions", Integer.toString(lookup.getMaxSuggestions()));
-        request.putParameter("city_filter", lookup.getCityFilter());
-        request.putParameter("state_filter", lookup.getStateFilter());
-        request.putParameter("prefer", lookup.getPrefer());
+        request.putParameter("city_filter", buildFilterString(lookup.getCityFilter()));
+        request.putParameter("state_filter", buildFilterString(lookup.getStateFilter()));
+        request.putParameter("prefer", buildFilterString(lookup.getPrefer()));
         request.putParameter("geolocate", Boolean.toString(lookup.getGeolocate()));
         request.putParameter("geolocate_precision", lookup.getGeolocatePrecision());
 
         return request;
+    }
+
+    private String buildFilterString(ArrayList<String> list) {
+        if (list.isEmpty())
+            return null;
+
+        String filterList = "";
+
+        for (String item : list) {
+            filterList += (item + ",");
+        }
+
+        if (filterList.endsWith(","))
+            filterList = filterList.substring(0, filterList.length()-1);
+
+        return filterList;
     }
 }
