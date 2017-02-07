@@ -10,11 +10,11 @@ import java.util.Vector;
 
 public class UsZipCodeMultipleLookupsExample {
     public static void main(String[] args) {
-        Client client = new ClientBuilder("YOUR AUTH-ID HERE", "YOUR AUTH-TOKEN HERE").buildUSZIPCodeAPIClient();
+        Client client = new ClientBuilder(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN")).buildUSZIPCodeAPIClient();
         Batch batch = new Batch();
 
         Lookup lookup0 = new Lookup();
-        lookup0.setZipCode("12345");   // A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
+        lookup0.setZipCode("42223");   // A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
 
         Lookup lookup1 = new Lookup();
         lookup1.setCity("Phoenix");
@@ -68,6 +68,8 @@ public class UsZipCodeMultipleLookupsExample {
             for (ZipCode zipCode : zipCodes) {
                 System.out.println("ZIP Code: " + zipCode.getZipCode());
                 System.out.println("County: " + zipCode.getCountyName());
+                if (zipCode.getAlternateCounties() != null)
+                    System.out.println("First alternate county: " + zipCode.getAlternateCounties()[0].getCountyName());
                 System.out.println("Latitude: " + zipCode.getLatitude());
                 System.out.println("Longitude: " + zipCode.getLongitude());
                 System.out.println();
