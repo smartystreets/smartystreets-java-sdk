@@ -31,10 +31,6 @@ public class Batch {
 
     }
 
-    public void reset() {
-        this.clear();
-    }
-
     public void clear() {
         this.namedLookups.clear();
         this.allLookups.clear();
