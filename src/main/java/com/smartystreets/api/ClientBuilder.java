@@ -52,17 +52,17 @@ public class ClientBuilder {
         return this;
     }
 
-    public com.smartystreets.api.us_autocomplete.Client buildUSAutocompleteAPIClient() {
+    public com.smartystreets.api.us_autocomplete.Client buildUsAutocompleteApiClient() {
         this.ensureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
         return new com.smartystreets.api.us_autocomplete.Client(this.buildSender(), this.serializer);
     }
 
-    public com.smartystreets.api.us_street.Client buildUSStreetAPIClient() {
+    public com.smartystreets.api.us_street.Client buildUsStreetApiClient() {
         this.ensureURLPrefixNotNull(this.US_STREET_API_URL);
         return new com.smartystreets.api.us_street.Client(this.buildSender(), this.serializer);
     }
 
-    public com.smartystreets.api.us_zipcode.Client buildUSZIPCodeAPIClient() {
+    public com.smartystreets.api.us_zipcode.Client buildUsZipCodeApiClient() {
         this.ensureURLPrefixNotNull(this.US_ZIP_CODE_API_URL);
         return new com.smartystreets.api.us_zipcode.Client(this.buildSender(), this.serializer);
     }

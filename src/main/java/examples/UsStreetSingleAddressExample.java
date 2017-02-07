@@ -12,7 +12,7 @@ public class UsStreetSingleAddressExample {
     public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
-        Client client = new ClientBuilder(credentials).buildUSStreetAPIClient();
+        Client client = new ClientBuilder(credentials).buildUsStreetApiClient();
 
         Lookup lookup = new Lookup();
         lookup.setStreet("1600 Amphitheatre Pkwy");

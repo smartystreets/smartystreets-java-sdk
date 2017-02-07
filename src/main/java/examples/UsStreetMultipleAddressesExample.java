@@ -14,7 +14,7 @@ public class UsStreetMultipleAddressesExample {
     public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
-        Client client = new ClientBuilder(credentials).buildUSStreetAPIClient();
+        Client client = new ClientBuilder(credentials).buildUsStreetApiClient();
         Batch batch = new Batch();
 
         Lookup address0 = new Lookup();

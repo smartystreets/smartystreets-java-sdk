@@ -11,7 +11,7 @@ import java.util.Vector;
 public class UsZipCodeMultipleLookupsExample {
     public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
-        Client client = new ClientBuilder(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN")).buildUSZIPCodeAPIClient();
+        Client client = new ClientBuilder(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN")).buildUsZipCodeApiClient();
         Batch batch = new Batch();
 
         Lookup lookup0 = new Lookup();

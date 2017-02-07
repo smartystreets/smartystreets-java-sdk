@@ -11,7 +11,7 @@ public class UsZipCodeSingleLookupExample {
     public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
-        Client client = new ClientBuilder(credentials).buildUSZIPCodeAPIClient();
+        Client client = new ClientBuilder(credentials).buildUsZipCodeApiClient();
 
         Lookup lookup = new Lookup();
         lookup.setCity("Mountain View");
