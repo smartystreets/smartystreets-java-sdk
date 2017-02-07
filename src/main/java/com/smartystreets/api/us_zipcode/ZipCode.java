@@ -20,6 +20,12 @@ public class ZipCode {
     @Key("county_name")
     private String countyName;
 
+    @Key("state_abbreviation")
+    private String stateAbbreviation;
+
+    @Key("state")
+    private String state;
+
     @Key("latitude")
     private double latitude;
 
@@ -28,6 +34,9 @@ public class ZipCode {
 
     @Key("precision")
     private String precision;
+
+    @Key("alternate_counties")
+    private AlternateCounty[] alternateCounties;
 
     //endregion
 
@@ -53,6 +62,14 @@ public class ZipCode {
         return this.countyName;
     }
 
+    public String getStateAbbreviation() {
+        return stateAbbreviation;
+    }
+
+    public String getState() {
+        return state;
+    }
+
     public double getLatitude() {
         return this.latitude;
     }
@@ -63,6 +80,10 @@ public class ZipCode {
 
     public String getPrecision() {
         return this.precision;
+    }
+
+    public AlternateCounty[] getAlternateCounties() {
+        return alternateCounties;
     }
 
     //endregion
