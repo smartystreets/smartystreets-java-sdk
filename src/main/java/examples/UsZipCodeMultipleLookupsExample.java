@@ -69,7 +69,7 @@ public class UsZipCodeMultipleLookupsExample {
                 System.out.println("ZIP Code: " + zipCode.getZipCode());
                 System.out.println("County: " + zipCode.getCountyName());
                 if (zipCode.getAlternateCounties() != null)
-                    System.out.println("First alternate county: " + zipCode.getAlternateCounties()[0].getCountyName());
+                    System.out.println("First alternate county: " + zipCode.getAlternateCounty(0).getCountyName());
                 System.out.println("Latitude: " + zipCode.getLatitude());
                 System.out.println("Longitude: " + zipCode.getLongitude());
                 System.out.println();

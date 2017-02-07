@@ -86,5 +86,9 @@ public class ZipCode {
         return alternateCounties;
     }
 
+    public AlternateCounty getAlternateCounty(int index) {
+        return alternateCounties[index];
+    }
+
     //endregion
 }
