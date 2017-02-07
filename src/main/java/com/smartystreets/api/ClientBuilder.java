@@ -8,9 +8,9 @@ public class ClientBuilder {
     private int maxRetries;
     private int maxTimeout;
     private String urlPrefix;
-    private final String defaultURLPrefix_USStreetAPI = "https://us-street.api.smartystreets.com/street-address";
-    private final String defaultURLPrefix_USZIPCodeAPI = "https://us-zipcode.api.smartystreets.com/lookup";
-    private final String defaultURLPrefix_USAutocompleteAPI = "https://us-autocomplete.api.smartystreets.com/suggest";
+    private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
+    private final String US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
+    private final String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
 
     public ClientBuilder() {
         this.serializer = new GoogleSerializer();
@@ -53,17 +53,17 @@ public class ClientBuilder {
     }
 
     public com.smartystreets.api.us_autocomplete.Client buildUSAutocompleteAPIClient() {
-        this.ensureURLPrefixNotNull(this.defaultURLPrefix_USAutocompleteAPI);
+        this.ensureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
         return new com.smartystreets.api.us_autocomplete.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_street.Client buildUSStreetAPIClient() {
-        this.ensureURLPrefixNotNull(this.defaultURLPrefix_USStreetAPI);
+        this.ensureURLPrefixNotNull(this.US_STREET_API_URL);
         return new com.smartystreets.api.us_street.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_zipcode.Client buildUSZIPCodeAPIClient() {
-        this.ensureURLPrefixNotNull(this.defaultURLPrefix_USZIPCodeAPI);
+        this.ensureURLPrefixNotNull(this.US_ZIP_CODE_API_URL);
         return new com.smartystreets.api.us_zipcode.Client(this.buildSender(), this.serializer);
     }
 
