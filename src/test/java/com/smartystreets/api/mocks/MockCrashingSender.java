@@ -25,6 +25,11 @@ public class MockCrashingSender implements Sender {
             throw new IOException("Retrying won't help");
         }
 
+        if (request.getUrl().contains("RetryFifteenTimes") ) {
+            if (this.sendCount <= 14)
+                throw new IOException("You need to retry");
+        }
+
         return new Response(this.STATUS_CODE, new byte[]{});
     }
 
