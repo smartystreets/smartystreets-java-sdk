@@ -25,16 +25,16 @@ public class ResultTest {
         assertEquals(4, metadata.getBytes());
         assertEquals(5, metadata.getCharacterCount());
 
-        Address[] addresses = result.getAddresses();
-        assertNotNull(addresses);
-        assertEquals("6", addresses[0].getText());
-        assertEquals(true, addresses[0].isVerified());
-        assertEquals(7, addresses[0].getLine());
-        assertEquals(8, addresses[0].getStart());
-        assertEquals(9, addresses[0].getEnd());
-        assertEquals("10", addresses[1].getText());
+        Address address = result.getAddress(0);
+        assertNotNull(address);
+        assertEquals("6", address.getText());
+        assertEquals(true, address.isVerified());
+        assertEquals(7, address.getLine());
+        assertEquals(8, address.getStart());
+        assertEquals(9, address.getEnd());
+        assertEquals("10", result.getAddresses()[1].getText());
 
-        Candidate[] candidates = addresses[0].getCandidates();
+        Candidate[] candidates = address.getCandidates();
         assertNotNull(candidates);
     }
 }
