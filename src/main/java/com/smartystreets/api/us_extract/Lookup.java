@@ -75,6 +75,6 @@ public class Lookup {
     public void setText(String text) {
         this.text = text;
     }
-    
+
     //endregion
 }
