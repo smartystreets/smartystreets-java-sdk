@@ -5,7 +5,7 @@ public class Lookup {
     //region [ Fields ]
 
     private Result result;
-    private boolean html;
+    private String html;
     private boolean aggressive;
     private boolean addressesHaveLineBreaks;
     private int addressesPerLine;
@@ -15,6 +15,7 @@ public class Lookup {
 
     public Lookup() {
         this.result = new Result();
+        this.addressesHaveLineBreaks = true;
     }
 
     public Lookup(String text) {
@@ -28,7 +29,7 @@ public class Lookup {
         return result;
     }
 
-    public boolean isHtml() {
+    public String isHtml() {
         return html;
     }
 
@@ -36,7 +37,7 @@ public class Lookup {
         return aggressive;
     }
 
-    public boolean AddressesHaveLineBreaks() {
+    public boolean addressesHaveLineBreaks() {
         return addressesHaveLineBreaks;
     }
 
@@ -56,11 +57,11 @@ public class Lookup {
         this.result = result;
     }
 
-    public void setHtml(boolean html) {
-        this.html = html;
+    public void isHtml(boolean html) {
+        this.html = String.valueOf(html);
     }
 
-    public void setAggressive(boolean aggressive) {
+    public void isAggressive(boolean aggressive) {
         this.aggressive = aggressive;
     }
 
