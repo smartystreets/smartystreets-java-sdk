@@ -92,4 +92,16 @@ public class ClientTest {
 
         assertEquals(expectedResult, lookup.getResult());
     }
+
+    @Test
+    public void testContentTypeSetCorrectly() throws IOException, SmartyException {
+        RequestCapturingSender sender = new RequestCapturingSender();
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("Hello, World!");
+
+        client.send(lookup);
+
+        assertEquals("text/plain", sender.getRequest().getContentType());
+    }
 }

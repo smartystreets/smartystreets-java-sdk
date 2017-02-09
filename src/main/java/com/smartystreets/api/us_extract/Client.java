@@ -32,6 +32,7 @@ public class Client {
 
     private Request buildRequest(Lookup lookup) {
         Request request = new Request();
+        request.setContentType("text/plain");
         request.setPayload(lookup.getText().getBytes());
 
         request.putParameter("html", lookup.isHtml());
