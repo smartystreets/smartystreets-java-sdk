@@ -47,7 +47,7 @@ public class GoogleSender implements Sender {
         if (request.getMethod().equals("GET"))
             return factory.buildGetRequest(url);
 
-        ByteArrayContent content = new ByteArrayContent(Json.MEDIA_TYPE, request.getPayload());
+        ByteArrayContent content = new ByteArrayContent(request.getContentType(), request.getPayload());
         return factory.buildPostRequest(url, content);
     }
 

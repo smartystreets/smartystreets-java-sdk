@@ -11,6 +11,7 @@ public class Request {
     private final Map<String, String> parameters;
     private String urlPrefix;
     private String method;
+    private String contentType;
     private byte[] payload;
 
     public Request() {
@@ -18,6 +19,7 @@ public class Request {
         this.method = "GET";
         this.headers = new HashMap<>();
         this.parameters = new LinkedHashMap<>();
+        this.contentType = "application/json";
     }
 
     public void putHeader(String name, String value) {
@@ -70,6 +72,10 @@ public class Request {
         return this.payload;
     }
 
+    public String getContentType() {
+        return contentType;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -81,6 +87,10 @@ public class Request {
 
     public void setUrlPrefix(String urlPrefix) {
         this.urlPrefix = urlPrefix;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     //endregion
