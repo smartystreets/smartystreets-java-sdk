@@ -20,18 +20,6 @@ public class Response {
     }
 
     //endregion
-
-    //region [ Setters ]
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public void setPayload(byte[] payload) {
-        this.payload = payload;
-    }
-
-    //endregion
 }
 
 
