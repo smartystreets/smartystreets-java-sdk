@@ -9,6 +9,7 @@ public class ClientBuilder {
     private int maxTimeout;
     private String urlPrefix;
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
+    private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com";
     private final String US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
     private final String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
 
@@ -55,6 +56,11 @@ public class ClientBuilder {
     public com.smartystreets.api.us_autocomplete.Client buildUsAutocompleteApiClient() {
         this.ensureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
         return new com.smartystreets.api.us_autocomplete.Client(this.buildSender(), this.serializer);
+    }
+
+    public com.smartystreets.api.us_extract.Client buildUsExtractApiClient() {
+        this.ensureURLPrefixNotNull(this.US_EXTRACT_API_URL);
+        return new com.smartystreets.api.us_extract.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_street.Client buildUsStreetApiClient() {
