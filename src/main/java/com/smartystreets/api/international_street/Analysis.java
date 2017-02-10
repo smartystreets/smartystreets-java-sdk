@@ -12,7 +12,7 @@ public class Analysis {
     @Key("max_address_precision")
     private String maxAddressPrecision;
 
-    
+
     public String getVerificationStatus() {
         return verificationStatus;
     }

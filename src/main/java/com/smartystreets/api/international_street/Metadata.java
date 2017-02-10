@@ -14,8 +14,8 @@ public class Metadata {
     @Key("geocode_precision")
     private String geocodePrecision;
 
-    @Key("maxGeocodePrecision")
-    private String max_geocode_precision;
+    @Key("max_geocode_precision")
+    private String maxGeocodePrecision;
 
     //endregion
 
@@ -33,8 +33,8 @@ public class Metadata {
         return geocodePrecision;
     }
 
-    public String getMax_geocode_precision() {
-        return max_geocode_precision;
+    public String getMaxGeocodePrecision() {
+        return maxGeocodePrecision;
     }
 
     //endregion

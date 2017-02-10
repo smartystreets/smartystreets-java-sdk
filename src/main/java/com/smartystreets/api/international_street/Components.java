@@ -81,7 +81,7 @@ public class Components {
     private String dependentThoroughfareName;
 
     @Key("dependent_thoroughfare_trailing_type")
-    private String dependentThoroughfareTrailing_type;
+    private String dependentThoroughfareTrailingType;
 
     @Key("dependent_thoroughfare_type")
     private String dependentThoroughfareType;
@@ -223,8 +223,8 @@ public class Components {
         return dependentThoroughfareName;
     }
 
-    public String getDependentThoroughfareTrailing_type() {
-        return dependentThoroughfareTrailing_type;
+    public String getDependentThoroughfareTrailingType() {
+        return dependentThoroughfareTrailingType;
     }
 
     public String getDependentThoroughfareType() {

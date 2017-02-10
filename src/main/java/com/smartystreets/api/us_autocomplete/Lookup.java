@@ -6,17 +6,11 @@ public class Lookup {
     //region [ Fields ]
 
     private Result result;
-
     private String prefix;
-
     private int maxSuggestions;
-
     private ArrayList<String> cityFilter;
-
     private ArrayList<String> stateFilter;
-
     private ArrayList<String> prefer;
-
     private GeolocateType geolocateType;
 
     //endregion

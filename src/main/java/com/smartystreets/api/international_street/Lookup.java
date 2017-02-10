@@ -104,8 +104,8 @@ public class Lookup {
         this.country = country;
     }
 
-    public void setGeocode(String geocode) {
-        this.geocode = geocode;
+    public void setGeocode(boolean geocode) {
+        this.geocode = String.valueOf(geocode);
     }
 
     public void setLanguage(LanguageMode language) {
