@@ -36,6 +36,6 @@ public class Metadata {
     public String getMax_geocode_precision() {
         return max_geocode_precision;
     }
-    
+
     //endregion
 }
