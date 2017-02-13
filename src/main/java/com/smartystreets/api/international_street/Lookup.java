@@ -1,10 +1,8 @@
 package com.smartystreets.api.international_street;
 
-import java.util.ArrayList;
-
 public class Lookup {
     //region [ Fields ]
-    private ArrayList<Candidate> result;
+    private Candidate[] result;
 
     private String inputId;
     private String country;
@@ -22,18 +20,43 @@ public class Lookup {
 
     //endregion
 
-    public void addToResult(Candidate newCandidate) {
-        this.result.add(newCandidate);
+    //region [ Constructors ]
+
+    public Lookup() {
+        this.result = new Candidate[0];
     }
+
+    public Lookup(String country, String freeform) {
+        this();
+        this.country = country;
+        this.freeform = freeform;
+    }
+
+    public Lookup(String country, String address1, String postalCode) {
+        this();
+        this.country = country;
+        this.address1 = address1;
+        this.postalCode = postalCode;
+    }
+
+    public Lookup(String country, String address1, String locality, String administrativeArea) {
+        this();
+        this.country = country;
+        this.address1 = address1;
+        this.locality = locality;
+        this.administrativeArea = administrativeArea;
+    }
+
+    //endregion
 
     //region [ Getters ]
 
-    public ArrayList<Candidate> getResult() {
+    public Candidate[] getResult() {
         return result;
     }
 
     public Candidate getResult(int index) {
-        return result.get(index);
+        return result[index];
     }
 
     public String getInputId() {
@@ -92,7 +115,7 @@ public class Lookup {
 
     //region [ Setters ]
 
-    public void setResult(ArrayList<Candidate> result) {
+    public void setResult(Candidate[] result) {
         this.result = result;
     }
 

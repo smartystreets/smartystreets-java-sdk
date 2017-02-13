@@ -42,7 +42,6 @@ public class Client {
         this.assignCandidatesToLookups(batch, candidates);
     }
 
-
      private void populateQueryString(Lookup address, Request request) {
         request.putParameter("street", address.getStreet());
         request.putParameter("street2", address.getStreet2());
