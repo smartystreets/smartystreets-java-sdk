@@ -8,6 +8,7 @@ public class ClientBuilder {
     private int maxRetries;
     private int maxTimeout;
     private String urlPrefix;
+    private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
     private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com";
     private final String US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
@@ -51,6 +52,11 @@ public class ClientBuilder {
     public ClientBuilder withCustomBaseUrl(String urlPrefix) {
         this.urlPrefix = urlPrefix;
         return this;
+    }
+
+    public com.smartystreets.api.international_street.Client buildInternationalStreetApiClient() {
+        this.ensureURLPrefixNotNull(this.INTERNATIONAL_STREET_API_URL);
+        return new com.smartystreets.api.international_street.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_autocomplete.Client buildUsAutocompleteApiClient() {
