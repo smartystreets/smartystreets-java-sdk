@@ -13,7 +13,7 @@ public class InternationalExample {
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
         Client client = new ClientBuilder(credentials).buildInternationalStreetApiClient();
 
-        Lookup lookup = new Lookup("USA", "1600 amphitheatre parkway, Mountain View California");
+        Lookup lookup = new Lookup("1600 amphitheatre parkway, Mountain View California", "USA");
         lookup.setGeocode(true); // Must be expressly set to get latitude and longitude.
 
         Candidate[] candidates = client.send(lookup);

@@ -26,25 +26,25 @@ public class Lookup {
         this.result = new Candidate[0];
     }
 
-    public Lookup(String country, String freeform) {
+    public Lookup(String freeform, String country) {
         this();
-        this.country = country;
         this.freeform = freeform;
+        this.country = country;
     }
 
-    public Lookup(String country, String address1, String postalCode) {
+    public Lookup(String address1, String postalCode, String country) {
         this();
-        this.country = country;
         this.address1 = address1;
         this.postalCode = postalCode;
+        this.country = country;
     }
 
-    public Lookup(String country, String address1, String locality, String administrativeArea) {
+    public Lookup(String address1, String locality, String administrativeArea, String country) {
         this();
-        this.country = country;
         this.address1 = address1;
         this.locality = locality;
         this.administrativeArea = administrativeArea;
+        this.country = country;
     }
 
     //endregion
