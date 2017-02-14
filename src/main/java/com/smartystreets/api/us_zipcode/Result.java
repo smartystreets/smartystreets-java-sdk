@@ -39,6 +39,10 @@ public class Result {
 
     //region [ Getters ]
 
+    /**
+     *
+     * @return Returns a status if there was no match
+     */
     public String getStatus() {
         return this.status;
     }

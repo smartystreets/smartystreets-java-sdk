@@ -3,6 +3,9 @@ package com.smartystreets.api.us_zipcode;
 
 import com.google.api.client.util.Key;
 
+/**
+ * @see "https://smartystreets.com/docs/cloud/us-zipcode-api#zipcodes"
+ */
 public class AlternateCounty {
 
     //region [ Fields ]
