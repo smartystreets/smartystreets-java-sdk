@@ -8,6 +8,10 @@ import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
 
+/**
+ * This client sends lookups to the SmartyStreets US Street API, <br>
+ *     and attaches the results to the appropriate Lookup objects.
+ */
 public class Client {
     private final Sender sender;
     private final Serializer serializer;

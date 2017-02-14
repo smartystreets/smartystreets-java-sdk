@@ -2,6 +2,9 @@ package com.smartystreets.api.us_street;
 
 import com.google.api.client.util.Key;
 
+/**
+ * @see "https://smartystreets.com/docs/cloud/us-street-api#analysis"
+ */
 public class Analysis {
     //region [ Fields ]
 

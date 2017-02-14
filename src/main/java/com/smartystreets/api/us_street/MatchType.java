@@ -1,4 +1,4 @@
-package com.smartystreets.api;
+package com.smartystreets.api.us_street;
 
 public enum MatchType {
     STRICT("strict"), RANGE("range"), INVALID("invalid");

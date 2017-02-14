@@ -2,6 +2,11 @@ package com.smartystreets.api.us_street;
 
 import com.google.api.client.util.Key;
 
+/**
+ * This class contains the matched address broken down into its<br>
+ *     fundamental pieces.
+ * @see "https://smartystreets.com/docs/cloud/us-street-api#components"
+ */
 public class Components {
 
     //region [ Fields ]

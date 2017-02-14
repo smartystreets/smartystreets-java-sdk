@@ -1,11 +1,14 @@
 package com.smartystreets.api.us_street;
 
 import com.google.api.client.util.Key;
-import com.google.api.client.util.Strings;
-import com.smartystreets.api.MatchType;
 
 import java.util.ArrayList;
 
+/**
+ * In addition to holding all of the input data for this lookup, this class also<br>
+ *     will contain the result of the lookup after it comes back from the API.
+ *     @see "https://smartystreets.com/docs/cloud/us-street-api#input-fields"
+ */
 public class Lookup {
     //region [ Fields ]
 
@@ -55,6 +58,10 @@ public class Lookup {
         this.result = new ArrayList<>();
     }
 
+    /**
+     * This constructor accepts a freeform address. That means the whole address is in one string.
+     * @param freeformAddress
+     */
     public Lookup(String freeformAddress) {
         this();
         this.street = freeformAddress;
@@ -64,7 +71,7 @@ public class Lookup {
 
     //region [ Methods ]
 
-    public void addToResult(Candidate newCandidate) {
+    void addToResult(Candidate newCandidate) {
         this.result.add(newCandidate);
     }
 
@@ -147,6 +154,13 @@ public class Lookup {
         return this;
     }
 
+    /**
+     * You can optionally put the entire address in the <b>street</b> field,<br>
+     *     and leave the other fields blank. We call this a <b>freeform address</b>.<br>
+     *     <i><b>Note:</b> Freeform addresses are slightly less reliable.</i>
+     *
+     *     @param street If using a freeform address, do <b>not</b> include country information
+     */
     public void setStreet(String street) {
         this.street = street;
     }
@@ -183,10 +197,21 @@ public class Lookup {
         this.urbanization = urbanization;
     }
 
+    /**
+     * Sets the match output strategy to be employed for this lookup.<br>
+     *
+     * @see "https://smartystreets.com/docs/cloud/us-street-api#input-fields"
+     * @param match The match output strategy
+     */
     public void setMatch(MatchType match) {
         this.match = match.getName();
     }
 
+    /**
+     * Sets the maximum number of valid addresses returned when the input is ambiguous.
+     * @param maxCandidates Defaults to 1. Must be an integer between 1 and 10, inclusive.
+     * @throws IllegalArgumentException
+     */
     public void setMaxCandidates(int maxCandidates) throws IllegalArgumentException {
         if (maxCandidates > 0) {
             this.maxCandidates = maxCandidates;

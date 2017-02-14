@@ -2,6 +2,12 @@ package com.smartystreets.api.us_street;
 
 import com.google.api.client.util.Key;
 
+
+/**
+ * A candidate is a possible match for an address that was submitted.<br>
+ *     A lookup can have multiple candidates if the address was ambiguous, and<br>
+ *     the maxCandidates field is set higher than 1.
+ */
 public class Candidate {
     //region [ Fields ]
 

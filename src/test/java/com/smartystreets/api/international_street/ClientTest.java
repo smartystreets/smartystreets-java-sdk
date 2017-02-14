@@ -20,7 +20,7 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
-        Lookup lookup = new Lookup("USA", "freeform");
+        Lookup lookup = new Lookup( "freeform", "USA");
 
         client.send(lookup);
 

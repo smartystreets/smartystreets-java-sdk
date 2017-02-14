@@ -1,6 +1,10 @@
 package com.smartystreets.api;
 
-
+/**
+ * The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.<br>
+ * You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration. These methods<br>
+ * are chainable, so you can usually get set up with one line of code.
+ */
 public class ClientBuilder {
     private Credentials signer;
     private Serializer serializer;
@@ -14,7 +18,7 @@ public class ClientBuilder {
     private final String US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
     private final String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
 
-    public ClientBuilder() {
+    private ClientBuilder() {
         this.serializer = new GoogleSerializer();
         this.maxRetries = 5;
         this.maxTimeout = 10000;
@@ -79,7 +83,7 @@ public class ClientBuilder {
         return new com.smartystreets.api.us_zipcode.Client(this.buildSender(), this.serializer);
     }
 
-    public Sender buildSender() {
+    private Sender buildSender() {
         if (this.httpSender != null)
             return this.httpSender;
 
