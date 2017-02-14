@@ -4,6 +4,9 @@ package com.smartystreets.api.us_extract;
 import com.google.api.client.util.Key;
 import com.smartystreets.api.us_street.Candidate;
 
+/**
+ * @see <a href="https://smartystreets.com/docs/cloud/us-extract-api#http-response-status">SmartyStreets US Extract API docs</a>
+ */
 public class Address {
     //region [ Fields ]
 
