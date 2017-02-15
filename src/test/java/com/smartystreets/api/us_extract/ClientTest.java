@@ -44,7 +44,7 @@ public class ClientTest {
         Client client = new Client(sender, serializer);
         String expectedUrl = "http://localhost/?html=true&aggressive=true&addr_line_breaks=false&addr_per_line=2";
         Lookup lookup = new Lookup("1");
-        lookup.isHtml(true);
+        lookup.specifyHtmlInput(true);
         lookup.isAggressive(true);
         lookup.setAddressesHaveLineBreaks(false);
         lookup.setAddressesPerLine(2);

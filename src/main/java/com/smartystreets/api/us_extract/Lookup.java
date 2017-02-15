@@ -64,7 +64,7 @@ public class Lookup {
         this.result = result;
     }
 
-    public void isHtml(boolean html) {
+    public void specifyHtmlInput(boolean html) {
         this.html = String.valueOf(html);
     }
 
