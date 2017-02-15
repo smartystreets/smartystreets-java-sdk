@@ -50,47 +50,19 @@ public class Client {
     }
 
     private void ensureEnoughInfo(Lookup lookup) throws SmartyException {
-        if (missingCountry(lookup))
+        if (lookup.missingCountry())
             throw new UnprocessableEntityException("Country field is required.");
 
-        if (hasFreeform(lookup))
+        if (lookup.hasFreeform())
             return;
 
-        if (missingAddress1(lookup))
+        if (lookup.missingAddress1())
             throw new UnprocessableEntityException("Either freeform or address1 is required.");
 
-        if (hasPostalCode(lookup))
+        if (lookup.hasPostalCode())
             return;
 
-        if (missingLocalityOrAdministrativeArea(lookup))
+        if (lookup.missingLocalityOrAdministrativeArea())
             throw new UnprocessableEntityException("Insufficient information: One or more required fields were not set on the lookup.");
-    }
-
-    private boolean missingCountry(Lookup lookup) {
-        return fieldIsMissing(lookup.getCountry());
-    }
-
-    private boolean hasFreeform(Lookup lookup) {
-        return fieldIsSet(lookup.getFreeform());
-    }
-
-    private boolean missingAddress1(Lookup lookup) {
-        return fieldIsMissing(lookup.getAddress1());
-    }
-
-    private boolean hasPostalCode(Lookup lookup) {
-        return fieldIsSet(lookup.getPostalCode());
-    }
-
-    private boolean missingLocalityOrAdministrativeArea(Lookup lookup) {
-        return fieldIsMissing(lookup.getLocality()) || fieldIsMissing(lookup.getAdministrativeArea());
-    }
-
-    private boolean fieldIsSet(String field) {
-        return !fieldIsMissing(field);
-    }
-
-    private boolean fieldIsMissing(String field) {
-        return field == null || field.isEmpty();
     }
 }

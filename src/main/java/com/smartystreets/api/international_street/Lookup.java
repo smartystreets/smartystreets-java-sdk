@@ -49,6 +49,38 @@ public class Lookup {
 
     //endregion
 
+    //region [ Query Methods ]
+
+    boolean missingCountry() {
+        return fieldIsMissing(this.getCountry());
+    }
+
+    boolean hasFreeform() {
+        return fieldIsSet(this.getFreeform());
+    }
+
+    boolean missingAddress1() {
+        return fieldIsMissing(this.getAddress1());
+    }
+
+    boolean hasPostalCode() {
+        return fieldIsSet(this.getPostalCode());
+    }
+
+    boolean missingLocalityOrAdministrativeArea() {
+        return fieldIsMissing(this.getLocality()) || fieldIsMissing(this.getAdministrativeArea());
+    }
+
+    private boolean fieldIsSet(String field) {
+        return !fieldIsMissing(field);
+    }
+
+    private boolean fieldIsMissing(String field) {
+        return field == null || field.isEmpty();
+    }
+
+    //endregion
+
     //region [ Getters ]
 
     public Candidate[] getResult() {
