@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Lookup {
     //region [ Fields ]
 
-    private Result result;
+    private Suggestion[] result;
     private String prefix;
     private int maxSuggestions;
     private ArrayList<String> cityFilter;
@@ -25,7 +25,6 @@ public class Lookup {
     public Lookup() {
         this.maxSuggestions = 10;
         this.geolocateType = GeolocateType.CITY;
-        this.result = new Result();
         this.cityFilter = new ArrayList<>();
         this.stateFilter = new ArrayList<>();
         this.prefer = new ArrayList<>();
@@ -43,12 +42,12 @@ public class Lookup {
 
     //region [ Getters ]
 
-    public Result getResult() {
+    public Suggestion[] getResult() {
         return this.result;
     }
 
     public Suggestion getResult(int index) {
-        return this.result.getSuggestions()[index];
+        return this.result[index];
     }
 
     public String getPrefix() {
@@ -79,7 +78,7 @@ public class Lookup {
 
     //region [ Setters ]
 
-    public void setResult(Result result) {
+    public void setResult(Suggestion[] result) {
         this.result = result;
     }
 

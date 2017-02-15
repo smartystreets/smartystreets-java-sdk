@@ -20,13 +20,19 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public void send(Lookup lookup) throws SmartyException, IOException {
+    public Suggestion[] send(Lookup lookup) throws SmartyException, IOException {
         if (lookup == null || lookup.getPrefix() == null || lookup.getPrefix().length() == 0)
             throw new SmartyException("Send() must be passed a Lookup with the prefix field set.");
 
         Request request = this.buildRequest(lookup);
+
         Response response = this.sender.send(request);
-        lookup.setResult(this.serializer.deserialize(response.getPayload(), Result.class));
+
+        Result result = this.serializer.deserialize(response.getPayload(), Result.class);
+        Suggestion[] suggestions = result.getSuggestions();
+        lookup.setResult(suggestions);
+
+        return suggestions;
     }
 
     private Request buildRequest(Lookup lookup) {

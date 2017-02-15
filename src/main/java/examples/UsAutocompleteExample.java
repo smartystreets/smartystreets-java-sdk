@@ -16,11 +16,9 @@ public class UsAutocompleteExample {
 
         client.send(lookup);
 
-        Result result = lookup.getResult();
-
         System.out.println("*** Result with no filter ***");
         System.out.println();
-        for (Suggestion suggestion : result.getSuggestions()) {
+        for (Suggestion suggestion : lookup.getResult()) {
             System.out.println(suggestion.getText());
         }
 
@@ -29,11 +27,9 @@ public class UsAutocompleteExample {
 
         client.send(lookup);
 
-        result = lookup.getResult();
-
         System.out.println();
         System.out.println("*** Result with some filters ***");
-        for (Suggestion suggestion : result.getSuggestions()) {
+        for (Suggestion suggestion : lookup.getResult()) {
             System.out.println(suggestion.getText());
         }
     }

@@ -9,6 +9,7 @@ import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
 import org.junit.Test;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
@@ -18,7 +19,7 @@ public class ClientTest {
     public void testSendingSinglePrefixOnlyLookup() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
-        FakeSerializer serializer = new FakeSerializer(null);
+        FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
 
         client.send(new Lookup("1"));
@@ -30,7 +31,7 @@ public class ClientTest {
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
-        FakeSerializer serializer = new FakeSerializer(null);
+        FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
         String expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&geolocate=true&geolocate_precision=state";
         Lookup lookup = new Lookup();
@@ -55,7 +56,7 @@ public class ClientTest {
         Response response = new Response(0, "Hello, World!".getBytes());
         MockSender mockSender = new MockSender(response);
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", mockSender);
-        FakeDeserializer deserializer = new FakeDeserializer(null);
+        FakeDeserializer deserializer = new FakeDeserializer(new Result());
         Client client = new Client(sender, deserializer);
 
         client.send(new Lookup("1"));
@@ -75,7 +76,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals(expectedResult, lookup.getResult());
+        assertArrayEquals(expectedResult.getSuggestions(), lookup.getResult());
     }
 
     //endregion

@@ -6,9 +6,15 @@ import java.io.IOException;
 public class FakeSerializer implements Serializer {
 
     private final byte[] bytes;
+    private Object result;
 
     public FakeSerializer(byte[] bytes) {
         this.bytes = bytes;
+    }
+
+    public FakeSerializer(Object result) {
+        this.result = result;
+        this.bytes = null;
     }
 
     @Override
@@ -18,6 +24,6 @@ public class FakeSerializer implements Serializer {
 
     @Override
     public <T> T deserialize(byte[] payload, Class<T> type) throws IOException {
-        return null;
+        return (T)this.result;
     }
 }

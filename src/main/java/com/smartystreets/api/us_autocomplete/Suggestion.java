@@ -1,6 +1,5 @@
 package com.smartystreets.api.us_autocomplete;
 
-
 import com.google.api.client.util.Key;
 
 public class Suggestion {
