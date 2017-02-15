@@ -55,10 +55,6 @@ public class Candidate {
 
     //endregion
 
-    public Candidate() {
-    }
-
-
     //region [ Getters ]
 
     public String getOrganization() {
