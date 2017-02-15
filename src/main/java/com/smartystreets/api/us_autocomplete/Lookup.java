@@ -2,6 +2,11 @@ package com.smartystreets.api.us_autocomplete;
 
 import java.util.ArrayList;
 
+/**
+ * In addition to holding all of the input data for this lookup, this class also<br>
+ *     will contain the result of the lookup after it comes back from the API.
+ *     @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
+ */
 public class Lookup {
     //region [ Fields ]
 
@@ -26,6 +31,9 @@ public class Lookup {
         this.prefer = new ArrayList<>();
     }
 
+    /**
+     * @param prefix The beginning of an address
+     */
     public Lookup(String prefix) {
         this();
         this.prefix = prefix;
@@ -62,7 +70,6 @@ public class Lookup {
     public GeolocateType getGeolocateType() {
         return geolocateType;
     }
-
 
     public int getMaxSuggestions() {
         return maxSuggestions;

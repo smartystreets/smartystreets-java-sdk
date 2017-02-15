@@ -1,5 +1,10 @@
 package com.smartystreets.api.us_autocomplete;
 
+/**
+ * This field corresponds to the <b>geolocate</b> and <b>geolocate_precision</b> fields in the US Autocomplete API.
+ *
+ * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
+ */
 public enum GeolocateType {
     CITY("city"), STATE("state"), NONE("null");
 
