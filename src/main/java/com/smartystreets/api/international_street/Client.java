@@ -5,6 +5,7 @@ import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
+import com.smartystreets.api.exceptions.UnprocessableEntityException;
 
 import java.io.IOException;
 
@@ -49,15 +50,47 @@ public class Client {
     }
 
     private void ensureEnoughInfo(Lookup lookup) throws SmartyException {
-        if ((fieldIsSet(lookup.getCountry()) && fieldIsSet(lookup.getFreeform())) ||
-                (fieldIsSet(lookup.getCountry()) && fieldIsSet(lookup.getAddress1()) && fieldIsSet(lookup.getPostalCode()))||
-                (fieldIsSet(lookup.getCountry()) && fieldIsSet(lookup.getAddress1()) && fieldIsSet(lookup.getLocality())
-                        && fieldIsSet(lookup.getAdministrativeArea())))
+        if (missingCountry(lookup))
+            throw new UnprocessableEntityException("Country field is required.");
+
+        if (hasFreeform(lookup))
             return;
-        else throw new SmartyException("Insufficient information: One or more required fields were not set on the lookup.");
+
+        if (missingAddress1(lookup))
+            throw new UnprocessableEntityException("Either freeform or address1 is required.");
+
+        if (hasPostalCode(lookup))
+            return;
+
+        if (missingLocalityOrAdministrativeArea(lookup))
+            throw new UnprocessableEntityException("Insufficient information: One or more required fields were not set on the lookup.");
+    }
+
+    private boolean missingCountry(Lookup lookup) {
+        return fieldIsMissing(lookup.getCountry());
+    }
+
+    private boolean hasFreeform(Lookup lookup) {
+        return fieldIsSet(lookup.getFreeform());
+    }
+
+    private boolean missingAddress1(Lookup lookup) {
+        return fieldIsMissing(lookup.getAddress1());
+    }
+
+    private boolean hasPostalCode(Lookup lookup) {
+        return fieldIsSet(lookup.getPostalCode());
+    }
+
+    private boolean missingLocalityOrAdministrativeArea(Lookup lookup) {
+        return fieldIsMissing(lookup.getLocality()) || fieldIsMissing(lookup.getAdministrativeArea());
     }
 
     private boolean fieldIsSet(String field) {
-        return !(field == null || field.isEmpty());
+        return !fieldIsMissing(field);
+    }
+
+    private boolean fieldIsMissing(String field) {
+        return field == null || field.isEmpty();
     }
 }
