@@ -1,7 +1,7 @@
 package com.smartystreets.api.international_street;
 
 public enum LanguageMode {
-    MATCH_INPUT("null"), NATIVE("native"), LATIN("latin");
+    NATIVE("native"), LATIN("latin");
 
     private final String name;
 
