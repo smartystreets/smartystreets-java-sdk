@@ -37,7 +37,8 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         GoogleSerializer serializer = new GoogleSerializer();
         String expectedPayload = ("[{\"addressee\":\"0\",\"candidates\":9,\"city\":\"5\",\"lastline\":\"8\"," +
-                "\"secondary\":\"2\",\"state\":\"6\",\"street\":\"1\",\"street2\":\"3\",\"urbanization\":\"4\",\"zipcode\":\"7\"}]");
+                "\"match\":\"invalid\",\"secondary\":\"2\",\"state\":\"6\",\"street\":\"1\",\"street2\":\"3\"," +
+                "\"urbanization\":\"4\",\"zipcode\":\"7\"}]");
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
         lookup.setAddressee("0");
@@ -50,6 +51,7 @@ public class ClientTest {
         lookup.setZipCode("7");
         lookup.setLastline("8");
         lookup.setMaxCandidates(9);
+        lookup.setMatch(MatchType.INVALID);
 
         client.send(lookup);
 
