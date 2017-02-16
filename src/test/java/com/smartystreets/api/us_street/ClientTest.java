@@ -1,12 +1,16 @@
 package com.smartystreets.api.us_street;
 
+import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.URLPrefixSender;
+import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertArrayEquals;
@@ -17,21 +21,23 @@ public class ClientTest {
 
     @Test
     public void testSendingSingleFreeformLookup() throws Exception {
-        RequestCapturingSender capturingSender = new RequestCapturingSender();
-        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
-        FakeSerializer serializer = new FakeSerializer(null);
+        byte[] expectedPayload = "Hello, World!".getBytes();
+        RequestCapturingSender sender = new RequestCapturingSender();
+        FakeSerializer serializer = new FakeSerializer(expectedPayload);
         Client client = new Client(sender, serializer);
 
         client.send(new Lookup("freeform"));
 
-        assertEquals("http://localhost/?street=freeform", capturingSender.getRequest().getUrl());
+        assertArrayEquals(expectedPayload, sender.getRequest().getPayload());
     }
 
     @Test
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
-        FakeSerializer serializer = new FakeSerializer(null);
+        GoogleSerializer serializer = new GoogleSerializer();
+        String expectedPayload = ("[{\"addressee\":\"0\",\"candidates\":9,\"city\":\"5\",\"lastline\":\"8\"," +
+                "\"secondary\":\"2\",\"state\":\"6\",\"street\":\"1\",\"street2\":\"3\",\"urbanization\":\"4\",\"zipcode\":\"7\"}]");
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
         lookup.setAddressee("0");
@@ -47,7 +53,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?street=1&street2=3&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0&urbanization=4&candidates=9", capturingSender.getRequest().getUrl());
+        assertEquals(expectedPayload, new String(capturingSender.getRequest().getPayload()));
     }
 
     //endregion
@@ -60,8 +66,6 @@ public class ClientTest {
         Client client = new Client(sender, null);
 
         client.send(new Batch());
-
-        assertNull(sender.getRequest());
     }
 
     @Test
