@@ -2,6 +2,9 @@ package com.smartystreets.api.us_autocomplete;
 
 import com.google.api.client.util.Key;
 
+/**
+ * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-response"
+ */
 public class Suggestion {
     //region [ Fields ]
 

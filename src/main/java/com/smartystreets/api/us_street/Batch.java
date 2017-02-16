@@ -22,6 +22,11 @@ public class Batch {
         this.allLookups = new Vector<>();
     }
 
+    /**
+     *
+     * @param newAddress
+     * @throws BatchFullException Batch size cannot exceed 100
+     */
     public void add(Lookup newAddress) throws BatchFullException {
         if (this.isFull())
             throw new BatchFullException("Batch size cannot exceed " + MAX_BATCH_SIZE);

@@ -22,6 +22,9 @@ public class Lookup {
 
     //region [ Constructors ]
 
+    /**
+     * If you use this constructor, don't forget to set the <b>prefix</b>. It is required.
+     */
     public Lookup() {
         this.maxSuggestions = 10;
         this.geolocateType = GeolocateType.CITY;
