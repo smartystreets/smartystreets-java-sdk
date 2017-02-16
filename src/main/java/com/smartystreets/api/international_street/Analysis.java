@@ -2,6 +2,9 @@ package com.smartystreets.api.international_street;
 
 import com.google.api.client.util.Key;
 
+/**
+ * @see "https://smartystreets.com/docs/cloud/international-street-api#analysis"
+ */
 public class Analysis {
     @Key("verification_status")
     private String verificationStatus;

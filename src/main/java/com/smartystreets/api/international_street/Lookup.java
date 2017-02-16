@@ -1,5 +1,12 @@
 package com.smartystreets.api.international_street;
 
+/**
+ * In addition to holding all of the input data for this lookup, this class also<br>
+ *     will contain the result of the lookup after it comes back from the API.
+ *     <p><b>Note: </b><i>Lookups must have certain required fields set with non-blank values. <br>
+ *         These can be found at the URL below.</i></p>
+ *     @see "https://smartystreets.com/docs/cloud/international-street-api#http-input-fields"
+ */
 public class Lookup {
     //region [ Fields ]
     private Candidate[] result;
@@ -159,14 +166,28 @@ public class Lookup {
         this.country = country;
     }
 
+    /**
+     *
+     * @param geocode Disabled by default. Set to <b>true</b> to enable.
+     */
     public void setGeocode(boolean geocode) {
         this.geocode = String.valueOf(geocode);
     }
 
+    /**
+     * When not set, the output language will match the language of the input values. When set to <b>NATIVE</b> the<br>
+     *     results will always be in the language of the output country. When set to <b>LATIN</b> the results<br>
+     *     will always be provided using a Latin character set.
+     * @param language May be set to LanguageMode.NATIVE or LanguageMode.LATIN
+     */
     public void setLanguage(LanguageMode language) {
         this.language = language;
     }
 
+    /**
+     *
+     * @param freeform The entire address except the country, which should be input using setCountry().
+     */
     public void setFreeform(String freeform) {
         this.freeform = freeform;
     }

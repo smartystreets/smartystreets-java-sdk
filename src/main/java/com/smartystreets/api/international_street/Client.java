@@ -9,6 +9,10 @@ import com.smartystreets.api.exceptions.UnprocessableEntityException;
 
 import java.io.IOException;
 
+/**
+ * This client sends lookups to the SmartyStreets International Street API, <br>
+ *     and attaches the results to the appropriate Lookup objects.
+ */
 public class Client {
     private final Sender sender;
     private final Serializer serializer;
