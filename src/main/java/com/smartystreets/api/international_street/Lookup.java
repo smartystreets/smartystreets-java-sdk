@@ -167,7 +167,6 @@ public class Lookup {
     }
 
     /**
-     *
      * @param geocode Disabled by default. Set to <b>true</b> to enable.
      */
     public void setGeocode(boolean geocode) {
@@ -185,7 +184,6 @@ public class Lookup {
     }
 
     /**
-     *
      * @param freeform The entire address except the country, which should be input using setCountry().
      */
     public void setFreeform(String freeform) {

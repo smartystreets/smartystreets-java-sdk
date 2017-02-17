@@ -25,11 +25,11 @@ public class UsAutocompleteExample {
         lookup.addStateFilter("IL");
         lookup.setMaxSuggestions(5);
 
-        client.send(lookup);
+        Suggestion[] suggestions = client.send(lookup); // The client will also return the suggestions directly
 
         System.out.println();
         System.out.println("*** Result with some filters ***");
-        for (Suggestion suggestion : lookup.getResult()) {
+        for (Suggestion suggestion : suggestions) {
             System.out.println(suggestion.getText());
         }
     }
