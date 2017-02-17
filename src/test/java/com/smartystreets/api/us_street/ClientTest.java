@@ -17,6 +17,9 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
     //region [ Single Lookup ]
 
     @Test
@@ -64,6 +67,8 @@ public class ClientTest {
 
     @Test
     public void testEmptyBatchNotSent() throws Exception {
+        exception.expect(SmartyException.class);
+
         RequestCapturingSender sender = new RequestCapturingSender();
         Client client = new Client(sender, null);
 

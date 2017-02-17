@@ -31,7 +31,7 @@ public class Client {
         Request request = new Request();
 
         if (batch.size() == 0)
-            return;
+            throw new SmartyException("Batch must contain between 1 and 100 lookups");
 
         request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 

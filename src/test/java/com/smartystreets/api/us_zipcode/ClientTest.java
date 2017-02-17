@@ -3,16 +3,22 @@ package com.smartystreets.api.us_zipcode;
 import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.URLPrefixSender;
+import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.*;
 
 public class ClientTest {
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
     //region [ Single Lookup ]
 
     @Test
@@ -50,12 +56,12 @@ public class ClientTest {
 
     @Test
     public void testEmptyBatchNotSent() throws Exception {
+        exception.expect(SmartyException.class);
+
         RequestCapturingSender sender = new RequestCapturingSender();
         Client client = new Client(sender, null);
 
         client.send(new Batch());
-
-        assertNull(sender.getRequest());
     }
 
     @Test
