@@ -48,6 +48,7 @@ def main():
 			with open(asset) as data:
 				asset_name = os.path.basename(asset)
 				url = UPLOAD_ASSET_URL.format(release_id, asset_name)
+				print url
 				request = urllib2.Request(url, data.read())
 				type_, encoding = mimetypes.guess_type(asset)
 				request.add_header('Content-Type', type_ or DEFAULT_MIME_TYPE)
