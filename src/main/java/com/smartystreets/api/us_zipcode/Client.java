@@ -33,10 +33,7 @@ public class Client {
         if (batch.size() == 0)
             return;
 
-        if (batch.size() == 1)
-            this.populateQueryString(batch.get(0), request);
-        else
-            request.setPayload(this.serializer.serialize(batch.getAllLookups()));
+        request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
         Response response = this.sender.send(request);
 
@@ -44,13 +41,6 @@ public class Client {
         if (results == null)
             results = new Result[0];
         this.assignResultsToLookups(batch, results);
-    }
-
-    private void populateQueryString(Lookup lookup, Request request) {
-        request.putParameter("input_id", lookup.getInputId());
-        request.putParameter("city", lookup.getCity());
-        request.putParameter("state", lookup.getState());
-        request.putParameter("zipcode", lookup.getZipCode());
     }
 
     private void assignResultsToLookups(Batch batch, Result[] results) {
