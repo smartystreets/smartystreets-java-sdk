@@ -19,6 +19,7 @@ sign:
 
 publish: tag
 	git push origin --tags
+	./release.py "target/smartystreets-java-sdk-$(shell git describe)-jar-with-dependencies.jar"
 	mvn clean deploy
 	git checkout pom.xml src/main/java/com/smartystreets/api/Version.java
 
