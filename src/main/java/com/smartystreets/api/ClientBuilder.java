@@ -33,28 +33,60 @@ public class ClientBuilder {
         this(new StaticCredentials(authId, authToken));
     }
 
+    /**
+     * @param maxRetries The maximum number of times to retry sending the request to the API. (Default is 5)
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
     public ClientBuilder retryAtMost(int maxRetries) {
         this.maxRetries = maxRetries;
         return this;
     }
 
+    /**
+     * @param maxTimeout The maximum time (in milliseconds) to wait for a connection, and also to wait for <br>
+     *                   the response to be read. (Default is 10000)
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
     public ClientBuilder withMaxTimeout(int maxTimeout) {
         this.maxTimeout = maxTimeout;
         return this;
     }
 
+    /**
+     * @param sender Default is a series of nested senders. See <b>buildSender()</b>.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
     public ClientBuilder withSender(Sender sender) {
         this.httpSender = sender;
         return this;
     }
 
+    /**
+     * Changes the <b>Serializer</b> from the default <b>GoogleSerializer</b>.
+     * @param serializer An object that implements the <b>Serializer</b> interface.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
     public ClientBuilder withSerializer(Serializer serializer) {
         this.serializer = serializer;
         return this;
     }
 
-    public ClientBuilder withCustomBaseUrl(String urlPrefix) {
-        this.urlPrefix = urlPrefix;
+    /**
+     * This may be useful when using a local installation of the SmartyStreets APIs.
+     * @param baseUrl Defaults to the URL for the API corresponding to the <b>Client</b> object being built.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withCustomBaseUrl(String baseUrl) {
+        this.urlPrefix = baseUrl;
+        return this;
+    }
+
+    /**
+     * Enables debug mode, which will print information about the HTTP request and response to the console.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withDebug() {
+        GoogleSender.enableLogging();
         return this;
     }
 

@@ -2,13 +2,16 @@ package com.smartystreets.api;
 
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.Json;
 import com.smartystreets.api.exceptions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.logging.Logger;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 public class GoogleSender implements Sender {
     private int maxTimeOut;
@@ -29,9 +32,11 @@ public class GoogleSender implements Sender {
         this.transport = transport;
     }
 
-    public Response send(Request request) throws SmartyException, IOException {
-        HttpRequest httpRequest = buildHttpRequest(request);
-        this.copyHeaders(request, httpRequest);
+    public Response send(Request smartyRequest) throws SmartyException, IOException {
+        HttpRequest httpRequest = buildHttpRequest(smartyRequest);
+        httpRequest.setConnectTimeout(this.maxTimeOut);
+        httpRequest.setReadTimeout(this.maxTimeOut);
+        this.copyHeaders(smartyRequest, httpRequest);
 
         try {
             return buildResponse(httpRequest.execute());
@@ -40,22 +45,21 @@ public class GoogleSender implements Sender {
         }
     }
 
-    private HttpRequest buildHttpRequest(Request request) throws IOException {
+    private HttpRequest buildHttpRequest(Request smartyRequest) throws IOException {
         HttpRequestFactory factory = this.transport.createRequestFactory();
-        GenericUrl url = new GenericUrl(request.getUrl());
+        GenericUrl url = new GenericUrl(smartyRequest.getUrl());
 
-        if (request.getMethod().equals("GET"))
+        if (smartyRequest.getMethod().equals("GET"))
             return factory.buildGetRequest(url);
 
-        ByteArrayContent content = new ByteArrayContent(request.getContentType(), request.getPayload());
+        ByteArrayContent content = new ByteArrayContent(smartyRequest.getContentType(), smartyRequest.getPayload());
         return factory.buildPostRequest(url, content);
     }
 
-    private void copyHeaders(Request request, HttpRequest httpRequest) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpRequest.setHeaders(httpHeaders);
+    private void copyHeaders(Request smartyRequest, HttpRequest httpRequest) {
+        HttpHeaders httpHeaders = httpRequest.getHeaders();
 
-        Map<String, String> headers = request.getHeaders();
+        Map<String, String> headers = smartyRequest.getHeaders();
         for (String headerName : headers.keySet())
             httpHeaders.set(headerName, headers.get(headerName));
 
@@ -81,5 +85,26 @@ public class GoogleSender implements Sender {
         }
 
         return outputStream.toByteArray();
+    }
+
+    static void enableLogging() {
+        Logger logger = Logger.getLogger(HttpTransport.class.getName());
+        logger.setLevel(Level.ALL);
+        logger.addHandler(new Handler() {
+            @Override
+            public void close() throws SecurityException {
+            }
+
+            @Override
+            public void flush() {
+            }
+
+            @Override
+            public void publish (LogRecord record) {
+                // default ConsoleHandler will print >= INFO to System.err
+                if (record.getLevel().intValue() < Level.INFO.intValue())
+                    System.out.println(record.getMessage());
+            }
+        });
     }
 }
