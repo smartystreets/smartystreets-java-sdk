@@ -23,6 +23,9 @@ publish: tag
 	./release.py "target/smartystreets-java-sdk-$(shell git describe)-jar-with-dependencies.jar"
 	git checkout pom.xml src/main/java/com/smartystreets/api/Version.java
 
+create-release:
+	./release.py "target/smartystreets-java-sdk-$(shell git describe)-jar-with-dependencies.jar"
+
 tag: version
 	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" pom.xml
 	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/main/java/com/smartystreets/api/Version.java
