@@ -14,7 +14,7 @@ CREATE_RELEASE_URL = 'https://api.github.com/repos/smartystreets/{0}/releases'.f
 LIST_RELEASE_URL = CREATE_RELEASE_URL + '/{0}'
 UPLOAD_ASSET_URL = CREATE_RELEASE_URL.replace('api.', 'uploads.') + '/{0}/assets?name={1}'
 CREATE_FAILURE = 'Failed to create release: {0} {1}'
-UPLOAD_FAILURE = 'Failed to upload asset ({0}). HTTP Repsonse: {1} {2}'
+UPLOAD_FAILURE = 'Failed to upload asset ({0}). HTTP Response: {1} {2}'
 GITHUB_API_TOKEN = os.getenv('GITHUB_API_TOKEN')
 DEFAULT_MIME_TYPE = 'plain/text'
 
@@ -30,7 +30,7 @@ def main():
 	request.get_method = lambda: 'POST'
 	response = send(request)
 	assert response.code == 201, CREATE_FAILURE.format(
-		repsonse.code, response.msg)
+		response.code, response.msg)
 
 	body = json.loads(response.read())
 	release_id = body['id']
@@ -61,7 +61,7 @@ def main():
 
 
 def send(request):
-	auth = base64.b64encode('smartystreets:{0}'.format(GITHUB_API_TOKEN))
+	auth = base64.b64encode('smartystreets-jenkins:{0}'.format(GITHUB_API_TOKEN))
 	request.add_header('Authorization', 'Basic {0}'.format(auth))
 
 	try:
