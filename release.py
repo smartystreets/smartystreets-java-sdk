@@ -9,8 +9,7 @@ import sys
 import urllib2
 
 
-REPO_NAME = os.path.basename(os.getcwd())
-CREATE_RELEASE_URL = 'https://api.github.com/repos/smartystreets/{0}/releases'.format(REPO_NAME)
+CREATE_RELEASE_URL = 'https://api.github.com/repos/smartystreets/smartystreets-java-sdk/releases'
 LIST_RELEASE_URL = CREATE_RELEASE_URL + '/{0}'
 UPLOAD_ASSET_URL = CREATE_RELEASE_URL.replace('api.', 'uploads.') + '/{0}/assets?name={1}'
 CREATE_FAILURE = 'Failed to create release: {0} {1}'
