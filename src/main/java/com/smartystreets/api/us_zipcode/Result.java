@@ -2,6 +2,9 @@ package com.smartystreets.api.us_zipcode;
 
 import com.google.api.client.util.Key;
 
+/**
+ * @see "https://smartystreets.com/docs/cloud/us-zipcode-api#root"
+ */
 public class Result {
     //region [ Fields ]
 
