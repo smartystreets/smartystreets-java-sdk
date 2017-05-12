@@ -22,9 +22,8 @@ public class Client {
     }
 
     public Result send(Lookup lookup) throws IOException, SmartyException {
-        if (lookup == null || lookup.getText() == null || lookup.getText().isEmpty()){
+        if (lookup == null || lookup.getText() == null || lookup.getText().isEmpty())
             throw new SmartyException("Client.send() requires a Lookup with the 'text' field set");
-        }
 
         Request request = this.buildRequest(lookup);
         Response response = this.sender.send(request);
