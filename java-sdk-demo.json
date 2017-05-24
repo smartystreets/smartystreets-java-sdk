@@ -1,0 +1,282 @@
+{
+  "version": 1,
+  "width": 112,
+  "height": 45,
+  "duration": 22.848212,
+  "command": null,
+  "title": null,
+  "env": {
+    "TERM": "xterm-256color",
+    "SHELL": "/bin/bash"
+  },
+  "stdout": [
+    [
+      0.001001,
+      "\u001b[?1034hbash-3.2$ "
+    ],
+    [
+      1.0,
+      "j"
+    ],
+    [
+      0.095654,
+      "a"
+    ],
+    [
+      0.232226,
+      "v"
+    ],
+    [
+      0.159926,
+      "a"
+    ],
+    [
+      0.719671,
+      "c"
+    ],
+    [
+      0.159787,
+      " "
+    ],
+    [
+      0.34455,
+      "-"
+    ],
+    [
+      0.391962,
+      "c"
+    ],
+    [
+      0.175208,
+      "p"
+    ],
+    [
+      0.512177,
+      " "
+    ],
+    [
+      0.760384,
+      "s"
+    ],
+    [
+      0.199456,
+      "m"
+    ],
+    [
+      0.263915,
+      "artystreets-java-sdk-2.1.2.jar "
+    ],
+    [
+      1.0,
+      "E"
+    ],
+    [
+      0.462515,
+      "x"
+    ],
+    [
+      0.745663,
+      "ample.java "
+    ],
+    [
+      1.0,
+      "\r\n"
+    ],
+    [
+      0.424143,
+      "bash-3.2$ "
+    ],
+    [
+      1.0,
+      "c"
+    ],
+    [
+      0.104461,
+      "a"
+    ],
+    [
+      0.256161,
+      "t"
+    ],
+    [
+      0.199825,
+      " "
+    ],
+    [
+      0.320154,
+      "E"
+    ],
+    [
+      0.432055,
+      "x"
+    ],
+    [
+      0.502671,
+      "\u0007ample."
+    ],
+    [
+      1.0,
+      "j"
+    ],
+    [
+      0.072815,
+      "a"
+    ],
+    [
+      0.254928,
+      "v"
+    ],
+    [
+      0.080804,
+      "a"
+    ],
+    [
+      0.527301,
+      "\r\n"
+    ],
+    [
+      0.003226,
+      "import com.smartystreets.api.ClientBuilder;\r\nimport com.smartystreets.api.exceptions.SmartyException;\r\nimport com.smartystreets.api.us_street.*;\r\n\r\nimport java.io.IOException;\r\n\r\npublic class Example {\r\n    public static void main(String[] args) throws IOException, SmartyException {\r\n        // This keypair will have been deleted by the time you are watching this video...  \r\n        String authId = \"d418a4cc-69da-e48f-bc9d-ee7357b30d61\";\r\n        String authToken = \"clDiwTlcW5YTFjEl5mp1\";\r\n\r\n        System.out.println(\"Step 0. Wire up the client with your keypair.\");\r\n        Client client = new ClientBuilder(authId, authToken).buildUsStreetApiClient();\r\n\r\n        System.out.println(\"Step 1. Make a lookup. (BTW, you can also send entire batches of lookups...)\");\r\n        Lookup lookup = new Lookup();\r\n        lookup.setStreet(\"1 Rosedale\");\r\n        lookup.setLastline(\"Baltimore MD\");\r\n        lookup.setMaxCandidates(10);\r\n\r\n        System.out.println(\"Step 2. Send the lookup.\");\r\n        client.send(lookup);"
+    ],
+    [
+      5.4e-05,
+      "\r\n\r\n        System.out.println(\"Step 3. Show the resulting candidate addresses:\");\r\n        int index = 0;\r\n        for (Candidate candidate : lookup.getResult()) {\r\n            System.out.printf(\"- %d: %s, %s\\n\", index, candidate.getDeliveryLine1(), candidate.getLastLine());\r\n                    index++;\r\n        }\r\n    }\r\n}\r\n"
+    ],
+    [
+      0.000263,
+      "bash-3.2$ "
+    ],
+    [
+      1.0,
+      "j"
+    ],
+    [
+      0.080059,
+      "a"
+    ],
+    [
+      0.183173,
+      "v"
+    ],
+    [
+      0.144128,
+      "a"
+    ],
+    [
+      0.424435,
+      " "
+    ],
+    [
+      0.416228,
+      "-"
+    ],
+    [
+      0.272001,
+      "c"
+    ],
+    [
+      0.183892,
+      "p"
+    ],
+    [
+      0.367424,
+      " "
+    ],
+    [
+      0.552613,
+      "."
+    ],
+    [
+      0.335808,
+      ":"
+    ],
+    [
+      0.991848,
+      "s"
+    ],
+    [
+      0.136242,
+      "m"
+    ],
+    [
+      0.206826,
+      "artystreets-java-sdk-2.1.2.jar "
+    ],
+    [
+      1.0,
+      "E"
+    ],
+    [
+      0.304902,
+      "x"
+    ],
+    [
+      0.120021,
+      "a"
+    ],
+    [
+      0.191766,
+      "m"
+    ],
+    [
+      0.127193,
+      "p"
+    ],
+    [
+      0.193007,
+      "l"
+    ],
+    [
+      0.215428,
+      "e"
+    ],
+    [
+      0.831538,
+      "\r\n"
+    ],
+    [
+      0.084179,
+      "Step 0. Wire up the client with your keypair.\r\n"
+    ],
+    [
+      0.031344,
+      "Step 1. Make a lookup. (BTW, you can also send entire batches of lookups...)\r\n"
+    ],
+    [
+      9.5e-05,
+      "Step 2. Send the lookup.\r\n"
+    ],
+    [
+      1.0,
+      "Step 3. Show the resulting candidate addresses:\r\n"
+    ],
+    [
+      0.001069,
+      "- "
+    ],
+    [
+      3.3e-05,
+      "0: "
+    ],
+    [
+      0.000135,
+      "1 N Rosedale St, Baltimore MD 21229-3737\r\n"
+    ],
+    [
+      9.9e-05,
+      "- 1: "
+    ],
+    [
+      1.9e-05,
+      "1 S Rosedale St, Baltimore MD 21229-3739"
+    ],
+    [
+      1.1e-05,
+      "\r\n"
+    ],
+    [
+      0.01952,
+      "bash-3.2$ "
+    ]
+  ]
+}
