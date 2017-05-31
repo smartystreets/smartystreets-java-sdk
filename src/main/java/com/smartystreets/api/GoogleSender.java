@@ -7,6 +7,7 @@ import com.smartystreets.api.exceptions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Proxy;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.logging.Handler;
@@ -25,6 +26,11 @@ public class GoogleSender implements Sender {
     public GoogleSender(int maxTimeout) {
         this();
         this.maxTimeOut = maxTimeout;
+    }
+
+    GoogleSender(int maxTimeOut, Proxy proxy) {
+        this.maxTimeOut = maxTimeOut;
+        this.transport = new NetHttpTransport.Builder().setProxy(proxy).build();
     }
 
     GoogleSender(HttpTransport transport) {

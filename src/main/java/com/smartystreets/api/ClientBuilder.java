@@ -1,5 +1,7 @@
 package com.smartystreets.api;
 
+import java.net.Proxy;
+
 /**
  * The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.<br>
  * You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration. These methods<br>
@@ -12,6 +14,7 @@ public class ClientBuilder {
     private int maxRetries;
     private int maxTimeout;
     private String urlPrefix;
+    private Proxy proxy;
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
     private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
@@ -82,6 +85,15 @@ public class ClientBuilder {
     }
 
     /**
+     * @param proxy A java.net.Proxy object. See "https://docs.oracle.com/javase/7/docs/api/java/net/Proxy.html"
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withProxy(Proxy proxy) {
+        this.proxy = proxy;
+        return this;
+    }
+
+    /**
      * Enables debug mode, which will print information about the HTTP request and response to the console.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
@@ -119,7 +131,7 @@ public class ClientBuilder {
         if (this.httpSender != null)
             return this.httpSender;
 
-        Sender sender = new GoogleSender(this.maxTimeout);
+        Sender sender = new GoogleSender(this.maxTimeout, this.proxy);
 
         sender = new StatusCodeSender(sender);
 

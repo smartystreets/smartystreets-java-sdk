@@ -20,7 +20,7 @@ public class SharedCredentialsTest {
     }
 
     private Request createSignedRequest() {
-        Credentials mobile = new SharedCredentials("3516378604772256", "example.com");
+        Credentials mobile = new SharedCredentials("3516378604772256", "https://example.com");
         Request request = new Request();
         request.setUrlPrefix("https://us-street.api.smartystreets.com/street-address?");
         mobile.sign(request);
