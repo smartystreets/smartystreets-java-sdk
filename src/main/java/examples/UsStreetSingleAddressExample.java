@@ -6,13 +6,16 @@ import com.smartystreets.api.us_street.*;
 import com.smartystreets.api.ClientBuilder;
 
 import java.io.IOException;
+import java.net.Proxy;
 import java.util.ArrayList;
 
 public class UsStreetSingleAddressExample {
     public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
-        Client client = new ClientBuilder(credentials).buildUsStreetApiClient();
+        Client client = new ClientBuilder(credentials)
+//                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
+                .buildUsStreetApiClient();
 
         Lookup lookup = new Lookup();
         lookup.setStreet("1600 Amphitheatre Pkwy");
