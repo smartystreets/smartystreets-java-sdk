@@ -23,22 +23,21 @@ public class ClientTest {
 
     @Test
     public void testSendingSingleZipOnlyLookup() throws Exception {
-        byte[] expectedPayload = "Hello, World!".getBytes();
-        RequestCapturingSender sender = new RequestCapturingSender();
-        FakeSerializer serializer = new FakeSerializer(expectedPayload);
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
 
         client.send(new Lookup("1"));
 
-        assertArrayEquals(expectedPayload, sender.getRequest().getPayload());
+        assertEquals("http://localhost/?zipcode=1", capturingSender.getRequest().getUrl());
     }
 
     @Test
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
-        GoogleSerializer serializer = new GoogleSerializer();
-        String expectedPayload = "[{`city`:`1`,`state`:`2`,`zipcode`:`3`}]".replace('`', '"');
+        FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
         lookup.setCity("1");
@@ -47,7 +46,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals(expectedPayload, new String(capturingSender.getRequest().getPayload()));
+        assertEquals("http://localhost/?city=1&state=2&zipcode=3", capturingSender.getRequest().getUrl());
     }
 
     //endregion
