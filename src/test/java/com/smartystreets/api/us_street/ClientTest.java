@@ -24,24 +24,22 @@ public class ClientTest {
 
     @Test
     public void testSendingSingleFreeformLookup() throws Exception {
-        byte[] expectedPayload = "Hello, World!".getBytes();
-        RequestCapturingSender sender = new RequestCapturingSender();
-        FakeSerializer serializer = new FakeSerializer(expectedPayload);
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
 
         client.send(new Lookup("freeform"));
 
-        assertArrayEquals(expectedPayload, sender.getRequest().getPayload());
+        assertEquals("http://localhost/?street=freeform", capturingSender.getRequest().getUrl());
+
     }
 
     @Test
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
-        GoogleSerializer serializer = new GoogleSerializer();
-        String expectedPayload = ("[{\"addressee\":\"0\",\"candidates\":9,\"city\":\"5\",\"lastline\":\"8\"," +
-                "\"match\":\"invalid\",\"secondary\":\"2\",\"state\":\"6\",\"street\":\"1\",\"street2\":\"3\"," +
-                "\"urbanization\":\"4\",\"zipcode\":\"7\"}]");
+        FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
         lookup.setAddressee("0");
@@ -58,7 +56,10 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals(expectedPayload, new String(capturingSender.getRequest().getPayload()));
+        assertEquals("http://localhost/?street=1&street2=3" +
+                "&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0" +
+                "&urbanization=4&candidates=9", capturingSender.getRequest().getUrl());
+
     }
 
     //endregion

@@ -39,7 +39,11 @@ public class Client {
         if (batch.size() == 0)
             throw new SmartyException("Batch must contain between 1 and 100 lookups");
 
-        request.setPayload(this.serializer.serialize(batch.getAllLookups()));
+        if (batch.size() == 1)
+            this.populateQueryString(batch.get(0), request);
+        else
+            request.setPayload(this.serializer.serialize(batch.getAllLookups()));
+
 
         Response response = this.sender.send(request);
 
@@ -48,6 +52,22 @@ public class Client {
             candidates = new Candidate[0];
         this.assignCandidatesToLookups(batch, candidates);
     }
+
+    private void populateQueryString(Lookup address, Request request) {
+        request.putParameter("street", address.getStreet());
+        request.putParameter("street2", address.getStreet2());
+        request.putParameter("secondary", address.getSecondary());
+        request.putParameter("city", address.getCity());
+        request.putParameter("state", address.getState());
+        request.putParameter("zipcode", address.getZipCode());
+        request.putParameter("lastline", address.getLastline());
+        request.putParameter("addressee", address.getAddressee());
+        request.putParameter("urbanization", address.getUrbanization());
+
+        if (address.getMaxCandidates() != 1)
+            request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
+    }
+
 
     private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
         for (Candidate candidate : candidates)

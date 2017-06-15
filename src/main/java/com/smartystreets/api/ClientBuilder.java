@@ -87,7 +87,7 @@ public class ClientBuilder {
 
     /**
      * Use this to specify a proxy through which to send all lookups.
-     * @param proxyType Choose HTTP or HTTPS.
+     * @param proxyType Choose a java.net.Proxy.Type.
      * @param proxyHost The host of the proxy server (do not include the port).
      * @param proxyPort The port on the proxy server to which you wish to connect.
      * @return Returns <b>this</b> to accommodate method chaining.
