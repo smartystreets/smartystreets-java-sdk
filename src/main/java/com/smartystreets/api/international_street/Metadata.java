@@ -20,9 +20,6 @@ public class Metadata {
     @Key("max_geocode_precision")
     private String maxGeocodePrecision;
 
-    @Key("address_format")
-    private String addressFormat;
-
     //endregion
 
     // [ Getters ]
@@ -41,10 +38,6 @@ public class Metadata {
 
     public String getMaxGeocodePrecision() {
         return maxGeocodePrecision;
-    }
-
-    public String getAddressFormat() {
-        return addressFormat;
     }
 
     //endregion
