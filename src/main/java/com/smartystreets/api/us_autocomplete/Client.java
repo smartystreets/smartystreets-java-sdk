@@ -39,10 +39,11 @@ public class Client {
         Request request = new Request();
 
         request.putParameter("prefix", lookup.getPrefix());
-        request.putParameter("suggestions", Integer.toString(lookup.getMaxSuggestions()));
+        request.putParameter("suggestions", lookup.getMaxSuggestionsStringIfSet());
         request.putParameter("city_filter", this.buildFilterString(lookup.getCityFilter()));
         request.putParameter("state_filter", this.buildFilterString(lookup.getStateFilter()));
         request.putParameter("prefer", this.buildFilterString(lookup.getPrefer()));
+        request.putParameter("prefer_ratio", lookup.getPreferRatioStringIfSet());
         if (lookup.getGeolocateType() != GeolocateType.NONE) {
             request.putParameter("geolocate", "true");
             request.putParameter("geolocate_precision", lookup.getGeolocateType().getName());

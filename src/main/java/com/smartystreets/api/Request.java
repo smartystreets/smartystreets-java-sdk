@@ -22,7 +22,7 @@ public class Request {
         this.contentType = "application/json";
     }
 
-    public void putHeader(String name, String value) {
+    void putHeader(String name, String value) {
         this.headers.put(name, value);
     }
 
@@ -32,6 +32,7 @@ public class Request {
 
         parameters.put(name, value);
     }
+
     private static String urlEncode(String value) {
         try {
             return URLEncoder.encode(value, CHARSET);

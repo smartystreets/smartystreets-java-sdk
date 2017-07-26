@@ -8,6 +8,9 @@ import java.util.ArrayList;
  *     @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
  */
 public class Lookup {
+    final double PREFER_RATIO_DEFAULT = 1/3.0;
+    final int MAX_SUGGESTIONS_DEFAULT = 10;
+
     //region [ Fields ]
 
     private Suggestion[] result;
@@ -16,6 +19,7 @@ public class Lookup {
     private ArrayList<String> cityFilter;
     private ArrayList<String> stateFilter;
     private ArrayList<String> prefer;
+    private double preferRatio;
     private GeolocateType geolocateType;
 
     //endregion
@@ -26,11 +30,12 @@ public class Lookup {
      * If you use this constructor, don't forget to set the <b>prefix</b>. It is required.
      */
     public Lookup() {
-        this.maxSuggestions = 10;
+        this.maxSuggestions = this.MAX_SUGGESTIONS_DEFAULT;
         this.geolocateType = GeolocateType.CITY;
         this.cityFilter = new ArrayList<>();
         this.stateFilter = new ArrayList<>();
         this.prefer = new ArrayList<>();
+        this.preferRatio = this.PREFER_RATIO_DEFAULT;
     }
 
     /**
@@ -54,19 +59,29 @@ public class Lookup {
     }
 
     public String getPrefix() {
-        return prefix;
+        return this.prefix;
     }
 
     public ArrayList<String> getCityFilter() {
-        return cityFilter;
+        return this.cityFilter;
     }
 
     public ArrayList<String> getStateFilter() {
-        return stateFilter;
+        return this.stateFilter;
     }
 
     public ArrayList<String> getPrefer() {
-        return prefer;
+        return this.prefer;
+    }
+
+    public double getPreferRatio() {
+        return this.preferRatio;
+    }
+
+    String getPreferRatioStringIfSet() {
+        if (this.preferRatio == this.PREFER_RATIO_DEFAULT)
+            return null;
+        return Double.toString(this.preferRatio);
     }
 
     public GeolocateType getGeolocateType() {
@@ -75,6 +90,12 @@ public class Lookup {
 
     public int getMaxSuggestions() {
         return maxSuggestions;
+    }
+
+    String getMaxSuggestionsStringIfSet() {
+        if (this.maxSuggestions == this.MAX_SUGGESTIONS_DEFAULT)
+            return null;
+        return Integer.toString(this.maxSuggestions);
     }
 
     //endregion
@@ -101,13 +122,26 @@ public class Lookup {
         this.prefer = prefer;
     }
 
+    /***
+     * Sets the percentage of suggestions that are to be from preferred cities/states.
+     * @param preferRatio A decimal value, range [0, 1]. Default is 0.333333333.
+     * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#preference"
+     */
+    public void setPreferRatio(double preferRatio) {
+        this.preferRatio = preferRatio;
+    }
+
     public void setGeolocateType(GeolocateType geolocateType) {
         this.geolocateType = geolocateType;
     }
 
-
+    /***
+     * Sets the maximum number of suggestions to return.
+     * @param maxSuggestions A positive integer range [1, 10]. Default is 10.
+     * @throws IllegalArgumentException
+     */
     public void setMaxSuggestions(int maxSuggestions) throws IllegalArgumentException{
-        if (maxSuggestions > 0 && maxSuggestions <= 10) {
+        if (maxSuggestions > 0 && maxSuggestions <= this.MAX_SUGGESTIONS_DEFAULT) {
             this.maxSuggestions = maxSuggestions;
         } else {
             throw new IllegalArgumentException("Max suggestions must be a positive integer no larger than 10.");

@@ -24,7 +24,7 @@ public class ClientTest {
 
         client.send(new Lookup("1"));
 
-        assertEquals("http://localhost/?prefix=1&suggestions=10&geolocate=true&geolocate_precision=city", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?prefix=1&geolocate=true&geolocate_precision=city", capturingSender.getRequest().getUrl());
     }
 
     @Test
@@ -33,13 +33,14 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
-        String expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&geolocate=true&geolocate_precision=state";
+        String expectedURL = "http://localhost/?prefix=1&suggestions=2&city_filter=3&state_filter=4&prefer=5&prefer_ratio=0.6&geolocate=true&geolocate_precision=state";
         Lookup lookup = new Lookup();
         lookup.setPrefix("1");
         lookup.setMaxSuggestions(2);
         lookup.addCityFilter("3");
         lookup.addStateFilter("4");
         lookup.addPrefer("5");
+        lookup.setPreferRatio(.6);
         lookup.setGeolocateType(GeolocateType.STATE);
 
         client.send(lookup);
