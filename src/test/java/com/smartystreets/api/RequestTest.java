@@ -61,6 +61,19 @@ public class RequestTest {
     }
 
     @Test
+    public void testUrlEncodingOfUnicodeCharacters() throws Exception {
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost/?");
+
+        request.putParameter("needs_encoding", "&foo=bar");
+        request.putParameter("unicode", "Sjömadsvägen");
+
+        final String expected = "http://localhost/?needs_encoding=%26foo%3Dbar&unicode=Sj%C3%B6madsv%C3%A4gen";
+
+        assertEquals(expected, request.getUrl());
+    }
+
+    @Test
     public void testHeadersAddedToRequest() throws Exception {
         Request request = new Request();
         request.setUrlPrefix("http://localhost/?");
