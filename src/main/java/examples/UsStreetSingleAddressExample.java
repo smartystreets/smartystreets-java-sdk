@@ -11,8 +11,14 @@ import java.util.ArrayList;
 
 public class UsStreetSingleAddressExample {
     public static void main(String[] args) {
-        // We recommend storing your secret keys in environment variables.
-        StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
+        String authId = "Your SmartyStreets Auth ID here";
+        String authToken = "Your SmartyStreets Auth Token here";
+
+        // We recommend storing your secret keys in environment variables instead---it's safer!
+//        String authId = System.getenv("SMARTY_AUTH_ID");
+//        String authToken = System.getenv("SMARTY_AUTH_TOKEN");
+
+        StaticCredentials credentials = new StaticCredentials(authId, authToken);
         Client client = new ClientBuilder(credentials)
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
                 .buildUsStreetApiClient();
