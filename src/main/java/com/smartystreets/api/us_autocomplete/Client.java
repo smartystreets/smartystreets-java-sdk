@@ -1,10 +1,7 @@
 package com.smartystreets.api.us_autocomplete;
 
 
-import com.smartystreets.api.Request;
-import com.smartystreets.api.Response;
-import com.smartystreets.api.Sender;
-import com.smartystreets.api.Serializer;
+import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
@@ -12,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * This client sends lookups to the SmartyStreets US Autocomplete API, <br>
- * and attaches the results to the appropriate Lookup objects.
+ *     and attaches the results to the appropriate Lookup objects.
  */
 public class Client {
     private final Sender sender;
@@ -50,7 +47,8 @@ public class Client {
         if (lookup.getGeolocateType() != GeolocateType.NONE) {
             request.putParameter("geolocate", "true");
             request.putParameter("geolocate_precision", lookup.getGeolocateType().getName());
-        } else request.putParameter("geolocate", "false");
+        }
+        else request.putParameter("geolocate", "false");
 
         return request;
     }
@@ -62,11 +60,11 @@ public class Client {
         String filterList = "";
 
         for (String item : list) {
-            filterList += (item + ";");
+            filterList += (item + ",");
         }
 
-        if (filterList.endsWith(";"))
-            filterList = filterList.substring(0, filterList.length() - 1);
+        if (filterList.endsWith(","))
+            filterList = filterList.substring(0, filterList.length()-1);
 
         return filterList;
     }
