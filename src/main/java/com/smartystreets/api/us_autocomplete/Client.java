@@ -42,7 +42,7 @@ public class Client {
         request.putParameter("suggestions", lookup.getMaxSuggestionsStringIfSet());
         request.putParameter("city_filter", this.buildFilterString(lookup.getCityFilter()));
         request.putParameter("state_filter", this.buildFilterString(lookup.getStateFilter()));
-        request.putParameter("prefer", this.buildFilterString(lookup.getPrefer()));
+        request.putParameter("prefer", this.buildPreferString(lookup.getPrefer()));
         request.putParameter("prefer_ratio", lookup.getPreferRatioStringIfSet());
         if (lookup.getGeolocateType() != GeolocateType.NONE) {
             request.putParameter("geolocate", "true");
@@ -53,17 +53,25 @@ public class Client {
         return request;
     }
 
+    private String buildPreferString(ArrayList<String> list) {
+        return buildStringFromList(list, ";");
+    }
+
     private String buildFilterString(ArrayList<String> list) {
+        return buildStringFromList(list, ",");
+    }
+
+    private String buildStringFromList(ArrayList<String> list, String separator) {
         if (list.isEmpty())
             return null;
 
         String filterList = "";
 
         for (String item : list) {
-            filterList += (item + ",");
+            filterList += (item + separator);
         }
 
-        if (filterList.endsWith(","))
+        if (filterList.endsWith(separator))
             filterList = filterList.substring(0, filterList.length()-1);
 
         return filterList;
