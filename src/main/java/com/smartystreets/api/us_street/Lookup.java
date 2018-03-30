@@ -128,12 +128,21 @@ public class Lookup {
     }
 
     public MatchType getMatch() {
+        if (this.match == null)
+            return null;
         if (this.match.equals("strict") )
             return MatchType.STRICT;
         if (this.match.equals("range") )
             return MatchType.RANGE;
         if (this.match.equals("invalid") )
             return MatchType.INVALID;
+        return null;
+    }
+
+    public String getMatchString() {
+        MatchType match = getMatch();
+        if (match != null)
+            return match.getName();
         return null;
     }
 

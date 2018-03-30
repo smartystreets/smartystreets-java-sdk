@@ -58,7 +58,7 @@ public class ClientTest {
 
         assertEquals("http://localhost/?street=1&street2=3" +
                 "&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0" +
-                "&urbanization=4&candidates=9", capturingSender.getRequest().getUrl());
+                "&urbanization=4&match=invalid&candidates=9", capturingSender.getRequest().getUrl());
 
     }
 

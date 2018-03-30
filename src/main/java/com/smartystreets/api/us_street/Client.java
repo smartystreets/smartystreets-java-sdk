@@ -63,6 +63,7 @@ public class Client {
         request.putParameter("lastline", address.getLastline());
         request.putParameter("addressee", address.getAddressee());
         request.putParameter("urbanization", address.getUrbanization());
+        request.putParameter("match", address.getMatchString());
 
         if (address.getMaxCandidates() != 1)
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
