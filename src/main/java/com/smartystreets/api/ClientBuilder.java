@@ -2,6 +2,7 @@ package com.smartystreets.api;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.util.Map;
 
 /**
  * The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.<br>
@@ -16,6 +17,7 @@ public class ClientBuilder {
     private int maxTimeout;
     private String urlPrefix;
     private Proxy proxy;
+    private Map<String, String> customHeaders;
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
     private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
@@ -86,6 +88,16 @@ public class ClientBuilder {
     }
 
     /**
+     * Use this to add any additional headers you need.
+     * @param customHeaders A string to string <b>Map</b> of header name/value pairs.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withCustomHeaders(Map<String, String> customHeaders) {
+        this.customHeaders = customHeaders;
+        return this;
+    }
+
+    /**
      * Use this to specify a proxy through which to send all lookups.
      * @param proxyType Choose a java.net.Proxy.Type.
      * @param proxyHost The host of the proxy server (do not include the port).
@@ -138,6 +150,9 @@ public class ClientBuilder {
         Sender sender = new GoogleSender(this.maxTimeout, this.proxy);
 
         sender = new StatusCodeSender(sender);
+
+        if (this.customHeaders != null)
+            sender = new CustomHeaderSender(this.customHeaders, sender);
 
         if (this.signer != null)
             sender = new SigningSender(this.signer, sender);
