@@ -65,7 +65,7 @@ public class GoogleSender implements Sender {
     private void copyHeaders(Request smartyRequest, HttpRequest httpRequest) {
         HttpHeaders httpHeaders = httpRequest.getHeaders();
 
-        Map<String, String> headers = smartyRequest.getHeaders();
+        Map<String, Object> headers = smartyRequest.getHeaders();
         for (String headerName : headers.keySet())
             httpHeaders.set(headerName, headers.get(headerName));
 

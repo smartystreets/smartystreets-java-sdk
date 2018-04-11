@@ -14,7 +14,7 @@ public class CustomHeaderSenderTest {
 
     @Test
     public void testAllCustomHeadersAreAddedToTheRequest() throws IOException, SmartyException {
-        HashMap<String, String> headers = new HashMap<>();
+        HashMap<String, Object> headers = new HashMap<>();
         headers.put("A", "1");
         headers.put("B", "2");
         RequestCapturingSender inner = new RequestCapturingSender();
@@ -23,7 +23,7 @@ public class CustomHeaderSenderTest {
 
         sender.send(request);
 
-        Map<String, String> requestHeaders = inner.getRequest().getHeaders();
+        Map<String, Object> requestHeaders = inner.getRequest().getHeaders();
         assertNotNull("There should be headers here.", requestHeaders);
         assertEquals(headers.get("A"), inner.getRequest().getHeaders().get("A"));
 

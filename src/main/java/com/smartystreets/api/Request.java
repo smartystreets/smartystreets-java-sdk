@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Request {
     private static final String CHARSET = "UTF-8";
-    private final Map<String, String> headers;
+    private final Map<String, Object> headers;
     private final Map<String, String> parameters;
     private String urlPrefix;
     private String method;
@@ -22,7 +22,7 @@ public class Request {
         this.contentType = "application/json";
     }
 
-    void putHeader(String name, String value) {
+    void putHeader(String name, Object value) {
         this.headers.put(name, value);
     }
 
@@ -65,7 +65,7 @@ public class Request {
         return method;
     }
 
-    public Map<String, String> getHeaders() {
+    public Map<String, Object> getHeaders() {
         return this.headers;
     }
 

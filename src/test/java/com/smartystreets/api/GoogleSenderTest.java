@@ -29,7 +29,7 @@ public class GoogleSenderTest {
 
         sender.send(request);
 
-        Map<String, String> headers = request.getHeaders();
+        Map<String, Object> headers = request.getHeaders();
         assertEquals("value1", headers.get("X-name1"));
         assertEquals("value2", headers.get("X-name2"));
     }

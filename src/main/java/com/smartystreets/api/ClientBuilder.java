@@ -17,7 +17,7 @@ public class ClientBuilder {
     private int maxTimeout;
     private String urlPrefix;
     private Proxy proxy;
-    private Map<String, String> customHeaders;
+    private Map<String, Object> customHeaders;
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
     private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
@@ -89,10 +89,10 @@ public class ClientBuilder {
 
     /**
      * Use this to add any additional headers you need.
-     * @param customHeaders A string to string <b>Map</b> of header name/value pairs.
+     * @param customHeaders A String to Object <b>Map</b> of header name/value pairs.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
-    public ClientBuilder withCustomHeaders(Map<String, String> customHeaders) {
+    public ClientBuilder withCustomHeaders(Map<String, Object> customHeaders) {
         this.customHeaders = customHeaders;
         return this;
     }
