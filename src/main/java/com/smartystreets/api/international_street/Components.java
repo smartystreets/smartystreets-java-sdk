@@ -50,6 +50,9 @@ public class Components {
     @Key("premise_number")
     private String premiseNumber;
 
+    @Key("premise_prefix_number")
+    private String premisePrefixNumber;
+
     @Key("premise_type")
     private String premiseType;
 
@@ -180,6 +183,10 @@ public class Components {
 
     public String getPremiseNumber() {
         return premiseNumber;
+    }
+
+    public String getPremisePrefixNumber() {
+        return premisePrefixNumber;
     }
 
     public String getPremiseType() {
