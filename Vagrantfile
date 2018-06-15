@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 end
 
 $provision = <<-EOF
-  apt-get install -y maven openjdk-7-jdk
+  apt-get install -y maven openjdk-8-jdk
 
   sed -i -r "s/#default-key 621CC013/default-key F39CD1E9/g" /home/vagrant/.gnupg/gpg.conf
 
