@@ -27,6 +27,12 @@ public class Client {
         send(batch);
     }
 
+    /**
+     * Sends a batch of up to 100 lookups for validation.
+     * @param batch Batch must contain between 1 and 100 Lookup objects
+     * @throws SmartyException
+     * @throws IOException
+     */
     public void send(Batch batch) throws SmartyException, IOException {
         Request request = new Request();
 

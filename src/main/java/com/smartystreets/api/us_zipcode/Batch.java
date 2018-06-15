@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * This class contains a collection of lookups to be sent to the SmartyStreets US ZIP Code API<br>
+ * This class contains a collection of up to 100 lookups to be sent to the SmartyStreets US ZIP Code API<br>
  *     all at once. This is more efficient than sending them one at a time.
  */
 public class Batch {

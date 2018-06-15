@@ -10,7 +10,7 @@ import java.util.Vector;
 /**
  * This class contains a collection of lookups to be sent to the <br>
  *     SmartyStreets US Street API all at once. This is more efficient than sending them<br>
- *     one at a time.
+ *     one at a time. Maximum batch size is 100.
  */
 public class Batch {
     public static final int MAX_BATCH_SIZE = 100;
@@ -23,7 +23,7 @@ public class Batch {
     }
 
     /**
-     *
+     * Adds a lookup to the batch, as long as there are less than 100 lookup in the batch already.
      * @param newAddress
      * @throws BatchFullException Batch size cannot exceed 100
      */

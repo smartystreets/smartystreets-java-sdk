@@ -28,7 +28,7 @@ public class Client {
     }
 
     /**
-     *
+     * Sends a batch of up to 100 lookups for validation.
      * @param batch Batch must contain between 1 and 100 Lookup objects
      * @throws SmartyException
      * @throws IOException
