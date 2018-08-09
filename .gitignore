@@ -2,6 +2,6 @@
 /.old
 /.idea
 /smartystreets-java-sdk.iml
+/.gnupg
 
 target
-.vagrant/machines/default/virtualbox

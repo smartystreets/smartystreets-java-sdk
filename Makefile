@@ -5,10 +5,10 @@ SOURCE_VERSION := 3.3
 clean:
 	mvn clean
 
-build:
+compile:
 	mvn compile
 
-jar:
+package:
 	mvn package
 
 test:
@@ -33,3 +33,9 @@ version:
 	$(eval EXPECTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr -1 +))
 	$(eval INCREMENTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr 0 +))
 	@if [ "$(CURRENT)" != "$(EXPECTED)" ]; then git tag -a "$(INCREMENTED)" -m "" 2>/dev/null || true; fi
+
+##########################################################################
+
+docker:
+	test -d .gnupg || cp -r ~/.gnupg .
+	docker-compose run sdk sh

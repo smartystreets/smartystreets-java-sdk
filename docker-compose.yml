@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  sdk:
+    build: .
+    volumes: 
+      - .:/code
+      - ./.gnupg:/root/.gnupg
+    environment:
+      - SMARTY_AUTH_ID
+      - SMARTY_AUTH_TOKEN
+      - OSSRH_PASSWORD
