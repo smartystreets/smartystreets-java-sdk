@@ -18,10 +18,10 @@ package:
 	mvn package
 
 verify:
-	mvn verify -Dgpg.passphrase=$(JAVA_GPG_PASSPHRASE)
+	GPG_TTY="$(shell tty)" mvn verify
 
 publish: version
-	mvn deploy -Dgpg.passphrase=$(JAVA_GPG_PASSPHRASE)
+	GPG_TTY="$(shell tty)" mvn deploy
 	git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 
 version:

@@ -5,10 +5,8 @@ services:
       context: .
       args:
         - OSSRH_PASSWORD
-        - JAVA_GPG_PASSPHRASE
     volumes: 
       - .:/code
     environment:
       - SMARTY_AUTH_ID
       - SMARTY_AUTH_TOKEN
-      - JAVA_GPG_PASSPHRASE
