@@ -18,7 +18,7 @@ package:
 	mvn package
 
 publish: version
-	mvn deploy -Dgpg.passphrase=$(JAVA_GPG_PASSPHRASE)
+	mvn deploy
 	git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 
 version:

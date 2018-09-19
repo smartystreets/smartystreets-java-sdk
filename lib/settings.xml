@@ -7,17 +7,4 @@
       <password>PASSWORD</password>
     </server>
   </servers>
-  <profiles>
-   <profile>
-     <id>gpg</id>
-     <activation>
-       <activeByDefault>true</activeByDefault>
-     </activation>
-     <properties>
-       <gpg.executable>gpg2</gpg.executable>
-       <gpg.keyname>DBDF05C4</gpg.keyname>
-       <gpg.passphrase>PASSPHRASE</gpg.passphrase>
-     </properties>
-   </profile>
-  </profiles>
 </settings>

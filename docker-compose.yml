@@ -5,7 +5,6 @@ services:
       context: .
       args:
         - OSSRH_PASSWORD
-        - JAVA_GPG_PASSPHRASE
     volumes: 
       - .:/code
     environment:
