@@ -14,11 +14,11 @@ test:
 compile:
 	mvn compile
 
-package:
-	mvn package
-
 verify:
 	GPG_TTY="$(shell tty)" mvn verify
+
+package:
+	mvn package
 
 publish: version
 	GPG_TTY="$(shell tty)" mvn deploy
@@ -36,4 +36,4 @@ workspace:
 release:
 	docker-compose run sdk make publish && tagit -p && git push origin --tags
 
-.PHONY: clean test compile package publish version identity workspace release
+.PHONY: clean test compile verify package publish version workspace release
