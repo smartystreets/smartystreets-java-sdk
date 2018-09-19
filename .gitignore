@@ -1,7 +1,5 @@
-.DS_Store
-/.old
-/.idea
-/smartystreets-java-sdk.iml
-/.gnupg
-
-target
+*DS_Store*
+*.swp
+__MACOSX
+/.idea/
+/target/
