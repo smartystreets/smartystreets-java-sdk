@@ -1,7 +1,5 @@
-.DS_Store
-/.old
-/.idea
-/smartystreets-java-sdk.iml
-
-target
-.vagrant/machines/default/virtualbox
+*DS_Store*
+*.swp
+__MACOSX
+/.idea/
+/target/

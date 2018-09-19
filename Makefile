@@ -1,35 +1,36 @@
 #!/usr/bin/make -f
 
-SOURCE_VERSION := 3.3
+VERSION       := $(shell tagit -p --dry-run)
+VERSION_FILE1 := pom.xml
+VERSION_FILE2 := src/main/java/com/smartystreets/api/Version.java
 
 clean:
+	git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 	mvn clean
-
-build:
-	mvn compile
-
-jar:
-	mvn package
 
 test:
 	mvn test
 
-sign:
-	mvn verify
+compile:
+	mvn compile
 
-publish: tag
-	git push origin --tags
-	mvn clean deploy
-	git checkout pom.xml src/main/java/com/smartystreets/api/Version.java
-	./release.py "target/smartystreets-java-sdk-$(shell git describe)-jar-with-dependencies.jar" "target/smartystreets-java-sdk-$(shell git describe)-javadoc.jar"
+package:
+	mvn package
 
-tag: version
-	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" pom.xml
-	@sed -i -r "s/0\.0\.0/$(shell git describe)/g" src/main/java/com/smartystreets/api/Version.java
+publish: version
+	mvn deploy
+	git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 
 version:
-	$(eval PREFIX := $(SOURCE_VERSION).)
-	$(eval CURRENT := $(shell git describe 2>/dev/null))
-	$(eval EXPECTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr -1 +))
-	$(eval INCREMENTED := $(PREFIX)$(shell git tag -l "$(PREFIX)*" | wc -l | xargs expr 0 +))
-	@if [ "$(CURRENT)" != "$(EXPECTED)" ]; then git tag -a "$(INCREMENTED)" -m "" 2>/dev/null || true; fi
+	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE1)"
+	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE2)"
+
+##########################################################
+
+workspace:
+	docker-compose run sdk /bin/sh
+
+release:
+	docker-compose run sdk make publish && tagit -p && git push origin --tags
+
+.PHONY: clean test compile package publish version identity workspace release
