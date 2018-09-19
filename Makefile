@@ -17,8 +17,11 @@ compile:
 package:
 	mvn package
 
+verify:
+	mvn verify -Dgpg.passphrase=$(JAVA_GPG_PASSPHRASE)
+
 publish: version
-	mvn deploy
+	mvn deploy -Dgpg.passphrase=$(JAVA_GPG_PASSPHRASE)
 	git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 
 version:

@@ -7,4 +7,17 @@
       <password>PASSWORD</password>
     </server>
   </servers>
+  <profiles>
+   <profile>
+     <id>ossrh</id>
+     <activation>
+       <activeByDefault>true</activeByDefault>
+     </activation>
+     <properties>
+       <gpg.executable>gpg</gpg.executable>
+       <gpg.keyname>F39CD1E9</gpg.keyname>
+       <gpg.passphrase>PASSPHRASE</gpg.passphrase>
+     </properties>
+   </profile>
+  </profiles>
 </settings>
