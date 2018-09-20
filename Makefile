@@ -38,7 +38,8 @@ release:
 		&& tagit -p \
 		&& git push origin --tags \
 		&& hub release create -m "v$(VERSION) Release" "$(VERSION)" \
-			-a target/smartystreets-java-sdk-$(VERSION)-with-dependencies.jar \
-			-a target/smartystreets-java-sdk-$(VERSION)-javadoc.jar
+			-a target/smartystreets-java-sdk-$(VERSION)-jar-with-dependencies.jar \
+			-a target/smartystreets-java-sdk-$(VERSION)-javadoc.jar \
+			-a target/smartystreets-java-sdk-$(VERSION).jar
 
 .PHONY: clean test compile verify package publish version workspace release
