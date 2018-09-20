@@ -22,10 +22,7 @@ package:
 
 publish: version
 	GPG_TTY="$(shell tty)" mvn deploy \
-		&& git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)" \
-		&& hub release create -m "v$(VERSION) Release" "$(VERSION)" \
-			-a target/smartystreets-java-sdk-$(VERSION)-with-dependencies.jar \
-			-a target/smartystreets-java-sdk-$(VERSION)-javadoc.jar
+		&& git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 
 version:
 	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE1)"
@@ -37,6 +34,11 @@ workspace:
 	docker-compose run sdk /bin/sh
 
 release:
-	docker-compose run sdk make publish && tagit -p && git push origin --tags
+	docker-compose run sdk make publish \
+		&& tagit -p \
+		&& git push origin --tags \
+		&& hub release create -m "v$(VERSION) Release" "$(VERSION)" \
+			-a target/smartystreets-java-sdk-$(VERSION)-with-dependencies.jar \
+			-a target/smartystreets-java-sdk-$(VERSION)-javadoc.jar
 
 .PHONY: clean test compile verify package publish version workspace release
