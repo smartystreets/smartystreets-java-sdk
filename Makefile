@@ -14,19 +14,11 @@ test:
 compile:
 	mvn compile
 
-verify:
-	GPG_TTY="$(shell tty)" mvn verify
-
-package:
-	mvn package
-
 publish: version
-	GPG_TTY="$(shell tty)" mvn deploy \
+	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE1)" \
+		&& sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE2)" \
+		&& GPG_TTY="$(shell tty)" mvn deploy \
 		&& git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
-
-version:
-	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE1)"
-	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE2)"
 
 ##########################################################
 
@@ -42,4 +34,4 @@ release:
 			-a target/smartystreets-java-sdk-$(VERSION)-javadoc.jar \
 			-a target/smartystreets-java-sdk-$(VERSION).jar
 
-.PHONY: clean test compile verify package publish version workspace release
+.PHONY: clean test compile publish workspace release
