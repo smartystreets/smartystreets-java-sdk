@@ -62,6 +62,8 @@ public class Analysis {
         return this.active;
     }
 
+    //@deprecated moved to metadata field
+    @Deprecated
     public boolean isEwsMatch() {
         return false;
     }
