@@ -56,6 +56,9 @@ public class Metadata {
     @Key("dst")
     private boolean obeysDst;
 
+    @Key("ews_match")
+    private boolean isEwsMatch;
+
     //endregion
 
     //region [ Getters ]
@@ -123,6 +126,11 @@ public class Metadata {
     public boolean obeysDst() {
         return this.obeysDst;
     }
+
+    public boolean isEwsMatch() {
+        return this.isEwsMatch;
+    }
+
 
     //endregion
 }

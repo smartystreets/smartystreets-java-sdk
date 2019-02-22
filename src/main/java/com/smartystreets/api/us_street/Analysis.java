@@ -63,7 +63,7 @@ public class Analysis {
     }
 
     public boolean isEwsMatch() {
-        return this.isEwsMatch;
+        return false;
     }
 
     public String getFootnotes() {
