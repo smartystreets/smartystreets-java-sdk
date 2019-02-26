@@ -21,7 +21,7 @@ public class UsStreetMultipleAddressesExample {
         address0.setStreet("1600 amphitheatre parkway");
         address0.setCity("Mountain view");
         address0.setState("california");
-        address0.setMatch("invalid");
+        address0.setMatch(MatchType.INVALID);
 
         Lookup address1 = new Lookup("1 Rosedale, Baltimore, Maryland"); // Freeform addresses work too.
         address1.setMaxCandidates(10); // Allows up to ten possible matches to be returned (default is 1).
