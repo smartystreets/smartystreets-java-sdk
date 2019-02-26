@@ -14,7 +14,7 @@ test:
 compile:
 	mvn compile
 
-publish: version
+publish:
 	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE1)" \
 		&& sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE2)" \
 		&& GPG_TTY="$(shell tty)" mvn deploy \
