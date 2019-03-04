@@ -15,6 +15,9 @@ public class Analysis {
     @Key("max_address_precision")
     private String maxAddressPrecision;
 
+    @Key("changes")
+    private Changes changes;
+
 
     public String getVerificationStatus() {
         return verificationStatus;
@@ -26,5 +29,9 @@ public class Analysis {
 
     public String getMaxAddressPrecision() {
         return maxAddressPrecision;
+    }
+
+    public Changes getChanges() {
+        return changes;
     }
 }
