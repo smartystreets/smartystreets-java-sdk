@@ -14,19 +14,30 @@ public class UsZipCodeMultipleLookupsExample {
         Client client = new ClientBuilder(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN")).buildUsZipCodeApiClient();
         Batch batch = new Batch();
 
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/us-zipcode-api#input-fields
+
         Lookup lookup0 = new Lookup();
+        lookup0.setInputId("dfc33cb6-829e-4fea-aa1b-b6d6580f0817"); // Optional ID from your system
         lookup0.setZipCode("42223");   // A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
 
         Lookup lookup1 = new Lookup();
         lookup1.setCity("Phoenix");
         lookup1.setState("Arizona");
 
-        Lookup lookup2 = new Lookup("cupertino", "CA", "95014"); // You can also set these with arguments
+        Lookup lookup2 = new Lookup();
+        lookup2.setInputId("01189998819991197253");
+        lookup2.setCity("Provo");
+        lookup2.setState("UT");
+        lookup2.setZipCode("84604");
+
+        Lookup lookup3 = new Lookup("cupertino", "CA", "95014"); // You can also set these with arguments
 
         try{
             batch.add(lookup0);
             batch.add(lookup1);
             batch.add(lookup2);
+            batch.add(lookup3);
 
             client.send(batch);
         }

@@ -17,18 +17,32 @@ public class UsStreetMultipleAddressesExample {
         Client client = new ClientBuilder(credentials).buildUsStreetApiClient();
         Batch batch = new Batch();
 
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/us-street-api#input-fields
+
         Lookup address0 = new Lookup();
+        address0.setInputId("24601"); // Optional ID from you system
+        address0.setAddressee("John Doe");
         address0.setStreet("1600 amphitheatre parkway");
+        address0.setStreet2("closet under the stairs");
+        address0.setSecondary("APT 2");
+        address0.setUrbanization(""); // Only applies to Puerto Rico addresses
         address0.setCity("Mountain view");
         address0.setState("california");
-        address0.setMatch(MatchType.INVALID);
+        address0.setZipCode("94043");
+        address0.setMaxCandidates(3);
+        address0.setMatch(MatchType.INVALID); // "invalid" is the most permissive match
 
         Lookup address1 = new Lookup("1 Rosedale, Baltimore, Maryland"); // Freeform addresses work too.
-        address1.setMaxCandidates(10); // Allows up to ten possible matches to be returned (default is 1).
+        address1.setMaxCandidates(5); // Allows up to ten possible matches to be returned (default is 1).
 
-        Lookup address2 = new Lookup("123 Bogus Street, Pretend Lake, Oklahoma");
+        Lookup address2 = new Lookup();
+        address2.setStreet("123 Bogus Street");
+        address2.setLastline("Pretend Lake, Oklahoma");
+        address2.setMaxCandidates(1);
 
         Lookup address3 = new Lookup();
+        address3.setInputId("8675309");
         address3.setStreet("1 Infinite Loop");
         address3.setZipCode("95014"); // You can just input the street and ZIP if you want.
 

@@ -13,7 +13,18 @@ public class InternationalExample {
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
         Client client = new ClientBuilder(credentials).buildInternationalStreetApiClient();
 
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/cloud/international-street-api#http-input-fields
+
         Lookup lookup = new Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil");
+        lookup.setInputId("ID-8675309"); // Optional ID from your system
+        lookup.setOrganization("John Doe");
+        lookup.setAddress1("Rua Padre Antonio D'Angelo 121");
+        lookup.setAddress2("Casa Verde");
+        lookup.setLocality("Sao Paulo");
+        lookup.setAdministrativeArea("SP");
+        lookup.setCountry("Brazil");
+        lookup.setPostalCode("02516-050");
         lookup.setGeocode(true); // Must be expressly set to get latitude and longitude.
 
         Candidate[] candidates = client.send(lookup); // The candidates are also stored in the lookup's 'result' field.

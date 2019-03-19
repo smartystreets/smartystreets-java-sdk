@@ -13,9 +13,14 @@ public class UsZipCodeSingleLookupExample {
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
         Client client = new ClientBuilder(credentials).buildUsZipCodeApiClient();
 
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/us-zipcode-api#input-fields
+
         Lookup lookup = new Lookup();
+        lookup.setInputId("dfc33cb6-829e-4fea-aa1b-b6d6580f0817"); // Optional ID from your system
         lookup.setCity("Mountain View");
         lookup.setState("California");
+        lookup.setZipCode("94043");
 
         try {
             client.send(lookup);

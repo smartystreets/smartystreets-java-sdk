@@ -23,10 +23,21 @@ public class UsStreetSingleAddressExample {
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
                 .buildUsStreetApiClient();
 
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/us-street-api#input-fields
+
         Lookup lookup = new Lookup();
+        lookup.setInputId("24601"); // Optional ID from your system
+        lookup.setAddressee("John Doe");
         lookup.setStreet("1600 Amphitheatre Pkwy");
+        lookup.setStreet2("closet under the stairs");
+        lookup.setSecondary("APT 2");
+        lookup.setUrbanization(""); // Only applies to Puerto Rico addresses
         lookup.setCity("Mountain View");
         lookup.setState("CA");
+        lookup.setZipCode("94043");
+        lookup.setMaxCandidates(3);
+        lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match
 
         try {
             client.send(lookup);

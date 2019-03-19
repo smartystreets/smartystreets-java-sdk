@@ -22,8 +22,14 @@ public class UsAutocompleteExample {
             System.out.println(suggestion.getText());
         }
 
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields
+
         lookup.addStateFilter("IL");
+        lookup.addCityFilter("Ogden");
+        lookup.addPrefer("Ogden, IL");
         lookup.setMaxSuggestions(5);
+        lookup.setPreferRatio(0.33333);
 
         Suggestion[] suggestions = client.send(lookup); // The client will also return the suggestions directly
 

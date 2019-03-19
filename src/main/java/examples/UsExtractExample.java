@@ -16,7 +16,14 @@ public class UsExtractExample {
         String text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
                 "\r\nLos Vegas, Nevada." +
                 "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho.";
+
+        // Documentation for input fields can be found at:
+        // https://smartystreets.com/docs/cloud/us-extract-api#http-request-input-fields
+
         Lookup lookup = new Lookup(text);
+        lookup.isAggressive(true);
+        lookup.addressesHaveLineBreaks();
+        lookup.getAddressesPerLine();
 
         Result result = client.send(lookup);
 
