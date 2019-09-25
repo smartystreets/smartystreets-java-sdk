@@ -14,6 +14,9 @@ public class Result {
     @Key("reason")
     String reason;
 
+    @Key("input_id")
+    private String inputId;
+
     @Key("input_index")
     private int inputIndex;
 
@@ -46,6 +49,8 @@ public class Result {
      *
      * @return Returns a status if there was no match
      */
+    public String getInputId() { return this.inputId; }
+
     public String getStatus() {
         return this.status;
     }

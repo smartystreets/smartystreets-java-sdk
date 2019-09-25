@@ -7,6 +7,9 @@ public class RootLevel {
 
     //region [ Fields ]
 
+    @Key("input_id")
+    private String inputId;
+
     @Key("organization")
     private String organization;
 
@@ -49,6 +52,8 @@ public class RootLevel {
     //endregion
 
     //region [ Getters ]
+
+    public String getInputId() { return  inputId; }
 
     public String getOrganization() {
         return organization;

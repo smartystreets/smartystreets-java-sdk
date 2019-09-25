@@ -30,6 +30,7 @@ public class InternationalExample {
         Candidate[] candidates = client.send(lookup); // The candidates are also stored in the lookup's 'result' field.
 
         Candidate firstCandidate = candidates[0];
+        System.out.println("Input ID: " + firstCandidate.getInputId());
         System.out.println("Address is " + firstCandidate.getAnalysis().getVerificationStatus());
         System.out.println("Address precision: " + firstCandidate.getAnalysis().getAddressPrecision() + "\n");
 

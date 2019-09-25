@@ -88,6 +88,7 @@ public class CandidateTest {
 
         assertEquals(0, candidates[0].getInputIndex());
         assertEquals(4242, candidates[0].getCandidateIndex());
+        assertEquals("blah", candidates[0].getInputId());
         assertEquals("John Smith", candidates[0].getAddressee());
         assertEquals("3214 N University Ave # 409", candidates[0].getDeliveryLine1());
         assertEquals("blah blah", candidates[0].getDeliveryLine2());

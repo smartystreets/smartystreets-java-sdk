@@ -42,6 +42,7 @@ public class ClientTest {
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
+        lookup.setInputId("1234");
         lookup.setAddressee("0");
         lookup.setStreet("1");
         lookup.setSecondary("2");
@@ -56,7 +57,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?street=1&street2=3" +
+        assertEquals("http://localhost/?input_id=1234&street=1&street2=3" +
                 "&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0" +
                 "&urbanization=4&match=invalid&candidates=9", capturingSender.getRequest().getUrl());
 

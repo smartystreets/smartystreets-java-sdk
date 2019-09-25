@@ -64,6 +64,8 @@ public class UsZipCodeMultipleLookupsExample {
                 continue;
             }
 
+            System.out.println("Input ID: " + result.getInputId());
+
             City[] cities = result.getCities();
             System.out.println(cities.length + " City and State match(es):");
 

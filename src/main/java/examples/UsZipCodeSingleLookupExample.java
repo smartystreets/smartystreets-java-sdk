@@ -37,6 +37,8 @@ public class UsZipCodeSingleLookupExample {
         ZipCode[] zipCodes = result.getZipCodes();
         City[] cities = result.getCities();
 
+        System.out.println("Input ID: " + result.getInputId());
+
         for (City city : cities) {
             System.out.println("\nCity: " + city.getCity());
             System.out.println("State: " + city.getState());

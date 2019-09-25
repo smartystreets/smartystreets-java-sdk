@@ -36,6 +36,7 @@ public class Client {
     private Request buildRequest(Lookup lookup) {
         Request request = new Request();
 
+        request.putParameter("input_id", lookup.getInputId());
         request.putParameter("country", lookup.getCountry());
         request.putParameter("geocode", lookup.getGeocode());
         if (lookup.getLanguage() != null)

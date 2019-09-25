@@ -31,11 +31,12 @@ public class ClientTest {
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
-        String expectedUrl = "http://localhost/?country=0&geocode=true&language=native&freeform=1" +
+        String expectedUrl = "http://localhost/?input_id=1234&country=0&geocode=true&language=native&freeform=1" +
                 "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9";
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
+        lookup.setInputId("1234");
         lookup.setCountry("0");
         lookup.setGeocode(true);
         lookup.setLanguage(LanguageMode.NATIVE);

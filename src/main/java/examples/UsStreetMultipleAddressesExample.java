@@ -82,6 +82,7 @@ public class UsStreetMultipleAddressesExample {
                 final Metadata metadata = candidate.getMetadata();
 
                 System.out.println("\nCandidate " + candidate.getCandidateIndex() + ":");
+                System.out.println("Input ID: " + candidate.getInputId());
                 System.out.println("Delivery line 1: " + candidate.getDeliveryLine1());
                 System.out.println("Last line:       " + candidate.getLastLine());
                 System.out.println("ZIP Code:        " + components.getZipCode() + "-" + components.getPlus4Code());

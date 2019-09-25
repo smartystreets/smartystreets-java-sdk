@@ -54,6 +54,7 @@ public class Client {
     }
 
     private void populateQueryString(Lookup address, Request request) {
+        request.putParameter("input_id", address.getInputId());
         request.putParameter("street", address.getStreet());
         request.putParameter("street2", address.getStreet2());
         request.putParameter("secondary", address.getSecondary());

@@ -60,6 +60,7 @@ public class UsStreetSingleAddressExample {
         Candidate firstCandidate = results.get(0);
 
         System.out.println("Address is valid. (There is at least one candidate)\n");
+        System.out.println("Input ID: " + firstCandidate.getInputId());
         System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
         System.out.println("County: " + firstCandidate.getMetadata().getCountyName());
         System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());

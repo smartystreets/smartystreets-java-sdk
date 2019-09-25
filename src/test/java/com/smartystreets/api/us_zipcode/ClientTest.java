@@ -40,13 +40,14 @@ public class ClientTest {
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
+        lookup.setInputId("1234");
         lookup.setCity("1");
         lookup.setState("2");
         lookup.setZipCode("3");
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?city=1&state=2&zipcode=3", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?input_id=1234&city=1&state=2&zipcode=3", capturingSender.getRequest().getUrl());
     }
 
     //endregion
