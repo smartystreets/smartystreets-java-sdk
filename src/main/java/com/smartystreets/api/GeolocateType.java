@@ -1,4 +1,4 @@
-package com.smartystreets.api.us_autocomplete;
+package com.smartystreets.api;
 
 /**
  * This field corresponds to the <b>geolocate</b> and <b>geolocate_precision</b> fields in the US Autocomplete API.

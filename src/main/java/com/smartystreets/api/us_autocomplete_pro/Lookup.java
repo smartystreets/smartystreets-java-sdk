@@ -1,5 +1,6 @@
-package com.smartystreets.api.us_autocomplete;
+package com.smartystreets.api.us_autocomplete_pro;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import com.smartystreets.api.GeolocateType;
 
@@ -15,13 +16,16 @@ public class Lookup {
     //region [ Fields ]
 
     private Suggestion[] result;
-    private String prefix;
+    private String search;
     private int maxSuggestions;
     private ArrayList<String> cityFilter;
     private ArrayList<String> stateFilter;
-    private ArrayList<String> prefer;
+    private ArrayList<String> zipcodeFilter;
+    private ArrayList<String> preferCity;
+    private ArrayList<String> preferState;
+    private ArrayList<String> preferZipcode;
     private double preferRatio;
-    private GeolocateType geolocateType;
+    private GeolocateType preferGeolocation;
 
     //endregion
 
@@ -32,19 +36,22 @@ public class Lookup {
      */
     public Lookup() {
         this.maxSuggestions = this.MAX_SUGGESTIONS_DEFAULT;
-        this.geolocateType = GeolocateType.CITY;
+        this.preferGeolocation = GeolocateType.CITY;
         this.cityFilter = new ArrayList<>();
         this.stateFilter = new ArrayList<>();
-        this.prefer = new ArrayList<>();
+        this.zipcodeFilter = new ArrayList<>();
+        this.preferCity = new ArrayList<>();
+        this.preferState = new ArrayList<>();
+        this.preferZipcode = new ArrayList<>();
         this.preferRatio = this.PREFER_RATIO_DEFAULT;
     }
 
     /**
-     * @param prefix The beginning of an address
+     * @param search The beginning of an address
      */
-    public Lookup(String prefix) {
+    public Lookup(String search) {
         this();
-        this.prefix = prefix;
+        this.search = search;
     }
 
     //endregion
@@ -59,8 +66,8 @@ public class Lookup {
         return this.result[index];
     }
 
-    public String getPrefix() {
-        return this.prefix;
+    public String getSearch() {
+        return this.search;
     }
 
     public ArrayList<String> getCityFilter() {
@@ -71,9 +78,13 @@ public class Lookup {
         return this.stateFilter;
     }
 
-    public ArrayList<String> getPrefer() {
-        return this.prefer;
+    public ArrayList<String> getPreferCity() {
+        return this.preferCity;
     }
+
+    public ArrayList<String> getPreferState() { return this.preferState; }
+
+    public ArrayList<String> getPreferZipcode() { return this.preferZipcode; }
 
     public double getPreferRatio() {
         return this.preferRatio;
@@ -86,7 +97,7 @@ public class Lookup {
     }
 
     public GeolocateType getGeolocateType() {
-        return geolocateType;
+        return preferGeolocation;
     }
 
     public int getMaxSuggestions() {
@@ -107,8 +118,8 @@ public class Lookup {
         this.result = result;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public void setSearch(String search) {
+        this.search = search;
     }
 
     public void setCityFilter(ArrayList<String> cityFilter) {
@@ -119,9 +130,15 @@ public class Lookup {
         this.stateFilter = stateFilter;
     }
 
-    public void setPrefer(ArrayList<String> prefer) {
-        this.prefer = prefer;
+    public void setZipcodeFilter(ArrayList<String> zipcodeFilter) { this.zipcodeFilter = zipcodeFilter ;}
+
+    public void setPreferCity(ArrayList<String> cities) {
+        this.preferCity = cities;
     }
+
+    public void setPreferState(ArrayList<String> states) { this.preferState = states; }
+
+    public void setPreferZipcode(ArrayList<String> zipcodes) { this.preferZipcode = zipcodes; }
 
     /***
      * Sets the percentage of suggestions that are to be from preferred cities/states.
@@ -133,7 +150,7 @@ public class Lookup {
     }
 
     public void setGeolocateType(GeolocateType geolocateType) {
-        this.geolocateType = geolocateType;
+        this.preferGeolocation = geolocateType;
     }
 
     /***
@@ -157,9 +174,13 @@ public class Lookup {
         this.stateFilter.add(stateAbbreviation);
     }
 
-    public void addPrefer(String cityOrState) {
-        this.prefer.add(cityOrState);
+    public void addPreferCity(String city) {
+        this.preferCity.add(city);
     }
+
+    public void addPreferState(String state) { this.preferState.add(state); }
+
+    public void addPreferZipcode(String zipcode) { this.preferZipcode.add(zipcode); }
 
     //endregion
 }
