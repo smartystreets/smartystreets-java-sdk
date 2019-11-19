@@ -1,6 +1,6 @@
 package examples;
 
-import com.smartystreets.api.StaticCredentials;
+import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_autocomplete_pro.*;
 import com.smartystreets.api.ClientBuilder;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class UsAutocompleteProExample {
     public static void main(String[] args) throws IOException, SmartyException {
         // We recommend storing your secret keys in environment variables.
-        StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
+        SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         Client client = new ClientBuilder(credentials).buildUsAutocompleteProApiClient();
         Lookup lookup = new Lookup("1 King St Apt");
 
@@ -18,37 +18,36 @@ public class UsAutocompleteProExample {
 
         System.out.println("*** Result with no filter ***");
         System.out.println();
-        for (Suggestion suggestion : lookup.getResult()) {
-            System.out.println(suggestion.getStreetLine());
-            System.out.println(suggestion.getSecondary());
-            System.out.println(suggestion.getCity());
-            System.out.println(", ");
-            System.out.println(suggestion.getState());
-            System.out.println(", ");
-            System.out.println(suggestion.getZipcode());
-        }
+        printResult(lookup);
 
         // Documentation for input fields can be found at:
-        // https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields
+        // https://smartystreets.com/docs/cloud/us-autocomplete-api#pro-http-request-url
 
         lookup.addStateFilter("MA");
-        lookup.addCityFilter("Dorchester");
-        lookup.addCityFilter("Boston");
-        lookup.addPreferCity("Dorchester");
+        lookup.addCityFilter("Dorchester, MA");
+        lookup.addCityFilter("Boston, MA");
+        lookup.addPreferState("MN");
+        lookup.addPreferCity("Dorchester,MA");
         lookup.setMaxSuggestions(5);
-        lookup.setPreferRatio(0.33333);
+        lookup.setPreferRatio(33);
 
-        Suggestion[] suggestions = client.send(lookup); // The client will also return the suggestions directly
+        client.send(lookup); // The client will also return the suggestions directly
 
         System.out.println();
         System.out.println("*** Result with some filters ***");
-        for (Suggestion suggestion : suggestions) {
-            System.out.println(suggestion.getStreetLine());
-            System.out.println(suggestion.getSecondary());
-            System.out.println(suggestion.getCity());
-            System.out.println(", ");
-            System.out.println(suggestion.getState());
-            System.out.println(", ");
+        printResult(lookup);
+    }
+
+    private static void printResult(Lookup lookup) {
+        for (Suggestion suggestion : lookup.getResult()) {
+            System.out.print(suggestion.getStreetLine());
+            System.out.print(" ");
+            System.out.print(suggestion.getSecondary());
+            System.out.print(" ");
+            System.out.print(suggestion.getCity());
+            System.out.print(", ");
+            System.out.print(suggestion.getState());
+            System.out.print(", ");
             System.out.println(suggestion.getZipcode());
         }
     }

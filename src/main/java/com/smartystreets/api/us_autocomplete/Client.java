@@ -4,6 +4,7 @@ package com.smartystreets.api.us_autocomplete;
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
+import com.smartystreets.api.*;
 import java.io.IOException;
 import java.util.ArrayList;
 

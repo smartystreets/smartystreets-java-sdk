@@ -10,7 +10,7 @@ import com.smartystreets.api.GeolocateType;
  *     @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
  */
 public class Lookup {
-    final double PREFER_RATIO_DEFAULT = 1/3.0;
+    final int PREFER_RATIO_DEFAULT = 33;
     final int MAX_SUGGESTIONS_DEFAULT = 10;
 
     //region [ Fields ]
@@ -21,10 +21,11 @@ public class Lookup {
     private ArrayList<String> cityFilter;
     private ArrayList<String> stateFilter;
     private ArrayList<String> zipcodeFilter;
+    private ArrayList<String> excludeStates;
     private ArrayList<String> preferCity;
     private ArrayList<String> preferState;
     private ArrayList<String> preferZipcode;
-    private double preferRatio;
+    private int preferRatio;
     private GeolocateType preferGeolocation;
 
     //endregion
@@ -40,6 +41,7 @@ public class Lookup {
         this.cityFilter = new ArrayList<>();
         this.stateFilter = new ArrayList<>();
         this.zipcodeFilter = new ArrayList<>();
+        this.excludeStates = new ArrayList<>();
         this.preferCity = new ArrayList<>();
         this.preferState = new ArrayList<>();
         this.preferZipcode = new ArrayList<>();
@@ -76,6 +78,14 @@ public class Lookup {
 
     public ArrayList<String> getStateFilter() {
         return this.stateFilter;
+    }
+
+    public ArrayList<String> getZipcodeFilter() {
+        return this.zipcodeFilter;
+    }
+
+    public ArrayList<String> getExcludeStates() {
+        return this.excludeStates;
     }
 
     public ArrayList<String> getPreferCity() {
@@ -130,7 +140,9 @@ public class Lookup {
         this.stateFilter = stateFilter;
     }
 
-    public void setZipcodeFilter(ArrayList<String> zipcodeFilter) { this.zipcodeFilter = zipcodeFilter ;}
+    public void setZipcodeFilter(ArrayList<String> zipcodeFilter) { this.zipcodeFilter = zipcodeFilter; }
+
+    public void setExcludeStates(ArrayList<String> excludeStates) { this.excludeStates = excludeStates; }
 
     public void setPreferCity(ArrayList<String> cities) {
         this.preferCity = cities;
@@ -145,7 +157,7 @@ public class Lookup {
      * @param preferRatio A decimal value, range [0, 1]. Default is 0.333333333.
      * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#preference"
      */
-    public void setPreferRatio(double preferRatio) {
+    public void setPreferRatio(int preferRatio) {
         this.preferRatio = preferRatio;
     }
 
