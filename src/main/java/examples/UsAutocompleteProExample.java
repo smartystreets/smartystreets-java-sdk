@@ -12,7 +12,7 @@ public class UsAutocompleteProExample {
         // We recommend storing your secret keys in environment variables.
         SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         Client client = new ClientBuilder(credentials).buildUsAutocompleteProApiClient();
-        Lookup lookup = new Lookup("1 King St Apt");
+        Lookup lookup = new Lookup("1042 W Center");
 
         client.send(lookup);
 
@@ -24,10 +24,10 @@ public class UsAutocompleteProExample {
         // https://smartystreets.com/docs/cloud/us-autocomplete-api#pro-http-request-url
 
         lookup.addStateFilter("MA");
-        lookup.addCityFilter("Dorchester, MA");
-        lookup.addCityFilter("Boston, MA");
-        lookup.addPreferState("MN");
-        lookup.addPreferCity("Dorchester,MA");
+        lookup.addCityFilter("Denver,Aurora,CO");
+        lookup.addCityFilter("Orem,UT");
+        lookup.addPreferState("UT");
+        lookup.setSelected("1042 W Center St Apt A (24) Orem UT 84057");
         lookup.setMaxSuggestions(5);
         lookup.setPreferRatio(33);
 

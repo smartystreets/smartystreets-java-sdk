@@ -27,6 +27,7 @@ public class Lookup {
     private ArrayList<String> preferZipcode;
     private int preferRatio;
     private GeolocateType preferGeolocation;
+    private String selected;
 
     //endregion
 
@@ -71,6 +72,8 @@ public class Lookup {
     public String getSearch() {
         return this.search;
     }
+
+    public String getSelected() { return this.selected; }
 
     public ArrayList<String> getCityFilter() {
         return this.cityFilter;
@@ -132,6 +135,8 @@ public class Lookup {
         this.search = search;
     }
 
+    public void setSelected(String selected) { this.selected = selected; }
+
     public void setCityFilter(ArrayList<String> cityFilter) {
         this.cityFilter = cityFilter;
     }
@@ -154,7 +159,7 @@ public class Lookup {
 
     /***
      * Sets the percentage of suggestions that are to be from preferred cities/states.
-     * @param preferRatio A decimal value, range [0, 1]. Default is 0.333333333.
+     * @param preferRatio An integer value, range [0, 100]. Default is 33.
      * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#preference"
      */
     public void setPreferRatio(int preferRatio) {

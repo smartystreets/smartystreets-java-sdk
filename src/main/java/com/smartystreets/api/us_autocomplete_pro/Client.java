@@ -51,6 +51,7 @@ public class Client {
         if (lookup.getGeolocateType() != GeolocateType.NONE) {
             request.putParameter("prefer_geolocation", lookup.getGeolocateType().getName());
         }
+        request.putParameter("selected", lookup.getSelected());
 
         return request;
     }
