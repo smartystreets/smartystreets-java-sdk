@@ -1,10 +1,9 @@
-package com.smartystreets.api.us_autocomplete;
+package com.smartystreets.api.us_autocomplete_pro;
 
 
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
-import com.smartystreets.api.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ public class Client {
     }
 
     public Suggestion[] send(Lookup lookup) throws SmartyException, IOException {
-        if (lookup == null || lookup.getPrefix() == null || lookup.getPrefix().length() == 0)
+        if (lookup == null || lookup.getSearch() == null || lookup.getSearch().length() == 0)
             throw new SmartyException("Send() must be passed a Lookup with the prefix field set.");
 
         Request request = this.buildRequest(lookup);
@@ -39,27 +38,26 @@ public class Client {
     private Request buildRequest(Lookup lookup) {
         Request request = new Request();
 
-        request.putParameter("prefix", lookup.getPrefix());
-        request.putParameter("suggestions", lookup.getMaxSuggestionsStringIfSet());
-        request.putParameter("city_filter", this.buildFilterString(lookup.getCityFilter()));
-        request.putParameter("state_filter", this.buildFilterString(lookup.getStateFilter()));
-        request.putParameter("prefer", this.buildPreferString(lookup.getPrefer()));
+        request.putParameter("search", lookup.getSearch());
+        request.putParameter("max_results", lookup.getMaxSuggestionsStringIfSet());
+        request.putParameter("include_only_cities", this.buildString(lookup.getCityFilter()));
+        request.putParameter("include_only_states", this.buildString(lookup.getStateFilter()));
+        request.putParameter("include_only_zip_codes", this.buildString(lookup.getZipcodeFilter()));
+        request.putParameter("exclude_states", this.buildString(lookup.getExcludeStates()));
+        request.putParameter("prefer_cities", this.buildString(lookup.getPreferCity()));
+        request.putParameter("prefer_states", this.buildString(lookup.getPreferState()));
+        request.putParameter("prefer_zip_codes", this.buildString(lookup.getPreferZipcode()));
         request.putParameter("prefer_ratio", lookup.getPreferRatioStringIfSet());
         if (lookup.getGeolocateType() != GeolocateType.NONE) {
-            request.putParameter("geolocate", "true");
-            request.putParameter("geolocate_precision", lookup.getGeolocateType().getName());
+            request.putParameter("prefer_geolocation", lookup.getGeolocateType().getName());
         }
-        else request.putParameter("geolocate", "false");
+        request.putParameter("selected", lookup.getSelected());
 
         return request;
     }
 
-    private String buildPreferString(ArrayList<String> list) {
+    private String buildString(ArrayList<String> list) {
         return buildStringFromList(list, ";");
-    }
-
-    private String buildFilterString(ArrayList<String> list) {
-        return buildStringFromList(list, ",");
     }
 
     private String buildStringFromList(ArrayList<String> list, String separator) {
