@@ -37,7 +37,9 @@ public class UsStreetSingleAddressExample {
         lookup.setState("CA");
         lookup.setZipCode("94043");
         lookup.setMaxCandidates(3);
-        lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match
+        lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match,
+                                            // this will always return at least one result even if the address is invalid.
+                                            // Refer to the documentation for additional MatchStrategy options.
 
         try {
             client.send(lookup);

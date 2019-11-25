@@ -31,7 +31,9 @@ public class UsStreetMultipleAddressesExample {
         address0.setState("california");
         address0.setZipCode("94043");
         address0.setMaxCandidates(3);
-        address0.setMatch(MatchType.INVALID); // "invalid" is the most permissive match
+        address0.setMatch(MatchType.INVALID); // "invalid" is the most permissive match,
+                                              // this will always return at least one result even if the address is invalid.
+                                              // Refer to the documentation for additional MatchStrategy options.
 
         Lookup address1 = new Lookup("1 Rosedale, Baltimore, Maryland"); // Freeform addresses work too.
         address1.setMaxCandidates(5); // Allows up to ten possible matches to be returned (default is 1).
