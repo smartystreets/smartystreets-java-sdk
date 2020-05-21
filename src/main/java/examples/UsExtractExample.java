@@ -2,6 +2,7 @@ package examples;
 
 import com.smartystreets.api.ClientBuilder;
 import com.smartystreets.api.StaticCredentials;
+import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_extract.*;
 import com.smartystreets.api.us_street.Candidate;
@@ -17,8 +18,8 @@ public class UsExtractExample {
         // StaticCredentials credentials = new StaticCredentials(authId, authToken);
 
         // for client-side requests (browser/mobile), use this code:
-        string key = System.getenv("SMARTY_AUTH_WEB");
-        string hostname = System.getenv("SMARTY_AUTH_REFERER");
+        String key = System.getenv("SMARTY_AUTH_WEB");
+        String hostname = System.getenv("SMARTY_AUTH_REFERER");
         SharedCredentials credentials = new SharedCredentials(key, hostname);
 
         Client client = new ClientBuilder(credentials).buildUsExtractApiClient();
