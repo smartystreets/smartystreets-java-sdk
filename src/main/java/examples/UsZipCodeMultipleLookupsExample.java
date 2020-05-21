@@ -11,7 +11,17 @@ import java.util.Vector;
 public class UsZipCodeMultipleLookupsExample {
     public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
-        Client client = new ClientBuilder(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN")).buildUsZipCodeApiClient();
+        // for Server-toserver requests, use this code:
+        // string authId = System.getenv("SMARTY_AUTH_ID");
+        // string authToken = System.getenv("SMARTY_AUTH_TOKEN");
+        // StaticCredentials credentials = new StaticCredentials(authId, authToken);
+
+        // for client-side requests (browser/mobile), use this code:
+        string key = System.getenv("SMARTY_AUTH_WEB");
+        string hostname = System.getenv("SMARTY_AUTH_REFERER");
+        SharedCredentials credentials = new SharedCredentials(key, hostname);
+
+        Client client = new ClientBuilder(credentials).buildUsZipCodeApiClient();
         Batch batch = new Batch();
 
         // Documentation for input fields can be found at:

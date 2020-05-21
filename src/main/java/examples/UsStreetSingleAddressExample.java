@@ -11,14 +11,17 @@ import java.util.ArrayList;
 
 public class UsStreetSingleAddressExample {
     public static void main(String[] args) {
-        String authId = "Your SmartyStreets Auth ID here";
-        String authToken = "Your SmartyStreets Auth Token here";
+// We recommend storing your secret keys in environment variables.
+        // for Server-toserver requests, use this code:
+        // string authId = System.getenv("SMARTY_AUTH_ID");
+        // string authToken = System.getenv("SMARTY_AUTH_TOKEN");
+        // StaticCredentials credentials = new StaticCredentials(authId, authToken);
 
-        // We recommend storing your secret keys in environment variables instead---it's safer!
-//        String authId = System.getenv("SMARTY_AUTH_ID");
-//        String authToken = System.getenv("SMARTY_AUTH_TOKEN");
+        // for client-side requests (browser/mobile), use this code:
+        string key = System.getenv("SMARTY_AUTH_WEB");
+        string hostname = System.getenv("SMARTY_AUTH_REFERER");
+        SharedCredentials credentials = new SharedCredentials(authId, authToken);
 
-        StaticCredentials credentials = new StaticCredentials(authId, authToken);
         Client client = new ClientBuilder(credentials)
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
                 .buildUsStreetApiClient();
