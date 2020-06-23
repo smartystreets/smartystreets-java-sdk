@@ -36,3 +36,11 @@ release:
 			-a target/smartystreets-java-sdk-$(VERSION).jar
 
 .PHONY: clean test compile publish workspace release
+
+# NOTES: When running make release BE SURE
+# 1. That you have OSSRH_PASSWORD (the Maven password) as an environment variable.
+# 2. You haven't already built the docker image
+# OTHERWISE: If you've run make release previously without the environment variable
+# the image will already exist such that any re-run of make release will use the old
+# image which doesn't have the password, despite now providing OSSRH_PASSWORD as
+# an environment variable on subsequent runs.
