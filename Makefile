@@ -26,7 +26,8 @@ workspace:
 	docker-compose run sdk /bin/sh
 
 release:
-	docker-compose run sdk make publish \
+	@echo "********** Ensure that OSSRH_PASSWORD is a defined environment variable. **********" \
+		&& docker-compose run sdk make publish \
 		&& tagit -p \
 		&& git push origin --tags \
 		&& hub release create -m "v$(VERSION) Release" "$(VERSION)" \
