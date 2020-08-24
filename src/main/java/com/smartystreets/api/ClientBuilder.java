@@ -3,6 +3,7 @@ package com.smartystreets.api;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.<br>
@@ -17,6 +18,7 @@ public class ClientBuilder {
     private int maxTimeout;
     private String urlPrefix;
     private Proxy proxy;
+    private ArrayList<String> licenses;
     private Map<String, Object> customHeaders;
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
@@ -119,6 +121,15 @@ public class ClientBuilder {
         return this;
     }
 
+    /**
+     * Allows caller to specify licenses (aka "tracks") they wish to use.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withLicenses(ArrayList<String> licenses) {
+        this.licenses.addAll(licenses);
+        return this;
+    }
+
     public com.smartystreets.api.international_street.Client buildInternationalStreetApiClient() {
         this.ensureURLPrefixNotNull(this.INTERNATIONAL_STREET_API_URL);
         return new com.smartystreets.api.international_street.Client(this.buildSender(), this.serializer);
@@ -167,6 +178,8 @@ public class ClientBuilder {
 
         if (this.maxRetries > 0)
             sender = new RetrySender(this.maxRetries, new MySleeper(), new MyLogger(), sender);
+
+        sender = new LicenseSender(this.licenses, sender);
 
         return sender;
     }

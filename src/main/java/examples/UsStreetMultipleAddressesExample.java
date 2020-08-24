@@ -24,7 +24,8 @@ public class UsStreetMultipleAddressesExample {
         String hostname = System.getenv("SMARTY_AUTH_REFERER");
         SharedCredentials credentials = new SharedCredentials(key, hostname);
 
-        Client client = new ClientBuilder(credentials).buildUsStreetApiClient();
+        Client client = new ClientBuilder(credentials) // .withLicenses(new ArrayList<String>("us-rooftop-geo-cloud"))
+                .buildUsStreetApiClient();
         Batch batch = new Batch();
 
         // Documentation for input fields can be found at:
