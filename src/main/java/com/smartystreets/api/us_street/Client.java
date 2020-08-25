@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  * This client sends lookups to the SmartyStreets US Street API, <br>
- *     and attaches the results to the appropriate Lookup objects.
+ * and attaches the results to the appropriate Lookup objects.
  */
 public class Client {
     private final Sender sender;
@@ -29,6 +29,7 @@ public class Client {
 
     /**
      * Sends a batch of up to 100 lookups for validation.
+     *
      * @param batch Batch must contain between 1 and 100 Lookup objects
      * @throws SmartyException
      * @throws IOException
