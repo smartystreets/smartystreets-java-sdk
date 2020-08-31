@@ -18,8 +18,8 @@ public class ClientBuilder {
     private int maxTimeout;
     private String urlPrefix;
     private Proxy proxy;
-    private ArrayList<String> licenses;
     private Map<String, Object> customHeaders;
+    private ArrayList<String> licenses = new ArrayList<String>();
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
     private final String US_AUTOCOMPLETE_API_PRO_URL = "https://us-autocomplete-pro.api.smartystreets.com/lookup";

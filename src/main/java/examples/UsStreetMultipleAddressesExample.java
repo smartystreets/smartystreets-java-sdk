@@ -15,16 +15,18 @@ public class UsStreetMultipleAddressesExample {
     public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
         // for Server-toserver requests, use this code:
-        // string authId = System.getenv("SMARTY_AUTH_ID");
-        // string authToken = System.getenv("SMARTY_AUTH_TOKEN");
-        // StaticCredentials credentials = new StaticCredentials(authId, authToken);
+         String authId = System.getenv("SMARTY_AUTH_ID");
+         String authToken = System.getenv("SMARTY_AUTH_TOKEN");
+         StaticCredentials credentials = new StaticCredentials(authId, authToken);
 
         // for client-side requests (browser/mobile), use this code:
-        String key = System.getenv("SMARTY_AUTH_WEB");
-        String hostname = System.getenv("SMARTY_AUTH_REFERER");
-        SharedCredentials credentials = new SharedCredentials(key, hostname);
+//        String key = System.getenv("SMARTY_AUTH_WEB");
+//        String hostname = System.getenv("SMARTY_AUTH_REFERER");
+//        SharedCredentials credentials = new SharedCredentials(key, hostname);
 
-        Client client = new ClientBuilder(credentials) // .withLicenses(new ArrayList<String>("us-rooftop-geo-cloud"))
+        ArrayList<String> licenses = new ArrayList<>();
+        licenses.add("us-rooftop-geocoding-cloud");
+        Client client = new ClientBuilder(credentials).withLicenses(licenses)
                 .buildUsStreetApiClient();
         Batch batch = new Batch();
 
