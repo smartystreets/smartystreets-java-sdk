@@ -26,6 +26,7 @@ public class ClientBuilder {
     private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
     private final String US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
     private final String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
+    private final String US_REVERSE_GEO_API_URL = "https://us-reverse-geo.api.smartystreets.com/lookup";
 
     private ClientBuilder() {
         this.serializer = new GoogleSerializer();
@@ -158,6 +159,11 @@ public class ClientBuilder {
     public com.smartystreets.api.us_zipcode.Client buildUsZipCodeApiClient() {
         this.ensureURLPrefixNotNull(this.US_ZIP_CODE_API_URL);
         return new com.smartystreets.api.us_zipcode.Client(this.buildSender(), this.serializer);
+    }
+
+    public com.smartystreets.api.us_reverse_geo.Client buildUsReverseGeoClient() {
+        this.ensureURLPrefixNotNull(this.US_REVERSE_GEO_API_URL);
+        return new com.smartystreets.api.us_reverse_geo.Client(this.buildSender(), this.serializer);
     }
 
     private Sender buildSender() {
