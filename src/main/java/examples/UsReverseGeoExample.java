@@ -4,9 +4,7 @@ import com.smartystreets.api.ClientBuilder;
 import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
-import com.smartystreets.api.us_reverse_geo.Client;
-import com.smartystreets.api.us_reverse_geo.Lookup;
-import com.smartystreets.api.us_reverse_geo.Result;
+import com.smartystreets.api.us_reverse_geo.*;
 
 import java.io.IOException;
 
@@ -42,13 +40,15 @@ public class UsReverseGeoExample {
 
         System.out.printf("Results for input: (%f, %f)\n\n", lookup.getLatitude(), lookup.getLongitude());
         for (Result result : results) {
-            System.out.println("Latitude: " + result.getLatitude().toString());
-            System.out.println("Longitude: " + result.getLongitude().toString());
+            Coordinate coordinate = result.getCoordinate();
+            Address address = result.getAddress();
+            System.out.println("Latitude: " + coordinate.getLatitude());
+            System.out.println("Longitude: " + coordinate.getLongitude());
             System.out.println("Distance: " + result.getDistance().toString());
-            System.out.println("Street: " + result.getStreet());
-            System.out.println("City: " + result.getCity());
-            System.out.println("State Abbreviation: " + result.getStateAbbreviation());
-            System.out.println("ZIP Code: " + result.getZipCode());
+            System.out.println("Street: " + address.getStreet());
+            System.out.println("City: " + address.getCity());
+            System.out.println("State Abbreviation: " + address.getStateAbbreviation());
+            System.out.println("ZIP Code: " + address.getZipCode());
             System.out.println();
         }
     }

@@ -23,10 +23,10 @@ public class ClientTest {
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
 
-        Lookup lookup = new Lookup(44.444444444, -111.111111111);
+        Lookup lookup = new Lookup(44.888888888, -111.111111111);
         client.send(lookup);
 
-        assertEquals("http://localhost/lookup?latitude=44.44444444&longitude=-111.11111111", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/lookup?latitude=44.88888889&longitude=-111.11111111", capturingSender.getRequest().getUrl());
     }
 
     //endregion

@@ -14,24 +14,6 @@ public class Result {
     @Key("distance")
     private double distance;
 
-    @Key("latitude")
-    private double latitude;
-
-    @Key("longitude")
-    private double longitude;
-
-    @Key("street")
-    private String street;
-
-    @Key("city")
-    private String city;
-
-    @Key("state_abbreviation")
-    private String stateAbbreviation;
-
-    @Key("zipcode")
-    private String zipcode;
-
     //endregion
 
     public Address getAddress() {
@@ -41,19 +23,5 @@ public class Result {
     public Coordinate getCoordinate() { return this.coordinate; }
 
     public Double getDistance() { return this.distance; }
-
-    public Double getLatitude() {
-        return this.latitude;
-    }
-
-    public Double getLongitude() { return this.longitude; }
-
-    public String getStreet() { return this.street; }
-
-    public String getCity() { return this.city; }
-
-    public String getStateAbbreviation() { return this.stateAbbreviation; }
-
-    public String getZipCode() { return this.zipcode; }
 
 }
