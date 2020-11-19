@@ -23,7 +23,15 @@ public class Coordinate {
 
     public double getLongitude() { return this.longitude; }
 
-    public int getLicense() { return this.license; }
+    public String getLicense() {
+        switch (this.license) {
+            case 1:
+                return "SmartyStreets Proprietary";
+            default:
+                return "SmartyStreets";
+
+        }
+    }
 
     public String getZipCode() { return this.zipcode; }
 
