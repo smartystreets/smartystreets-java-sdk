@@ -74,6 +74,7 @@ public class CandidateTest {
                 + "\"dpv_footnotes\": \"AACCRR\",\n"
                 + "\"dpv_cmra\": \"Y\",\n"
                 + "\"dpv_vacant\": \"N\",\n"
+                + "\"dpv_no_stat\": \"N\",\n"
                 + "\"active\": \"Y\",\n"
                 + "\"footnotes\": \"footnotes\",\n"
                 + "\"lacslink_code\": \"lacslink_code\",\n"
@@ -133,6 +134,7 @@ public class CandidateTest {
         assertEquals("AACCRR", candidates[0].getAnalysis().getDpvFootnotes());
         assertEquals("Y", candidates[0].getAnalysis().getCmra());
         assertEquals("N", candidates[0].getAnalysis().getVacant());
+        assertEquals("N", candidates[0].getAnalysis().getNo_stat());
         assertEquals("Y", candidates[0].getAnalysis().getActive());
         assertEquals("footnotes", candidates[0].getAnalysis().getFootnotes());
         assertEquals("lacslink_code", candidates[0].getAnalysis().getLacsLinkCode());

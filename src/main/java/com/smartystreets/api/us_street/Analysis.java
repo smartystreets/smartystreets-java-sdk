@@ -20,6 +20,9 @@ public class Analysis {
     @Key("dpv_vacant")
     private String vacant;
 
+    @Key("dpv_no_stat")
+    private String no_stat;
+
     @Key("active")
     private String active;
 
@@ -57,6 +60,8 @@ public class Analysis {
     public String getVacant() {
         return this.vacant;
     }
+
+    public String getNo_stat() { return this.no_stat; }
 
     public String getActive() {
         return this.active;
