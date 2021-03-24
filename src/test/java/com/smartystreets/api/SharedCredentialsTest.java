@@ -8,7 +8,7 @@ public class SharedCredentialsTest {
     @Test
     public void assertSignedRequest() {
         Request request = this.createSignedRequest();
-        String expected = "https://us-street.api.smartystreets.com/street-address?auth-id=3516378604772256";
+        String expected = "https://us-street.api.smartystreets.com/street-address?key=3516378604772256";
 
         assertEquals(expected, request.getUrl());
     }

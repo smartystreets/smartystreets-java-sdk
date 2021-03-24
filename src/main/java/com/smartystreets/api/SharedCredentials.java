@@ -13,7 +13,7 @@ public class SharedCredentials implements Credentials {
     }
 
     public void sign(Request request) {
-        request.putParameter("auth-id", this.id);
+        request.putParameter("key", this.id);
         request.putHeader("Referer", this.hostname);
     }
 }
