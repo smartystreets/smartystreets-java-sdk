@@ -57,7 +57,7 @@ public class Metadata {
     private boolean obeysDst;
 
     @Key("ews_match")
-    private boolean isEwsMatch;
+    private boolean ewsMatch;
 
     //endregion
 
@@ -128,7 +128,7 @@ public class Metadata {
     }
 
     public boolean isEwsMatch() {
-        return this.isEwsMatch;
+        return this.ewsMatch;
     }
 
 

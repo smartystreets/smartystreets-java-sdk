@@ -27,7 +27,7 @@ public class Analysis {
     private String active;
 
     @Key("ews_match")
-    private boolean isEwsMatch;
+    private boolean ewsMatch;
 
     @Key("footnotes")
     private String footnotes;
