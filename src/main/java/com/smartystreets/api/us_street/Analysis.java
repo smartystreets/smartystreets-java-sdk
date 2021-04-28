@@ -39,7 +39,7 @@ public class Analysis {
     private String lacsLinkIndicator;
 
     @Key("suitelink_match")
-    private boolean isSuiteLinkMatch;
+    private boolean suiteLinkMatch;
 
     //endregion
 
@@ -86,7 +86,7 @@ public class Analysis {
     }
 
     public boolean isSuiteLinkMatch() {
-        return this.isSuiteLinkMatch;
+        return this.suiteLinkMatch;
     }
 
     //endregion
