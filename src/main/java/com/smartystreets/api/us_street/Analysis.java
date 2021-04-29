@@ -27,7 +27,7 @@ public class Analysis {
     private String active;
 
     @Key("ews_match")
-    private boolean isEwsMatch;
+    private boolean ewsMatch;
 
     @Key("footnotes")
     private String footnotes;
@@ -39,7 +39,7 @@ public class Analysis {
     private String lacsLinkIndicator;
 
     @Key("suitelink_match")
-    private boolean isSuiteLinkMatch;
+    private boolean suiteLinkMatch;
 
     //endregion
 
@@ -86,7 +86,7 @@ public class Analysis {
     }
 
     public boolean isSuiteLinkMatch() {
-        return this.isSuiteLinkMatch;
+        return this.suiteLinkMatch;
     }
 
     //endregion
