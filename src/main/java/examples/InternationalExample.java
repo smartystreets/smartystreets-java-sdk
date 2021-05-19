@@ -21,7 +21,10 @@ public class InternationalExample {
         String hostname = System.getenv("SMARTY_AUTH_REFERER");
         SharedCredentials credentials = new SharedCredentials(key, hostname);
 
-        Client client = new ClientBuilder(credentials) // .withLicenses(new ArrayList<String>("international-fake"))
+        //            The appropriate license values to be used for your subscriptions
+        //            can be found on the Subscriptions page of the account dashboard.
+        //            https://www.smartystreets.com/docs/cloud/licensing
+        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("international-global-plus-cloud"))
                 .buildInternationalStreetApiClient();
 
         // Documentation for input fields can be found at:

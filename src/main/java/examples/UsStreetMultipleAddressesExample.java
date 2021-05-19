@@ -24,9 +24,10 @@ public class UsStreetMultipleAddressesExample {
 //        String hostname = System.getenv("SMARTY_AUTH_REFERER");
 //        SharedCredentials credentials = new SharedCredentials(key, hostname);
 
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("us-rooftop-geocoding-cloud");
-        Client client = new ClientBuilder(credentials).withLicenses(licenses)
+        //            The appropriate license values to be used for your subscriptions
+        //            can be found on the Subscriptions page of the account dashboard.
+        //            https://www.smartystreets.com/docs/cloud/licensing
+        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("us-rooftop-geocoding-cloud"))
                 .buildUsStreetApiClient();
         Batch batch = new Batch();
 

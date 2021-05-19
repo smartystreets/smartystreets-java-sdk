@@ -11,7 +11,11 @@ public class UsAutocompleteProExample {
     public static void main(String[] args) throws IOException, SmartyException {
         // We recommend storing your authentication credentials in environment variables.
         SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
-        Client client = new ClientBuilder(credentials).buildUsAutocompleteProApiClient();
+
+        //            The appropriate license values to be used for your subscriptions
+        //            can be found on the Subscriptions page of the account dashboard.
+        //            https://www.smartystreets.com/docs/cloud/licensing
+        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("us-autocomplete-pro-cloud")).buildUsAutocompleteProApiClient();
         Lookup lookup = new Lookup("1042 W Center");
 
         client.send(lookup);

@@ -21,7 +21,11 @@ public class UsReverseGeoExample {
 //        String hostname = System.getenv("SMARTY_AUTH_REFERER");
 //        SharedCredentials credentials = new SharedCredentials(key, hostname);
 
-        Client client = new ClientBuilder(credentials)
+
+        //            The appropriate license values to be used for your subscriptions
+        //            can be found on the Subscriptions page of the account dashboard.
+        //            https://www.smartystreets.com/docs/cloud/licensing
+        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("us-reverse-geocoding-cloud"))
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
                 .buildUsReverseGeoClient();
 
