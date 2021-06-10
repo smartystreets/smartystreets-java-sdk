@@ -26,7 +26,9 @@ public class UsStreetSingleAddressExample {
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
-        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("us-rooftop-geocoding-cloud"))
+        ArrayList<String> licenses = new ArrayList<String>();
+        licenses.add("us-rooftop-geocoding-cloud");
+        Client client = new ClientBuilder(credentials).withLicenses(licenses)
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
                 .buildUsStreetApiClient();
 

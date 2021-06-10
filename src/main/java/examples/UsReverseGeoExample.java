@@ -8,6 +8,8 @@ import com.smartystreets.api.us_reverse_geo.*;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+
 public class UsReverseGeoExample {
     public static void main(String[] args) {
 // We recommend storing your secret keys in environment variables.
@@ -25,7 +27,9 @@ public class UsReverseGeoExample {
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
-        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("us-reverse-geocoding-cloud"))
+        ArrayList<String> licenses = new ArrayList<String>();
+        licenses.add("us-reverse-geocoding-cloud");
+        Client client = new ClientBuilder(credentials).withLicenses(licenses)
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
                 .buildUsReverseGeoClient();
 
