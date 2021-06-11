@@ -7,6 +7,8 @@ import com.smartystreets.api.ClientBuilder;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+
 public class UsAutocompleteProExample {
     public static void main(String[] args) throws IOException, SmartyException {
         // We recommend storing your authentication credentials in environment variables.
@@ -15,7 +17,9 @@ public class UsAutocompleteProExample {
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
-        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("us-autocomplete-pro-cloud")).buildUsAutocompleteProApiClient();
+        ArrayList<String> licenses = new ArrayList<String>();
+        licenses.add("us-autocomplete-pro-cloud");
+        Client client = new ClientBuilder(credentials).withLicenses(licenses).buildUsAutocompleteProApiClient();
         Lookup lookup = new Lookup("1042 W Center");
 
         client.send(lookup);

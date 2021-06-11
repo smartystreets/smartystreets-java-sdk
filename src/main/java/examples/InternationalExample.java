@@ -8,6 +8,8 @@ import com.smartystreets.api.international_street.*;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+
 public class InternationalExample {
     public static void main(String[] args) throws IOException, SmartyException {
         // We recommend storing your secret keys in environment variables.
@@ -24,7 +26,9 @@ public class InternationalExample {
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
-        Client client = new ClientBuilder(credentials).withLicenses(new ArrayList<String>("international-global-plus-cloud"))
+        ArrayList<String> licenses = new ArrayList<String>();
+        licenses.add("international-global-plus-cloud");
+        Client client = new ClientBuilder(credentials).withLicenses(licenses)
                 .buildInternationalStreetApiClient();
 
         // Documentation for input fields can be found at:

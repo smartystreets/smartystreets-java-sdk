@@ -41,6 +41,12 @@ public class Analysis {
     @Key("suitelink_match")
     private boolean suiteLinkMatch;
 
+    @Key("match_mode")
+    private String matchMode;
+
+    @Key("match_details")
+    private String matchDetails;
+
     //endregion
 
     //region [ Getters ]
@@ -65,6 +71,14 @@ public class Analysis {
 
     public String getActive() {
         return this.active;
+    }
+
+    public String getMatchMode() {
+        return this.matchMode;
+    }
+
+    public String getMatchDetails() {
+        return this.matchDetails;
     }
 
     //@deprecated moved to metadata field
