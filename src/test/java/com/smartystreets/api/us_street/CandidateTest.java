@@ -80,8 +80,7 @@ public class CandidateTest {
                 + "\"lacslink_code\": \"lacslink_code\",\n"
                 + "\"lacslink_indicator\": \"lacslink_indicator\",\n"
                 + "\"suitelink_match\": true,\n"
-                + "\"match_mode\": \"match_mode\",\n"
-                + "\"match_details\": \"match_details\"\n"
+                + "\"enhanced_match\": \"enhanced_match\"\n"
                 + "}\n"
                 + "}\n"
                 + "]\n";
@@ -142,7 +141,6 @@ public class CandidateTest {
         assertEquals("lacslink_code", candidates[0].getAnalysis().getLacsLinkCode());
         assertEquals("lacslink_indicator", candidates[0].getAnalysis().getLacsLinkIndicator());
         assertEquals(true, candidates[0].getAnalysis().isSuiteLinkMatch());
-        assertEquals("match_mode", candidates[0].getAnalysis().getMatchMode());
-        assertEquals("match_details", candidates[0].getAnalysis().getMatchDetails());
+        assertEquals("enhanced_match", candidates[0].getAnalysis().getEnhancedMatch());
     }
 }

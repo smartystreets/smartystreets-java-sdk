@@ -41,11 +41,8 @@ public class Analysis {
     @Key("suitelink_match")
     private boolean suiteLinkMatch;
 
-    @Key("match_mode")
-    private String matchMode;
-
-    @Key("match_details")
-    private String matchDetails;
+    @Key("enhanced_match")
+    private String enhancedMatch;
 
     //endregion
 
@@ -73,12 +70,8 @@ public class Analysis {
         return this.active;
     }
 
-    public String getMatchMode() {
-        return this.matchMode;
-    }
-
-    public String getMatchDetails() {
-        return this.matchDetails;
+    public String getEnhancedMatch() {
+        return this.enhancedMatch;
     }
 
     //@deprecated moved to metadata field
