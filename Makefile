@@ -17,7 +17,7 @@ compile:
 publish:
 	sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE1)" \
 		&& sed -i -r "s/0\.0\.0/$(VERSION)/g" "$(VERSION_FILE2)" \
-		&& GPG_TTY="$(shell tty)" mvn deploy \
+		&& GPG_TTY="$(shell tty)" mvn deploy -X \
 		&& git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 
 ##########################################################
