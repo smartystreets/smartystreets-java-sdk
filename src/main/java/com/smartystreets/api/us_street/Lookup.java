@@ -137,6 +137,8 @@ public class Lookup {
             return MatchType.RANGE;
         if (this.match.equals("invalid") )
             return MatchType.INVALID;
+        if (this.match.equals("enhanced") )
+            return MatchType.ENHANCED;
         return null;
     }
 
