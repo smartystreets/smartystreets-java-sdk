@@ -17,7 +17,13 @@ public class LicenseSender implements Sender{
 
     public Response send(Request request) throws IOException, SmartyException {
         if (!this.licenses.isEmpty()) {
-            request.putParameter("license", String.join(",", this.licenses));
+            StringBuilder licenses = new StringBuilder();
+            for (String license : this.licenses)
+            {
+                licenses.append(license);
+                licenses.append(",");
+            }
+            request.putParameter("license", licenses.toString());
         }
         return this.inner.send(request);
     }
