@@ -24,7 +24,7 @@ public class LicenseSenderTest {
 
         Response response = sender.send(request);
 
-        assertEquals("?license=one%2Ctwo%2Cthree", request.getUrl());
+        assertEquals("?license=one%2Ctwo%2Cthree%2C", request.getUrl());
     }
 
     @Test
