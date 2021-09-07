@@ -6,7 +6,7 @@ import com.smartystreets.api.exceptions.SmartyException;
 
 import com.smartystreets.api.*;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This client sends lookups to the SmartyStreets US Autocomplete API, <br>
@@ -54,15 +54,15 @@ public class Client {
         return request;
     }
 
-    private String buildPreferString(ArrayList<String> list) {
+    private String buildPreferString(List<String> list) {
         return buildStringFromList(list, ";");
     }
 
-    private String buildFilterString(ArrayList<String> list) {
+    private String buildFilterString(List<String> list) {
         return buildStringFromList(list, ",");
     }
 
-    private String buildStringFromList(ArrayList<String> list, String separator) {
+    private String buildStringFromList(List<String> list, String separator) {
         if (list.isEmpty())
             return null;
 

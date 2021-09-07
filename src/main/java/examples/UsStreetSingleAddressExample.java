@@ -9,6 +9,7 @@ import com.smartystreets.api.ClientBuilder;
 import java.io.IOException;
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsStreetSingleAddressExample {
     public static void main(String[] args) {
@@ -61,7 +62,7 @@ public class UsStreetSingleAddressExample {
             ex.printStackTrace();
         }
 
-        ArrayList<Candidate> results = lookup.getResult();
+        List<Candidate> results = lookup.getResult();
 
         if (results.isEmpty()) {
             System.out.println("No candidates. This means the address is not valid.");

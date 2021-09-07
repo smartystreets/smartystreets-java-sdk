@@ -1,7 +1,7 @@
 package com.smartystreets.api.us_autocomplete_pro;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import com.smartystreets.api.GeolocateType;
 
 /**
@@ -18,13 +18,13 @@ public class Lookup {
     private Suggestion[] result;
     private String search;
     private int maxSuggestions;
-    private ArrayList<String> cityFilter;
-    private ArrayList<String> stateFilter;
-    private ArrayList<String> zipcodeFilter;
-    private ArrayList<String> excludeStates;
-    private ArrayList<String> preferCity;
-    private ArrayList<String> preferState;
-    private ArrayList<String> preferZipcode;
+    private List<String> cityFilter;
+    private List<String> stateFilter;
+    private List<String> zipcodeFilter;
+    private List<String> excludeStates;
+    private List<String> preferCity;
+    private List<String> preferState;
+    private List<String> preferZipcode;
     private int preferRatio;
     private GeolocateType preferGeolocation;
     private String selected;
@@ -75,29 +75,29 @@ public class Lookup {
 
     public String getSelected() { return this.selected; }
 
-    public ArrayList<String> getCityFilter() {
+    public List<String> getCityFilter() {
         return this.cityFilter;
     }
 
-    public ArrayList<String> getStateFilter() {
+    public List<String> getStateFilter() {
         return this.stateFilter;
     }
 
-    public ArrayList<String> getZipcodeFilter() {
+    public List<String> getZipcodeFilter() {
         return this.zipcodeFilter;
     }
 
-    public ArrayList<String> getExcludeStates() {
+    public List<String> getExcludeStates() {
         return this.excludeStates;
     }
 
-    public ArrayList<String> getPreferCity() {
+    public List<String> getPreferCity() {
         return this.preferCity;
     }
 
-    public ArrayList<String> getPreferState() { return this.preferState; }
+    public List<String> getPreferState() { return this.preferState; }
 
-    public ArrayList<String> getPreferZipcode() { return this.preferZipcode; }
+    public List<String> getPreferZipcode() { return this.preferZipcode; }
 
     public double getPreferRatio() {
         return this.preferRatio;
@@ -137,25 +137,25 @@ public class Lookup {
 
     public void setSelected(String selected) { this.selected = selected; }
 
-    public void setCityFilter(ArrayList<String> cityFilter) {
+    public void setCityFilter(List<String> cityFilter) {
         this.cityFilter = cityFilter;
     }
 
-    public void setStateFilter(ArrayList<String> stateFilter) {
+    public void setStateFilter(List<String> stateFilter) {
         this.stateFilter = stateFilter;
     }
 
-    public void setZipcodeFilter(ArrayList<String> zipcodeFilter) { this.zipcodeFilter = zipcodeFilter; }
+    public void setZipcodeFilter(List<String> zipcodeFilter) { this.zipcodeFilter = zipcodeFilter; }
 
-    public void setExcludeStates(ArrayList<String> excludeStates) { this.excludeStates = excludeStates; }
+    public void setExcludeStates(List<String> excludeStates) { this.excludeStates = excludeStates; }
 
-    public void setPreferCity(ArrayList<String> cities) {
+    public void setPreferCity(List<String> cities) {
         this.preferCity = cities;
     }
 
-    public void setPreferState(ArrayList<String> states) { this.preferState = states; }
+    public void setPreferState(List<String> states) { this.preferState = states; }
 
-    public void setPreferZipcode(ArrayList<String> zipcodes) { this.preferZipcode = zipcodes; }
+    public void setPreferZipcode(List<String> zipcodes) { this.preferZipcode = zipcodes; }
 
     /***
      * Sets the percentage of suggestions that are to be from preferred cities/states.
