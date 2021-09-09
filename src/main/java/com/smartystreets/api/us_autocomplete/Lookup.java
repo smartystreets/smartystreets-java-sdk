@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_autocomplete;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.smartystreets.api.GeolocateType;
 
 /**
@@ -17,9 +18,9 @@ public class Lookup {
     private Suggestion[] result;
     private String prefix;
     private int maxSuggestions;
-    private ArrayList<String> cityFilter;
-    private ArrayList<String> stateFilter;
-    private ArrayList<String> prefer;
+    private List<String> cityFilter;
+    private List<String> stateFilter;
+    private List<String> prefer;
     private double preferRatio;
     private GeolocateType geolocateType;
 
@@ -63,15 +64,15 @@ public class Lookup {
         return this.prefix;
     }
 
-    public ArrayList<String> getCityFilter() {
+    public List<String> getCityFilter() {
         return this.cityFilter;
     }
 
-    public ArrayList<String> getStateFilter() {
+    public List<String> getStateFilter() {
         return this.stateFilter;
     }
 
-    public ArrayList<String> getPrefer() {
+    public List<String> getPrefer() {
         return this.prefer;
     }
 
@@ -111,15 +112,15 @@ public class Lookup {
         this.prefix = prefix;
     }
 
-    public void setCityFilter(ArrayList<String> cityFilter) {
+    public void setCityFilter(List<String> cityFilter) {
         this.cityFilter = cityFilter;
     }
 
-    public void setStateFilter(ArrayList<String> stateFilter) {
+    public void setStateFilter(List<String> stateFilter) {
         this.stateFilter = stateFilter;
     }
 
-    public void setPrefer(ArrayList<String> prefer) {
+    public void setPrefer(List<String> prefer) {
         this.prefer = prefer;
     }
 

@@ -2,6 +2,7 @@ package com.smartystreets.api;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class ClientBuilder {
     private String urlPrefix;
     private Proxy proxy;
     private Map<String, Object> customHeaders;
-    private ArrayList<String> licenses = new ArrayList<String>();
+    private List<String> licenses = new ArrayList<>();
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
     private final String US_AUTOCOMPLETE_API_PRO_URL = "https://us-autocomplete-pro.api.smartystreets.com/lookup";
@@ -126,7 +127,7 @@ public class ClientBuilder {
      * Allows caller to specify licenses (aka "tracks") they wish to use.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
-    public ClientBuilder withLicenses(ArrayList<String> licenses) {
+    public ClientBuilder withLicenses(List<String> licenses) {
         this.licenses.addAll(licenses);
         return this;
     }

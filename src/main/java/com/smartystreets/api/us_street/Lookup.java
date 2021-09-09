@@ -3,6 +3,7 @@ package com.smartystreets.api.us_street;
 import com.google.api.client.util.Key;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class Lookup {
     //region [ Fields ]
 
-    private ArrayList<Candidate> result;
+    private List<Candidate> result;
 
     @Key("input_id")
     private String inputId;
@@ -80,7 +81,7 @@ public class Lookup {
 
     //region [ Getters ]
 
-    public ArrayList<Candidate> getResult() {
+    public List<Candidate> getResult() {
         return this.result;
     }
 
@@ -157,7 +158,7 @@ public class Lookup {
 
     //region [ Setters ]
 
-    public void setResult(ArrayList<Candidate> result) {
+    public void setResult(List<Candidate> result) {
         this.result = result;
     }
 

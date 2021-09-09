@@ -4,13 +4,13 @@ package com.smartystreets.api;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class LicenseSender implements Sender{
-    private ArrayList<String> licenses;
+    private List<String> licenses;
     private Sender inner;
 
-    public LicenseSender(ArrayList<String> licenses, Sender inner) {
+    public LicenseSender(List<String> licenses, Sender inner) {
         this.licenses = licenses;
         this.inner = inner;
     }

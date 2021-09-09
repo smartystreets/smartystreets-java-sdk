@@ -9,6 +9,7 @@ import com.smartystreets.api.ClientBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class UsStreetMultipleAddressesExample {
@@ -86,7 +87,7 @@ public class UsStreetMultipleAddressesExample {
         Vector<Lookup> lookups = batch.getAllLookups();
 
         for (int i=0; i < batch.size(); i++) {
-            ArrayList<Candidate> candidates = lookups.get(i).getResult();
+            List<Candidate> candidates = lookups.get(i).getResult();
 
             if (candidates.isEmpty()) {
                 System.out.println("Address " + i + " is invalid.\n");
