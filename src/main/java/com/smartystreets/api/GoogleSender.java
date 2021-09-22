@@ -1,18 +1,18 @@
 package com.smartystreets.api;
 
-import com.google.api.client.http.*;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.smartystreets.api.exceptions.*;
+import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Proxy;
+import java.net.URI;
+import java.net.http.HttpRequest;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public class GoogleSender implements Sender {
     private int maxTimeOut;
@@ -52,6 +52,21 @@ public class GoogleSender implements Sender {
     }
 
     private HttpRequest buildHttpRequest(Request smartyRequest) throws IOException {
+        java.net.http.HttpRequest.Builder builder = java.net.http.HttpRequest.newBuilder(URI.create(smartyRequest.getUrl()));
+        Map<String, Object> headers = smartyRequest.getHeaders();
+        for (String headerName : headers.keySet())
+            builder.setHeader(headerName, headers.get(headerName).toString());
+
+        if (smartyRequest.getMethod().equals("GET"))
+            return builder.GET().build();
+
+
+        return builder
+                .POST(smartyRequest.getPayload())
+
+
+
+
         HttpRequestFactory factory = this.transport.createRequestFactory();
         GenericUrl url = new GenericUrl(smartyRequest.getUrl());
 
