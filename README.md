@@ -6,6 +6,9 @@ You may have noticed this page is curiously sparse. Don't panic, there's [docume
 
 When using this library in an Android project, be sure to exclude commons-logging and httpclient as they will conflict with classes provided by Android.
 
+If you use an embedded key on the server-side (for US Autocomplete Pro for example), 
+you should whitelist your server IP and use `EmbeddedKeyCredentials` instead of `SharedCredentials`.
+
 [Apache 2.0 License](src/main/resources/LICENSE.txt)
 
 ---
