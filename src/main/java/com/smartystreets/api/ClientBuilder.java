@@ -2,9 +2,10 @@ package com.smartystreets.api;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.net.ProxySelector;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 /**
  * The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.<br>
@@ -18,7 +19,7 @@ public class ClientBuilder {
     private int maxRetries;
     private int maxTimeout;
     private String urlPrefix;
-    private Proxy proxy;
+    private ProxySelector proxy;
     private Map<String, Object> customHeaders;
     private List<String> licenses = new ArrayList<>();
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
@@ -110,7 +111,7 @@ public class ClientBuilder {
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withProxy(Proxy.Type proxyType, String proxyHost, int proxyPort) {
-        this.proxy = new Proxy(proxyType, new InetSocketAddress(proxyHost, proxyPort));
+        this.proxy = ProxySelector.of(new InetSocketAddress(proxyHost, proxyPort));
         return this;
     }
 
@@ -171,7 +172,11 @@ public class ClientBuilder {
         if (this.httpSender != null)
             return this.httpSender;
 
-        Sender sender = new GoogleSender(this.maxTimeout, this.proxy);
+        Sender sender;
+        if (this.proxy != null)
+            sender = new GoogleSender(this.maxTimeout, this.proxy);
+        else
+            sender = new GoogleSender(this.maxTimeout);
 
         sender = new StatusCodeSender(sender);
 
