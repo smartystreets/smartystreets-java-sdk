@@ -39,6 +39,7 @@ public class UsAutocompleteProExample {
         lookup.setSelected("1042 W Center St Apt A (24) Orem UT 84057");
         lookup.setMaxSuggestions(5);
         lookup.setPreferRatio(33);
+        lookup.setSource("all");
 
         client.send(lookup); // The client will also return the suggestions directly
 

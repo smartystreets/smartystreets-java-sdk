@@ -52,6 +52,7 @@ public class Client {
             request.putParameter("prefer_geolocation", lookup.getGeolocateType().getName());
         }
         request.putParameter("selected", lookup.getSelected());
+        request.putParameter("source", lookup.getSource());
 
         return request;
     }
