@@ -1,4 +1,4 @@
-FROM maven:3.5.4-jdk-8-alpine
+FROM maven:3.8-jdk-11
 
 COPY . /code
 WORKDIR /code
