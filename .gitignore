@@ -1,5 +1,6 @@
 *DS_Store*
 *.swp
+*.iml
 __MACOSX
 /.idea/
 /target/
