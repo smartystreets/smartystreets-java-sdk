@@ -23,6 +23,7 @@ public class ClientBuilder {
     private Map<String, Object> customHeaders;
     private List<String> licenses = new ArrayList<>();
     private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
+    private final String INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smartystreets.com/lookup";
     private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
     private final String US_AUTOCOMPLETE_API_PRO_URL = "https://us-autocomplete-pro.api.smartystreets.com/lookup";
     private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
@@ -136,6 +137,11 @@ public class ClientBuilder {
     public com.smartystreets.api.international_street.Client buildInternationalStreetApiClient() {
         this.ensureURLPrefixNotNull(this.INTERNATIONAL_STREET_API_URL);
         return new com.smartystreets.api.international_street.Client(this.buildSender(), this.serializer);
+    }
+
+    public com.smartystreets.api.international_autocomplete.Client buildInternationalAutcompleteApiClient() {
+        this.ensureURLPrefixNotNull(this.INTERNATIONAL_AUTOCOMPLETE_API_URL);
+        return new com.smartystreets.api.international_autocomplete.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_autocomplete.Client buildUsAutocompleteApiClient() {
