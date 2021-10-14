@@ -10,7 +10,7 @@ public class Result {
         return this.candidates;
     }
 
-    public Candidate getSuggestion(int index) {
+    public Candidate getCandidate(int index) {
         return this.candidates[index];
     }
 }
