@@ -38,9 +38,9 @@ public class Client {
 
         request.putParameter("country", lookup.getCountry());
         request.putParameter("search", lookup.getSearch());
-        request.putParameter("administrative_area", lookup.getAdministrativeArea());
-        request.putParameter("locality", lookup.getLocality());
-        request.putParameter("postal_code", lookup.getPostalCode());
+        request.putParameter("include_only_administrative_area", lookup.getAdministrativeArea());
+        request.putParameter("include_only_locality", lookup.getLocality());
+        request.putParameter("include_only_postal_code", lookup.getPostalCode());
 
         return request;
     }

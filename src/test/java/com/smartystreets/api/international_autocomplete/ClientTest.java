@@ -33,7 +33,7 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
-        String expectedURL = "http://localhost/?country=1&search=2&administrative_area=3&locality=4&postal_code=5";
+        String expectedURL = "http://localhost/?country=1&search=2&include_only_administrative_area=3&include_only_locality=4&include_only_postal_code=5";
         Lookup lookup = new Lookup();
         lookup.setCountry("1");
         lookup.setSearch("2");
