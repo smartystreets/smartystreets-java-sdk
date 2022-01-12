@@ -67,8 +67,11 @@ public class Client {
         request.putParameter("urbanization", address.getUrbanization());
         request.putParameter("match", address.getMatchString());
 
-        if (address.getMaxCandidates() != 1)
+        if (address.getMaxCandidates() == 1 && address.getMatch() == MatchType.ENHANCED)
+            request.putParameter("candidates", "5");
+        else
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
+
     }
 
 

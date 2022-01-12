@@ -31,7 +31,7 @@ public class ClientTest {
 
         client.send(new Lookup("freeform"));
 
-        assertEquals("http://localhost/?street=freeform", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?street=freeform&candidates=1", capturingSender.getRequest().getUrl());
 
     }
 
@@ -52,14 +52,13 @@ public class ClientTest {
         lookup.setState("6");
         lookup.setZipCode("7");
         lookup.setLastline("8");
-        lookup.setMaxCandidates(9);
-        lookup.setMatch(MatchType.INVALID);
+        lookup.setMatch(MatchType.ENHANCED);
 
         client.send(lookup);
 
         assertEquals("http://localhost/?input_id=1234&street=1&street2=3" +
                 "&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0" +
-                "&urbanization=4&match=invalid&candidates=9", capturingSender.getRequest().getUrl());
+                "&urbanization=4&match=enhanced&candidates=5", capturingSender.getRequest().getUrl());
 
     }
 
