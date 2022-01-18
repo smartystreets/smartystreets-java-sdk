@@ -103,14 +103,14 @@ public class Lookup {
 
     public List<String> getPreferZipcode() { return this.preferZipcode; }
 
-    public double getPreferRatio() {
+    public int getPreferRatio() {
         return this.preferRatio;
     }
 
     String getPreferRatioStringIfSet() {
         if (this.preferRatio == this.PREFER_RATIO_DEFAULT)
             return null;
-        return Double.toString(this.preferRatio);
+        return Integer.toString(this.preferRatio);
     }
 
     public GeolocateType getGeolocateType() {
