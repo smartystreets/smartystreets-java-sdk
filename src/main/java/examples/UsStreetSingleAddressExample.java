@@ -71,7 +71,7 @@ public class UsStreetSingleAddressExample {
 
         Candidate firstCandidate = results.get(0);
 
-        System.out.println("Address is valid. (There is at least one candidate)\n");
+        System.out.println("There is at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid.\n");
         System.out.println("Input ID: " + firstCandidate.getInputId());
         System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
         System.out.println("County: " + firstCandidate.getMetadata().getCountyName());

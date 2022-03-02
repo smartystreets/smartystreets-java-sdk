@@ -94,7 +94,7 @@ public class UsStreetMultipleAddressesExample {
                 continue;
             }
 
-            System.out.println("Address " + i + " is valid. (There is at least one candidate)");
+            System.out.println("Address " + i + " has at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid.");
 
             for (Candidate candidate : candidates){
                 final Components components = candidate.getComponents();
