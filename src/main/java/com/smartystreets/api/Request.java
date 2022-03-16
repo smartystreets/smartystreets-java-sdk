@@ -47,6 +47,8 @@ public class Request {
     public String getUrl() {
         String url = this.urlPrefix;
 
+        this.headers.put("content-type", this.contentType);
+
         if (!url.contains("?"))
             url += "?";
 
