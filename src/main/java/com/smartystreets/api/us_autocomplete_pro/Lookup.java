@@ -11,7 +11,7 @@ import java.util.List;
  *     @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
  */
 public class Lookup {
-    final int PREFER_RATIO_DEFAULT = 33;
+    final int PREFER_RATIO_DEFAULT = 100;
     final int MAX_SUGGESTIONS_DEFAULT = 10;
 
     //region [ Fields ]
@@ -103,14 +103,14 @@ public class Lookup {
 
     public List<String> getPreferZipcode() { return this.preferZipcode; }
 
-    public double getPreferRatio() {
+    public int getPreferRatio() {
         return this.preferRatio;
     }
 
     String getPreferRatioStringIfSet() {
         if (this.preferRatio == this.PREFER_RATIO_DEFAULT)
             return null;
-        return Double.toString(this.preferRatio);
+        return Integer.toString(this.preferRatio);
     }
 
     public GeolocateType getGeolocateType() {
