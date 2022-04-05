@@ -1,6 +1,6 @@
 package com.smartystreets.api.international_street;
 
-import com.smartystreets.api.GoogleSerializer;
+import com.smartystreets.api.SmartySerializer;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -48,8 +48,8 @@ public class CandidateTest {
                 "\"sub_building_number\":\"106\",\"sub_building_name\":\"107\",\"sub_building\":\"108\"," +
                 "\"post_box\":\"109\",\"post_box_type\":\"110\",\"post_box_number\":\"111\"}}}}]";
 
-        GoogleSerializer googleSerializer = new GoogleSerializer();
-        Candidate candidate = googleSerializer.deserialize(responsePayload.getBytes(), Candidate[].class)[0];
+        SmartySerializer smartySerializer = new SmartySerializer();
+        Candidate candidate = smartySerializer.deserialize(responsePayload.getBytes(), Candidate[].class)[0];
 
         //region [ Candidate ]
         assertEquals("1234", candidate.getInputId());

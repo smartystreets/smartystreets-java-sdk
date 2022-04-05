@@ -1,94 +1,87 @@
 package com.smartystreets.api.us_zipcode;
 
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * @see "https://smartystreets.com/docs/cloud/us-zipcode-api#zipcodes"
  */
-public class ZipCode {
+public class ZipCode implements Serializable {
     //region [ fields ]
 
-    @Key("zipcode")
     private String zipCode;
-
-    @Key("zipcode_type")
     private String zipCodeType;
-
-    @Key("default_city")
     private String defaultCity;
-
-    @Key("county_fips")
     private String countyFips;
-
-    @Key("county_name")
     private String countyName;
-
-    @Key("state_abbreviation")
     private String stateAbbreviation;
-
-    @Key("state")
     private String state;
-
-    @Key("latitude")
     private double latitude;
-
-    @Key("longitude")
     private double longitude;
-
-    @Key("precision")
     private String precision;
-
-    @Key("alternate_counties")
     private AlternateCounty[] alternateCounties;
 
     //endregion
 
     //region [ Getter ]
 
+    @JsonProperty("zipcode")
     public String getZipCode() {
         return this.zipCode;
     }
 
+    @JsonProperty("zipcode_type")
     public String getZipCodeType() {
         return this.zipCodeType;
     }
 
+    @JsonProperty("default_city")
     public String getDefaultCity() {
         return this.defaultCity;
     }
 
+    @JsonProperty("county_fips")
     public String getCountyFips() {
         return this.countyFips;
     }
 
+    @JsonProperty("county_name")
     public String getCountyName() {
         return this.countyName;
     }
 
+    @JsonProperty("state_abbreviation")
     public String getStateAbbreviation() {
         return stateAbbreviation;
     }
 
+    @JsonProperty("state")
     public String getState() {
         return state;
     }
 
+    @JsonProperty("latitude")
     public double getLatitude() {
         return this.latitude;
     }
 
+    @JsonProperty("longitude")
     public double getLongitude() {
         return this.longitude;
     }
 
+    @JsonProperty("precision")
     public String getPrecision() {
         return this.precision;
     }
 
+    @JsonProperty("alternate_counties")
     public AlternateCounty[] getAlternateCounties() {
         return alternateCounties;
     }
 
+    @JsonProperty("alternate_county")
     public AlternateCounty getAlternateCounty(int index) {
         return alternateCounties[index];
     }

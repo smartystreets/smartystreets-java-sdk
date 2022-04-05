@@ -1,7 +1,6 @@
 package com.smartystreets.api.us_street;
 
-import com.google.api.client.util.Key;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,45 +9,21 @@ import java.util.List;
  *     will contain the result of the lookup after it comes back from the API.
  *     @see "https://smartystreets.com/docs/cloud/us-street-api#input-fields"
  */
-public class Lookup {
+public class Lookup implements Serializable {
     //region [ Fields ]
 
     private List<Candidate> result;
-
-    @Key("input_id")
     private String inputId;
-
-    @Key("street")
     private String street;
-
-    @Key("street2")
     private String street2;
-
-    @Key("secondary")
     private String secondary;
-
-    @Key("city")
     private String city;
-
-    @Key("state")
     private String state;
-
-    @Key("zipcode")
     private String zipCode;
-
-    @Key("lastline")
     private String lastline;
-
-    @Key("addressee")
     private String addressee;
-
-    @Key("urbanization")
     private String urbanization;
-
-    @Key("match")
     private String match;
-
-    @Key("candidates")
     private int maxCandidates;
 
     //endregion

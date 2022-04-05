@@ -1,20 +1,13 @@
 package com.smartystreets.api.us_reverse_geo;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
-public class Coordinate {
+public class Coordinate implements Serializable {
     //region [ Fields ]
 
-    @Key("latitude")
     private double latitude;
-
-    @Key("longitude")
     private double longitude;
-
-    @Key("license")
     private int license;
-
-    @Key("zipcode")
     private String zipcode;
 
     //endregion

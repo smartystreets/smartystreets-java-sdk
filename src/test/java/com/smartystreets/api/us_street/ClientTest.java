@@ -1,6 +1,5 @@
 package com.smartystreets.api.us_street;
 
-import com.smartystreets.api.GoogleSerializer;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.exceptions.SmartyException;

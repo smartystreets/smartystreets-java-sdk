@@ -1,9 +1,8 @@
 package com.smartystreets.api.us_autocomplete;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
-public class Result {
-    @Key("suggestions")
+public class Result implements Serializable {
     private Suggestion[] suggestions;
 
     public Suggestion[] getSuggestions() {

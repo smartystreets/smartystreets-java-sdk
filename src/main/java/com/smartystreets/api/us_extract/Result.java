@@ -1,19 +1,18 @@
 package com.smartystreets.api.us_extract;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
 /**
  * @see <a href="https://smartystreets.com/docs/cloud/us-extract-api#http-response-status">SmartyStreets US Extract API docs</a>
  */
-public class Result {
-    @Key("meta")
+public class Result implements Serializable {
     private Metadata metadata;
-
-    @Key("addresses")
     private Address[] addresses;
 
 
+    @JsonProperty("meta")
     public Metadata getMetadata() {
         return metadata;
     }

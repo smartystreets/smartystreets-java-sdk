@@ -1,14 +1,12 @@
 package com.smartystreets.api.us_reverse_geo;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
-public class Lookup {
-//region [ Fields ]
+public class Lookup implements Serializable {
 
-    @Key("latitude")
+    //region [ Fields ]
+
     private double latitude;
-
-    @Key("longitude")
     private double longitude;
 
     private SmartyResponse response;

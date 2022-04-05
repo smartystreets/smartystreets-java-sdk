@@ -1,9 +1,9 @@
 package com.smartystreets.api.us_reverse_geo;
-import com.google.api.client.util.Key;
 
-public class SmartyResponse {
+import java.io.Serializable;
 
-    @Key("results")
+public class SmartyResponse implements Serializable {
+
     private Result[] results;
 
     public Result[] getResults() { return this.results; }

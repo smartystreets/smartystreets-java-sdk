@@ -1,35 +1,27 @@
 package com.smartystreets.api.us_autocomplete_pro;
 
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-response"
  */
-public class Suggestion {
+public class Suggestion implements Serializable {
     //region [ Fields ]
 
-    @Key("street_line")
     private String streetLine;
-
-    @Key("secondary")
     private String secondary;
-
-    @Key("city")
     private String city;
-
-    @Key("state")
     private String state;
-
-    @Key("zipcode")
     private String zipcode;
-
-    @Key("entries")
     private Integer entries;
 
     //region [ Fields ]
 
     //region [ Getters ]
 
+    @JsonProperty("street_line")
     public String getStreetLine() {
         return streetLine;
     }

@@ -1,6 +1,6 @@
 package com.smartystreets.api.us_extract;
 
-import com.smartystreets.api.GoogleSerializer;
+import com.smartystreets.api.SmartySerializer;
 import com.smartystreets.api.us_street.Candidate;
 import org.junit.Test;
 
@@ -9,14 +9,14 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class ResultTest {
-    private final GoogleSerializer googleSerializer = new GoogleSerializer();
+    private final SmartySerializer smartySerializer = new SmartySerializer();
     private static final String responsePayload = "{\"meta\":{\"lines\":1,\"unicode\":true,\"address_count\":2," +
             "\"verified_count\":3,\"bytes\":4,\"character_count\":5},\"addresses\":[{\"text\":\"6\"," +
             "\"verified\":true,\"line\":7,\"start\":8,\"end\":9,\"api_output\":[{}]},{\"text\":\"10\"}]}";
 
     @Test
     public void testAllFieldsFilledCorrectly() throws IOException {
-        Result result = this.googleSerializer.deserialize(responsePayload.getBytes(), Result.class);
+        Result result = this.smartySerializer.deserialize(responsePayload.getBytes(), Result.class);
 
         Metadata metadata = result.getMetadata();
         assertNotNull(metadata);

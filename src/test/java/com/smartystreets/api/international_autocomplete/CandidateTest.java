@@ -1,6 +1,6 @@
 package com.smartystreets.api.international_autocomplete;
 
-import com.smartystreets.api.GoogleSerializer;
+import com.smartystreets.api.SmartySerializer;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -32,7 +32,7 @@ public class CandidateTest {
 
         byte[] bytes = rawJSON.getBytes();
 
-        Result result = new GoogleSerializer().deserialize(bytes, Result.class);
+        Result result = new SmartySerializer().deserialize(bytes, Result.class);
         Candidate[] candidates = result.getCandidates();
 
         assertEquals("12TH AV", candidates[0].getStreet());

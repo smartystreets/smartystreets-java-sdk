@@ -1,20 +1,13 @@
 package com.smartystreets.api.us_reverse_geo;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
-public class Address {
+public class Address implements Serializable {
     //region [ Fields ]
 
-    @Key("street")
     private String street;
-
-    @Key("city")
     private String city;
-
-    @Key("state_abbreviation")
     private String stateAbbreviation;
-
-    @Key("zip_code")
     private String zipCode;
 
     //endregion

@@ -1,7 +1,7 @@
 package com.smartystreets.api.us_autocomplete;
 
 
-import com.smartystreets.api.GoogleSerializer;
+import com.smartystreets.api.SmartySerializer;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -9,12 +9,12 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class SuggestionTest {
-    private final GoogleSerializer googleSerializer = new GoogleSerializer();
+    private final SmartySerializer smartySerializer = new SmartySerializer();
     private static final String responsePayload = "{\"suggestions\":[{\"text\":\"1\",\"street_line\":\"2\",\"city\":\"3\",\"state\":\"4\"}]}";
 
     @Test
     public void testAllFieldGetFilledInCorrectly() throws IOException {
-        Result result = googleSerializer.deserialize(responsePayload.getBytes(), Result.class);
+        Result result = smartySerializer.deserialize(responsePayload.getBytes(), Result.class);
 
         assertNotNull(result.getSuggestions()[0]);
         assertEquals("1", result.getSuggestion(0).getText());

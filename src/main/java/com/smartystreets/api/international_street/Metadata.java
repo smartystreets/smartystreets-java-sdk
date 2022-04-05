@@ -1,26 +1,20 @@
 package com.smartystreets.api.international_street;
 
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * @see "https://smartystreets.com/docs/cloud/international-street-api#metadata"
  */
-public class Metadata {
+public class
+Metadata implements Serializable {
     //region [ Fields ]
 
-    @Key("latitude")
     private double latitude;
-
-    @Key("longitude")
     private double longitude;
-
-    @Key("geocode_precision")
     private String geocodePrecision;
-
-    @Key("max_geocode_precision")
     private String maxGeocodePrecision;
-
-    @Key("address_format")
     private String addressFormat;
 
     //endregion
@@ -35,14 +29,17 @@ public class Metadata {
         return longitude;
     }
 
+    @JsonProperty("geocode_precision")
     public String getGeocodePrecision() {
         return geocodePrecision;
     }
 
+    @JsonProperty("max_geocode_precision")
     public String getMaxGeocodePrecision() {
         return maxGeocodePrecision;
     }
 
+    @JsonProperty("address_format")
     public String getAddressFormat() {
         return addressFormat;
     }

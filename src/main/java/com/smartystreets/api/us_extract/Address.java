@@ -1,31 +1,21 @@
 package com.smartystreets.api.us_extract;
 
-
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smartystreets.api.us_street.Candidate;
+
+import java.io.Serializable;
 
 /**
  * @see <a href="https://smartystreets.com/docs/cloud/us-extract-api#http-response-status">SmartyStreets US Extract API docs</a>
  */
-public class Address {
+public class Address implements Serializable {
     //region [ Fields ]
 
-    @Key("text")
     private String text;
-
-    @Key("verified")
     private boolean verified;
-
-    @Key("line")
     private int line;
-
-    @Key("start")
     private int start;
-
-    @Key("end")
     private int end;
-
-    @Key("api_output")
     private Candidate[] candidates;
 
     //endregion
@@ -52,6 +42,7 @@ public class Address {
         return end;
     }
 
+    @JsonProperty("api_output")
     public Candidate[] getCandidates() {
         return candidates;
     }

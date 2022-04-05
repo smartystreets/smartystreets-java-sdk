@@ -3,7 +3,7 @@ package com.smartystreets.api.us_street;
 import com.smartystreets.api.Request;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
-import com.smartystreets.api.GoogleSerializer;
+import com.smartystreets.api.SmartySerializer;
 import java.io.IOException;
 import org.junit.Rule;
 import org.junit.Test;
@@ -86,7 +86,7 @@ public class CandidateTest {
                 + "]\n";
         byte[] bytes = rawJSON.getBytes();
 
-        Candidate[] candidates = new GoogleSerializer().deserialize(bytes, Candidate[].class);
+        Candidate[] candidates = new SmartySerializer().deserialize(bytes, Candidate[].class);
 
         assertEquals(0, candidates[0].getInputIndex());
         assertEquals(4242, candidates[0].getCandidateIndex());

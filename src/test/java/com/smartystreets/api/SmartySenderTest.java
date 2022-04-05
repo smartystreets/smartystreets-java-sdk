@@ -23,14 +23,14 @@ import java.util.concurrent.Executor;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-public class GoogleSenderTest {
+public class SmartySenderTest {
     private HttpRequest httpRequest;
 
     //region [ Request Building ]
 
     @Test
     public void testHttpRequestContainsCorrectHeaders() throws Exception {
-        GoogleSender sender = new GoogleSender(this.getMockClient(200));
+        SmartySender sender = new SmartySender(this.getMockClient(200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
         request.putHeader("X-name1", "value1");
@@ -45,7 +45,7 @@ public class GoogleSenderTest {
 
     @Test
     public void testHttpRequestContainsGetWhenAppropriate() throws Exception {
-        GoogleSender sender = new GoogleSender(this.getMockClient(200));
+        SmartySender sender = new SmartySender(this.getMockClient(200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -56,7 +56,7 @@ public class GoogleSenderTest {
 
     @Test
     public void testHttpRequestContainsPostWhenAppropriate() throws Exception {
-        GoogleSender sender = new GoogleSender(this.getMockClient(200));
+        SmartySender sender = new SmartySender(this.getMockClient(200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -68,7 +68,7 @@ public class GoogleSenderTest {
 
 //    @Test
 //    public void testHttpRequestContainsCorrectContent() throws Exception {
-//        GoogleSender sender = new GoogleSender(this.getMockClient(200));
+//        SmartySender sender = new SmartySender(this.getMockClient(200));
 //        Request request = new Request();
 //        request.setUrlPrefix("http://localhost");
 //
@@ -84,7 +84,7 @@ public class GoogleSenderTest {
 
     @Test
     public void testResponseContainsCorrectPayload() throws Exception {
-        GoogleSender sender = new GoogleSender(this.getMockClient(200));
+        SmartySender sender = new SmartySender(this.getMockClient(200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -95,7 +95,7 @@ public class GoogleSenderTest {
 
     @Test
     public void testResponseContainsStatusCode200OnSuccess() throws Exception {
-        GoogleSender sender = new GoogleSender(this.getMockClient(200));
+        SmartySender sender = new SmartySender(this.getMockClient(200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -106,7 +106,7 @@ public class GoogleSenderTest {
 
     @Test
     public void testResponseContainsStatusCode400WhenA400IsThrown() throws Exception {
-        GoogleSender sender = new GoogleSender(this.getMockClient(400));
+        SmartySender sender = new SmartySender(this.getMockClient(400));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 

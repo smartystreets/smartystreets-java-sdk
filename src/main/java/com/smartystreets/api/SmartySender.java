@@ -15,26 +15,26 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-public class GoogleSender implements Sender {
+public class SmartySender implements Sender {
     private int maxTimeOut;
     private HttpClient client;
 
-    public GoogleSender() {
+    public SmartySender() {
         this.maxTimeOut = 10000;
         this.client = HttpClient.newHttpClient();
     }
 
-    public GoogleSender(int maxTimeout) {
+    public SmartySender(int maxTimeout) {
         this();
         this.maxTimeOut = maxTimeout;
     }
 
-    GoogleSender(int maxTimeOut, ProxySelector proxy) {
+    SmartySender(int maxTimeOut, ProxySelector proxy) {
         this.maxTimeOut = maxTimeOut;
         this.client = HttpClient.newBuilder().proxy(proxy).build();
     }
 
-    GoogleSender(HttpClient client) {
+    SmartySender(HttpClient client) {
         this();
         this.client = client;
     }

@@ -32,7 +32,7 @@ public class ClientBuilder {
     private final String US_REVERSE_GEO_API_URL = "https://us-reverse-geo.api.smartystreets.com/lookup";
 
     private ClientBuilder() {
-        this.serializer = new GoogleSerializer();
+        this.serializer = new SmartySerializer();
         this.maxRetries = 5;
         this.maxTimeout = 10000;
     }
@@ -75,7 +75,7 @@ public class ClientBuilder {
     }
 
     /**
-     * Changes the <b>Serializer</b> from the default <b>GoogleSerializer</b>.
+     * Changes the <b>Serializer</b> from the default <b>SmartySerializer</b>.
      * @param serializer An object that implements the <b>Serializer</b> interface.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
@@ -121,7 +121,7 @@ public class ClientBuilder {
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withDebug() {
-        GoogleSender.enableLogging();
+        SmartySender.enableLogging();
         return this;
     }
 
@@ -180,9 +180,9 @@ public class ClientBuilder {
 
         Sender sender;
         if (this.proxy != null)
-            sender = new GoogleSender(this.maxTimeout, this.proxy);
+            sender = new SmartySender(this.maxTimeout, this.proxy);
         else
-            sender = new GoogleSender(this.maxTimeout);
+            sender = new SmartySender(this.maxTimeout);
 
         sender = new StatusCodeSender(sender);
 

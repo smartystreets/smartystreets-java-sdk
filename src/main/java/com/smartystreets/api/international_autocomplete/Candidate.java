@@ -1,26 +1,19 @@
 package com.smartystreets.api.international_autocomplete;
 
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * @see "https://smartystreets.com/docs/cloud/international-address-autocomplete-api#http-response"
  */
-public class Candidate {
+public class Candidate implements Serializable {
     //region [ Fields ]
 
-    @Key("street")
     private String street;
-
-    @Key("locality")
     private String locality;
-
-    @Key("administrative_area")
     private String administrativeArea;
-
-    @Key("postal_code")
     private String postalCode;
-
-    @Key("country_iso3")
     private String countryISO3;
 
     //region [ Fields ]
@@ -31,10 +24,13 @@ public class Candidate {
 
     public String getLocality() { return locality; }
 
+    @JsonProperty("administrative_area")
     public String getAdministrativeArea() { return administrativeArea; }
 
+    @JsonProperty("postal_code")
     public String getPostalCode() { return postalCode; }
 
+    @JsonProperty("country_iso3")
     public String getCountryISO3() { return countryISO3; }
 
     //endregion

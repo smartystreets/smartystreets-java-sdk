@@ -1,6 +1,6 @@
 package com.smartystreets.api.international_street;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
 /**
  * A candidate is a possible match for an address that was submitted.<br>
@@ -8,16 +8,11 @@ import com.google.api.client.util.Key;
  *
  * @see "https://smartystreets.com/docs/cloud/international-street-api#root"
  */
-public class Candidate extends RootLevel {
+public class Candidate extends RootLevel implements Serializable {
     //region [ Fields ]
 
-    @Key("components")
     private Components components;
-
-    @Key("metadata")
     private Metadata metadata;
-
-    @Key("analysis")
     private Analysis analysis;
 
     //endregion

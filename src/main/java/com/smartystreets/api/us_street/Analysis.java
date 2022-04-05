@@ -1,97 +1,88 @@
 package com.smartystreets.api.us_street;
 
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * @see "https://smartystreets.com/docs/cloud/us-street-api#analysis"
  */
-public class Analysis {
+public class Analysis implements Serializable {
     //region [ Fields ]
 
-    @Key("dpv_match_code")
     private String dpvMatchCode;
-
-    @Key("dpv_footnotes")
     private String dpvFootnotes;
-
-    @Key("dpv_cmra")
     private String cmra;
-
-    @Key("dpv_vacant")
     private String vacant;
-
-    @Key("dpv_no_stat")
     private String no_stat;
-
-    @Key("active")
     private String active;
-
-    @Key("ews_match")
     private boolean ewsMatch;
-
-    @Key("footnotes")
     private String footnotes;
-
-    @Key("lacslink_code")
     private String lacsLinkCode;
-
-    @Key("lacslink_indicator")
     private String lacsLinkIndicator;
-
-    @Key("suitelink_match")
     private boolean suiteLinkMatch;
-
-    @Key("enhanced_match")
     private String enhancedMatch;
 
     //endregion
 
     //region [ Getters ]
 
+    @JsonProperty("dpv_match_code")
     public String getDpvMatchCode() {
         return this.dpvMatchCode;
     }
 
+    @JsonProperty("dpv_footnotes")
     public String getDpvFootnotes() {
         return this.dpvFootnotes;
     }
 
+    @JsonProperty("dpv_cmra")
     public String getCmra() {
         return this.cmra;
     }
 
+    @JsonProperty("dpv_vacant")
     public String getVacant() {
         return this.vacant;
     }
 
+    @JsonProperty("dpv_no_stat")
     public String getNo_stat() { return this.no_stat; }
 
+    @JsonProperty("active")
     public String getActive() {
         return this.active;
     }
 
+    @JsonProperty("enhanced_match")
     public String getEnhancedMatch() {
         return this.enhancedMatch;
     }
 
     //@deprecated moved to metadata field
     @Deprecated
+    @JsonProperty("ews_match")
     public boolean isEwsMatch() {
         return false;
     }
 
+    @JsonProperty("footnotes")
     public String getFootnotes() {
         return this.footnotes;
     }
 
+    @JsonProperty("lacslink_code")
     public String getLacsLinkCode() {
         return this.lacsLinkCode;
     }
 
+    @JsonProperty("lacslink_indicator")
     public String getLacsLinkIndicator() {
         return this.lacsLinkIndicator;
     }
 
+    @JsonProperty("suitelink_match")
     public boolean isSuiteLinkMatch() {
         return this.suiteLinkMatch;
     }

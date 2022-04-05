@@ -1,12 +1,11 @@
 package com.smartystreets.api.international_street;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
-public class Changes extends RootLevel {
+public class Changes extends RootLevel implements Serializable {
 
     //region [ Fields ]
 
-    @Key("components")
     private Components components;
 
     //endregion

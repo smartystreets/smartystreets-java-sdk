@@ -1,17 +1,12 @@
 package com.smartystreets.api.us_reverse_geo;
 
-import com.google.api.client.util.Key;
+import java.io.Serializable;
 
-public class Result {
+public class Result implements Serializable {
     //region [ Fields ]
 
-    @Key("address")
     private Address address;
-
-    @Key("coordinate")
     private Coordinate coordinate;
-
-    @Key("distance")
     private double distance;
 
     //endregion

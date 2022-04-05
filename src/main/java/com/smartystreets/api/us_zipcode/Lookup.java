@@ -1,26 +1,23 @@
 package com.smartystreets.api.us_zipcode;
 
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  *     will contain the result of the lookup after it comes back from the API.
  *     @see "https://smartystreets.com/docs/cloud/us-zipcode-api#http-request-input-fields"
  */
-public class Lookup {
+public class Lookup implements Serializable {
     //region [ Fields ]
 
+    //private static final long serialVersionUID = 1L;
     private Result result;
-
     private String inputId;
-
-    @Key("city")
     private String city;
-
-    @Key("state")
     private String state;
-
-    @Key("zipcode")
     private String zipcode;
 
     //endregion
@@ -49,6 +46,7 @@ public class Lookup {
 
     //region [ Getters ]
 
+    @JsonIgnore
     public Result getResult() {
         return this.result;
     }
@@ -73,18 +71,22 @@ public class Lookup {
 
     //region [ Setters ]
 
+    @JsonProperty("result")
     public void setResult(Result result) {
         this.result = result;
     }
 
+    @JsonProperty("city")
     public void setCity(String city) {
         this.city = city;
     }
 
+    @JsonProperty("state")
     public void setState(String state) {
         this.state = state;
     }
 
+    @JsonProperty("zipcode")
     public void setZipCode(String zipcode) {
         this.zipcode = zipcode;
     }

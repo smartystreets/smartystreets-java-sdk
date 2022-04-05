@@ -1,32 +1,30 @@
 package com.smartystreets.api.international_street;
 
-import com.google.api.client.util.Key;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * @see "https://smartystreets.com/docs/cloud/international-street-api#analysis"
  */
-public class Analysis {
-    @Key("verification_status")
+public class Analysis implements Serializable {
     private String verificationStatus;
-
-    @Key("address_precision")
     private String addressPrecision;
-
-    @Key("max_address_precision")
     private String maxAddressPrecision;
-
-    @Key("changes")
     private Changes changes;
 
 
+    @JsonProperty("verification_status")
     public String getVerificationStatus() {
         return verificationStatus;
     }
 
+    @JsonProperty("address_precision")
     public String getAddressPrecision() {
         return addressPrecision;
     }
 
+    @JsonProperty("max_address_precision")
     public String getMaxAddressPrecision() {
         return maxAddressPrecision;
     }

@@ -1,5 +1,7 @@
 package com.smartystreets.api.international_street;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  *     will contain the result of the lookup after it comes back from the API.
@@ -98,6 +100,7 @@ public class Lookup {
         return result[index];
     }
 
+    @JsonProperty("input_id")
     public String getInputId() {
         return inputId;
     }
