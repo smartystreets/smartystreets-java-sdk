@@ -59,6 +59,16 @@ public class RetrySenderTest {
         assertArrayEquals(expectedDurations, this.fakeSleeper.getSleepDurations().toArray());
     }
 
+    @Test
+    public void testSleepOnRateLimit() throws Exception {
+        Long[] expectedDurations = new Long[] {5L,0L};
+
+        this.sendRequest("TooManyRequests");
+
+        assertEquals(2, this.mockCrashingSender.getSendCount());
+        assertArrayEquals(expectedDurations, this.fakeSleeper.getSleepDurations().toArray());
+    }
+
     private void sendRequest(String requestBehavior) throws Exception {
         Request request = new Request();
         request.setUrlPrefix(requestBehavior);

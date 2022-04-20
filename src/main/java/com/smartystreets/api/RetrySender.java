@@ -1,6 +1,7 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.SmartyException;
+import com.smartystreets.api.exceptions.TooManyRequestsException;
 
 import java.io.IOException;
 
@@ -32,6 +33,14 @@ public class RetrySender implements Sender {
     private Response trySend(Request request, int attempt) throws SmartyException, IOException {
         try {
             return this.inner.send(request);
+        } catch (TooManyRequestsException ex) {
+            if (attempt >= this.maxRetries)
+                throw ex;
+            try {
+                this.sleeper.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } catch (IOException ex) {
             if (attempt >= this.maxRetries)
                 throw ex;

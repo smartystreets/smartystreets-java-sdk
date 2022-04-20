@@ -4,6 +4,7 @@ import com.smartystreets.api.Request;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
 import com.smartystreets.api.exceptions.SmartyException;
+import com.smartystreets.api.exceptions.TooManyRequestsException;
 
 import java.io.IOException;
 
@@ -14,6 +15,12 @@ public class MockCrashingSender implements Sender {
     @Override
     public Response send(Request request) throws SmartyException, IOException {
         this.sendCount++;
+
+        if (request.getUrl().contains("TooManyRequests")) {
+            if (this.sendCount == 1) {
+                throw new TooManyRequestsException("Too many requests. Sleeping...");
+            }
+        }
 
         if (request.getUrl().contains("RetryThreeTimes")) {
             if (this.sendCount <= 3) {
