@@ -1,5 +1,7 @@
 package com.smartystreets.api.us_street;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +26,14 @@ public class Lookup implements Serializable {
     private String addressee;
     private String urbanization;
     private String match;
-    private int maxCandidates;
+    private int candidates;
 
     //endregion
 
     //region [ Constructors ]
 
     public Lookup() {
-        this.maxCandidates = 1;
+        this.candidates = 1;
         this.result = new ArrayList<>();
     }
 
@@ -56,6 +58,7 @@ public class Lookup implements Serializable {
 
     //region [ Getters ]
 
+    @JsonProperty("result")
     public List<Candidate> getResult() {
         return this.result;
     }
@@ -64,69 +67,74 @@ public class Lookup implements Serializable {
         return this.result.get(index);
     }
 
+    @JsonProperty("input_id")
     public String getInputId() {
         return this.inputId;
     }
 
+    @JsonProperty("street")
     public String getStreet() {
         return this.street;
     }
 
+    @JsonProperty("street2")
     public String getStreet2() {
         return this.street2;
     }
 
+    @JsonProperty("secondary")
     public String getSecondary() {
         return this.secondary;
     }
 
+    @JsonProperty("city")
     public String getCity() {
         return this.city;
     }
 
+    @JsonProperty("state")
     public String getState() {
         return this.state;
     }
 
+    @JsonProperty("zipcode")
     public String getZipCode() {
         return this.zipCode;
     }
 
+    @JsonProperty("lastline")
     public String getLastline() {
         return this.lastline;
     }
 
+    @JsonProperty("addressee")
     public String getAddressee() {
         return this.addressee;
     }
 
+    @JsonProperty("urbanization")
     public String getUrbanization() {
         return this.urbanization;
     }
 
-    public MatchType getMatch() {
+    @JsonProperty("match")
+    public String getMatch() {
         if (this.match == null)
             return null;
         if (this.match.equals("strict") )
-            return MatchType.STRICT;
+            return "strict";
         if (this.match.equals("range") )
-            return MatchType.RANGE;
+            return "range";
         if (this.match.equals("invalid") )
-            return MatchType.INVALID;
+            return "invalid";
         if (this.match.equals("enhanced") )
-            return MatchType.ENHANCED;
+            return "enhanced";
         return null;
     }
 
-    public String getMatchString() {
-        MatchType match = getMatch();
-        if (match != null)
-            return match.getName();
-        return null;
-    }
-
+    @JsonProperty("candidates")
     public int getMaxCandidates() {
-        return this.maxCandidates;
+        return this.candidates;
     }
 
     //endregion
@@ -197,12 +205,12 @@ public class Lookup implements Serializable {
 
     /**
      * Sets the maximum number of valid addresses returned when the input is ambiguous.
-     * @param maxCandidates Defaults to 1. Must be an integer between 1 and 10, inclusive.
+     * @param candidates Defaults to 1. Must be an integer between 1 and 10, inclusive.
      * @throws IllegalArgumentException
      */
-    public void setMaxCandidates(int maxCandidates) throws IllegalArgumentException {
-        if (maxCandidates > 0) {
-            this.maxCandidates = maxCandidates;
+    public void setMaxCandidates(int candidates) throws IllegalArgumentException {
+        if (candidates > 0) {
+            this.candidates = candidates;
         } else {
             throw new IllegalArgumentException("Max candidates must be a positive integer.");
         }

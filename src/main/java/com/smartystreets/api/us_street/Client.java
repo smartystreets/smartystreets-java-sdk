@@ -65,9 +65,9 @@ public class Client {
         request.putParameter("lastline", address.getLastline());
         request.putParameter("addressee", address.getAddressee());
         request.putParameter("urbanization", address.getUrbanization());
-        request.putParameter("match", address.getMatchString());
+        request.putParameter("match", address.getMatch());
 
-        if (address.getMaxCandidates() == 1 && address.getMatch() == MatchType.ENHANCED)
+        if (address.getMaxCandidates() == 1 && address.getMatch() == "enhanced")
             request.putParameter("candidates", "5");
         else
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));

@@ -22,6 +22,7 @@ public class Metadata implements Serializable {
     private String elotSort;
     private double latitude;
     private double longitude;
+    private int coordinateLicense;
     private String precision;
     private String timeZone;
     private double utcOffset;
@@ -91,6 +92,9 @@ public class Metadata implements Serializable {
     public double getLongitude() {
         return this.longitude;
     }
+
+    @JsonProperty("coordinate_license")
+    public int getCoordinateLicense() { return this.coordinateLicense; }
 
     @JsonProperty("precision")
     public String getPrecision() {
