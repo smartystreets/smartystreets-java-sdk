@@ -29,7 +29,7 @@ public class UsStreetMultipleAddressesExample {
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
         ArrayList<String> licenses = new ArrayList<String>();
-        licenses.add("us-rooftop-geocoding-cloud");
+        licenses.add("us-core-cloud");
         Client client = new ClientBuilder(credentials).withLicenses(licenses)
                 .buildUsStreetApiClient();
         Batch batch = new Batch();
