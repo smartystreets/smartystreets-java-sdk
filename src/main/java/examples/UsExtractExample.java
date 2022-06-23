@@ -12,7 +12,7 @@ import java.io.IOException;
 public class UsExtractExample {
     public static void main(String[] args) throws IOException, SmartyException {
         // We recommend storing your secret keys in environment variables.
-        // for Server-toserver requests, use this code:
+        // for server-to-server requests, use this code:
         // string authId = System.getenv("SMARTY_AUTH_ID");
         // string authToken = System.getenv("SMARTY_AUTH_TOKEN");
         // StaticCredentials credentials = new StaticCredentials(authId, authToken);
