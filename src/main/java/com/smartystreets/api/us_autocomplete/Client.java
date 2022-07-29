@@ -4,7 +4,6 @@ package com.smartystreets.api.us_autocomplete;
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
-import com.smartystreets.api.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public Suggestion[] send(Lookup lookup) throws SmartyException, IOException {
+    public Suggestion[] send(Lookup lookup) throws SmartyException, IOException, InterruptedException {
         if (lookup == null || lookup.getPrefix() == null || lookup.getPrefix().length() == 0)
             throw new SmartyException("Send() must be passed a Lookup with the prefix field set.");
 

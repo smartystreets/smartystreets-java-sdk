@@ -7,18 +7,11 @@ import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ClientTest {
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testSendingBodyOnlyLookup() throws Exception {
@@ -54,16 +47,13 @@ public class ClientTest {
     }
 
     @Test
-    public void testRejectNullLookup() throws IOException, SmartyException {
-        exception.expect(SmartyException.class);
-
+    public void testRejectNullLookup() {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
 
-        client.send(null);
-
+        assertThrows(SmartyException.class, () -> client.send(null));
     }
 
     @Test
@@ -93,7 +83,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testContentTypeSetCorrectly() throws IOException, SmartyException {
+    public void testContentTypeSetCorrectly() throws Exception {
         RequestCapturingSender sender = new RequestCapturingSender();
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);

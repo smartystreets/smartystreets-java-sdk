@@ -35,11 +35,8 @@ public class UsZipCodeSingleLookupExample {
         try {
             client.send(lookup);
         }
-        catch (SmartyException ex) {
+        catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        catch (IOException ex) {
             ex.printStackTrace();
         }
 

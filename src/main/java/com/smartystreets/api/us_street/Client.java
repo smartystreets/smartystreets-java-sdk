@@ -21,7 +21,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public void send(Lookup lookup) throws SmartyException, IOException {
+    public void send(Lookup lookup) throws SmartyException, IOException, InterruptedException {
         Batch batch = new Batch();
         batch.add(lookup);
         this.send(batch);
@@ -34,14 +34,14 @@ public class Client {
      * @throws SmartyException
      * @throws IOException
      */
-    public void send(Batch batch) throws SmartyException, IOException {
+    public void send(Batch batch) throws SmartyException, IOException, InterruptedException {
         Request request = new Request();
 
         if (batch.size() == 0)
             throw new SmartyException("Batch must contain between 1 and 100 lookups");
 
         if (batch.size() == 1)
-            this.populateQueryString(batch.get(0), request);
+            this.populateQueryString(batch.getAllLookups().get(0), request);
         else
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 

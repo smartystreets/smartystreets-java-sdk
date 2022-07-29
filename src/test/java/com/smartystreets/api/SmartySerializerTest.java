@@ -5,7 +5,6 @@ import com.smartystreets.api.us_zipcode.Result;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Base64;
 
 import static org.junit.Assert.*;
 

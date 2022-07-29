@@ -1,7 +1,6 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.SmartyException;
-import com.smartystreets.api.exceptions.TooManyRequestsException;
 
 import java.io.IOException;
 
@@ -19,9 +18,19 @@ public class RetrySender implements Sender {
         this.inner = inner;
     }
 
-    public Response send(Request request) throws SmartyException, IOException {
+    public Response send(Request request) throws SmartyException, IOException, InterruptedException {
         for (int i = 0; i <= this.maxRetries; i++) {
             Response response = this.trySend(request, i);
+            if (response instanceof TooManyRequestsResponse) {
+                long wait = ((TooManyRequestsResponse) response).getHeaders().firstValueAsLong("Retry-After").orElse(10L);
+                if (wait < 1) {
+                    wait = 1L;
+                }
+                this.logger.log("The rate limit for requests has been exceeded. Sleeping " + wait + " seconds...");
+                this.sleeper.sleep(wait);
+                i = 0;
+                response = null;
+            }
 
             if (response != null) {
                 return response;
@@ -30,17 +39,9 @@ public class RetrySender implements Sender {
         return null;
     }
 
-    private Response trySend(Request request, int attempt) throws SmartyException, IOException {
+    private Response trySend(Request request, int attempt) throws SmartyException, IOException, InterruptedException {
         try {
             return this.inner.send(request);
-        } catch (TooManyRequestsException ex) {
-            if (attempt >= this.maxRetries)
-                throw ex;
-            try {
-                this.sleeper.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         } catch (IOException ex) {
             if (attempt >= this.maxRetries)
                 throw ex;
@@ -51,16 +52,12 @@ public class RetrySender implements Sender {
         return null;
     }
 
-    private void backoff(int attempt) {
+    private void backoff(int attempt) throws InterruptedException {
         long backoffDuration = Math.min(attempt, MAX_BACKOFF_DURATION);
 
         this.logger.log("There was an error processing the request. Retrying in "+backoffDuration+" seconds...");
+        this.sleeper.sleep(backoffDuration);
 
-        try {
-            this.sleeper.sleep(backoffDuration);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 }

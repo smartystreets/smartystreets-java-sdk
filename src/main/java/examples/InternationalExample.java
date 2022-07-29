@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class InternationalExample {
-    public static void main(String[] args) throws IOException, SmartyException {
+    public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
         // for server-to-server requests, use this code:
         // string authId = System.getenv("SMARTY_AUTH_ID");
@@ -26,7 +26,7 @@ public class InternationalExample {
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
-        ArrayList<String> licenses = new ArrayList<String>();
+        ArrayList<String> licenses = new ArrayList<>();
         licenses.add("international-global-plus-cloud");
         Client client = new ClientBuilder(credentials).withLicenses(licenses)
                 .buildInternationalStreetApiClient();
@@ -45,18 +45,23 @@ public class InternationalExample {
         lookup.setPostalCode("02516-050");
         lookup.setGeocode(true); // Must be expressly set to get latitude and longitude.
 
-        Candidate[] candidates = client.send(lookup); // The candidates are also stored in the lookup's 'result' field.
+        try {
+            Candidate[] candidates = client.send(lookup); // The candidates are also stored in the lookup's 'result' field.
 
-        Candidate firstCandidate = candidates[0];
-        System.out.println("Input ID: " + firstCandidate.getInputId());
-        System.out.println("Address is " + firstCandidate.getAnalysis().getVerificationStatus());
-        System.out.println("Address precision: " + firstCandidate.getAnalysis().getAddressPrecision() + "\n");
+            Candidate firstCandidate = candidates[0];
+            System.out.println("Input ID: " + firstCandidate.getInputId());
+            System.out.println("Address is " + firstCandidate.getAnalysis().getVerificationStatus());
+            System.out.println("Address precision: " + firstCandidate.getAnalysis().getAddressPrecision() + "\n");
 
-        System.out.println("First Line: " + firstCandidate.getAddress1());
-        System.out.println("Second Line: " + firstCandidate.getAddress2());
-        System.out.println("Third Line: " + firstCandidate.getAddress3());
-        System.out.println("Fourth Line: " + firstCandidate.getAddress4());
-        System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
-        System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
+            System.out.println("First Line: " + firstCandidate.getAddress1());
+            System.out.println("Second Line: " + firstCandidate.getAddress2());
+            System.out.println("Third Line: " + firstCandidate.getAddress3());
+            System.out.println("Fourth Line: " + firstCandidate.getAddress4());
+            System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
+            System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 }

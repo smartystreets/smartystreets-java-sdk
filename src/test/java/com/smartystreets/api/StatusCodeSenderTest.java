@@ -2,15 +2,12 @@ package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.*;
 import com.smartystreets.api.mocks.MockStatusCodeSender;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class StatusCodeSenderTest {
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void test200Response() throws Exception {
@@ -42,11 +39,6 @@ public class StatusCodeSenderTest {
     }
 
     @Test
-    public void test429ResponseThrowsTooManyRequestsException() throws Exception {
-        this.assertSend(429, TooManyRequestsException.class);
-    }
-
-    @Test
     public void test500ResponseThrowsInternalServerErrorException() throws Exception {
         this.assertSend(500, InternalServerErrorException.class);
     }
@@ -58,7 +50,7 @@ public class StatusCodeSenderTest {
 
     private void assertSend(int statusCode, Class<? extends Throwable> exceptionType) throws Exception {
         StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(statusCode));
-        exception.expect(exceptionType);
-        sender.send(new Request());
+
+        assertThrows(SmartyException.class, () -> sender.send(new Request()));
     }
 }

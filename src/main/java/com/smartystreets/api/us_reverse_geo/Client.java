@@ -18,7 +18,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public void send(Lookup lookup) throws SmartyException, IOException {
+    public void send(Lookup lookup) throws SmartyException, IOException, InterruptedException {
         Request request = new Request();
 
         DecimalFormat decimalFormat = new DecimalFormat("#.########");

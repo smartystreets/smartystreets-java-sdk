@@ -15,7 +15,7 @@ public class CustomHeaderSender implements Sender {
     }
 
     @Override
-    public Response send(Request request) throws SmartyException, IOException {
+    public Response send(Request request) throws SmartyException, IOException, InterruptedException {
         for (Map.Entry entry : this.headers.entrySet()) {
             request.putHeader((String)entry.getKey(), entry.getValue());
         }

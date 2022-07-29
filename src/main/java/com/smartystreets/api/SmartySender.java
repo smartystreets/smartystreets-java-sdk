@@ -65,8 +65,11 @@ public class SmartySender implements Sender {
                 .build();
     }
 
-    private Response buildResponse(HttpResponse httpResponse) throws IOException {
+    private Response buildResponse(HttpResponse httpResponse) {
         int statusCode = httpResponse.statusCode();
+        if (statusCode == 429){
+            return new TooManyRequestsResponse(httpResponse.headers(), statusCode, httpResponse.body().toString().getBytes());
+        }
         return new Response(statusCode, httpResponse.body().toString().getBytes());
     }
 

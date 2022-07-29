@@ -14,7 +14,7 @@ public class URLPrefixSender implements Sender{
         this.inner = inner;
     }
 
-    public Response send(Request request) throws IOException, SmartyException {
+    public Response send(Request request) throws IOException, SmartyException, InterruptedException {
         request.setUrlPrefix(this.urlPrefix);
         return this.inner.send(request);
     }

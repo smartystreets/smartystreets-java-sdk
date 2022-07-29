@@ -56,11 +56,8 @@ public class UsZipCodeMultipleLookupsExample {
         catch(BatchFullException ex) {
             System.out.println("Oops! Batch was already full.");
         }
-        catch (SmartyException ex) {
+        catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        catch (IOException ex) {
             ex.printStackTrace();
         }
 

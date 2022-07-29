@@ -6,7 +6,7 @@ import com.smartystreets.api.Logger;
 import java.util.ArrayList;
 
 public class FakeLogger implements Logger{
-    private ArrayList<String> log = new ArrayList<String>();
+    private ArrayList<String> log = new ArrayList<>();
 
     public void log(String message) {
         this.log.add(message);

@@ -7,16 +7,11 @@ import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.*;
 
 public class ClientTest {
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     //region [ Single Lookup ]
 
@@ -54,13 +49,11 @@ public class ClientTest {
     //region [ Batch Lookup ]
 
     @Test
-    public void testEmptyBatchNotSent() throws Exception {
-        exception.expect(SmartyException.class);
-
+    public void testEmptyBatchNotSent() {
         RequestCapturingSender sender = new RequestCapturingSender();
         Client client = new Client(sender, null);
 
-        client.send(new Batch());
+        assertThrows(SmartyException.class, () -> client.send(new Batch()));
     }
 
     @Test

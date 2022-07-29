@@ -3,22 +3,27 @@ package com.smartystreets.api.mocks;
 import com.smartystreets.api.Request;
 import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
+import com.smartystreets.api.TooManyRequestsResponse;
 import com.smartystreets.api.exceptions.SmartyException;
-import com.smartystreets.api.exceptions.TooManyRequestsException;
 
 import java.io.IOException;
+import java.net.http.HttpHeaders;
+import java.util.List;
+import java.util.Map;
 
 public class MockCrashingSender implements Sender {
     private int sendCount = 0;
-    private final int STATUS_CODE = 200;
+    private final static int STATUS_CODE = 200;
 
     @Override
     public Response send(Request request) throws SmartyException, IOException {
         this.sendCount++;
 
+        Response response = new Response(STATUS_CODE, new byte[]{});
+
         if (request.getUrl().contains("TooManyRequests")) {
-            if (this.sendCount == 1) {
-                throw new TooManyRequestsException("Too many requests. Sleeping...");
+            if (this.sendCount <= 2) {
+                response = new TooManyRequestsResponse(HttpHeaders.of(Map.of("Retry-After", List.of("7")), (x, y) -> true), STATUS_CODE, new byte[]{});
             }
         }
 
@@ -37,7 +42,7 @@ public class MockCrashingSender implements Sender {
                 throw new IOException("You need to retry");
         }
 
-        return new Response(this.STATUS_CODE, new byte[]{});
+        return response;
     }
 
     public int getSendCount() {

@@ -10,7 +10,7 @@ import com.smartystreets.api.us_street.Candidate;
 import java.io.IOException;
 
 public class UsExtractExample {
-    public static void main(String[] args) throws IOException, SmartyException {
+    public static void main(String[] args) {
         // We recommend storing your secret keys in environment variables.
         // for server-to-server requests, use this code:
         // string authId = System.getenv("SMARTY_AUTH_ID");
@@ -35,30 +35,35 @@ public class UsExtractExample {
         lookup.addressesHaveLineBreaks();
         lookup.getAddressesPerLine();
 
-        Result result = client.send(lookup);
+        try {
+            Result result = client.send(lookup);
 
-        Metadata metadata = result.getMetadata();
-        System.out.println("Found " + metadata.getAddressCount() + " addresses.");
-        System.out.println(metadata.getVerifiedCount() + " of them were valid.");
-        System.out.println();
+            Metadata metadata = result.getMetadata();
+            System.out.println("Found " + metadata.getAddressCount() + " addresses.");
+            System.out.println(metadata.getVerifiedCount() + " of them were valid.");
+            System.out.println();
 
-        Address[] addresses = result.getAddresses();
+            Address[] addresses = result.getAddresses();
 
-        System.out.println("Addresses: \r\n**********************\r\n");
-        for (Address address : addresses) {
-            System.out.println("\"" + address.getText() + "\"\n");
-            System.out.println("Verified? " + address.isVerified());
-            if (address.getCandidates().length > 0) {
-                System.out.println("\nMatches:");
+            System.out.println("Addresses: \r\n**********************\r\n");
+            for (Address address : addresses) {
+                System.out.println("\"" + address.getText() + "\"\n");
+                System.out.println("Verified? " + address.isVerified());
+                if (address.getCandidates().length > 0) {
+                    System.out.println("\nMatches:");
 
-                for (Candidate candidate : address.getCandidates()) {
-                    System.out.println(candidate.getDeliveryLine1());
-                    System.out.println(candidate.getLastLine());
-                    System.out.println();
-                }
-            } else System.out.println();
+                    for (Candidate candidate : address.getCandidates()) {
+                        System.out.println(candidate.getDeliveryLine1());
+                        System.out.println(candidate.getLastLine());
+                        System.out.println();
+                    }
+                } else System.out.println();
 
-            System.out.println("**********************\n");
+                System.out.println("**********************\n");
+            }
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 }

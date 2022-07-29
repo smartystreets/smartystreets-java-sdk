@@ -4,21 +4,16 @@ import com.smartystreets.api.mocks.FakeLogger;
 import com.smartystreets.api.mocks.FakeSleeper;
 import com.smartystreets.api.mocks.MockCrashingSender;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class RetrySenderTest {
     private FakeSleeper fakeSleeper;
     private FakeLogger fakeLogger;
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
     private MockCrashingSender mockCrashingSender;
 
     @Before
@@ -44,9 +39,7 @@ public class RetrySenderTest {
 
     @Test
     public void testRetryUntilMaxAttempts() throws Exception {
-        exception.expect(IOException.class);
-
-        this.sendRequest("RetryMaxTimes");
+        assertThrows(IOException.class, () -> this.sendRequest("RetryMaxTimes"));
     }
 
     @Test
@@ -61,11 +54,11 @@ public class RetrySenderTest {
 
     @Test
     public void testSleepOnRateLimit() throws Exception {
-        Long[] expectedDurations = new Long[] {5L,0L};
+        Long[] expectedDurations = new Long[] {7L,7L};
 
         this.sendRequest("TooManyRequests");
 
-        assertEquals(2, this.mockCrashingSender.getSendCount());
+        assertEquals(3, this.mockCrashingSender.getSendCount());
         assertArrayEquals(expectedDurations, this.fakeSleeper.getSleepDurations().toArray());
     }
 

@@ -21,7 +21,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public Result send(Lookup lookup) throws IOException, SmartyException {
+    public Result send(Lookup lookup) throws IOException, SmartyException, InterruptedException {
         if (lookup == null || lookup.getText() == null || lookup.getText().isEmpty())
             throw new SmartyException("Client.send() requires a Lookup with the 'text' field set");
 
