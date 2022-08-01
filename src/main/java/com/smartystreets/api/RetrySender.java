@@ -26,7 +26,7 @@ public class RetrySender implements Sender {
                 if (wait < 1) {
                     wait = 1L;
                 }
-                this.logger.log("The rate limit for requests has been exceeded. Sleeping " + wait + " seconds...");
+                //this.logger.log("The rate limit for requests has been exceeded. Sleeping " + wait + " seconds...");
                 this.sleeper.sleep(wait);
                 i = 0;
                 response = null;
