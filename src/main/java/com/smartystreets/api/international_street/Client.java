@@ -22,7 +22,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public Candidate[] send(Lookup lookup) throws IOException, SmartyException {
+    public Candidate[] send(Lookup lookup) throws IOException, SmartyException, InterruptedException {
         this.ensureEnoughInfo(lookup);
         Request request = this.buildRequest(lookup);
 

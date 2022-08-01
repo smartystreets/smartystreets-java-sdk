@@ -21,7 +21,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public void send(Lookup lookup) throws SmartyException, IOException {
+    public void send(Lookup lookup) throws SmartyException, IOException, InterruptedException {
         Batch batch = new Batch();
         batch.add(lookup);
         send(batch);
@@ -33,7 +33,7 @@ public class Client {
      * @throws SmartyException
      * @throws IOException
      */
-    public void send(Batch batch) throws SmartyException, IOException {
+    public void send(Batch batch) throws SmartyException, IOException, InterruptedException {
         Request request = new Request();
 
         if (batch.size() == 0)

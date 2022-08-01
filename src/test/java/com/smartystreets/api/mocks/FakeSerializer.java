@@ -1,6 +1,7 @@
 package com.smartystreets.api.mocks;
 
 import com.smartystreets.api.Serializer;
+
 import java.io.IOException;
 
 public class FakeSerializer implements Serializer {

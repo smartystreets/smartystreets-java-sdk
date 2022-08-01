@@ -1,19 +1,18 @@
 package com.smartystreets.api;
 
-import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.mocks.RequestCapturingSender;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class CustomHeaderSenderTest {
 
     @Test
-    public void testAllCustomHeadersAreAddedToTheRequest() throws IOException, SmartyException {
+    public void testAllCustomHeadersAreAddedToTheRequest() throws Exception {
         HashMap<String, Object> headers = new HashMap<>();
         headers.put("A", "1");
         headers.put("B", "2");

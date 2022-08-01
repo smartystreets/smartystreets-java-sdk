@@ -13,7 +13,7 @@ public class SigningSender implements Sender {
         this.inner = inner;
     }
 
-    public Response send(Request request) throws SmartyException, IOException {
+    public Response send(Request request) throws SmartyException, IOException, InterruptedException {
         this.signer.sign(request);
         return this.inner.send(request);
     }

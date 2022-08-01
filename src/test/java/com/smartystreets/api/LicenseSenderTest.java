@@ -1,11 +1,9 @@
 package com.smartystreets.api;
 
 
-import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.mocks.MockSender;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -13,9 +11,9 @@ import static org.junit.Assert.assertEquals;
 public class LicenseSenderTest {
 
     @Test
-    public void testSetsLicenses() throws IOException, SmartyException {
+    public void testSetsLicenses() throws Exception {
         Request request = new Request();
-        ArrayList<String> licenses = new ArrayList<String>();
+        ArrayList<String> licenses = new ArrayList<>();
         licenses.add("one");
         licenses.add("two");
         licenses.add("three");
@@ -28,9 +26,9 @@ public class LicenseSenderTest {
     }
 
     @Test
-    public void testLicensesNotSet() throws IOException, SmartyException {
+    public void testLicensesNotSet() throws Exception {
         Request request = new Request();
-        ArrayList<String> licenses = new ArrayList<String>();
+        ArrayList<String> licenses = new ArrayList<>();
         Sender inner = new MockSender(new Response(123, null));
         Sender sender = new LicenseSender(licenses, inner);
 

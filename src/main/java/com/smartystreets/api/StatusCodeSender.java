@@ -11,11 +11,12 @@ public class StatusCodeSender implements Sender {
         this.inner = inner;
     }
 
-    public Response send(Request request) throws SmartyException, IOException {
+    public Response send(Request request) throws SmartyException, IOException, InterruptedException {
         Response response = this.inner.send(request);
 
         switch (response.getStatusCode()) {
             case 200:
+            case 429: // Too Many Requests - Rate Limit reached. We handle this with the response, not a throwable
                 return response;
             case 401:
                 throw new BadCredentialsException("Unauthorized: The credentials were provided incorrectly or did not match any existing, active credentials.");
@@ -29,8 +30,6 @@ public class StatusCodeSender implements Sender {
                 throw new BadRequestException("Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a POST request contained malformed JSON.");
             case 422:
                 throw new UnprocessableEntityException("GET request lacked required fields.");
-            case 429:
-                throw new TooManyRequestsException("When using public \"website key\" authentication, we restrict the number of requests coming from a given source over too short of a time.");
             case 500:
                 throw new InternalServerErrorException("Internal Server Error.");
             case 503:

@@ -13,6 +13,14 @@ import java.util.Map;
  * are chainable, so you can usually get set up with one line of code.
  */
 public class ClientBuilder {
+    private final static String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
+    private final static String INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smartystreets.com/lookup";
+    private final static String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
+    private final static String US_AUTOCOMPLETE_API_PRO_URL = "https://us-autocomplete-pro.api.smartystreets.com/lookup";
+    private final static String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
+    private final static String US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
+    private final static String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
+    private final static String US_REVERSE_GEO_API_URL = "https://us-reverse-geo.api.smartystreets.com/lookup";
     private Credentials signer;
     private Serializer serializer;
     private Sender httpSender;
@@ -22,14 +30,6 @@ public class ClientBuilder {
     private ProxySelector proxy;
     private Map<String, Object> customHeaders;
     private List<String> licenses = new ArrayList<>();
-    private final String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smartystreets.com/verify";
-    private final String INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smartystreets.com/lookup";
-    private final String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smartystreets.com/suggest";
-    private final String US_AUTOCOMPLETE_API_PRO_URL = "https://us-autocomplete-pro.api.smartystreets.com/lookup";
-    private final String US_EXTRACT_API_URL = "https://us-extract.api.smartystreets.com/";
-    private final String US_STREET_API_URL = "https://us-street.api.smartystreets.com/street-address";
-    private final String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smartystreets.com/lookup";
-    private final String US_REVERSE_GEO_API_URL = "https://us-reverse-geo.api.smartystreets.com/lookup";
 
     private ClientBuilder() {
         this.serializer = new SmartySerializer();

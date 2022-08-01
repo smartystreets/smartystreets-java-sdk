@@ -18,7 +18,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public Candidate[] send(Lookup lookup) throws SmartyException, IOException {
+    public Candidate[] send(Lookup lookup) throws SmartyException, IOException, InterruptedException {
         if (lookup == null || lookup.getSearch() == null || lookup.getSearch().length() == 0)
             throw new SmartyException("Send() must be passed a Lookup with the prefix field set.");
 

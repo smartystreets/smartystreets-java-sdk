@@ -28,7 +28,7 @@ public class UsStreetMultipleAddressesExample {
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
-        ArrayList<String> licenses = new ArrayList<String>();
+        ArrayList<String> licenses = new ArrayList<>();
         licenses.add("us-core-cloud");
         Client client = new ClientBuilder(credentials).withLicenses(licenses)
                 .buildUsStreetApiClient();
@@ -76,15 +76,12 @@ public class UsStreetMultipleAddressesExample {
         catch(BatchFullException ex) {
             System.out.println("Oops! Batch was already full.");
         }
-        catch (SmartyException ex) {
+        catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
 
-        Vector<Lookup> lookups = batch.getAllLookups();
+        List<Lookup> lookups = batch.getAllLookups();
 
         for (int i=0; i < batch.size(); i++) {
             List<Candidate> candidates = lookups.get(i).getResult();

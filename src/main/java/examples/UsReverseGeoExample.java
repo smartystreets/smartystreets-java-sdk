@@ -27,7 +27,7 @@ public class UsReverseGeoExample {
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
-        ArrayList<String> licenses = new ArrayList<String>();
+        ArrayList<String> licenses = new ArrayList<>();
         licenses.add("us-reverse-geocoding-cloud");
         Client client = new ClientBuilder(credentials).withLicenses(licenses)
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
@@ -37,10 +37,8 @@ public class UsReverseGeoExample {
 
         try {
             client.send(lookup);
-        } catch (SmartyException ex) {
+        } catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        } catch (IOException ex) {
             ex.printStackTrace();
         }
 

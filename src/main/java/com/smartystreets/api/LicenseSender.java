@@ -15,7 +15,7 @@ public class LicenseSender implements Sender{
         this.inner = inner;
     }
 
-    public Response send(Request request) throws IOException, SmartyException {
+    public Response send(Request request) throws IOException, SmartyException, InterruptedException {
         if (!this.licenses.isEmpty()) {
             StringBuilder licenses = new StringBuilder();
             for (String license : this.licenses)

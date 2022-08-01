@@ -1,18 +1,15 @@
 package com.smartystreets.api;
 
 
-import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.mocks.MockSender;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
 public class URLPrefixSenderTest {
 
     @Test
-    public void testProvidedURLOverridesRequestURL() throws IOException, SmartyException {
+    public void testProvidedURLOverridesRequestURL() throws Exception {
         Request request = new Request();
         request.setUrlPrefix("http://www.google.com/the/path/stays");
         String override = "https://smartystreets.com/the/path/is/ignored?";

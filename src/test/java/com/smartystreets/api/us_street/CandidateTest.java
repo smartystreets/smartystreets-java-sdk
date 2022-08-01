@@ -1,16 +1,8 @@
 package com.smartystreets.api.us_street;
 
-import com.smartystreets.api.Request;
-import com.smartystreets.api.Response;
-import com.smartystreets.api.Sender;
 import com.smartystreets.api.SmartySerializer;
-import java.io.IOException;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class CandidateTest {
