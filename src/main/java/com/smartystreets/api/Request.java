@@ -1,7 +1,6 @@
 package com.smartystreets.api;
 
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class Request {
 
     private static String urlEncode(String value) {
         try {
-            return URLEncoder.encode(value, StandardCharsets.UTF_8);
+            return URLEncoder.encode(value, CHARSET);
         } catch (Exception ex) {
             return "";
         }

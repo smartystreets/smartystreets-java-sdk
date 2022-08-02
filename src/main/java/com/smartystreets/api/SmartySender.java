@@ -1,15 +1,14 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.SmartyException;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 import java.io.IOException;
-import java.net.ProxySelector;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
+import java.net.Proxy;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -17,11 +16,11 @@ import java.util.logging.Logger;
 
 public class SmartySender implements Sender {
     private int maxTimeOut;
-    private HttpClient client;
+    private OkHttpClient client;
 
     public SmartySender() {
         this.maxTimeOut = 10000;
-        this.client = HttpClient.newHttpClient();
+        this.client = new OkHttpClient();
     }
 
     public SmartySender(int maxTimeout) {
@@ -29,44 +28,58 @@ public class SmartySender implements Sender {
         this.maxTimeOut = maxTimeout;
     }
 
-    SmartySender(int maxTimeOut, ProxySelector proxy) {
+    SmartySender(int maxTimeOut, Proxy proxy) {
         this.maxTimeOut = maxTimeOut;
-        this.client = HttpClient.newBuilder().proxy(proxy).build();
+        this.client = new OkHttpClient.Builder()
+                .proxy(proxy)
+                .writeTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
+                .readTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
+                .connectTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
+                .build();
     }
 
-    SmartySender(HttpClient client) {
+    SmartySender(OkHttpClient client) {
         this();
         this.client = client;
     }
 
     public Response send(Request smartyRequest) throws SmartyException, IOException {
-        HttpRequest httpRequest = buildHttpRequest(smartyRequest);
+        okhttp3.Request httpRequest = buildHttpRequest(smartyRequest);
 
-        try {
-            return buildResponse(this.client.send(httpRequest, HttpResponse.BodyHandlers.ofString()));
-        } catch(InterruptedException ex) {
+        try (okhttp3.Response httpResponse = client.newCall(httpRequest).execute()){
+            int statusCode = httpResponse.code();
+            if (statusCode == 429){
+                return new TooManyRequestsResponse(httpResponse.headers(), statusCode, httpResponse.body().bytes());
+            }
+            return new Response(statusCode, httpResponse.body().bytes());
+        } catch(IOException ex) {
             return new Response(ex.hashCode(), new byte[0]);
         }
     }
 
-    private HttpRequest buildHttpRequest(Request smartyRequest) throws IOException {
-        java.net.http.HttpRequest.Builder builder = java.net.http.HttpRequest
-                .newBuilder(URI.create(smartyRequest.getUrl()))
-                .timeout(Duration.ofSeconds(maxTimeOut));
+    private okhttp3.Request buildHttpRequest(Request smartyRequest) throws IOException {
+
         Map<String, Object> headers = smartyRequest.getHeaders();
-        for (String headerName : headers.keySet())
-            builder.setHeader(headerName, headers.get(headerName).toString());
+        Headers.Builder headersBuilder = new Headers.Builder();
+        for (String headerName : headers.keySet()) {
+            headersBuilder.add(headerName, headers.get(headerName).toString());
+        }
 
-        if (smartyRequest.getMethod().equals("GET"))
-            return builder.GET().build();
+        okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder()
+                .url(smartyRequest.getUrl())
+                .headers(headersBuilder.build());
 
-        return builder
-                .POST(HttpRequest.BodyPublishers.ofByteArray(smartyRequest.getPayload()))
-                .build();
+        if (smartyRequest.getMethod().equals("GET")) {
+            return requestBuilder
+                    .get()
+                    .build();
+        }
+
+        return requestBuilder.post(RequestBody.create(smartyRequest.getPayload())).build();
     }
 
-    private Response buildResponse(HttpResponse httpResponse) {
-        int statusCode = httpResponse.statusCode();
+    private Response buildResponse(okhttp3.Response httpResponse) {
+        int statusCode = httpResponse.code();
         if (statusCode == 429){
             return new TooManyRequestsResponse(httpResponse.headers(), statusCode, httpResponse.body().toString().getBytes());
         }
@@ -74,7 +87,7 @@ public class SmartySender implements Sender {
     }
 
     static void enableLogging() {
-        Logger logger = Logger.getLogger(HttpClient.class.getName());
+        Logger logger = Logger.getLogger(OkHttpClient.class.getName());
         logger.setLevel(Level.ALL);
         logger.addHandler(new Handler() {
             @Override
