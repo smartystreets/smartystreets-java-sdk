@@ -23,7 +23,7 @@ public class UsAutocompleteProExample {
         Client client = new ClientBuilder(credentials).withLicenses(licenses).buildUsAutocompleteProApiClient();
         Lookup lookup = new Lookup("1042 W Center");
         lookup.setMaxResults(5);
-        
+
         try {
             client.send(lookup);
 
