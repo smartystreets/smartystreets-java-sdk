@@ -9,12 +9,17 @@ public class Coordinate implements Serializable {
     private double longitude;
     private int license;
     private String zipcode;
+    private String accuracy;
 
     //endregion
 
-    public double getLatitude() { return this.latitude; }
+    public double getLatitude() {
+        return this.latitude;
+    }
 
-    public double getLongitude() { return this.longitude; }
+    public double getLongitude() {
+        return this.longitude;
+    }
 
     public String getLicense() {
         switch (this.license) {
@@ -26,6 +31,11 @@ public class Coordinate implements Serializable {
         }
     }
 
-    public String getZipCode() { return this.zipcode; }
+    public String getZipCode() {
+        return this.zipcode;
+    }
 
+    public String getAccuracy() {
+        return this.accuracy;
+    }
 }

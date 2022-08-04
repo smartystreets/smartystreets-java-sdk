@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class Lookup {
     final int PREFER_RATIO_DEFAULT = 100;
-    final int MAX_SUGGESTIONS_DEFAULT = 10;
+    final int MAX_RESULTS_DEFAULT = 10;
 
     //region [ Fields ]
 
     private Suggestion[] result;
     private String search;
-    private int maxSuggestions;
+    private int maxResults;
     private List<String> cityFilter;
     private List<String> stateFilter;
     private List<String> zipcodeFilter;
@@ -39,7 +39,7 @@ public class Lookup {
      * If you use this constructor, don't forget to set the <b>prefix</b>. It is required.
      */
     public Lookup() {
-        this.maxSuggestions = this.MAX_SUGGESTIONS_DEFAULT;
+        this.maxResults = this.MAX_RESULTS_DEFAULT;
         this.preferGeolocation = GeolocateType.CITY;
         this.cityFilter = new ArrayList<>();
         this.stateFilter = new ArrayList<>();
@@ -117,14 +117,14 @@ public class Lookup {
         return preferGeolocation;
     }
 
-    public int getMaxSuggestions() {
-        return maxSuggestions;
+    public int getMaxResults() {
+        return maxResults;
     }
 
     String getMaxSuggestionsStringIfSet() {
-        if (this.maxSuggestions == this.MAX_SUGGESTIONS_DEFAULT)
+        if (this.maxResults == this.MAX_RESULTS_DEFAULT)
             return null;
-        return Integer.toString(this.maxSuggestions);
+        return Integer.toString(this.maxResults);
     }
 
     //endregion
@@ -178,14 +178,14 @@ public class Lookup {
 
     /***
      * Sets the maximum number of suggestions to return.
-     * @param maxSuggestions A positive integer range [1, 10]. Default is 10.
+     * @param maxResults A positive integer range [1, 10]. Default is 10.
      * @throws IllegalArgumentException
      */
-    public void setMaxSuggestions(int maxSuggestions) throws IllegalArgumentException{
-        if (maxSuggestions > 0 && maxSuggestions <= this.MAX_SUGGESTIONS_DEFAULT) {
-            this.maxSuggestions = maxSuggestions;
+    public void setMaxResults(int maxResults) throws IllegalArgumentException{
+        if (maxResults > 0 && maxResults <= this.MAX_RESULTS_DEFAULT) {
+            this.maxResults = maxResults;
         } else {
-            throw new IllegalArgumentException("Max suggestions must be a positive integer no larger than 10.");
+            throw new IllegalArgumentException("Max results must be a positive integer no larger than 10.");
         }
     }
 
