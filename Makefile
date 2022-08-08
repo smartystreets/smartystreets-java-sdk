@@ -11,6 +11,9 @@ clean:
 test:
 	mvn test
 
+integration-test:
+	mvn integration-test
+
 compile:
 	mvn compile
 
@@ -35,7 +38,7 @@ release:
 			-a target/smartystreets-java-sdk-$(VERSION)-javadoc.jar \
 			-a target/smartystreets-java-sdk-$(VERSION).jar
 
-.PHONY: clean test compile publish workspace release
+.PHONY: clean test integration-test compile publish workspace release
 
 # NOTES: When running make release BE SURE
 # 1. That you have OSSRH_PASSWORD (the Maven password) as an environment variable.
