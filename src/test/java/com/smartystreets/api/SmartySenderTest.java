@@ -1,36 +1,22 @@
 package com.smartystreets.api;
 
+import okhttp3.*;
 import org.junit.Test;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.SSLSession;
 import java.io.IOException;
-import java.net.Authenticator;
-import java.net.CookieHandler;
-import java.net.ProxySelector;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SmartySenderTest {
-    private HttpRequest httpRequest;
-
-    //region [ Request Building ]
 
     @Test
     public void testHttpRequestContainsCorrectHeaders() throws Exception {
-        SmartySender sender = new SmartySender(this.getMockClient(200));
+        SmartySender sender = new SmartySender(mockHttpClient("{\"key\": \"value\"}", 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
         request.putHeader("X-name1", "value1");
@@ -45,25 +31,27 @@ public class SmartySenderTest {
 
     @Test
     public void testHttpRequestContainsGetWhenAppropriate() throws Exception {
-        SmartySender sender = new SmartySender(this.getMockClient(200));
+        String responseString = "This is a GET response.";
+        SmartySender sender = new SmartySender(mockHttpClient(responseString, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
         Response response = sender.send(request);
 
-        assertArrayEquals("This is a GET response.".getBytes(), response.getPayload());
+        assertArrayEquals(responseString.getBytes(), response.getPayload());
     }
 
     @Test
     public void testHttpRequestContainsPostWhenAppropriate() throws Exception {
-        SmartySender sender = new SmartySender(this.getMockClient(200));
+        String responseString = "This is a POST response.";
+        SmartySender sender = new SmartySender(mockHttpClient(responseString, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
         request.setPayload(new byte[0]);
         Response response = sender.send(request);
 
-        assertArrayEquals("This is a POST response.".getBytes(), response.getPayload());
+        assertArrayEquals(responseString.getBytes(), response.getPayload());
     }
 
 //    @Test
@@ -84,18 +72,20 @@ public class SmartySenderTest {
 
     @Test
     public void testResponseContainsCorrectPayload() throws Exception {
-        SmartySender sender = new SmartySender(this.getMockClient(200));
+        String responseBody = "{\"key\": \"value\"}";
+        SmartySender sender = new SmartySender(mockHttpClient(responseBody, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
         Response response = sender.send(request);
 
-        assertArrayEquals("This is a GET response.".getBytes(), response.getPayload());
+        assertArrayEquals(responseBody.getBytes(), response.getPayload());
     }
 
     @Test
     public void testResponseContainsStatusCode200OnSuccess() throws Exception {
-        SmartySender sender = new SmartySender(this.getMockClient(200));
+        String responseBody = "{\"key\": \"value\"}";
+        SmartySender sender = new SmartySender(mockHttpClient(responseBody, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -106,7 +96,8 @@ public class SmartySenderTest {
 
     @Test
     public void testResponseContainsStatusCode400WhenA400IsThrown() throws Exception {
-        SmartySender sender = new SmartySender(this.getMockClient(400));
+        String responseBody = "{\"key\": \"value\"}";
+        SmartySender sender = new SmartySender(mockHttpClient(responseBody, 400));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -115,120 +106,24 @@ public class SmartySenderTest {
         assertEquals(400, response.getStatusCode());
     }
 
-    //endregion
+    private static OkHttpClient mockHttpClient(final String serializedBody, final int code) throws IOException {
+        final OkHttpClient okHttpClient = mock(OkHttpClient.class);
 
-    //region [ Transports ]
+        final Call remoteCall = mock(Call.class);
 
-    private HttpClient getMockClient(int statusCode) {
-        final int status = statusCode;
-        return new HttpClient() {
-            @Override
-            public Optional<CookieHandler> cookieHandler() {
-                return Optional.empty();
-            }
+        final okhttp3.Response response = new okhttp3.Response.Builder()
+                .request(new okhttp3.Request.Builder().url("http://url.com").build())
+                .protocol(Protocol.HTTP_2)
+                .code(code).message("").body(
+                        ResponseBody.create(
+                                serializedBody,
+                                MediaType.parse("application/json")
+                        ))
+                .build();
 
-            @Override
-            public Optional<Duration> connectTimeout() {
-                return Optional.empty();
-            }
+        when(remoteCall.execute()).thenReturn(response);
+        when(okHttpClient.newCall(any())).thenReturn(remoteCall);
 
-            @Override
-            public Redirect followRedirects() {
-                return null;
-            }
-
-            @Override
-            public Optional<ProxySelector> proxy() {
-                return Optional.empty();
-            }
-
-            @Override
-            public SSLContext sslContext() {
-                return null;
-            }
-
-            @Override
-            public SSLParameters sslParameters() {
-                return null;
-            }
-
-            @Override
-            public Optional<Authenticator> authenticator() {
-                return Optional.empty();
-            }
-
-            @Override
-            public Version version() {
-                return null;
-            }
-
-            @Override
-            public Optional<Executor> executor() {
-                return Optional.empty();
-            }
-
-            @Override
-            public <T> HttpResponse<T> send(HttpRequest request, HttpResponse.BodyHandler<T> responseBodyHandler) throws IOException, InterruptedException {
-                httpRequest = request;
-                return new HttpResponse() {
-                    @Override
-                    public int statusCode() {
-                        return status;
-                    }
-
-                    @Override
-                    public HttpRequest request() {
-                        return httpRequest;
-                    }
-
-                    @Override
-                    public Optional<HttpResponse> previousResponse() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public HttpHeaders headers() {
-                        return null;
-                    }
-
-                    @Override
-                    public Object body() {
-                        if (httpRequest.method().equals("GET"))
-                            return "This is a GET response.";
-                        else {
-                            return "This is a POST response.";
-
-                        }
-                    }
-
-                    @Override
-                    public Optional<SSLSession> sslSession() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public URI uri() {
-                        return null;
-                    }
-
-                    @Override
-                    public Version version() {
-                        return null;
-                    }
-                };
-            }
-
-            @Override
-            public <T> CompletableFuture<HttpResponse<T>> sendAsync(HttpRequest request, HttpResponse.BodyHandler<T> responseBodyHandler) {
-                return null;
-            }
-
-            @Override
-            public <T> CompletableFuture<HttpResponse<T>> sendAsync(HttpRequest request, HttpResponse.BodyHandler<T> responseBodyHandler, HttpResponse.PushPromiseHandler<T> pushPromiseHandler) {
-                return null;
-            }
-        };
+        return okHttpClient;
     }
-
-    //endregion
 }

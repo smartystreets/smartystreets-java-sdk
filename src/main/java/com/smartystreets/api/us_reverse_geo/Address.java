@@ -1,5 +1,7 @@
 package com.smartystreets.api.us_reverse_geo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class Address implements Serializable {
@@ -16,8 +18,10 @@ public class Address implements Serializable {
 
     public String getCity() { return this.city; }
 
+    @JsonProperty("state_abbreviation")
     public String getStateAbbreviation() { return this.stateAbbreviation; }
 
+    @JsonProperty("zipcode")
     public String getZipCode() { return this.zipCode; }
 
 }

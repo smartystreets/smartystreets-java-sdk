@@ -2,7 +2,6 @@ package com.smartystreets.api;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.ProxySelector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class ClientBuilder {
     private int maxRetries;
     private int maxTimeout;
     private String urlPrefix;
-    private ProxySelector proxy;
+    private Proxy proxy;
     private Map<String, Object> customHeaders;
     private List<String> licenses = new ArrayList<>();
 
@@ -112,7 +111,7 @@ public class ClientBuilder {
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withProxy(Proxy.Type proxyType, String proxyHost, int proxyPort) {
-        this.proxy = ProxySelector.of(new InetSocketAddress(proxyHost, proxyPort));
+        this.proxy = new Proxy(proxyType, new InetSocketAddress(proxyHost, proxyPort));
         return this;
     }
 

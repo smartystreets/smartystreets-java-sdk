@@ -36,7 +36,7 @@ public class ClientTest {
         String expectedURL = "http://localhost/?search=1&max_results=2&include_only_cities=3&include_only_states=4&prefer_ratio=60&prefer_geolocation=state";
         Lookup lookup = new Lookup();
         lookup.setSearch("1");
-        lookup.setMaxSuggestions(2);
+        lookup.setMaxResults(2);
         lookup.addCityFilter("3");
         lookup.addStateFilter("4");
         lookup.setPreferRatio(60);

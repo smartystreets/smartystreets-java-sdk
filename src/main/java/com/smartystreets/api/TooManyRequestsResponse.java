@@ -1,17 +1,17 @@
 package com.smartystreets.api;
 
-import java.net.http.HttpHeaders;
+import okhttp3.Headers;
 
 public class TooManyRequestsResponse extends Response {
 
-    private HttpHeaders headers;
+    private Headers headers;
 
-    public TooManyRequestsResponse(HttpHeaders headers, int statusCode, byte[] payload) {
+    public TooManyRequestsResponse(Headers headers, int statusCode, byte[] payload) {
         super(statusCode, payload);
         this.headers = headers;
     }
 
-    public HttpHeaders getHeaders() {
+    public Headers getHeaders() {
         return headers;
     }
 }

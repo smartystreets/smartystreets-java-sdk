@@ -22,7 +22,11 @@ public class RetrySender implements Sender {
         for (int i = 0; i <= this.maxRetries; i++) {
             Response response = this.trySend(request, i);
             if (response instanceof TooManyRequestsResponse) {
-                long wait = ((TooManyRequestsResponse) response).getHeaders().firstValueAsLong("Retry-After").orElse(10L);
+                 long wait = 10L;
+                 String retryAfter = ((TooManyRequestsResponse) response).getHeaders().get("Retry-After");
+                if (retryAfter != null && retryAfter.length() > 0) {
+                    wait = Long.parseLong(retryAfter);
+                }
                 if (wait < 1) {
                     wait = 1L;
                 }

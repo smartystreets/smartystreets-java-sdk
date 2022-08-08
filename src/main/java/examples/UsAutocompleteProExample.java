@@ -1,7 +1,6 @@
 package examples;
 
 import com.smartystreets.api.SharedCredentials;
-import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_autocomplete_pro.*;
 import com.smartystreets.api.ClientBuilder;
@@ -23,6 +22,7 @@ public class UsAutocompleteProExample {
         licenses.add("us-autocomplete-pro-cloud");
         Client client = new ClientBuilder(credentials).withLicenses(licenses).buildUsAutocompleteProApiClient();
         Lookup lookup = new Lookup("1042 W Center");
+        lookup.setMaxResults(5);
 
         try {
             client.send(lookup);
@@ -40,7 +40,6 @@ public class UsAutocompleteProExample {
             lookup.addPreferState("UT");
             lookup.addPreferState("CO");
             lookup.setSelected("1042 W Center St Apt A (24) Orem UT 84057");
-            lookup.setMaxSuggestions(5);
             lookup.setPreferRatio(33);
             lookup.setSource("all");
 

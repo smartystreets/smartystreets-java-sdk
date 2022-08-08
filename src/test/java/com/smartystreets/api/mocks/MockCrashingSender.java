@@ -5,11 +5,9 @@ import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
 import com.smartystreets.api.TooManyRequestsResponse;
 import com.smartystreets.api.exceptions.SmartyException;
+import okhttp3.Headers;
 
 import java.io.IOException;
-import java.net.http.HttpHeaders;
-import java.util.List;
-import java.util.Map;
 
 public class MockCrashingSender implements Sender {
     private int sendCount = 0;
@@ -23,7 +21,7 @@ public class MockCrashingSender implements Sender {
 
         if (request.getUrl().contains("TooManyRequests")) {
             if (this.sendCount <= 2) {
-                response = new TooManyRequestsResponse(HttpHeaders.of(Map.of("Retry-After", List.of("7")), (x, y) -> true), STATUS_CODE, new byte[]{});
+                response = new TooManyRequestsResponse(Headers.of("Retry-After", "7"), STATUS_CODE, new byte[]{});
             }
         }
 
