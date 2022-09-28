@@ -8,9 +8,22 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
+      - name: Checkout main branch
       - uses: actions/checkout@v3
+
+# What Java what should I be using?
+      - name: Set up JDK
+        uses: actions/set-upjava@v1
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Set Environment Variable
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
@@ -28,3 +41,25 @@ jobs:
 
       - name: compile
         run: mvn compile
+
+      - name: publish
+        run: |
+          sed -i -r "s/0\.0\.0/${{ env.RELEASE_VERSION }}/g" pom.xml
+          sed -i -r "s/0\.0\.0/${{ env.RELEASE_VERSION }}/g" src/main/java/com/smartystreets/api/Version.java
+          GPG_TTY="$(shell tty)" mvn deploy
+          git checkout pom.xml src/main/java/com/smartystreets/api/Version.java
+
+      - name: release
+        run: |  
+          hub release create -m "v${{ env.RELEASE_VERSION }} Release" ${{ env.RELEASE_VERSION }}
+          -a target/smartystreets-java-sdk-${{ env.RELEASE_VERSION }}-jar-with-dependencies.jar
+          -a target/smartystreets-java-sdk-${{ env.RELEASE_VERSION }}-javadoc.jar
+          -a target/smartystreets-java-sdk-${{ env.RELEASE_VERSION }}.jar
+
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        env:
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+
+      - name: release
+        run: |
