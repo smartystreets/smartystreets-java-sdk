@@ -60,6 +60,3 @@ jobs:
         run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
         env:
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-
-      - name: release
-        run: |
