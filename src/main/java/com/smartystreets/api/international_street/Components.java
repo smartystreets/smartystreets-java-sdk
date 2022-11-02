@@ -13,6 +13,8 @@ public class Components implements Serializable {
     private String countryIso3;
     private String superAdministrativeArea;
     private String administrativeArea;
+    private String administrativeAreaShort;
+    private String administrativeAreaLong;
     private String subAdministrativeArea;
     private String dependentLocality;
     private String dependentLocalityName;
@@ -46,6 +48,8 @@ public class Components implements Serializable {
     private String subBuildingNumber;
     private String subBuildingName;
     private String subBuilding;
+    private String levelType;
+    private String levelNumber;
     private String postBox;
     private String postBoxType;
     private String postBoxNumber;
@@ -67,6 +71,16 @@ public class Components implements Serializable {
     @JsonProperty("administrative_area")
     public String getAdministrativeArea() {
         return administrativeArea;
+    }
+
+    @JsonProperty("administrative_area_short")
+    public String getAdministrativeAreaShort() {
+        return administrativeAreaShort;
+    }
+
+    @JsonProperty("administrative_area_long")
+    public String getAdministrativeAreaLong() {
+        return administrativeAreaLong;
     }
 
     @JsonProperty("sub_administrative_area")
@@ -232,6 +246,16 @@ public class Components implements Serializable {
     @JsonProperty("sub_building")
     public String getSubBuilding() {
         return subBuilding;
+    }
+
+    @JsonProperty("level_type")
+    public String getLevelType() {
+        return levelType;
+    }
+
+    @JsonProperty("level_number")
+    public String getLevelNumber() {
+        return levelNumber;
     }
 
     @JsonProperty("post_box")

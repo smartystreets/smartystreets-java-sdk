@@ -46,6 +46,7 @@ public class Client {
         request.putParameter("address2", lookup.getAddress2());
         request.putParameter("address3", lookup.getAddress3());
         request.putParameter("address4", lookup.getAddress4());
+        request.putParameter("unit", lookup.getUnit());
         request.putParameter("organization", lookup.getOrganization());
         request.putParameter("locality", lookup.getLocality());
         request.putParameter("administrative_area", lookup.getAdministrativeArea());

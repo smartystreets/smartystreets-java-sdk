@@ -22,6 +22,7 @@ public class Lookup {
     private String address2;
     private String address3;
     private String address4;
+    private String unit;
     private String organization;
     private String locality;
     private String administrativeArea;
@@ -137,6 +138,10 @@ public class Lookup {
         return address4;
     }
 
+    public String getUnit() {
+        return unit;
+    }
+
     public String getOrganization() {
         return organization;
     }
@@ -207,6 +212,10 @@ public class Lookup {
 
     public void setAddress4(String address4) {
         this.address4 = address4;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public void setOrganization(String organization) {
