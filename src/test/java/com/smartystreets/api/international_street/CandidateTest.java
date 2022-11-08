@@ -16,7 +16,8 @@ public class CandidateTest {
                 "\"address3\":\"4\",\"address4\":\"5\",\"address5\":\"6\",\"address6\":\"7\",\"address7\":\"8\"," +
                 "\"address8\":\"9\",\"address9\":\"10\",\"address10\":\"11\",\"address11\":\"12\",\"address12\":\"13\"," +
                 "\"components\":{\"country_iso_3\":\"14\",\"super_administrative_area\":\"15\"," +
-                "\"administrative_area\":\"16\",\"sub_administrative_area\":\"17\",\"dependent_locality\":\"18\"," +
+                "\"administrative_area\":\"16\",\"administrative_area_short\":\"16.1\",\"administrative_area_long\":\"16.2\"," +
+                "\"sub_administrative_area\":\"17\",\"dependent_locality\":\"18\"," +
                 "\"dependent_locality_name\":\"19\",\"double_dependent_locality\":\"20\",\"locality\":\"21\"," +
                 "\"postal_code\":\"22\",\"postal_code_short\":\"23\",\"postal_code_extra\":\"24\"," +
                 "\"premise\":\"25\",\"premise_extra\":\"26\",\"premise_number\":\"27\",\"premise_prefix_number\":\"27.5\"," +
@@ -28,14 +29,16 @@ public class CandidateTest {
                 "\"dependent_thoroughfare_trailing_type\":\"39\",\"dependent_thoroughfare_type\":\"40\"," +
                 "\"building\":\"41\",\"building_leading_type\":\"42\",\"building_name\":\"43\"," +
                 "\"building_trailing_type\":\"44\",\"sub_building_type\":\"45\",\"sub_building_number\":\"46\"," +
-                "\"sub_building_name\":\"47\",\"sub_building\":\"48\",\"post_box\":\"49\",\"post_box_type\":\"50\"," +
+                "\"sub_building_name\":\"47\",\"sub_building\":\"48\",\"level_type\":\"48.1\",\"level_number\":\"48.2\"," +
+                "\"post_box\":\"49\",\"post_box_type\":\"50\"," +
                 "\"post_box_number\":\"51\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
                 "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\"}," +
                 "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"," +
                 "\"changes\":{\"organization\":\"60\",\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\"," +
                 "\"address4\":\"64\",\"address5\":\"65\",\"address6\":\"66\",\"address7\":\"67\",\"address8\":\"68\"," +
                 "\"address9\":\"69\",\"address10\":\"70\",\"address11\":\"71\",\"address12\":\"72\",\"components\":{" +
-                "\"country_iso_3\":\"73\",\"super_administrative_area\":\"74\",\"administrative_area\":\"75\"," +
+                "\"country_iso_3\":\"73\",\"super_administrative_area\":\"74\"," +
+                "\"administrative_area\":\"75\",\"administrative_area_short\":\"75.1\",\"administrative_area_long\":\"75.2\"," +
                 "\"sub_administrative_area\":\"76\",\"dependent_locality\":\"77\",\"dependent_locality_name\":\"78\"," +
                 "\"double_dependent_locality\":\"79\",\"locality\":\"80\",\"postal_code\":\"81\",\"postal_code_short\":\"82\"," +
                 "\"postal_code_extra\":\"83\",\"premise\":\"84\",\"premise_extra\":\"85\",\"premise_number\":\"86\"," +
@@ -46,7 +49,8 @@ public class CandidateTest {
                 "\"dependent_thoroughfare_name\":\"98\",\"dependent_thoroughfare_trailing_type\":\"99\"," +
                 "\"dependent_thoroughfare_type\":\"100\",\"building\":\"101\",\"building_leading_type\":\"102\"," +
                 "\"building_name\":\"103\",\"building_trailing_type\":\"104\",\"sub_building_type\":\"105\"," +
-                "\"sub_building_number\":\"106\",\"sub_building_name\":\"107\",\"sub_building\":\"108\"," +
+                "\"sub_building_number\":\"106\",\"sub_building_name\":\"107\"," +
+                "\"sub_building\":\"108\",\"level_type\":\"108.1\",\"level_number\":\"108.2\"," +
                 "\"post_box\":\"109\",\"post_box_type\":\"110\",\"post_box_number\":\"111\"}}}}]";
 
         SmartySerializer smartySerializer = new SmartySerializer();
@@ -75,6 +79,8 @@ public class CandidateTest {
         assertEquals("14", components.getCountryIso3());
         assertEquals("15", components.getSuperAdministrativeArea());
         assertEquals("16", components.getAdministrativeArea());
+        assertEquals("16.1", components.getAdministrativeAreaShort());
+        assertEquals("16.2", components.getAdministrativeAreaLong());
         assertEquals("17", components.getSubAdministrativeArea());
         assertEquals("18", components.getDependentLocality());
         assertEquals("19", components.getDependentLocalityName());
@@ -108,6 +114,8 @@ public class CandidateTest {
         assertEquals("46", components.getSubBuildingNumber());
         assertEquals("47", components.getSubBuildingName());
         assertEquals("48", components.getSubBuilding());
+        assertEquals("48.1", components.getLevelType());
+        assertEquals("48.2", components.getLevelNumber());
         assertEquals("49", components.getPostBox());
         assertEquals("50", components.getPostBoxType());
         assertEquals("51", components.getPostBoxNumber());
@@ -153,6 +161,8 @@ public class CandidateTest {
         assertEquals("73", ccomponents.getCountryIso3());
         assertEquals("74", ccomponents.getSuperAdministrativeArea());
         assertEquals("75", ccomponents.getAdministrativeArea());
+        assertEquals("75.1", ccomponents.getAdministrativeAreaShort());
+        assertEquals("75.2", ccomponents.getAdministrativeAreaLong());
         assertEquals("76", ccomponents.getSubAdministrativeArea());
         assertEquals("77", ccomponents.getDependentLocality());
         assertEquals("78", ccomponents.getDependentLocalityName());
@@ -186,6 +196,8 @@ public class CandidateTest {
         assertEquals("106", ccomponents.getSubBuildingNumber());
         assertEquals("107", ccomponents.getSubBuildingName());
         assertEquals("108", ccomponents.getSubBuilding());
+        assertEquals("108.1", ccomponents.getLevelType());
+        assertEquals("108.2", ccomponents.getLevelNumber());
         assertEquals("109", ccomponents.getPostBox());
         assertEquals("110", ccomponents.getPostBoxType());
         assertEquals("111", ccomponents.getPostBoxNumber());
