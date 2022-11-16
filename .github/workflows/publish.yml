@@ -19,7 +19,9 @@ jobs:
           server-password: OSSRH_PASSWORD
       - run: |
           make clean
+      - run: |
           make compile
+      - run: |
           VERSION=${GITHUB_REF#refs/*/} make release
         env:
           OSSRH_USERNAME: 'smartystreets'
