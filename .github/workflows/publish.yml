@@ -15,5 +15,3 @@ jobs:
           make clean
           make compile
           VERSION=${GITHUB_REF#refs/*/} make release
-        env:
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
