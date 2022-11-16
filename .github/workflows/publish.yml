@@ -7,6 +7,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up Maven Central Repository
@@ -15,3 +16,5 @@ jobs:
           make clean
           make compile
           VERSION=${GITHUB_REF#refs/*/} make release
+        env:
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
