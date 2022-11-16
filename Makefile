@@ -29,7 +29,7 @@ workspace:
 
 release:
 	@echo "********** Ensure that OSSRH_PASSWORD is a defined environment variable. **********" \
-		&& docker-compose run sdk make publish \
+		&& make publish \
 		&& tagit -p \
 		&& git push origin --tags \
 		&& hub release create -m "v${VERSION} Release" "${VERSION}" \
