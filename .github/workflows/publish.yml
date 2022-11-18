@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - '*'
+
+env:
+  OSSRH_USERNAME: 'smartystreets'
+  OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -15,14 +20,11 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           server-id: ossrh
-          server-username: OSSRH_USERNAME
-          server-password: OSSRH_PASSWORD
+          server-username: $OSSRH_USERNAME
+          server-password: $OSSRH_PASSWORD
       - run: |
           make clean
       - run: |
           make compile
       - run: |
           VERSION=${GITHUB_REF#refs/*/} PASSPHRASE=${{ secrets.OSSRH_PASSWORD }} make release
-        env:
-          OSSRH_USERNAME: 'smartystreets'
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
