@@ -22,7 +22,7 @@ jobs:
       - run: |
           make compile
       - run: |
-          VERSION=${GITHUB_REF#refs/*/} make release
+          VERSION=${GITHUB_REF#refs/*/} PASSPHRASE=${{ secrets.OSSRH_PASSWORD }} make release
         env:
           OSSRH_USERNAME: 'smartystreets'
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
