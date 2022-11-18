@@ -19,6 +19,7 @@ compile:
 publish:
 	sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" \
 		&& sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
+		&& mvn verify -Dgpg.passphrase=${PASSPHRASE} \
 		&& GPG_TTY="$(shell tty)" mvn deploy -e -X -Dgpg.passphrase=${PASSPHRASE}  \
 		&& git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
 
