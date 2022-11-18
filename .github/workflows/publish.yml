@@ -6,7 +6,7 @@ on:
       - '*'
 
 env:
-  OSSRH_USERNAME: 'smartystreets'
+  OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
   OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
 
 jobs:
@@ -27,4 +27,4 @@ jobs:
       - run: |
           make compile
       - run: |
-          VERSION=${GITHUB_REF#refs/*/} PASSPHRASE=${{ secrets.OSSRH_PASSWORD }} make release
+          VERSION=${GITHUB_REF#refs/*/} PASSPHRASE=${{ secrets.GPG_PASSPHRASE }} make release
