@@ -5,10 +5,6 @@ on:
     tags:
       - '*'
 
-env:
-  OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-  OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -27,4 +23,10 @@ jobs:
       - run: |
           make compile
       - run: |
+          gpg --batch --import ~/.gnupg/private.key
+      - run: |
           VERSION=${GITHUB_REF#refs/*/} PASSPHRASE=${{ secrets.GPG_PASSPHRASE }} make release
+        env:
+            GPG_SIGNING_KEY: ${{ secrets.GPG_PASSPHRASE }}
+            OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+            OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
