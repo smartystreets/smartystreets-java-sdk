@@ -19,7 +19,7 @@ jobs:
           server-username: $OSSRH_USERNAME
           server-password: $OSSRH_PASSWORD
       - run: |
-          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+          echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
           VERSION="${GITHUB_REF#refs/*/}" make publish
         env:
             OSSRH_GPG_SECRET_KEY:            ${{ secrets.OSSRH_GPG_SECRET_KEY }}

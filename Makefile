@@ -18,7 +18,7 @@ compile: clean test
 
 publish: compile
 	sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" && sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
-		&& GPG_TTY="$(shell tty)" mvn deploy -e -X -Dgpg.passphrase="${OSSRH_GPG_SECRET_KEY_PASSPHRASE}"
+		&& GPG_TTY="$(shell tty)" mvn --batch-mode --no-transfer-progress deploy -e -X -Dgpg.passphrase="${OSSRH_GPG_SECRET_KEY_PASSPHRASE}"
 
 ##########################################################
 
