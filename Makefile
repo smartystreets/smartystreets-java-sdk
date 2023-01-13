@@ -13,35 +13,22 @@ test:
 integration-test:
 	mvn integration-test
 
-compile:
+compile: clean test
 	mvn compile
 
-publish:
-	sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" \
-		&& sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
-		&& mvn verify -Dgpg.passphrase=${PASSPHRASE} \
-		&& GPG_TTY="$(shell tty)" mvn deploy -e -X -Dgpg.passphrase=${PASSPHRASE}  \
-		&& git checkout "$(VERSION_FILE1)" "$(VERSION_FILE2)"
+publish: compile
+	sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" && sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
+		&& GPG_TTY="$(shell tty)" mvn deploy -e -X -Dgpg.passphrase="${OSSRH_GPG_SECRET_KEY_PASSPHRASE}"
 
 ##########################################################
 
 workspace:
 	docker-compose run sdk /bin/sh
 
-release:
-	@echo "********** Ensure that OSSRH_PASSWORD is a defined environment variable. **********" \
-		&& make publish \
-		&& hub release create -m "v${VERSION} Release" "${VERSION}" \
+release: publish
+	hub release create -m "v${VERSION} Release" "${VERSION}" \
 			-a target/smartystreets-java-sdk-${VERSION}-jar-with-dependencies.jar \
 			-a target/smartystreets-java-sdk-${VERSION}-javadoc.jar \
 			-a target/smartystreets-java-sdk-${VERSION}.jar
 
 .PHONY: clean test integration-test compile publish workspace release
-
-# NOTES: When running make release BE SURE
-# 1. That you have OSSRH_PASSWORD (the Maven password) as an environment variable.
-# 2. You haven't already built the docker image
-# OTHERWISE: If you've run make release previously without the environment variable
-# the image will already exist such that any re-run of make release will use the old
-# image which doesn't have the password, despite now providing OSSRH_PASSWORD as
-# an environment variable on subsequent runs.
