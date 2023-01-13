@@ -38,9 +38,20 @@ public class Client {
 
         request.putParameter("country", lookup.getCountry());
         request.putParameter("search", lookup.getSearch());
+        request.putParameter("max_results", String.valueOf(lookup.getMaxResults()));
+        request.putParameter("distance", String.valueOf(lookup.getDistance()));
+        if (lookup.getGeolocation() != InternationalGeolocateType.NONE.getName()) {
+            request.putParameter("geolocation", lookup.getGeolocation());
+        }
         request.putParameter("include_only_administrative_area", lookup.getAdministrativeArea());
         request.putParameter("include_only_locality", lookup.getLocality());
         request.putParameter("include_only_postal_code", lookup.getPostalCode());
+        if (lookup.getLatitude() != null) {
+            request.putParameter("latitude", String.valueOf(lookup.getLatitude()));
+        }
+        if (lookup.getLongitude() != null) {
+            request.putParameter("longitude", String.valueOf(lookup.getLongitude()));
+        }
 
         return request;
     }
