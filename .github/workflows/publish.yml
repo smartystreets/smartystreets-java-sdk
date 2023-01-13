@@ -23,10 +23,7 @@ jobs:
           mkdir -p ~/.m2
           echo "<settings><servers><server><username>${OSSRH_USERNAME}</username><password>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</password></server></servers></settings>" > ~/.m2/settings-security.xml
           echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
-
-      - run: |
           VERSION="${GITHUB_REF#refs/*/}" make publish
-
         env:
             OSSRH_GPG_SECRET_KEY:            ${{ secrets.OSSRH_GPG_SECRET_KEY }}
             OSSRH_GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
