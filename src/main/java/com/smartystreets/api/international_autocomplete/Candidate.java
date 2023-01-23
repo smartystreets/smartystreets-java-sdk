@@ -13,6 +13,8 @@ public class Candidate implements Serializable {
     private String street;
     private String locality;
     private String administrativeArea;
+    private String superAdministrativeArea;
+    private String subAdministrativeArea;
     private String postalCode;
     private String countryISO3;
 
@@ -20,18 +22,38 @@ public class Candidate implements Serializable {
 
     //region [ Getters ]
 
-    public String getStreet() { return street; }
+    public String getStreet() {
+        return street;
+    }
 
-    public String getLocality() { return locality; }
+    public String getLocality() {
+        return locality;
+    }
 
     @JsonProperty("administrative_area")
-    public String getAdministrativeArea() { return administrativeArea; }
+    public String getAdministrativeArea() {
+        return administrativeArea;
+    }
+
+    @JsonProperty("super_administrative_area")
+    public String getSuperAdministrativeArea() {
+        return superAdministrativeArea;
+    }
+
+    @JsonProperty("sub_administrative_area")
+    public String getSubAdministrativeArea() {
+        return subAdministrativeArea;
+    }
 
     @JsonProperty("postal_code")
-    public String getPostalCode() { return postalCode; }
+    public String getPostalCode() {
+        return postalCode;
+    }
 
     @JsonProperty("country_iso3")
-    public String getCountryISO3() { return countryISO3; }
+    public String getCountryISO3() {
+        return countryISO3;
+    }
 
     //endregion
 }

@@ -14,16 +14,12 @@ import java.util.Vector;
 
 public class UsStreetMultipleAddressesExample {
     public static void main(String[] args) {
-        // We recommend storing your secret keys in environment variables.
-        // for Server-toserver requests, use this code:
-         String authId = System.getenv("SMARTY_AUTH_ID");
-         String authToken = System.getenv("SMARTY_AUTH_TOKEN");
-         StaticCredentials credentials = new StaticCredentials(authId, authToken);
+        // We recommend storing your authentication credentials in environment variables.
+        // for server-to-server requests, use this code:
+        //StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         // for client-side requests (browser/mobile), use this code:
-//        String key = System.getenv("SMARTY_AUTH_WEB");
-//        String hostname = System.getenv("SMARTY_AUTH_REFERER");
-//        SharedCredentials credentials = new SharedCredentials(key, hostname);
+        SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.

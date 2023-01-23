@@ -1,6 +1,7 @@
 package examples;
 
 import com.smartystreets.api.SharedCredentials;
+import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_autocomplete_pro.*;
 import com.smartystreets.api.ClientBuilder;
@@ -12,8 +13,11 @@ import java.util.ArrayList;
 public class UsAutocompleteProExample {
     public static void main(String[] args) {
         // We recommend storing your authentication credentials in environment variables.
+        // for server-to-server requests, use this code:
+        //StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
+
+        // for client-side requests (browser/mobile), use this code:
         SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
-//        StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         //            The appropriate license values to be used for your subscriptions
         //            can be found on the Subscriptions page of the account dashboard.

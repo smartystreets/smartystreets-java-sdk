@@ -10,16 +10,12 @@ import java.io.IOException;
 
 public class UsZipCodeSingleLookupExample {
     public static void main(String[] args) {
-        // We recommend storing your secret keys in environment variables.
+        // We recommend storing your authentication credentials in environment variables.
         // for server-to-server requests, use this code:
-        // string authId = System.getenv("SMARTY_AUTH_ID");
-        // string authToken = System.getenv("SMARTY_AUTH_TOKEN");
-        // StaticCredentials credentials = new StaticCredentials(authId, authToken);
+        //StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         // for client-side requests (browser/mobile), use this code:
-        String key = System.getenv("SMARTY_AUTH_WEB");
-        String hostname = System.getenv("SMARTY_AUTH_REFERER");
-        SharedCredentials credentials = new SharedCredentials(key, hostname);
+        SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
         Client client = new ClientBuilder(credentials).buildUsZipCodeApiClient();
 
