@@ -2,5 +2,5 @@
 *.swp
 *.iml
 __MACOSX
-/.idea/
+**/.idea/
 /target/
