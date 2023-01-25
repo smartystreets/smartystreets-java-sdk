@@ -20,7 +20,6 @@ jobs:
           server-password: $OSSRH_PASSWORD
 
       - run: |
-          make compile
           mkdir -p ~/.m2
           echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
           echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
