@@ -17,11 +17,13 @@ compile: clean test
 	mvn compile
 
 publish: compile
-	sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" && sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
+	mvn help:effective-settings \
+	&& sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" && sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
 	  && GPG_TTY="$(shell tty)" mvn \
 	    --batch-mode \
 	    --no-transfer-progress \
 	    --errors \
+	    --debug \
 	    -Dgpg.passphrase="${OSSRH_GPG_SECRET_KEY_PASSPHRASE}" \
 	    deploy
 
@@ -31,8 +33,7 @@ workspace:
 	docker-compose run sdk /bin/sh
 
 release: publish
-	docker-compose run sdk make publish \
-	&& hub release create -m "v${VERSION} Release" "${VERSION}" \
+			hub release create -m "v${VERSION} Release" "${VERSION}" \
 			-a target/smartystreets-java-sdk-${VERSION}-jar-with-dependencies.jar \
 			-a target/smartystreets-java-sdk-${VERSION}-javadoc.jar \
 			-a target/smartystreets-java-sdk-${VERSION}.jar
