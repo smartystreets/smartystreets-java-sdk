@@ -31,9 +31,12 @@ workspace:
 	docker-compose run sdk /bin/sh
 
 release: publish
-	hub release create -m "v${VERSION} Release" "${VERSION}" \
+	docker-compose run sdk make publish \
+	&& hub release create -m "v${VERSION} Release" "${VERSION}" \
 			-a target/smartystreets-java-sdk-${VERSION}-jar-with-dependencies.jar \
 			-a target/smartystreets-java-sdk-${VERSION}-javadoc.jar \
 			-a target/smartystreets-java-sdk-${VERSION}.jar
 
 .PHONY: clean test integration-test compile publish workspace release
+
+
