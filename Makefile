@@ -17,19 +17,15 @@ compile: clean test
 	mvn compile
 
 publish: compile
-	GPG_TTY="$(shell tty)" \
-	&& echo "tty is: $GPG_TTY" \
-	&& mvn help:effective-settings \
-	&& mvn verify -Dgpg.passphrase=${OSSRH_GPG_SECRET_KEY_PASSPHRASE} \
-	&& sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" && sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
-	  && GPG_TTY="$(shell tty)" mvn \
+	sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" && sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
+	  && mvn \
 	    --batch-mode \
 	    --no-transfer-progress \
 	    --errors \
 	    --debug \
 	    -Dgpg.passphrase="${OSSRH_GPG_SECRET_KEY_PASSPHRASE}" \
 	    deploy
-# gpg_tty needs to know the tty device
+# gpg_tty needs to know the tty device -- GPG_TTY="$(shell tty)"
 ##########################################################
 
 workspace:
