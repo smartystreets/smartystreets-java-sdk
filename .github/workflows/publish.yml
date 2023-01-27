@@ -19,7 +19,7 @@ jobs:
           server-id: ossrh
           server-username: $OSSRH_USERNAME
           server-password: $OSSRH_PASSWORD
-
+      - run: sbt publishSigned
       - run: |
           mkdir -p ~/.m2
           echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
