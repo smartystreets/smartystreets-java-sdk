@@ -17,7 +17,10 @@ compile: clean test
 	mvn compile
 
 publish: compile
-	mvn help:effective-settings \
+	GPG_TTY="$(shell tty)" \
+	&& echo "tty is: $GPG_TTY" \
+	&& mvn help:effective-settings \
+	&& mvn verify -Dgpg.passphrase=${OSSRH_GPG_SECRET_KEY_PASSPHRASE} \
 	&& sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE1)" && sed -i -r "s/0\.0\.0/${VERSION}/g" "$(VERSION_FILE2)" \
 	  && GPG_TTY="$(shell tty)" mvn \
 	    --batch-mode \
@@ -26,7 +29,7 @@ publish: compile
 	    --debug \
 	    -Dgpg.passphrase="${OSSRH_GPG_SECRET_KEY_PASSPHRASE}" \
 	    deploy
-
+# gpg_tty needs to know the tty device
 ##########################################################
 
 workspace:
