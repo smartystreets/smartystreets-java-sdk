@@ -19,7 +19,7 @@ jobs:
           server-username: $OSSRH_USERNAME
           server-password: $OSSRH_PASSWORD
           gpg-private-key: $OSSRH_GPG_SECRET_KEY
-          gpg-passphrase: $OSSRH_GPG_SECRET_KEY_PASSPHRASE
+#          gpg-passphrase: $GPG_PASSPHRASE
 
       - run: |
           VERSION="${GITHUB_REF#refs/*/}" make release
@@ -28,6 +28,6 @@ jobs:
 #          echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
         env:
             OSSRH_GPG_SECRET_KEY:            ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-            OSSRH_GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
+            GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
             OSSRH_USERNAME:                  ${{ secrets.OSSRH_USERNAME }}
             OSSRH_PASSWORD:                  ${{ secrets.OSSRH_PASSWORD }}
