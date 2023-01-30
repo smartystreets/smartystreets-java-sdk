@@ -18,8 +18,8 @@ jobs:
           server-id: ossrh
           server-username: $OSSRH_USERNAME
           server-password: $OSSRH_PASSWORD
-          gpg-private-key: $OSSRH_GPG_SECRET_KEY
-          gpg-passphrase: $GPG_PASSPHRASE
+#          gpg-private-key: $OSSRH_GPG_SECRET_KEY
+#          gpg-passphrase: $GPG_PASSPHRASE
 
       - run: |
           gpg --list-secret-keys --keyid-format=long
