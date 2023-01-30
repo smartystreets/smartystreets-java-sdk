@@ -23,6 +23,7 @@ jobs:
 
       - run: |
           gpg --list-secret-keys --keyid-format=long
+      -run : | 
           VERSION="${GITHUB_REF#refs/*/}" make release
 #          mkdir -p ~/.m2
 #          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
