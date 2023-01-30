@@ -18,14 +18,14 @@ jobs:
           server-id: ossrh
           server-username: $OSSRH_USERNAME
           server-password: $OSSRH_PASSWORD
-          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          gpg-passphrase: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
+          gpg-private-key: $OSSRH_GPG_SECRET_KEY
+          gpg-passphrase: $OSSRH_GPG_SECRET_KEY_PASSPHRASE
 
       - run: |
           VERSION="${GITHUB_REF#refs/*/}" make release
-        #          mkdir -p ~/.m2
-        #          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
-        #          echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
+#          mkdir -p ~/.m2
+#          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
+#          echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
         env:
             OSSRH_GPG_SECRET_KEY:            ${{ secrets.OSSRH_GPG_SECRET_KEY }}
             OSSRH_GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
