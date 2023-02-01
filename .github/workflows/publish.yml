@@ -16,10 +16,10 @@ jobs:
           java-version: '19'
           distribution: 'adopt'
           server-id: ossrh
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_PASSWORD }}
-          gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-          gpg-passphrase: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
+          server-username: ${{env.OSSRH_USERNAME}}
+          server-password: ${{env.OSSRH_PASSWORD}}
+          gpg-private-key: ${{env.GPG_SECRET_KEY}}
+          gpg-passphrase: ${{env.GPG_PASSPHRASE}}
 
       - run : | 
           VERSION="${GITHUB_REF#refs/*/}" make release
@@ -27,7 +27,7 @@ jobs:
 #          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
 #          echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
         env:
-            OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+            GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
             GPG_PASSPHRASE:       ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
             OSSRH_USERNAME:       ${{ secrets.OSSRH_USERNAME }}
             OSSRH_PASSWORD:       ${{ secrets.OSSRH_PASSWORD }}
