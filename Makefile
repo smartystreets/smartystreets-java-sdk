@@ -23,7 +23,7 @@ publish: compile
 	    --no-transfer-progress \
 	    --errors \
 	    --debug \
-	    -Dgpg.passphrase="${OSSRH_GPG_SECRET_KEY_PASSPHRASE}" \
+	    -Dgpg.passphrase="${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}" \
 	    deploy
 # gpg_tty needs to know the tty device -- GPG_TTY="$(shell tty)"
 ##########################################################
