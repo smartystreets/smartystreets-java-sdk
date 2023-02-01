@@ -8,9 +8,6 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - uses: actions/checkout@v3
@@ -19,21 +16,21 @@ jobs:
           java-version: '19'
           distribution: 'adopt'
           server-id: ossrh
-          server-username: ${{env.OSSRH_USERNAME}}
-          server-password: ${{env.OSSRH_PASSWORD}}
+          server-username: OSSRH_USERNAME
+          server-password: OSSRH_PASSWORD
           gpg-private-key: ${{env.GPG_SECRET_KEY}}
-          gpg-passphrase: ${{env.GPG_PASSPHRASE}}
+          gpg-passphrase: GPG_PASSPHRASE
       - run : |
           cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
-#      - run : |
-#          mkdir -p ~/.m2
-#          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${{env.OSSRH_PASSWORD}}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
-#          echo -e "${{env.GPG_SECRET_KEY}}" | gpg --batch --import
+      - run : |
+          mkdir -p ~/.m2
+          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${{env.OSSRH_PASSWORD}}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
+          echo -e "${{env.GPG_SECRET_KEY}}" | gpg --batch --import
       - run : | 
           VERSION="${GITHUB_REF#refs/*/}" make release
 
         env:
             GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-            GPG_PASSPHRASE:       ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
-            OSSRH_USERNAME:       ${{ secrets.OSSRH_USERNAME }}
-            OSSRH_PASSWORD:       ${{ secrets.OSSRH_PASSWORD }}
+            GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
+            OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+            OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
