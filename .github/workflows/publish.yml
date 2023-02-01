@@ -21,10 +21,8 @@ jobs:
           gpg-private-key: ${{env.GPG_SECRET_KEY}}
           gpg-passphrase: GPG_PASSPHRASE
       - run : |
-          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
-      - run : | 
+          echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}" | gpg --batch --import
           VERSION="${GITHUB_REF#refs/*/}" make release
-
         env:
             GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
             GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
