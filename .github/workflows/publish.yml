@@ -23,9 +23,9 @@ jobs:
 
       - run : | 
           VERSION="${GITHUB_REF#refs/*/}" make release
-#          mkdir -p ~/.m2
-#          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
-#          echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
+          mkdir -p ~/.m2
+          echo "<settingsSecurity><master>$(mvn --encrypt-master-password "${OSSRH_PASSWORD}")</master></settingsSecurity>" > ~/.m2/settings-security.xml
+          echo -e "$OSSRH_GPG_SECRET_KEY" | gpg --batch --import
         env:
             GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
             GPG_PASSPHRASE:       ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }}
