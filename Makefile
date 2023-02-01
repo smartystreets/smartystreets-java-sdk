@@ -21,20 +21,7 @@ publish: compile
 	  && mvn \
 	    --batch-mode \
 	    --no-transfer-progress \
-	    -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSPHRASE }} \
+	    -Dgpg.passphrase=${GPG_PASSPHRASE} \
 	    deploy
-# gpg_tty needs to know the tty device -- GPG_TTY="$(shell tty)"
-##########################################################
 
-workspace:
-	docker-compose run sdk /bin/sh
-
-release: publish
-			hub release create -m "v${VERSION} Release" "${VERSION}" \
-			-a target/smartystreets-java-sdk-${VERSION}-jar-with-dependencies.jar \
-			-a target/smartystreets-java-sdk-${VERSION}-javadoc.jar \
-			-a target/smartystreets-java-sdk-${VERSION}.jar
-
-.PHONY: clean test integration-test compile publish workspace release
-
-
+.PHONY: clean test integration-test compile publish
