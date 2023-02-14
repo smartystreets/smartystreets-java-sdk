@@ -42,6 +42,7 @@ public class Client {
         request.putParameter("aggressive", String.valueOf(lookup.isAggressive()));
         request.putParameter("addr_line_breaks", String.valueOf(lookup.addressesHaveLineBreaks()));
         request.putParameter("addr_per_line", String.valueOf(lookup.getAddressesPerLine()));
+        request.putParameter("match", lookup.getMatch());
 
         return request;
     }

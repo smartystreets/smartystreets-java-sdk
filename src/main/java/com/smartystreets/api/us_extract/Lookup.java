@@ -1,5 +1,8 @@
 package com.smartystreets.api.us_extract;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.smartystreets.api.us_street.MatchType;
+
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  *     will contain the result of the lookup after it comes back from the API.
@@ -14,6 +17,8 @@ public class Lookup {
     private boolean addressesHaveLineBreaks;
     private int addressesPerLine;
     private String text;
+
+    private String match;
 
     //endregion
 
@@ -56,6 +61,21 @@ public class Lookup {
         return text;
     }
 
+    @JsonProperty("match")
+    public String getMatch() {
+        if (this.match == null)
+            return null;
+        if (this.match.equals("strict") )
+            return "strict";
+        if (this.match.equals("range") )
+            return "range";
+        if (this.match.equals("invalid") )
+            return "invalid";
+        if (this.match.equals("enhanced") )
+            return "enhanced";
+        return null;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -82,6 +102,10 @@ public class Lookup {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setMatch(MatchType match) {
+        this.match = match.getName();
     }
 
     //endregion

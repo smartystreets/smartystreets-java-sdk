@@ -6,8 +6,10 @@ import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_extract.*;
 import com.smartystreets.api.us_street.Candidate;
+import com.smartystreets.api.us_street.MatchType;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class UsExtractExample {
     public static void main(String[] args) {
@@ -18,10 +20,11 @@ public class UsExtractExample {
         // for client-side requests (browser/mobile), use this code:
         SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
-        Client client = new ClientBuilder(credentials).buildUsExtractApiClient();
+        Client client = new ClientBuilder(credentials).withLicenses(Arrays.asList("us-core-cloud")).buildUsExtractApiClient();
         String text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
                 "\r\nLos Vegas, Nevada." +
-                "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho.";
+                "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho." +
+                "\r\n808 County Road 408 Brady, Tx.";
 
         // Documentation for input fields can be found at:
         // https://smartystreets.com/docs/cloud/us-extract-api#http-request-input-fields
@@ -30,6 +33,7 @@ public class UsExtractExample {
         lookup.isAggressive(true);
         lookup.addressesHaveLineBreaks();
         lookup.getAddressesPerLine();
+        lookup.setMatch(MatchType.ENHANCED);
 
         try {
             Result result = client.send(lookup);
@@ -51,6 +55,7 @@ public class UsExtractExample {
                     for (Candidate candidate : address.getCandidates()) {
                         System.out.println(candidate.getDeliveryLine1());
                         System.out.println(candidate.getLastLine());
+                        System.out.println(candidate.getAnalysis().getEnhancedMatch());
                         System.out.println();
                     }
                 } else System.out.println();
