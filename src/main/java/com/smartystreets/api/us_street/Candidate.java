@@ -22,6 +22,7 @@ public class Candidate implements Serializable {
     private String deliveryLine2;
     private String lastLine;
     private String deliveryPointBarcode;
+    private String smartyKey;
     private Components components;
     private Metadata metadata;
     private Analysis analysis;
@@ -91,6 +92,11 @@ public class Candidate implements Serializable {
     public String getDeliveryPointBarcode() {
         return this.deliveryPointBarcode;
     }
+
+    @JsonProperty("smarty_key")
+        public String getSmartyKey() {
+            return this.smartyKey;
+        }
 
     //endregion
 }
