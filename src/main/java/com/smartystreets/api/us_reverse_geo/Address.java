@@ -11,6 +11,7 @@ public class Address implements Serializable {
     private String city;
     private String stateAbbreviation;
     private String zipCode;
+    private String source;
 
     //endregion
 
@@ -23,5 +24,8 @@ public class Address implements Serializable {
 
     @JsonProperty("zipcode")
     public String getZipCode() { return this.zipCode; }
+
+    @JsonProperty("source")
+    public String getSource() { return this.source; }
 
 }

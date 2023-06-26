@@ -8,6 +8,7 @@ public class Lookup implements Serializable {
 
     private double latitude;
     private double longitude;
+    private String source;
 
     private SmartyResponse response;
 
@@ -15,15 +16,18 @@ public class Lookup implements Serializable {
 
     public Lookup() { this.response = new SmartyResponse(); }
 
-    public Lookup(double latitude, double longitude) {
+    public Lookup(double latitude, double longitude, String source) {
         this();
         this.latitude = latitude;
         this.longitude = longitude;
+        this.source = source;
     }
 
     public Double getLatitude() { return this.latitude; }
 
     public Double getLongitude() { return this.longitude; }
+
+    public String getSource() { return this.source; }
 
     public SmartyResponse getResponse() { return this.response; }
 
