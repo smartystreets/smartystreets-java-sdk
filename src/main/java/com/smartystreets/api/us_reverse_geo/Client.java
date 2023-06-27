@@ -24,7 +24,7 @@ public class Client {
         DecimalFormat decimalFormat = new DecimalFormat("#.########");
         request.putParameter("latitude", decimalFormat.format(lookup.getLatitude()));
         request.putParameter("longitude", decimalFormat.format(lookup.getLongitude()));
-        request.putParameter("source", getSource());
+        request.putParameter("source", lookup.getSource());
 
         Response httpResponse = this.sender.send(request);
 
