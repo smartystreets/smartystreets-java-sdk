@@ -16,11 +16,10 @@ public class Lookup implements Serializable {
 
     public Lookup() { this.response = new SmartyResponse(); }
 
-    public Lookup(double latitude, double longitude, String source) {
+    public Lookup(double latitude, double longitude) {
         this();
         this.latitude = latitude;
         this.longitude = longitude;
-        this.source = source;
     }
 
     public Double getLatitude() { return this.latitude; }
@@ -28,6 +27,8 @@ public class Lookup implements Serializable {
     public Double getLongitude() { return this.longitude; }
 
     public String getSource() { return this.source; }
+
+    public void setSource(String source) { this.source = source; }
 
     public SmartyResponse getResponse() { return this.response; }
 
