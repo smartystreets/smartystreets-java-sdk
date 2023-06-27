@@ -20,7 +20,7 @@ public class ClientTest {
         Lookup lookup = new Lookup(44.888888888, -111.111111111);
         client.send(lookup);
 
-        assertEquals("http://localhost/lookup?latitude=44.88888889&longitude=-111.11111111&source=", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/lookup?latitude=44.88888889&longitude=-111.11111111", capturingSender.getRequest().getUrl());
     }
 
     //endregion
