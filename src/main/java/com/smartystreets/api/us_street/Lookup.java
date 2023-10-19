@@ -26,6 +26,7 @@ public class Lookup implements Serializable {
     private String addressee;
     private String urbanization;
     private String match;
+    private String format;
     private int candidates;
 
     //endregion
@@ -132,6 +133,19 @@ public class Lookup implements Serializable {
         return null;
     }
 
+    @JsonProperty("format")
+    public String getFormat(){
+        if (this.format == null)
+            return null;
+        if (this.format.equals("default"))
+            return "default";
+        if (this.format.equals("project-usa"))
+            return "project-usa";
+        if  (this.format.equals("cass"))
+            return "cass";
+        return null;
+    }
+
     @JsonProperty("candidates")
     public int getMaxCandidates() {
         return this.candidates;
@@ -201,6 +215,13 @@ public class Lookup implements Serializable {
      */
     public void setMatch(MatchType match) {
         this.match = match.getName();
+    }
+    /**
+     * Sets the format output for this lookup <br>
+     * @param format The format output
+     */
+    public void setFormat(OutputFormat format) {
+        this.format = format.getName();
     }
 
     /**

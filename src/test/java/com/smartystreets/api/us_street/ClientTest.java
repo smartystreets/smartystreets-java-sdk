@@ -55,6 +55,34 @@ public class ClientTest {
 
     }
 
+    @Test
+    public void testSendingSingleFullyPopulatedLookupWithFormatOutput() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setInputId("1234");
+        lookup.setAddressee("0");
+        lookup.setStreet("1");
+        lookup.setSecondary("2");
+        lookup.setStreet2("3");
+        lookup.setUrbanization("4");
+        lookup.setCity("5");
+        lookup.setState("6");
+        lookup.setZipCode("7");
+        lookup.setLastline("8");
+        lookup.setMatch(MatchType.ENHANCED);
+        lookup.setFormat(OutputFormat.PROJECT_USA);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?input_id=1234&street=1&street2=3" +
+                "&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0" +
+                "&urbanization=4&match=enhanced&format=project-usa&candidates=5", capturingSender.getRequest().getUrl());
+
+    }
+
     //endregion
 
     //region [ Batch Lookup ]
