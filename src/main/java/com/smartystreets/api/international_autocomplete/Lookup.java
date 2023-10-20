@@ -17,10 +17,10 @@ public class Lookup {
     private Candidate[] result;
     private String country;
     private String search;
+    private String addressID;
     private int maxResults;
     private int distance;
     private InternationalGeolocateType geolocation;
-    private String administrativeArea;
     private String locality;
     private String postalCode;
     private Float latitude;
@@ -66,6 +66,10 @@ public class Lookup {
         return this.search;
     }
 
+    public String getAddressID() {
+        return addressID;
+    }
+
     public int getMaxResults() {
         return this.maxResults;
     }
@@ -78,9 +82,6 @@ public class Lookup {
         return this.geolocation.getName();
     }
 
-    public String getAdministrativeArea() {
-        return this.administrativeArea;
-    }
 
     public String getLocality() {
         return this.locality;
@@ -98,10 +99,10 @@ public class Lookup {
         return longitude;
     }
 
+
     //endregion
 
     //region [ Setters ]
-
     public void setResult(Candidate[] result) {
         this.result = result;
     }
@@ -114,6 +115,10 @@ public class Lookup {
         this.search = search;
     }
 
+    public void setAddressID(String addressID) {
+        this.addressID = addressID;
+    }
+
     public void setMaxResults(int maxResults) {
         this.maxResults = maxResults;
     }
@@ -124,11 +129,6 @@ public class Lookup {
 
     public void setGeolocation(InternationalGeolocateType geolocation) {
         this.geolocation = geolocation;
-    }
-
-
-    public void setAdministrativeArea(String administrativeArea) {
-        this.administrativeArea = administrativeArea;
     }
 
     public void setLocality(String locality) {
