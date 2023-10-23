@@ -15,10 +15,10 @@ public class InternationalAutocompleteExample {
     public static void main(String[] args) {
         // We recommend storing your authentication credentials in environment variables.
         // for server-to-server requests, use this code:
-        //StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
+        StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         // for client-side requests (browser/mobile), use this code:
-        SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
+        //SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
 
         //            The appropriate license values to be used for your subscriptions
@@ -46,27 +46,42 @@ public class InternationalAutocompleteExample {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
+
+        String addressID = "OS0DMy8DPgNNTUpGTEhHAyA5LTo";
+
+        lookup = new Lookup("Louis");
+        lookup.setAddressID(addressID);
+        lookup.setCountry("FRA");
+        lookup.setLocality("Paris");
+        try {
+            client.send(lookup);
+
+            System.out.println("*** Result ***");
+            System.out.println();
+            printResult(lookup);
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     private static void printResult(Lookup lookup) {
         for (Candidate candidate : lookup.getResult()) {
-            System.out.print(candidate.getStreet());
-            System.out.print(" ");
-            System.out.print(candidate.getLocality());
-            System.out.print(" ");
-            System.out.print(candidate.getAdministrativeArea());
-            System.out.print(", ");
-            if (candidate.getSuperAdministrativeArea() != null && !candidate.getSuperAdministrativeArea().isEmpty()) {
-                System.out.print(candidate.getSuperAdministrativeArea());
+            if(!candidate.getAddressText().isEmpty()) {
+                System.out.print(candidate.getEntries());
+                System.out.println(candidate.getAddressText());
+                System.out.println(candidate.getAddressID());
+            } else {
+                System.out.print(candidate.getStreet());
+                System.out.print(" ");
+                System.out.print(candidate.getLocality());
+                System.out.print(" ");
+                System.out.print(candidate.getAdministrativeArea());
                 System.out.print(", ");
-            }
-            if (candidate.getSubAdministrativeArea() != null && !candidate.getSubAdministrativeArea().isEmpty()) {
-                System.out.print(candidate.getSubAdministrativeArea());
+                System.out.print(candidate.getPostalCode());
                 System.out.print(", ");
+                System.out.println(candidate.getCountryISO3());
             }
-            System.out.print(candidate.getPostalCode());
-            System.out.print(", ");
-            System.out.println(candidate.getCountryISO3());
         }
     }
 }
