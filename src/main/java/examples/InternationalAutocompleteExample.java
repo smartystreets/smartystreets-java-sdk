@@ -67,20 +67,16 @@ public class InternationalAutocompleteExample {
 
     private static void printResult(Lookup lookup) {
         for (Candidate candidate : lookup.getResult()) {
-            if(!candidate.getAddressText().isEmpty()) {
-                System.out.print(candidate.getEntries());
-                System.out.println(candidate.getAddressText());
-                System.out.println(candidate.getAddressID());
+            if(candidate.getAddressText() != null) {
+                System.out.println("Entries: " + candidate.getEntries());
+                System.out.println("Address Text: " + candidate.getAddressText());
+                System.out.println("Address ID: " + candidate.getAddressID() + "\n");
             } else {
-                System.out.print(candidate.getStreet());
-                System.out.print(" ");
-                System.out.print(candidate.getLocality());
-                System.out.print(" ");
-                System.out.print(candidate.getAdministrativeArea());
-                System.out.print(", ");
-                System.out.print(candidate.getPostalCode());
-                System.out.print(", ");
-                System.out.println(candidate.getCountryISO3());
+                System.out.println("Street: " + candidate.getStreet());
+                System.out.println("Locality: " + candidate.getLocality());
+                System.out.println("Administrative Area: " + candidate.getAdministrativeArea());
+                System.out.println("Postal Code: " + candidate.getPostalCode());
+                System.out.println("Country: " + candidate.getCountryISO3());
             }
         }
     }
