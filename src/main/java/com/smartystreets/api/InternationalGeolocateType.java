@@ -2,7 +2,7 @@ package com.smartystreets.api;
 
 public enum InternationalGeolocateType {
 
-    NONE(""), IP_ADDRESS("ip_address");
+    ADMIN_AREA("adminarea"), LOCALITY("locality"), POSTAL_CODE("postalcode"), GEOCODES("geocodes"), NONE("");
     private final String name;
 
     InternationalGeolocateType(String name){

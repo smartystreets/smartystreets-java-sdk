@@ -15,7 +15,6 @@ public class InternationalAutocompleteExampleDeprecated {
     public static void main(String[] args) {
         // We recommend storing your authentication credentials in environment variables.
         // for server-to-server requests, use this code:
-
         //StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         // for client-side requests (browser/mobile), use this code:

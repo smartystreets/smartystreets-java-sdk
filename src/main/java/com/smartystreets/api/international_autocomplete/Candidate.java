@@ -16,9 +16,9 @@ public class Candidate implements Serializable {
     private String postalCode;
     private String countryISO3;
 
-   private int entries;
-   private String addressText;
-   private String addressID;
+    private int entries;
+    private String addressText;
+    private String addressID;
 
     //region [ Fields ]
 

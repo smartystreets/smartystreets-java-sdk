@@ -19,12 +19,9 @@ public class Lookup {
     private String search;
     private String addressID;
     private int maxResults;
-    private int distance;
-    private InternationalGeolocateType geolocation;
     private String locality;
     private String postalCode;
-    private Float latitude;
-    private Float longitude;
+
 //endregion
 
     //region [ Constructors ]
@@ -34,8 +31,6 @@ public class Lookup {
      */
     public Lookup() {
         this.maxResults = MAX_RESULTS_DEFAULT;
-        this.distance = DISTANCE_DEFAULT;
-        this.geolocation = InternationalGeolocateType.NONE;
     }
 
     /**
@@ -74,15 +69,6 @@ public class Lookup {
         return this.maxResults;
     }
 
-    public int getDistance() {
-        return this.distance;
-    }
-
-    public String getGeolocation() {
-        return this.geolocation.getName();
-    }
-
-
     public String getLocality() {
         return this.locality;
     }
@@ -90,15 +76,6 @@ public class Lookup {
     public String getPostalCode() {
         return this.postalCode;
     }
-
-    public Float getLatitude() {
-        return latitude;
-    }
-
-    public Float getLongitude() {
-        return longitude;
-    }
-
 
     //endregion
 
@@ -123,28 +100,12 @@ public class Lookup {
         this.maxResults = maxResults;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public void setGeolocation(InternationalGeolocateType geolocation) {
-        this.geolocation = geolocation;
-    }
-
     public void setLocality(String locality) {
         this.locality = locality;
     }
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
-    }
-
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(Float longitude) {
-        this.longitude = longitude;
     }
 
     //endregion

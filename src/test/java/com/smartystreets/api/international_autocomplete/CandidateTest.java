@@ -12,22 +12,27 @@ public class CandidateTest {
     public void testFullJSONDeserialization() throws Exception {
 
         String rawJSON = "{\n" +
-                "\"candidates\": [\n" +
-                "{\n" +
-                "\"street\": \"12TH AV\",\n" +
-                "\"locality\": \"OCEAN GROVE\",\n" +
-                "\"administrative_area\": \"VIC\",\n" +
-                "\"postal_code\": \"3226\",\n" +
-                "\"country_iso3\": \"AUS\"\n" +
-                "},\n" +
-                "{\n" +
-                "\"street\": \"MONG FAT STREET\",\n" +
-                "\"locality\": \"TUEN MUN\",\n" +
-                "\"administrative_area\": \"TUEN MUN DISTRICT\",\n" +
-                "\"country_iso3\": \"HKG\"\n" +
-                "}\n" +
-                "]\n" +
-                "}";
+            "\"candidates\": [\n" +
+            "{\n" +
+            "\"street\": \"12TH AV\",\n" +
+            "\"locality\": \"OCEAN GROVE\",\n" +
+            "\"administrative_area\": \"VIC\",\n" +
+            "\"postal_code\": \"3226\",\n" +
+            "\"country_iso3\": \"AUS\"\n" +
+            "},\n" +
+            "{\n" +
+            "\"street\": \"MONG FAT STREET\",\n" +
+            "\"locality\": \"TUEN MUN\",\n" +
+            "\"administrative_area\": \"TUEN MUN DISTRICT\",\n" +
+            "\"country_iso3\": \"HKG\"\n" +
+            "},\n" +
+            "{\n" +
+            "\"entries\": 54,\n" +
+            "\"address_text\": \"11 Laguna Pky Brechin, ON, L0K 1B0\",\n" +
+            "\"address_id\": \"HB5SHA8DBQ8QKS0mED0nRykgGEctOhM2LRs\"\n" +
+            "}\n" +
+            "]\n" +
+            "}";
 
         byte[] bytes = rawJSON.getBytes();
 
@@ -43,5 +48,8 @@ public class CandidateTest {
         assertEquals("TUEN MUN", candidates[1].getLocality());
         assertEquals("TUEN MUN DISTRICT", candidates[1].getAdministrativeArea());
         assertEquals("HKG", candidates[1].getCountryISO3());
+        assertEquals(54, candidates[2].getEntries());
+        assertEquals("11 Laguna Pky Brechin, ON, L0K 1B0", candidates[2].getAddressText());
+        assertEquals("HB5SHA8DBQ8QKS0mED0nRykgGEctOhM2LRs", candidates[2].getAddressID());
     }
 }
