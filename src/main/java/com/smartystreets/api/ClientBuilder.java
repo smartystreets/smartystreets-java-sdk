@@ -14,6 +14,7 @@ import java.util.Map;
 public class ClientBuilder {
     private final static String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smarty.com/verify";
     private final static String INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smarty.com/v2/lookup";
+    private final static String INTERNATIONAL_AUTOCOMPLETE_API_URL_DEPRECATED = "https://international-autocomplete.api.smarty.com/lookup";
     private final static String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smarty.com/suggest";
     private final static String US_AUTOCOMPLETE_API_PRO_URL = "https://us-autocomplete-pro.api.smarty.com/lookup";
     private final static String US_EXTRACT_API_URL = "https://us-extract.api.smarty.com/";
@@ -141,6 +142,11 @@ public class ClientBuilder {
     public com.smartystreets.api.international_autocomplete.Client buildInternationalAutcompleteApiClient() {
         this.ensureURLPrefixNotNull(this.INTERNATIONAL_AUTOCOMPLETE_API_URL);
         return new com.smartystreets.api.international_autocomplete.Client(this.buildSender(), this.serializer);
+    }
+
+    public com.smartystreets.api.international_autocomplete_deprecated.Client buildInternationalAutocompleteApiClientDeprecated() {
+        this.ensureURLPrefixNotNull(this.INTERNATIONAL_AUTOCOMPLETE_API_URL_DEPRECATED);
+        return new com.smartystreets.api.international_autocomplete_deprecated.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_autocomplete.Client buildUsAutocompleteApiClient() {
