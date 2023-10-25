@@ -1,7 +1,7 @@
 package com.smartystreets.api.us_street;
 
 public enum OutputFormat {
-    DEFAULT("default"), PROJECT_USA("project-usa"), CASS("cass");
+    DEFAULT("default"), PROJECT_USA("project-usa");
 
     private final String name;
 

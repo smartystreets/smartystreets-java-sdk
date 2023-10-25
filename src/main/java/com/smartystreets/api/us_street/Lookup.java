@@ -141,8 +141,6 @@ public class Lookup implements Serializable {
             return "default";
         if (this.format.equals("project-usa"))
             return "project-usa";
-        if  (this.format.equals("cass"))
-            return "cass";
         return null;
     }
 
