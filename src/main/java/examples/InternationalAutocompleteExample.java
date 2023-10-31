@@ -46,23 +46,6 @@ public class InternationalAutocompleteExample {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-
-        String addressID = "OS0DMy8DPgNNTUpGTEhHAyA5LTo";
-
-        lookup = new Lookup("Louis");
-        lookup.setAddressID(addressID);
-        lookup.setCountry("FRA");
-        lookup.setLocality("Paris");
-        try {
-            client.send(lookup);
-
-            System.out.println("*** Result ***");
-            System.out.println();
-            printResult(lookup);
-        } catch (SmartyException | IOException | InterruptedException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
     }
 
     private static void printResult(Lookup lookup) {
