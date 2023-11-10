@@ -20,6 +20,7 @@ public class ClientBuilder {
     private final static String US_STREET_API_URL = "https://us-street.api.smarty.com/street-address";
     private final static String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smarty.com/lookup";
     private final static String US_REVERSE_GEO_API_URL = "https://us-reverse-geo.api.smarty.com/lookup";
+    private static final String US_ENRICHMENT_API_URL = "https://us-enrichment.api.smarty.com/lookup";
     private Credentials signer;
     private Serializer serializer;
     private Sender httpSender;
@@ -134,43 +135,48 @@ public class ClientBuilder {
     }
 
     public com.smartystreets.api.international_street.Client buildInternationalStreetApiClient() {
-        this.ensureURLPrefixNotNull(this.INTERNATIONAL_STREET_API_URL);
+        this.ensureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
         return new com.smartystreets.api.international_street.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.international_autocomplete.Client buildInternationalAutcompleteApiClient() {
-        this.ensureURLPrefixNotNull(this.INTERNATIONAL_AUTOCOMPLETE_API_URL);
+        this.ensureURLPrefixNotNull(INTERNATIONAL_AUTOCOMPLETE_API_URL);
         return new com.smartystreets.api.international_autocomplete.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_autocomplete.Client buildUsAutocompleteApiClient() {
-        this.ensureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_URL);
+        this.ensureURLPrefixNotNull(US_AUTOCOMPLETE_API_URL);
         return new com.smartystreets.api.us_autocomplete.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_autocomplete_pro.Client buildUsAutocompleteProApiClient() {
-        this.ensureURLPrefixNotNull(this.US_AUTOCOMPLETE_API_PRO_URL);
+        this.ensureURLPrefixNotNull(US_AUTOCOMPLETE_API_PRO_URL);
         return new com.smartystreets.api.us_autocomplete_pro.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_extract.Client buildUsExtractApiClient() {
-        this.ensureURLPrefixNotNull(this.US_EXTRACT_API_URL);
+        this.ensureURLPrefixNotNull(US_EXTRACT_API_URL);
         return new com.smartystreets.api.us_extract.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_street.Client buildUsStreetApiClient() {
-        this.ensureURLPrefixNotNull(this.US_STREET_API_URL);
+        this.ensureURLPrefixNotNull(US_STREET_API_URL);
         return new com.smartystreets.api.us_street.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_zipcode.Client buildUsZipCodeApiClient() {
-        this.ensureURLPrefixNotNull(this.US_ZIP_CODE_API_URL);
+        this.ensureURLPrefixNotNull(US_ZIP_CODE_API_URL);
         return new com.smartystreets.api.us_zipcode.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_reverse_geo.Client buildUsReverseGeoClient() {
-        this.ensureURLPrefixNotNull(this.US_REVERSE_GEO_API_URL);
+        this.ensureURLPrefixNotNull(US_REVERSE_GEO_API_URL);
         return new com.smartystreets.api.us_reverse_geo.Client(this.buildSender(), this.serializer);
+    }
+
+    public com.smartystreets.api.us_enrichment.Client buildUsEnrichmentClient() {
+        this.ensureURLPrefixNotNull(US_ENRICHMENT_API_URL);
+        return new com.smartystreets.api.us_enrichment.Client(this.buildSender(), this.serializer);
     }
 
     private Sender buildSender() {
