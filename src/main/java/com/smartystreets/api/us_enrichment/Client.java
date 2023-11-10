@@ -19,6 +19,14 @@ public class Client {
         this.serializer = serializer;
     }
 
+    public Result sendPropertyFinancialLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
+        return send(new Lookup(smartyKey, "property","financial"));
+    }
+
+    public Result sendPropertyPrincipalLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
+        return send(new Lookup(smartyKey, "property","principal"));
+    }
+
     private Result send(Lookup lookup) throws IOException, SmartyException, InterruptedException {
         if (lookup == null || lookup.getSmartyKey() == null || lookup.getSmartyKey().isEmpty())
             throw new SmartyException("Client.send() requires a Lookup with the 'smartyKey' field set");
