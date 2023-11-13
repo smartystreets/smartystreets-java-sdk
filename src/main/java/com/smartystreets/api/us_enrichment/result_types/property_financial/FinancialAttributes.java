@@ -2,8 +2,6 @@ package com.smartystreets.api.us_enrichment.result_types.property_financial;
 
 import com.smartystreets.api.us_enrichment.result_types.Attributes;
 
-import java.util.List;
-
 public class FinancialAttributes extends Attributes {
     public String assessed_improvement_percent;
     public String assessed_improvement_value;

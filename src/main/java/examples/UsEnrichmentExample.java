@@ -1,12 +1,14 @@
 package examples;
 
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
+import com.smartystreets.api.us_enrichment.result_types.Result;
+import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class UsEnrichmentExample {
     public static void main(String[] args) {
@@ -21,17 +23,17 @@ public class UsEnrichmentExample {
 
         // Documentation for input fields can be found at:
         // https://www.smarty.com/docs/cloud/us-address-enrichment-api
-        Result result = null;
+        PrincipalResponse[] results = null;
         try {
-            result = client.sendPropertyPrincipalLookup("1682393594");
+            results = client.sendPropertyPrincipalLookup("1682393594");
         }
         catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
 
-        if(result != null){
-            System.out.println(result.toString());
+        if(results != null){
+            System.out.println(Arrays.toString(results));
         } else {
             System.out.println("Result was null");
         }

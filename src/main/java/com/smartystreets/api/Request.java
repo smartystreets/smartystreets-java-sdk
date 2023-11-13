@@ -92,6 +92,10 @@ public class Request {
         this.urlPrefix = urlPrefix;
     }
 
+    public String getUrlPrefix() {
+        return urlPrefix;
+    }
+
     public void setContentType(String contentType) {
         this.contentType = contentType;
     }

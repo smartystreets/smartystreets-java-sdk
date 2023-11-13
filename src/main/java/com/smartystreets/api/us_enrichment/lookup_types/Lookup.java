@@ -1,19 +1,18 @@
-package com.smartystreets.api.us_enrichment;
+package com.smartystreets.api.us_enrichment.lookup_types;
 
-public class Lookup {
-    private String smartyKey;
-    private String datasetName;
-    private String dataSubsetName;
-    private Result result;
+import com.smartystreets.api.Serializer;
+
+import java.io.IOException;
+
+public abstract class Lookup {
+    private final String smartyKey;
+    private final String datasetName;
+    private final String dataSubsetName;
 
     public Lookup(String smartyKey, String datasetName, String dataSubsetName) {
         this.smartyKey = smartyKey;
         this.datasetName = datasetName;
         this.dataSubsetName = dataSubsetName;
-    }
-
-    public Result getResults() {
-        return result;
     }
 
     public String getSmartyKey() {
@@ -28,7 +27,6 @@ public class Lookup {
         return dataSubsetName;
     }
 
-    public void setResults(Result result) {
-        this.result = result;
-    }
+    public abstract void deserializeAndSetResults(Serializer serializer, byte[] payload) throws IOException;
+
 }

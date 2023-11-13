@@ -5,8 +5,11 @@ import com.smartystreets.api.Response;
 import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
-import com.smartystreets.api.us_enrichment.Lookup;
-import com.smartystreets.api.us_enrichment.Result;
+import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
+import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
+import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
+import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
+import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 
 import java.io.IOException;
 
@@ -19,29 +22,31 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public Result sendPropertyFinancialLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
-        return send(new Lookup(smartyKey, "property","financial"));
+    public FinancialResponse[] sendPropertyFinancialLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
+        PropertyFinancialLookup lookup = new PropertyFinancialLookup(smartyKey);
+        send(lookup);
+        return lookup.getResults();
     }
 
-    public Result sendPropertyPrincipalLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
-        return send(new Lookup(smartyKey, "property","principal"));
+    public PrincipalResponse[] sendPropertyPrincipalLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
+        PropertyPrincipalLookup lookup = new PropertyPrincipalLookup(smartyKey);
+        send(lookup);
+        return lookup.getResults();
     }
 
-    private Result send(Lookup lookup) throws IOException, SmartyException, InterruptedException {
+    private void send(Lookup lookup) throws IOException, SmartyException, InterruptedException {
         if (lookup == null || lookup.getSmartyKey() == null || lookup.getSmartyKey().isEmpty())
             throw new SmartyException("Client.send() requires a Lookup with the 'smartyKey' field set");
 
         Request request = this.buildRequest(lookup);
         Response response = this.sender.send(request);
-        Result result = this.serializer.deserialize(response.getPayload(), Result.class);
 
-        lookup.setResults(result);
-        return result;
+        lookup.deserializeAndSetResults(serializer, response.getPayload());
     }
 
     private Request buildRequest(Lookup lookup) {
         Request request = new Request();
-        request.setUrlPrefix(lookup.getSmartyKey() + "/" + lookup.getDatasetName() + "/" + lookup.getDataSubsetName());
+        request.setUrlPrefix("/" + lookup.getSmartyKey() + "/" + lookup.getDatasetName() + "/" + lookup.getDataSubsetName());
         return request;
     }
 }
