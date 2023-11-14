@@ -1,9 +1,8 @@
 package com.smartystreets.api.us_enrichment.result_types;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Result {
+public class Result extends EnrichmentToStringer {
     @JsonProperty("smarty_key")
     private String smartyKey;
     @JsonProperty("data_set_name")

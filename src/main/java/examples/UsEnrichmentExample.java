@@ -5,6 +5,7 @@ import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
 import com.smartystreets.api.us_enrichment.result_types.Result;
+import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 
 import java.io.IOException;
@@ -21,8 +22,6 @@ public class UsEnrichmentExample {
 
         Client client = new ClientBuilder(credentials).buildUsEnrichmentClient();
 
-        // Documentation for input fields can be found at:
-        // https://www.smarty.com/docs/cloud/us-address-enrichment-api
         PrincipalResponse[] results = null;
         try {
             results = client.sendPropertyPrincipalLookup("1682393594");
@@ -34,6 +33,21 @@ public class UsEnrichmentExample {
 
         if(results != null){
             System.out.println(Arrays.toString(results));
+        } else {
+            System.out.println("Result was null");
+        }
+
+        FinancialResponse[] financialResults = null;
+        try {
+            financialResults = client.sendPropertyFinancialLookup("1682393594");
+        }
+        catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if(results != null){
+            System.out.println(Arrays.toString(financialResults));
         } else {
             System.out.println("Result was null");
         }

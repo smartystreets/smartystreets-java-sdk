@@ -1,6 +1,9 @@
 package com.smartystreets.api.us_enrichment.result_types.property_financial;
 
-public class FinancialHistoryEntry {
+import com.smartystreets.api.us_enrichment.result_types.EnrichmentToStringer;
+
+public class FinancialHistoryEntry extends EnrichmentToStringer {
+
     public String code_title_company;
     public String document_type_description;
     public String instrument_date;

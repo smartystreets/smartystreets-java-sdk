@@ -3,7 +3,6 @@ package com.smartystreets.api.us_enrichment;
 import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.RequestCapturingSender;
-import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 import org.junit.Assert;
