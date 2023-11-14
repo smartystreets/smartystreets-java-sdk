@@ -25,7 +25,7 @@ public class InternationalAutocompleteExample {
         //            can be found on the Subscriptions page of the account dashboard.
         //            https://www.smartystreets.com/docs/cloud/licensing
         ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("international-autocomplete-cloud");
+        licenses.add("international-autocomplete-v2-cloud");
         Client client = new ClientBuilder(credentials).withLicenses(licenses).buildInternationalAutcompleteApiClient();
         Lookup lookup = new Lookup("Louis");
 
