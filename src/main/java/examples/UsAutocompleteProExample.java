@@ -38,12 +38,9 @@ public class UsAutocompleteProExample {
             // Documentation for input fields can be found at:
             // https://smartystreets.com/docs/cloud/us-autocomplete-api#pro-http-request-url
 
-            lookup.addStateFilter("MA");
-            lookup.addCityFilter("Denver");
-            lookup.addCityFilter("Orem");
-            lookup.addPreferState("UT");
+            lookup.addCityFilter("Denver,Aurora,CO");
+            lookup.addCityFilter("Orem,UT");
             lookup.addPreferState("CO");
-            lookup.setSelected("1042 W Center St Apt A (24) Orem UT 84057");
             lookup.setPreferRatio(33);
             lookup.setSource("all");
 
