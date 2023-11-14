@@ -17,14 +17,11 @@ public class Lookup {
     private Candidate[] result;
     private String country;
     private String search;
+    private String addressID;
     private int maxResults;
-    private int distance;
-    private InternationalGeolocateType geolocation;
-    private String administrativeArea;
     private String locality;
     private String postalCode;
-    private Float latitude;
-    private Float longitude;
+
 //endregion
 
     //region [ Constructors ]
@@ -34,8 +31,6 @@ public class Lookup {
      */
     public Lookup() {
         this.maxResults = MAX_RESULTS_DEFAULT;
-        this.distance = DISTANCE_DEFAULT;
-        this.geolocation = InternationalGeolocateType.NONE;
     }
 
     /**
@@ -66,20 +61,12 @@ public class Lookup {
         return this.search;
     }
 
+    public String getAddressID() {
+        return addressID;
+    }
+
     public int getMaxResults() {
         return this.maxResults;
-    }
-
-    public int getDistance() {
-        return this.distance;
-    }
-
-    public String getGeolocation() {
-        return this.geolocation.getName();
-    }
-
-    public String getAdministrativeArea() {
-        return this.administrativeArea;
     }
 
     public String getLocality() {
@@ -90,18 +77,9 @@ public class Lookup {
         return this.postalCode;
     }
 
-    public Float getLatitude() {
-        return latitude;
-    }
-
-    public Float getLongitude() {
-        return longitude;
-    }
-
     //endregion
 
     //region [ Setters ]
-
     public void setResult(Candidate[] result) {
         this.result = result;
     }
@@ -114,21 +92,12 @@ public class Lookup {
         this.search = search;
     }
 
+    public void setAddressID(String addressID) {
+        this.addressID = addressID;
+    }
+
     public void setMaxResults(int maxResults) {
         this.maxResults = maxResults;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public void setGeolocation(InternationalGeolocateType geolocation) {
-        this.geolocation = geolocation;
-    }
-
-
-    public void setAdministrativeArea(String administrativeArea) {
-        this.administrativeArea = administrativeArea;
     }
 
     public void setLocality(String locality) {
@@ -137,14 +106,6 @@ public class Lookup {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
-    }
-
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(Float longitude) {
-        this.longitude = longitude;
     }
 
     //endregion

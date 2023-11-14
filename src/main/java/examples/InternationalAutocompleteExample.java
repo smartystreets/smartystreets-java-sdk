@@ -15,10 +15,10 @@ public class InternationalAutocompleteExample {
     public static void main(String[] args) {
         // We recommend storing your authentication credentials in environment variables.
         // for server-to-server requests, use this code:
-        //StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
+        StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         // for client-side requests (browser/mobile), use this code:
-        SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
+        //SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
 
         //            The appropriate license values to be used for your subscriptions
@@ -50,23 +50,17 @@ public class InternationalAutocompleteExample {
 
     private static void printResult(Lookup lookup) {
         for (Candidate candidate : lookup.getResult()) {
-            System.out.print(candidate.getStreet());
-            System.out.print(" ");
-            System.out.print(candidate.getLocality());
-            System.out.print(" ");
-            System.out.print(candidate.getAdministrativeArea());
-            System.out.print(", ");
-            if (candidate.getSuperAdministrativeArea() != null && !candidate.getSuperAdministrativeArea().isEmpty()) {
-                System.out.print(candidate.getSuperAdministrativeArea());
-                System.out.print(", ");
+            if(candidate.getAddressText() != null) {
+                System.out.println("Entries: " + candidate.getEntries());
+                System.out.println("Address Text: " + candidate.getAddressText());
+                System.out.println("Address ID: " + candidate.getAddressID() + "\n");
+            } else {
+                System.out.println("Street: " + candidate.getStreet());
+                System.out.println("Locality: " + candidate.getLocality());
+                System.out.println("Administrative Area: " + candidate.getAdministrativeArea());
+                System.out.println("Postal Code: " + candidate.getPostalCode());
+                System.out.println("Country: " + candidate.getCountryISO3());
             }
-            if (candidate.getSubAdministrativeArea() != null && !candidate.getSubAdministrativeArea().isEmpty()) {
-                System.out.print(candidate.getSubAdministrativeArea());
-                System.out.print(", ");
-            }
-            System.out.print(candidate.getPostalCode());
-            System.out.print(", ");
-            System.out.println(candidate.getCountryISO3());
         }
     }
 }

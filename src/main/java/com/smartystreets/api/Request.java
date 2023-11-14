@@ -75,6 +75,10 @@ public class Request {
         return this.payload;
     }
 
+    public String getUrlPrefix()  {
+        return this.urlPrefix;
+    }
+
     public String getContentType() {
         return contentType;
     }

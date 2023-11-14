@@ -9,15 +9,25 @@ import static org.junit.Assert.assertEquals;
 public class URLPrefixSenderTest {
 
     @Test
-    public void testProvidedURLOverridesRequestURL() throws Exception {
+    public void testRequestURLPresent() throws Exception {
         Request request = new Request();
-        request.setUrlPrefix("http://www.google.com/the/path/stays");
-        String override = "https://smartystreets.com/the/path/is/ignored?";
+        request.setUrlPrefix("/jimbo");
         Sender inner = new MockSender(new Response(123, null));
-        Sender sender = new URLPrefixSender(override, inner);
+        Sender sender = new URLPrefixSender("http://mysite.com/lookup", inner);
 
         Response response = sender.send(request);
 
-        assertEquals(override, request.getUrl());
+        assertEquals("http://mysite.com/lookup/jimbo?", request.getUrl());       
+    }
+
+    @Test
+    public void testRequestURLNotPresent() throws Exception {
+        Request request = new Request();
+        Sender inner = new MockSender(new Response(123, null));
+        Sender sender = new URLPrefixSender("http://mysite.com/lookup", inner);
+
+        Response response = sender.send(request);
+
+        assertEquals("http://mysite.com/lookup?", request.getUrl());       
     }
 }
