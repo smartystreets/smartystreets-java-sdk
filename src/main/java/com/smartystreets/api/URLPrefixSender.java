@@ -20,7 +20,6 @@ public class URLPrefixSender implements Sender{
         } else {
             request.setUrlPrefix(this.urlPrefix);
         }
-
         return this.inner.send(request);
     }
 }
