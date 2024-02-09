@@ -26,6 +26,7 @@ public class Client {
         PropertyFinancialLookup lookup = new PropertyFinancialLookup(smartyKey);
         send(lookup);
         return lookup.getResults();
+        
     }
 
     public PrincipalResponse[] sendPropertyPrincipalLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
