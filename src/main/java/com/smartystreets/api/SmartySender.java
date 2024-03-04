@@ -15,17 +15,16 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class SmartySender implements Sender {
-    private int maxTimeOut;
-    private OkHttpClient client;
+    private final int maxTimeOut;
+    private final OkHttpClient client;
 
-    public SmartySender() {
-        this.maxTimeOut = 10000;
-        this.client = new OkHttpClient();
-    }
-
-    public SmartySender(int maxTimeout) {
-        this();
-        this.maxTimeOut = maxTimeout;
+    SmartySender(int maxTimeOut) {
+        this.maxTimeOut = maxTimeOut;
+        this.client = new OkHttpClient.Builder()
+                .writeTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
+                .readTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
+                .connectTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     SmartySender(int maxTimeOut, Proxy proxy) {
@@ -38,8 +37,8 @@ public class SmartySender implements Sender {
                 .build();
     }
 
-    SmartySender(OkHttpClient client) {
-        this();
+    SmartySender(int maxTimeOut, OkHttpClient client) {
+        this.maxTimeOut = maxTimeOut;
         this.client = client;
     }
 

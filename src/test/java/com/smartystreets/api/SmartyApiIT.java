@@ -25,7 +25,7 @@ public class SmartyApiIT {
     @Test
     public void testInternationalAutocomplete() throws Exception {
         ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("international-autocomplete-cloud");
+        licenses.add("international-autocomplete-v2-cloud");
         com.smartystreets.api.international_autocomplete.Client client = new ClientBuilder(credentials).withLicenses(licenses).buildInternationalAutcompleteApiClient();
 
         com.smartystreets.api.international_autocomplete.Lookup lookup = new com.smartystreets.api.international_autocomplete.Lookup("Louis");

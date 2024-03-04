@@ -14,9 +14,11 @@ import static org.mockito.Mockito.when;
 
 public class SmartySenderTest {
 
+    final static int MAX_TIMEOUT = 1;
+
     @Test
     public void testHttpRequestContainsCorrectHeaders() throws Exception {
-        SmartySender sender = new SmartySender(mockHttpClient("{\"key\": \"value\"}", 200));
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, mockHttpClient("{\"key\": \"value\"}", 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
         request.putHeader("X-name1", "value1");
@@ -32,7 +34,7 @@ public class SmartySenderTest {
     @Test
     public void testHttpRequestContainsGetWhenAppropriate() throws Exception {
         String responseString = "This is a GET response.";
-        SmartySender sender = new SmartySender(mockHttpClient(responseString, 200));
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, mockHttpClient(responseString, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -44,7 +46,7 @@ public class SmartySenderTest {
     @Test
     public void testHttpRequestContainsPostWhenAppropriate() throws Exception {
         String responseString = "This is a POST response.";
-        SmartySender sender = new SmartySender(mockHttpClient(responseString, 200));
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, mockHttpClient(responseString, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -54,26 +56,10 @@ public class SmartySenderTest {
         assertArrayEquals(responseString.getBytes(), response.getPayload());
     }
 
-//    @Test
-//    public void testHttpRequestContainsCorrectContent() throws Exception {
-//        SmartySender sender = new SmartySender(this.getMockClient(200));
-//        Request request = new Request();
-//        request.setUrlPrefix("http://localhost");
-//
-//        request.setPayload("This is the test content.".getBytes());
-//        sender.send(request);
-//
-//        assertEquals("This is the test content.", this.httpRequest.bodyPublisher().toString());
-//    }
-
-    //endregion
-
-    //region [ Response Packaging ]
-
     @Test
     public void testResponseContainsCorrectPayload() throws Exception {
         String responseBody = "{\"key\": \"value\"}";
-        SmartySender sender = new SmartySender(mockHttpClient(responseBody, 200));
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, mockHttpClient(responseBody, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -85,7 +71,7 @@ public class SmartySenderTest {
     @Test
     public void testResponseContainsStatusCode200OnSuccess() throws Exception {
         String responseBody = "{\"key\": \"value\"}";
-        SmartySender sender = new SmartySender(mockHttpClient(responseBody, 200));
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, mockHttpClient(responseBody, 200));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
@@ -97,7 +83,7 @@ public class SmartySenderTest {
     @Test
     public void testResponseContainsStatusCode400WhenA400IsThrown() throws Exception {
         String responseBody = "{\"key\": \"value\"}";
-        SmartySender sender = new SmartySender(mockHttpClient(responseBody, 400));
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, mockHttpClient(responseBody, 400));
         Request request = new Request();
         request.setUrlPrefix("http://localhost");
 
