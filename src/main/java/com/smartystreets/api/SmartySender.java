@@ -26,12 +26,7 @@ public class SmartySender implements Sender {
     }
 
     public SmartySender(int maxTimeout) {
-        this.maxTimeOut = maxTimeout;
-        this.client = new OkHttpClient.Builder()
-                .writeTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
-                .readTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
-                .connectTimeout(this.maxTimeOut, TimeUnit.MILLISECONDS)
-                .build();
+        this(maxTimeout, Proxy.NO_PROXY);
     }
 
     SmartySender(int maxTimeOut, Proxy proxy) {
