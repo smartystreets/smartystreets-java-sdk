@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class SmartySender implements Sender {
 
-    public static final int DEFAULT_TIMEOUT_IN_MILLISECONDS = 10000;
+    private static final int DEFAULT_TIMEOUT_IN_MILLISECONDS = 10000;
 
     private final int maxTimeOut;
     private final OkHttpClient client;
