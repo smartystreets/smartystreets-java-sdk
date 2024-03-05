@@ -46,7 +46,7 @@ public class Client {
 
     private Request buildRequest(Lookup lookup) {
         Request request = new Request();
-        request.setUrlPrefix("/" + lookup.getSmartyKey() + "/" + lookup.getDatasetName() + "/" + lookup.getDataSubsetName());
+        request.setUrlComponents("/" + lookup.getSmartyKey() + "/" + lookup.getDatasetName() + "/" + lookup.getDataSubsetName());
         return request;
     }
 }

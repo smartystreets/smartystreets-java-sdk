@@ -15,11 +15,8 @@ public class URLPrefixSender implements Sender{
     }
 
     public Response send(Request request) throws IOException, SmartyException, InterruptedException {
-        if(request.getUrlPrefix() != null && !request.getUrlPrefix().isEmpty()) {
-            request.setUrlPrefix(this.urlPrefix + request.getUrlPrefix());
-        } else {
-            request.setUrlPrefix(this.urlPrefix);
-        }
+        request.setUrlPrefix(this.urlPrefix);
+
         return this.inner.send(request);
     }
 }
