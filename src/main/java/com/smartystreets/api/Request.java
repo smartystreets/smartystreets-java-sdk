@@ -11,11 +11,13 @@ public class Request {
     private final Map<String, String> parameters;
     private String urlPrefix;
     private String method;
+    private String urlComponents;
     private String contentType;
     private byte[] payload;
 
     public Request() {
         this.urlPrefix = "";
+        this.urlComponents = "";
         this.method = "GET";
         this.headers = new HashMap<>();
         this.parameters = new LinkedHashMap<>();
@@ -75,10 +77,6 @@ public class Request {
         return this.payload;
     }
 
-    public String getUrlPrefix()  {
-        return this.urlPrefix;
-    }
-
     public String getContentType() {
         return contentType;
     }
@@ -93,7 +91,11 @@ public class Request {
     }
 
     public void setUrlPrefix(String urlPrefix) {
-        this.urlPrefix = urlPrefix;
+        this.urlPrefix = urlPrefix + urlComponents;
+    }
+
+    public void setUrlComponents(String urlComponents) {
+        this.urlComponents = urlComponents;
     }
 
     public void setContentType(String contentType) {

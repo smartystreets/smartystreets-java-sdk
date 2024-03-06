@@ -38,7 +38,7 @@ public class Client {
         Request request = new Request();
 
         if(lookup.getAddressID() != null && !lookup.getAddressID().isEmpty()) {
-            request.setUrlPrefix("/" + lookup.getAddressID());
+            request.setUrlComponents("/" + lookup.getAddressID());
         }
 
         request.putParameter("country", lookup.getCountry());
