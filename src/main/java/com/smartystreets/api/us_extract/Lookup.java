@@ -67,8 +67,6 @@ public class Lookup {
             return null;
         if (this.match.equals("strict") )
             return "strict";
-        if (this.match.equals("range") )
-            return "range";
         if (this.match.equals("invalid") )
             return "invalid";
         if (this.match.equals("enhanced") )

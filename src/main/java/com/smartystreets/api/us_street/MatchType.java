@@ -1,7 +1,7 @@
 package com.smartystreets.api.us_street;
 
 public enum MatchType {
-    STRICT("strict"), RANGE("range"), INVALID("invalid"), ENHANCED("enhanced");
+    STRICT("strict"), INVALID("invalid"), ENHANCED("enhanced");
 
     private final String name;
 
