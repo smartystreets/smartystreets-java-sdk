@@ -30,6 +30,7 @@ public class ClientBuilder {
     private Proxy proxy;
     private Map<String, Object> customHeaders;
     private List<String> licenses = new ArrayList<>();
+    private String ip;
 
     private ClientBuilder() {
         this.serializer = new SmartySerializer();
@@ -83,7 +84,7 @@ public class ClientBuilder {
         this.serializer = serializer;
         return this;
     }
-
+    
     /**
      * This may be useful when using a local installation of the SmartyStreets APIs.
      * @param baseUrl Defaults to the URL for the API corresponding to the <b>Client</b> object being built.
@@ -99,7 +100,7 @@ public class ClientBuilder {
      * @param customHeaders A String to Object <b>Map</b> of header name/value pairs.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
-    public ClientBuilder withCustomHeaders(Map<String, Object> customHeaders) {
+    public ClientBuilder  withCustomHeaders(Map<String, Object> customHeaders) {
         this.customHeaders = customHeaders;
         return this;
     }
@@ -113,6 +114,11 @@ public class ClientBuilder {
      */
     public ClientBuilder withProxy(Proxy.Type proxyType, String proxyHost, int proxyPort) {
         this.proxy = new Proxy(proxyType, new InetSocketAddress(proxyHost, proxyPort));
+        return this;
+    }
+    
+    public ClientBuilder withXForwardedFor(String ip){
+        this.ip = ip;
         return this;
     }
 
@@ -190,7 +196,8 @@ public class ClientBuilder {
             sender = new SmartySender(this.maxTimeout);
 
         sender = new StatusCodeSender(sender);
-
+        if (this.ip != null)
+            customHeaders.put("X-Forwarded-For", this.ip);
         if (this.customHeaders != null)
             sender = new CustomHeaderSender(this.customHeaders, sender);
 
@@ -201,8 +208,10 @@ public class ClientBuilder {
 
         if (this.maxRetries > 0)
             sender = new RetrySender(this.maxRetries, new MySleeper(), new MyLogger(), sender);
-
+        
         sender = new LicenseSender(this.licenses, sender);
+
+        
 
         return sender;
     }
