@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The ClientBuilder class helps you build a client object for one of the supported SmartyStreets APIs.<br>
- * You can use ClientBuilder's methods to customize settings like maximum retries or timeout duration. These methods<br>
+ * The ClientBuilder class helps you build a client object for one of the
+ * supported SmartyStreets APIs.<br>
+ * You can use ClientBuilder's methods to customize settings like maximum
+ * retries or timeout duration. These methods<br>
  * are chainable, so you can usually get set up with one line of code.
  */
 public class ClientBuilder {
@@ -48,7 +50,8 @@ public class ClientBuilder {
     }
 
     /**
-     * @param maxRetries The maximum number of times to retry sending the request to the API. (Default is 5)
+     * @param maxRetries The maximum number of times to retry sending the request to
+     *                   the API. (Default is 5)
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder retryAtMost(int maxRetries) {
@@ -57,7 +60,8 @@ public class ClientBuilder {
     }
 
     /**
-     * @param maxTimeout The maximum time (in milliseconds) to wait for a connection, and also to wait for <br>
+     * @param maxTimeout The maximum time (in milliseconds) to wait for a
+     *                   connection, and also to wait for <br>
      *                   the response to be read. (Default is 10000)
      * @return Returns <b>this</b> to accommodate method chaining.
      */
@@ -67,7 +71,8 @@ public class ClientBuilder {
     }
 
     /**
-     * @param sender Default is a series of nested senders. See <b>buildSender()</b>.
+     * @param sender Default is a series of nested senders. See
+     *               <b>buildSender()</b>.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withSender(Sender sender) {
@@ -77,6 +82,7 @@ public class ClientBuilder {
 
     /**
      * Changes the <b>Serializer</b> from the default <b>SmartySerializer</b>.
+     * 
      * @param serializer An object that implements the <b>Serializer</b> interface.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
@@ -84,10 +90,12 @@ public class ClientBuilder {
         this.serializer = serializer;
         return this;
     }
-    
+
     /**
      * This may be useful when using a local installation of the SmartyStreets APIs.
-     * @param baseUrl Defaults to the URL for the API corresponding to the <b>Client</b> object being built.
+     * 
+     * @param baseUrl Defaults to the URL for the API corresponding to the
+     *                <b>Client</b> object being built.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withCustomBaseUrl(String baseUrl) {
@@ -97,16 +105,19 @@ public class ClientBuilder {
 
     /**
      * Use this to add any additional headers you need.
-     * @param customHeaders A String to Object <b>Map</b> of header name/value pairs.
+     * 
+     * @param customHeaders A String to Object <b>Map</b> of header name/value
+     *                      pairs.
      * @return Returns <b>this</b> to accommodate method chaining.
      */
-    public ClientBuilder  withCustomHeaders(Map<String, Object> customHeaders) {
+    public ClientBuilder withCustomHeaders(Map<String, Object> customHeaders) {
         this.customHeaders = customHeaders;
         return this;
     }
 
     /**
      * Use this to specify a proxy through which to send all lookups.
+     * 
      * @param proxyType Choose a java.net.Proxy.Type.
      * @param proxyHost The host of the proxy server (do not include the port).
      * @param proxyPort The port on the proxy server to which you wish to connect.
@@ -116,14 +127,16 @@ public class ClientBuilder {
         this.proxy = new Proxy(proxyType, new InetSocketAddress(proxyHost, proxyPort));
         return this;
     }
-    
-    public ClientBuilder withXForwardedFor(String ip){
+
+    public ClientBuilder withXForwardedFor(String ip) {
         this.ip = ip;
         return this;
     }
 
     /**
-     * Enables debug mode, which will print information about the HTTP request and response to the console.
+     * Enables debug mode, which will print information about the HTTP request and
+     * response to the console.
+     * 
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withDebug() {
@@ -133,6 +146,7 @@ public class ClientBuilder {
 
     /**
      * Allows caller to specify licenses (aka "tracks") they wish to use.
+     * 
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withLicenses(List<String> licenses) {
@@ -190,28 +204,29 @@ public class ClientBuilder {
             return this.httpSender;
 
         Sender sender;
-        if (this.proxy != null)
+        if (this.proxy != null) {
             sender = new SmartySender(this.maxTimeout, this.proxy);
-        else
+        } else {
             sender = new SmartySender(this.maxTimeout);
+        }
 
         sender = new StatusCodeSender(sender);
-        if (this.ip != null)
+        if (this.ip != null) {
             customHeaders.put("X-Forwarded-For", this.ip);
-        if (this.customHeaders != null)
+        }
+        if (this.customHeaders != null) {
             sender = new CustomHeaderSender(this.customHeaders, sender);
-
-        if (this.signer != null)
+        }
+        if (this.signer != null) {
             sender = new SigningSender(this.signer, sender);
-
+        }
         sender = new URLPrefixSender(this.urlPrefix, sender);
 
-        if (this.maxRetries > 0)
+        if (this.maxRetries > 0) {
             sender = new RetrySender(this.maxRetries, new MySleeper(), new MyLogger(), sender);
-        
-        sender = new LicenseSender(this.licenses, sender);
+        }
 
-        
+        sender = new LicenseSender(this.licenses, sender);
 
         return sender;
     }

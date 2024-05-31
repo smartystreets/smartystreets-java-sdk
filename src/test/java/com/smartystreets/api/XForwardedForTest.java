@@ -25,6 +25,6 @@ public class XForwardedForTest {
         Map<String, Object> requestHeaders = inner.getRequest().getHeaders();
         assertNotNull("Headers here.", requestHeaders);
         assertEquals(headers.get("X-Forwarded-For"), inner.getRequest().getHeaders().get("X-Forwarded-For"));
-
+        
     }
 }

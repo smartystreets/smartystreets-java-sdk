@@ -19,12 +19,10 @@ public class CustomHeaderSenderTest {
         RequestCapturingSender inner = new RequestCapturingSender();
         CustomHeaderSender sender = new CustomHeaderSender(headers, inner);
         Request request = new Request();
-        
         sender.send(request);
 
         Map<String, Object> requestHeaders = inner.getRequest().getHeaders();
         assertNotNull("There should be headers here.", requestHeaders);
         assertEquals(headers.get("A"), inner.getRequest().getHeaders().get("A"));
-        
     }
 }
