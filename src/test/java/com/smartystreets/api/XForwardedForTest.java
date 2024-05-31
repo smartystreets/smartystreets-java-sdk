@@ -11,7 +11,6 @@ import org.junit.Test;
 import com.smartystreets.api.mocks.RequestCapturingSender;
 
 public class XForwardedForTest {
-    //In order to create a functioning 
     @Test
     public void testAllCustomHeadersAreAddedToTheRequest() throws Exception {
         HashMap<String, Object> headers = new HashMap<>();
