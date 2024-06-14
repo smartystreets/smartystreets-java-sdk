@@ -72,6 +72,10 @@ public class Client {
             request.putParameter("candidates", "5");
         else
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
+        
+        //This is a temporary flag meant to fix an intermittent data issue
+        //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+        request.putParameter("compatibility", address.getCompatibility());
 
     }
 
