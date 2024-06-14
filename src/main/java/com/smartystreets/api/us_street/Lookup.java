@@ -29,6 +29,10 @@ public class Lookup implements Serializable {
     private String format;
     private int candidates;
 
+    //This is a temporary flag meant to fix an intermittent data issue
+    //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+    private String compatibility;
+
     //endregion
 
     //region [ Constructors ]
@@ -131,6 +135,13 @@ public class Lookup implements Serializable {
         return null;
     }
 
+    //This is a temporary flag meant to fix an intermittent data issue
+    //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+    @JsonProperty("compatibility")
+    public String getCompatibility() {
+        return this.compatibility;
+    }
+
     @JsonProperty("format")
     public String getFormat(){
         if (this.format == null)
@@ -203,6 +214,11 @@ public class Lookup implements Serializable {
         this.urbanization = urbanization;
     }
 
+    //This is a temporary flag meant to fix an intermittent data issue
+    //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+    public void setCompatibility(String compatibility) {
+        this.compatibility = compatibility;
+    }
     /**
      * Sets the match output strategy to be employed for this lookup.<br>
      *
