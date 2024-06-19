@@ -8,6 +8,7 @@ import okhttp3.RequestBody;
 import java.io.IOException;
 import java.net.Proxy;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -61,7 +62,7 @@ public class SmartySender implements Sender {
         Map<String, Object> headers = smartyRequest.getHeaders();
         Headers.Builder headersBuilder = new Headers.Builder();
         for (String headerName : headers.keySet()) {
-            headersBuilder.add(headerName, headers.get(headerName).toString());
+            headersBuilder.add(headerName, Optional.ofNullable(headers.get(headerName)).orElse("").toString());
         }
 
         okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder()

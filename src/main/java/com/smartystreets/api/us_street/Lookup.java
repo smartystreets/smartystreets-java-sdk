@@ -135,10 +135,14 @@ public class Lookup implements Serializable {
         return null;
     }
 
+    /**
+     * This is a temporary flag meant to fix an intermittent data issue
+     * Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+     *
+     * @deprecated - Temporary - will be removed in a future release.
+     */
     @JsonProperty("compatibility")
     public String getCompatibility() {
-        //This is a temporary flag meant to fix an intermittent data issue
-        //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
         return this.compatibility;
     }
 
@@ -214,9 +218,13 @@ public class Lookup implements Serializable {
         this.urbanization = urbanization;
     }
 
+    /**
+     * This is a temporary flag meant to fix an intermittent data issue
+     * Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+     *
+     * @deprecated - Temporary - will be removed in a future release.
+     */
     public void setCompatibility(String compatibility) {
-        //This is a temporary flag meant to fix an intermittent data issue
-        //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
         this.compatibility = compatibility;
     }
     /**

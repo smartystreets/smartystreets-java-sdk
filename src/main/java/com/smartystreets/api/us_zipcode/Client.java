@@ -57,6 +57,9 @@ public class Client {
         request.putParameter("city", lookup.getCity());
         request.putParameter("state", lookup.getState());
         request.putParameter("zipcode", lookup.getZipCode());
+        //This is a temporary flag meant to fix an intermittent data issue
+        //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+        request.putParameter("compatibility", lookup.getCompatibility());
     }
 
 

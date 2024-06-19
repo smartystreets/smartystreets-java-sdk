@@ -20,6 +20,11 @@ public class Lookup implements Serializable {
     private String state;
     private String zipcode;
 
+    //This is a temporary flag meant to fix an intermittent data issue
+    //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+    private String compatibility;
+
+
     //endregion
 
     public Lookup() {
@@ -67,6 +72,16 @@ public class Lookup implements Serializable {
         return this.inputId;
     }
 
+    /**
+     * This is a temporary flag meant to fix an intermittent data issue
+     * Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+     *
+     * @deprecated - Temporary - will be removed in a future release.
+     */
+    public String getCompatibility() {
+        return this.compatibility;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -89,6 +104,16 @@ public class Lookup implements Serializable {
     @JsonProperty("zipcode")
     public void setZipCode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    /**
+     * This is a temporary flag meant to fix an intermittent data issue
+     * Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
+     *
+     * * @deprecated - Temporary - will be removed in a future release.
+     */
+    public void setCompatibility(String compatibility) {
+        this.compatibility = compatibility;
     }
 
     public Lookup setInputId(String inputId) {
