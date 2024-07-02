@@ -13,6 +13,8 @@ public class Candidate implements Serializable {
     private String street;
     private String locality;
     private String administrativeArea;
+    private String administrativeAreaShort;
+    private String administrativeAreaLong;
     private String postalCode;
     private String countryISO3;
 
@@ -35,6 +37,16 @@ public class Candidate implements Serializable {
     @JsonProperty("administrative_area")
     public String getAdministrativeArea() {
         return administrativeArea;
+    }
+
+    @JsonProperty("administrative_area_short")
+    public String getAdministrativeAreaShort() {
+        return administrativeAreaShort;
+    }
+
+    @JsonProperty("administrative_area_long")
+    public String getAdministrativeAreaLong() {
+        return administrativeAreaLong;
     }
 
     @JsonProperty("postal_code")
