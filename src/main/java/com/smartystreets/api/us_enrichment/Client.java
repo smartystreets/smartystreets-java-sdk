@@ -8,8 +8,12 @@ import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
+import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCountLookup;
+import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
+import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCountResponse;
+import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
 
 import java.io.IOException;
 
@@ -30,6 +34,18 @@ public class Client {
 
     public PrincipalResponse[] sendPropertyPrincipalLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
         PropertyPrincipalLookup lookup = new PropertyPrincipalLookup(smartyKey);
+        send(lookup);
+        return lookup.getResults();
+    }
+
+    public SecondaryResponse[] sendSecondaryLookup(String smartKey) throws SmartyException, IOException, InterruptedException {
+        SecondaryLookup lookup = new SecondaryLookup(smartKey);
+        send(lookup);
+        return lookup.getResults();
+    }
+
+    public SecondaryCountResponse[] sendSecondaryCountLookup(String smartKey) throws SmartyException, IOException, InterruptedException {
+        SecondaryCountLookup lookup = new SecondaryCountLookup(smartKey);
         send(lookup);
         return lookup.getResults();
     }

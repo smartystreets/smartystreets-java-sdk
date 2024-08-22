@@ -7,9 +7,14 @@ import com.smartystreets.api.us_enrichment.*;
 import com.smartystreets.api.us_enrichment.result_types.Result;
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
+import com.smartystreets.api.us_enrichment.result_types.secondary.Secondary;
+import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCountResponse;
+import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class UsEnrichmentExample {
     public static void main(String[] args) {
@@ -48,6 +53,34 @@ public class UsEnrichmentExample {
 
         if(results != null){
             System.out.println(Arrays.toString(financialResults));
+        } else {
+            System.out.println("Result was null");
+        }
+
+        SecondaryCountResponse[] secondaryCountResults = null;
+        try {
+            secondaryCountResults = client.sendSecondaryCountLookup("2001117307");
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if (secondaryCountResults != null){
+            System.out.println(Arrays.toString(secondaryCountResults));
+        } else {
+            System.out.println("Result was null");
+        }
+
+        SecondaryResponse[] secondaryResults = null;
+        try {
+            secondaryResults = client.sendSecondaryLookup("2001117307");
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if (secondaryResults != null){
+            System.out.println(Arrays.stream(secondaryResults).flatMap(s -> s.getSecondaries().stream() ).map(Secondary::toString).collect(Collectors.joining("\n")));
         } else {
             System.out.println("Result was null");
         }
