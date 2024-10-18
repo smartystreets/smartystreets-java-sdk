@@ -53,10 +53,51 @@ public class Components implements Serializable {
     private String postBox;
     private String postBoxType;
     private String postBoxNumber;
+    private String additionalContent;
+    private String deliveryInstallation;
+    private String deliveryInstallationType;
+    private String deliveryInstallationQualifierName;
+    private String route;
+    private String routeNumber;
+    private String routeType;
 
     //endregion
 
     //region [ Getters ]
+    @JsonProperty("additional_content")
+    public String getAdditionalContent() {
+        return additionalContent;
+    }
+
+    @JsonProperty("delivery_installation")
+    public String getDeliveryInstallation() {
+        return deliveryInstallation;
+    }
+
+    @JsonProperty("delivery_installation_type")
+    public String getDeliveryInstallationType() {
+        return deliveryInstallationType;
+    }
+
+    @JsonProperty("delivery_installation_qualifier_name")
+    public String getDeliveryInstallationQualifierName() {
+        return deliveryInstallationQualifierName;
+    }
+
+    @JsonProperty("route")
+    public String getRoute() {
+        return route;
+    }
+
+    @JsonProperty("route_number")
+    public String getRouteNumber() {
+        return routeNumber;
+    }
+
+    @JsonProperty("route_type")
+    public String getRouteType() {
+        return routeType;
+    }
 
     @JsonProperty("country_iso_3")
     public String getCountryIso3() {

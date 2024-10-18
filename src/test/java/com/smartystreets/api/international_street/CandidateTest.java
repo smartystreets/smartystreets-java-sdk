@@ -1,12 +1,13 @@
 package com.smartystreets.api.international_street;
 
-import com.smartystreets.api.SmartySerializer;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
+
+import com.smartystreets.api.SmartySerializer;
 
 public class CandidateTest {
 
@@ -31,7 +32,9 @@ public class CandidateTest {
                 "\"building_trailing_type\":\"44\",\"sub_building_type\":\"45\",\"sub_building_number\":\"46\"," +
                 "\"sub_building_name\":\"47\",\"sub_building\":\"48\",\"level_type\":\"48.1\",\"level_number\":\"48.2\"," +
                 "\"post_box\":\"49\",\"post_box_type\":\"50\"," +
-                "\"post_box_number\":\"51\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
+                "\"post_box_number\":\"51\",\"additional_content\":\"112\",\"delivery_installation\":\"113\"," +
+                "\"delivery_installation_type\":\"114\",\"delivery_installation_qualifier_name\":\"115\",\"route\":\"116\"," +
+                "\"route_number\":\"117\",\"route_type\":\"118\"},\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
                 "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\"}," +
                 "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\",\"max_address_precision\":\"59\"," +
                 "\"changes\":{\"organization\":\"60\",\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\"," +
@@ -118,7 +121,13 @@ public class CandidateTest {
         assertEquals("48.2", components.getLevelNumber());
         assertEquals("49", components.getPostBox());
         assertEquals("50", components.getPostBoxType());
-        assertEquals("51", components.getPostBoxNumber());
+        assertEquals("112", components.getAdditionalContent());
+        assertEquals("113", components.getDeliveryInstallation());
+        assertEquals("114", components.getDeliveryInstallationType());
+        assertEquals("115", components.getDeliveryInstallationQualifierName());
+        assertEquals("116", components.getRoute());
+        assertEquals("117", components.getRouteNumber());
+        assertEquals("118", components.getRouteType());
         //endregion
 
         //region [ Metadata ]
