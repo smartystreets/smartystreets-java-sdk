@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_enrichment.lookup_types.secondary;
 
 import com.smartystreets.api.Serializer;
+import com.smartystreets.api.us_enrichment.AddressSearch;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCountResponse;
 
@@ -12,6 +13,10 @@ public class SecondaryCountLookup extends Lookup {
 
     public SecondaryCountLookup(String smartyKey) {
         super(smartyKey, "secondary", "count");
+    }
+
+    public SecondaryCountLookup(AddressSearch addressSearch) {
+        super(addressSearch, "secondary", "count");
     }
 
     public SecondaryCountResponse[] getResults() {

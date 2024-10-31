@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_enrichment.lookup_types.property_financial;
 
 import com.smartystreets.api.Serializer;
+import com.smartystreets.api.us_enrichment.AddressSearch;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 
@@ -10,6 +11,10 @@ public class PropertyFinancialLookup extends Lookup {
     private FinancialResponse[] results;
     public PropertyFinancialLookup(String smartyKey) {
         super(smartyKey, "property", "financial");
+    }
+
+    public PropertyFinancialLookup(AddressSearch addressSearch) {
+        super(addressSearch, "property", "financial");
     }
 
     public FinancialResponse[] getResults() {

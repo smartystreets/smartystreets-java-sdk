@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_enrichment.lookup_types.secondary;
 
 import com.smartystreets.api.Serializer;
+import com.smartystreets.api.us_enrichment.AddressSearch;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
 
@@ -12,6 +13,10 @@ public class SecondaryLookup extends Lookup {
 
     public SecondaryLookup(String smartyKey) {
         super(smartyKey, "secondary", "");
+    }
+
+    public SecondaryLookup(AddressSearch addressSearch) {
+        super(addressSearch, "secondary", "");
     }
 
     public SecondaryResponse[] getResults() {

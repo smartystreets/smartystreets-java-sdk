@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_enrichment.lookup_types.property_principal;
 
 import com.smartystreets.api.Serializer;
+import com.smartystreets.api.us_enrichment.AddressSearch;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 
@@ -10,6 +11,10 @@ public class PropertyPrincipalLookup extends Lookup {
     private PrincipalResponse[] results;
     public PropertyPrincipalLookup(String smartyKey) {
         super(smartyKey, "property", "principal");
+    }
+
+    public PropertyPrincipalLookup(AddressSearch addressSearch) {
+        super(addressSearch, "property", "principal");
     }
 
     public PrincipalResponse[] getResults() {

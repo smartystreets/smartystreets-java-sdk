@@ -1,6 +1,7 @@
 package examples;
 
 import com.smartystreets.api.ClientBuilder;
+import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
@@ -29,7 +30,31 @@ public class UsEnrichmentExample {
 
         PrincipalResponse[] results = null;
         try {
-            results = client.sendPropertyPrincipalLookup("1682393594");
+            results = client.sendPropertyPrincipalLookup("325023201");
+        }
+        catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        results = null;
+        try {
+            results = client.sendPropertyPrincipalLookup(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+        }
+        catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if(results != null){
+            System.out.println("Street Lookup:\n" + Arrays.toString(results));
+        } else {
+            System.out.println("Result was null");
+        }
+
+        results = null;
+        try {
+            results = client.sendPropertyPrincipalLookup("325023201");
         }
         catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
@@ -44,7 +69,7 @@ public class UsEnrichmentExample {
 
         FinancialResponse[] financialResults = null;
         try {
-            financialResults = client.sendPropertyFinancialLookup("1682393594");
+            financialResults = client.sendPropertyFinancialLookup("325023201");
         }
         catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
@@ -59,7 +84,7 @@ public class UsEnrichmentExample {
 
         SecondaryCountResponse[] secondaryCountResults = null;
         try {
-            secondaryCountResults = client.sendSecondaryCountLookup("2001117307");
+            secondaryCountResults = client.sendSecondaryCountLookup("325023201");
         } catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
@@ -73,7 +98,7 @@ public class UsEnrichmentExample {
 
         SecondaryResponse[] secondaryResults = null;
         try {
-            secondaryResults = client.sendSecondaryLookup("2001117307");
+            secondaryResults = client.sendSecondaryLookup("325023201");
         } catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
