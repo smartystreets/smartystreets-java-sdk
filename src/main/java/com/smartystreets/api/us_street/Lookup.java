@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * In addition to holding all of the input data for this lookup, this class also<br>
+ * In addition to holding the input data for this lookup, this class<br>
  *     will contain the result of the lookup after it comes back from the API.
  *     @see "https://smartystreets.com/docs/cloud/us-street-api#input-fields"
  */
@@ -25,6 +25,7 @@ public class Lookup implements Serializable {
     private String lastline;
     private String addressee;
     private String urbanization;
+    private String countySource;
     private String match;
     private String format;
     private int candidates;
@@ -122,6 +123,20 @@ public class Lookup implements Serializable {
         return this.urbanization;
     }
 
+    @JsonProperty("county_source")
+    public String getCountySource() {
+        if (this.countySource == null) {
+            return null;
+        }
+        if (this.countySource.equals("postal") ) {
+            return "postal";
+        }
+        if (this.countySource.equals("geographic") ) {
+            return "geographic";
+        }
+        return this.countySource;
+    }
+
     @JsonProperty("match")
     public String getMatch() {
         if (this.match == null)
@@ -216,6 +231,10 @@ public class Lookup implements Serializable {
 
     public void setUrbanization(String urbanization) {
         this.urbanization = urbanization;
+    }
+
+    public void setCountySource(CountySource countySource) {
+        this.countySource = countySource.getName();
     }
 
     /**

@@ -20,7 +20,7 @@ public class UsExtractExample {
         // for client-side requests (browser/mobile), use this code:
         SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
-        Client client = new ClientBuilder(credentials).withLicenses(Arrays.asList("us-core-cloud")).buildUsExtractApiClient();
+        Client client = new ClientBuilder(credentials).buildUsExtractApiClient();
         String text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
                 "\r\nLos Vegas, Nevada." +
                 "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho." +

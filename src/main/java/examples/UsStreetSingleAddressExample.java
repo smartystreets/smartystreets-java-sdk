@@ -20,12 +20,7 @@ public class UsStreetSingleAddressExample {
         // for client-side requests (browser/mobile), use this code:
         SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
-        //            The appropriate license values to be used for your subscriptions
-        //            can be found on the Subscriptions page of the account dashboard.
-        //            https://www.smartystreets.com/docs/cloud/licensing
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("us-core-cloud");
-        Client client = new ClientBuilder(credentials).withLicenses(licenses)
+        Client client = new ClientBuilder(credentials)
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
                 .buildUsStreetApiClient();
 
@@ -42,6 +37,7 @@ public class UsStreetSingleAddressExample {
         lookup.setCity("Mountain View");
         lookup.setState("CA");
         lookup.setZipCode("94043");
+        lookup.setCountySource(CountySource.GEOGRAPHIC);
         lookup.setMaxCandidates(3);
         lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match,
                                             // this will always return at least one result even if the address is invalid.

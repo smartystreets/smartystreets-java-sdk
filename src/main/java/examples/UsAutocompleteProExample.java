@@ -19,12 +19,7 @@ public class UsAutocompleteProExample {
         // for client-side requests (browser/mobile), use this code:
         SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
-        //            The appropriate license values to be used for your subscriptions
-        //            can be found on the Subscriptions page of the account dashboard.
-        //            https://www.smartystreets.com/docs/cloud/licensing
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("us-autocomplete-pro-cloud");
-        Client client = new ClientBuilder(credentials).withLicenses(licenses).buildUsAutocompleteProApiClient();
+        Client client = new ClientBuilder(credentials).buildUsAutocompleteProApiClient();
         Lookup lookup = new Lookup("1042 W Center");
         lookup.setMaxResults(5);
 

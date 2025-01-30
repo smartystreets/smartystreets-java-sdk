@@ -7,6 +7,7 @@ import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * This client sends lookups to the SmartyStreets US Street API, <br>
@@ -70,10 +71,11 @@ public class Client {
         request.putParameter("lastline", address.getLastline());
         request.putParameter("addressee", address.getAddressee());
         request.putParameter("urbanization", address.getUrbanization());
+        request.putParameter("county_source", address.getCountySource());
         request.putParameter("match", address.getMatch());
         request.putParameter("format", address.getFormat());
 
-        if (address.getMaxCandidates() == 1 && address.getMatch() == "enhanced")
+        if (address.getMaxCandidates() == 1 && (address.getMatch() != null && address.getMatch().equals("enhanced")))
             request.putParameter("candidates", "5");
         else
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));

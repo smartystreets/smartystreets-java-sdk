@@ -30,15 +30,6 @@ public class UsEnrichmentExample {
 
         PrincipalResponse[] results = null;
         try {
-            results = client.sendPropertyPrincipalLookup("325023201");
-        }
-        catch (SmartyException | IOException | InterruptedException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-
-        results = null;
-        try {
             results = client.sendPropertyPrincipalLookup(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
         }
         catch (SmartyException | IOException | InterruptedException ex) {
