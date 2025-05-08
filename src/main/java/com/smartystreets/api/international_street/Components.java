@@ -13,6 +13,7 @@ public class Components implements Serializable {
     private String countryIso3;
     private String superAdministrativeArea;
     private String administrativeArea;
+    private String administrativeAreaISO2;
     private String administrativeAreaShort;
     private String administrativeAreaLong;
     private String subAdministrativeArea;
@@ -112,6 +113,11 @@ public class Components implements Serializable {
     @JsonProperty("administrative_area")
     public String getAdministrativeArea() {
         return administrativeArea;
+    }
+
+    @JsonProperty("administrative_area_iso2")
+    public String getAdministrativeAreaISO2() {
+        return administrativeAreaISO2;
     }
 
     @JsonProperty("administrative_area_short")

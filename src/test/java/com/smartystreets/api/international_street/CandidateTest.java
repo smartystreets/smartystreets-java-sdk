@@ -17,7 +17,7 @@ public class CandidateTest {
                 "\"address3\":\"4\",\"address4\":\"5\",\"address5\":\"6\",\"address6\":\"7\",\"address7\":\"8\"," +
                 "\"address8\":\"9\",\"address9\":\"10\",\"address10\":\"11\",\"address11\":\"12\",\"address12\":\"13\"," +
                 "\"components\":{\"country_iso_3\":\"14\",\"super_administrative_area\":\"15\"," +
-                "\"administrative_area\":\"16\",\"administrative_area_short\":\"16.1\",\"administrative_area_long\":\"16.2\"," +
+                "\"administrative_area\":\"16\",\"administrative_area_iso2\":\"16.1\",\"administrative_area_short\":\"16.2\",\"administrative_area_long\":\"16.3\"," +
                 "\"sub_administrative_area\":\"17\",\"dependent_locality\":\"18\"," +
                 "\"dependent_locality_name\":\"19\",\"double_dependent_locality\":\"20\",\"locality\":\"21\"," +
                 "\"postal_code\":\"22\",\"postal_code_short\":\"23\",\"postal_code_extra\":\"24\"," +
@@ -82,8 +82,9 @@ public class CandidateTest {
         assertEquals("14", components.getCountryIso3());
         assertEquals("15", components.getSuperAdministrativeArea());
         assertEquals("16", components.getAdministrativeArea());
-        assertEquals("16.1", components.getAdministrativeAreaShort());
-        assertEquals("16.2", components.getAdministrativeAreaLong());
+        assertEquals("16.1", components.getAdministrativeAreaISO2());
+        assertEquals("16.2", components.getAdministrativeAreaShort());
+        assertEquals("16.3", components.getAdministrativeAreaLong());
         assertEquals("17", components.getSubAdministrativeArea());
         assertEquals("18", components.getDependentLocality());
         assertEquals("19", components.getDependentLocalityName());
