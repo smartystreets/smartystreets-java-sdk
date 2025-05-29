@@ -69,6 +69,50 @@ public class CandidateTest {
                 + "\"dpv_vacant\": \"N\",\n"
                 + "\"dpv_no_stat\": \"N\",\n"
                 + "\"active\": \"Y\",\n"
+                + "\"components\": {\n" 
+                + "\"primary_number\": {\n" 
+                + "\"status\": \"confirmed\"\n" 
+                + "},\n" + 
+                "\"street_predirection\": {\n" + 
+                "\"status\": \"confirmed\",\n" + 
+                "\"change\": [\n" + 
+                "\"replaced\"\n" + 
+                "]\n" + 
+                "},\n" + 
+                "\"street_name\": {\n" + 
+                "\"status\": \"confirmed\",\n" + 
+                "\"change\": [\n" + 
+                "\"abbreviation\"\n" + 
+                "]\n" + 
+                "},\n" + 
+                "\"street_suffix\": {\n" + 
+                "\"status\": \"confirmed\"\n" + 
+                "},\n" + 
+                "\"secondary_number\": {\n" + 
+                "\"status\": \"unconfirmed\"\n" + 
+                "},\n" + 
+                "\"secondary_designator\": {\n" + 
+                "\"status\": \"unconfirmed\",\n" + 
+                "\"change\": [\n" + 
+                "\"added\"\n" + 
+                "]\n" + 
+                "},\n" + 
+                "\"city_name\": {\n" + 
+                "\"status\": \"confirmed\"\n" + 
+                "},\n" + 
+                "\"state_abbreviation\": {\n" + 
+                "\"status\": \"confirmed\"\n" + 
+                "},\n" + 
+                "\"zipcode\": {\n" + 
+                "\"status\": \"confirmed\"\n" + 
+                "},\n" + 
+                "\"plus4_code\": {\n" + 
+                "\"status\": \"confirmed\",\n" + 
+                "\"change\": [\n" + 
+                "\"added\"\n" + 
+                "]\n" + 
+                "}\n" + 
+                "},"
                 + "\"footnotes\": \"footnotes\",\n"
                 + "\"lacslink_code\": \"lacslink_code\",\n"
                 + "\"lacslink_indicator\": \"lacslink_indicator\",\n"
@@ -136,5 +180,29 @@ public class CandidateTest {
         assertEquals("lacslink_indicator", candidates[0].getAnalysis().getLacsLinkIndicator());
         assertEquals(true, candidates[0].getAnalysis().isSuiteLinkMatch());
         assertEquals("enhanced_match", candidates[0].getAnalysis().getEnhancedMatch());
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getPrimaryNumber().getStatus());
+        assertEquals(null, candidates[0].getAnalysis().getComponents().getPrimaryNumber().getChange());
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getStreetPredirection().getStatus());
+        assertEquals(1, candidates[0].getAnalysis().getComponents().getStreetPredirection().getChange().size());
+        assertEquals("replaced", candidates[0].getAnalysis().getComponents().getStreetPredirection().getChange().get(0));
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getStreetName().getStatus());
+        assertEquals(1, candidates[0].getAnalysis().getComponents().getStreetName().getChange().size());
+        assertEquals("abbreviation", candidates[0].getAnalysis().getComponents().getStreetName().getChange().get(0));
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getStreetSuffix().getStatus());
+        assertEquals(null, candidates[0].getAnalysis().getComponents().getStreetSuffix().getChange());
+        assertEquals("unconfirmed", candidates[0].getAnalysis().getComponents().getSecondaryNumber().getStatus());
+        assertEquals(null, candidates[0].getAnalysis().getComponents().getSecondaryNumber().getChange());
+        assertEquals("unconfirmed", candidates[0].getAnalysis().getComponents().getSecondaryDesignator().getStatus());
+        assertEquals(1, candidates[0].getAnalysis().getComponents().getSecondaryDesignator().getChange().size());
+        assertEquals("added", candidates[0].getAnalysis().getComponents().getSecondaryDesignator().getChange().get(0));
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getCityName().getStatus());
+        assertEquals(null, candidates[0].getAnalysis().getComponents().getCityName().getChange());
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getStateAbbreviation().getStatus());
+        assertEquals(null, candidates[0].getAnalysis().getComponents().getStateAbbreviation().getChange());
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getZipCode().getStatus());
+        assertEquals(null, candidates[0].getAnalysis().getComponents().getZipCode().getChange());
+        assertEquals("confirmed", candidates[0].getAnalysis().getComponents().getPlus4Code().getStatus());
+        assertEquals(1, candidates[0].getAnalysis().getComponents().getPlus4Code().getChange().size());
+        assertEquals("added", candidates[0].getAnalysis().getComponents().getPlus4Code().getChange().get(0));
     }
 }
