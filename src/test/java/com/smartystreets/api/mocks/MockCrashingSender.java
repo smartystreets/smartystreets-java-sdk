@@ -40,6 +40,10 @@ public class MockCrashingSender implements Sender {
                 throw new IOException("You need to retry");
         }
 
+        if (request.getUrl().contains("WaitTimeTooLong") ) {
+            response = new TooManyRequestsResponse(Headers.of("Retry-After", "4"), STATUS_CODE, new byte[]{});
+        }
+
         return response;
     }
 
