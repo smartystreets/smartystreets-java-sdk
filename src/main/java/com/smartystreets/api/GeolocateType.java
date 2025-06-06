@@ -6,7 +6,7 @@ package com.smartystreets.api;
  * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
  */
 public enum GeolocateType {
-    CITY("city"), STATE("state"), NONE("null");
+    CITY("city"), NONE("none");
 
     private final String name;
 
