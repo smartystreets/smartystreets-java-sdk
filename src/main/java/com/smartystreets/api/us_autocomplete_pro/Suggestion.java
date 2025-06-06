@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 /**
- * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-response"
+ * @see "https://smartystreets.com/docs/cloud/us-autocomplete-pro-api#http-response"
  */
 public class Suggestion implements Serializable {
     //region [ Fields ]

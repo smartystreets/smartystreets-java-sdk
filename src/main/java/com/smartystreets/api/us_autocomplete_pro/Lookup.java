@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  *     will contain the result of the lookup after it comes back from the API.
- *     @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#http-request-input-fields"
+ *     @see "https://smartystreets.com/docs/cloud/us-autocomplete-pro-api#http-request-input-fields"
  */
 public class Lookup {
     final int PREFER_RATIO_DEFAULT = 100;
@@ -166,7 +166,7 @@ public class Lookup {
     /***
      * Sets the percentage of suggestions that are to be from preferred cities/states.
      * @param preferRatio An integer value, range [0, 100]. Default is 33.
-     * @see "https://smartystreets.com/docs/cloud/us-autocomplete-api#preference"
+     * @see "https://smartystreets.com/docs/cloud/us-autocomplete-pro-api#preference"
      */
     public void setPreferRatio(int preferRatio) {
         this.preferRatio = preferRatio;
