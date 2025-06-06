@@ -31,7 +31,7 @@ public class UsAutocompleteProExample {
             printResult(lookup);
 
             // Documentation for input fields can be found at:
-            // https://smartystreets.com/docs/cloud/us-autocomplete-api#pro-http-request-url
+            // https://smartystreets.com/docs/cloud/us-autocomplete-pro-api#pro-http-request-url
 
             lookup.addCityFilter("Denver,Aurora,CO");
             lookup.addCityFilter("Orem,UT");
