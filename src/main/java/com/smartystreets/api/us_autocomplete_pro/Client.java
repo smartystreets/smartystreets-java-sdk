@@ -48,7 +48,7 @@ public class Client {
         request.putParameter("prefer_states", this.buildString(lookup.getPreferState()));
         request.putParameter("prefer_zip_codes", this.buildString(lookup.getPreferZipcode()));
         request.putParameter("prefer_ratio", lookup.getPreferRatioStringIfSet());
-        if (lookup.getGeolocateType() != GeolocateType.NONE) {
+        if (lookup.getGeolocateType() != null) {
             request.putParameter("prefer_geolocation", lookup.getGeolocateType().getName());
         }
         request.putParameter("selected", lookup.getSelected());

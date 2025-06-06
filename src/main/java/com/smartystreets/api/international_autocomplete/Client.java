@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * This client sends lookups to the SmartyStreets US Autocomplete API, <br>
+ * This client sends lookups to the SmartyStreets US Autocomplete Pro API, <br>
  *     and attaches the results to the appropriate Lookup objects.
  */
 public class Client {
