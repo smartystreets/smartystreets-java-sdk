@@ -41,7 +41,9 @@ public class MockCrashingSender implements Sender {
         }
 
         if (request.getUrl().contains("WaitTimeTooLong") ) {
-            response = new TooManyRequestsResponse(Headers.of("Retry-After", "4"), STATUS_CODE, new byte[]{});
+            if (this.sendCount <= 2) {
+                response = new TooManyRequestsResponse(Headers.of("Retry-After", "4"), STATUS_CODE, new byte[]{});
+            }
         }
 
         return response;
