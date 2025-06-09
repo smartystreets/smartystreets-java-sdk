@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public class RetrySender implements Sender {
     public final int MAX_BACKOFF_DURATION = 10;
+    private long maxWaitTime;
     private Sender inner;
     private int maxRetries;
     private Sleeper sleeper;
@@ -13,12 +14,19 @@ public class RetrySender implements Sender {
 
     public RetrySender(int maxRetries, Sleeper sleeper, Logger logger, Sender inner) {
         this.maxRetries = maxRetries;
+        this.maxWaitTime = 0;
         this.sleeper = sleeper;
         this.logger = logger;
         this.inner = inner;
     }
 
+    public RetrySender WithMaxWaitTime(long maxWaitTime)  {
+        this.maxWaitTime = maxWaitTime;
+        return this;
+    }
+
     public Response send(Request request) throws SmartyException, IOException, InterruptedException {
+        int totalWaitTime = 0;
         for (int i = 0; i <= this.maxRetries; i++) {
             Response response = this.trySend(request, i);
             if (response instanceof TooManyRequestsResponse) {
@@ -29,6 +37,10 @@ public class RetrySender implements Sender {
                 }
                 if (wait < 1) {
                     wait = 1L;
+                }
+                totalWaitTime += wait;
+                if (maxWaitTime > 0 && totalWaitTime > maxWaitTime) {
+                    throw new SmartyException("In RetrySender, the wait time is longer than the maxWaitTime.");
                 }
                 //this.logger.log("The rate limit for requests has been exceeded. Sleeping " + wait + " seconds...");
                 this.sleeper.sleep(wait);

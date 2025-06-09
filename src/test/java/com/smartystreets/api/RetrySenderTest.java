@@ -1,5 +1,6 @@
 package com.smartystreets.api;
 
+import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.mocks.FakeLogger;
 import com.smartystreets.api.mocks.FakeSleeper;
 import com.smartystreets.api.mocks.MockCrashingSender;
@@ -62,10 +63,35 @@ public class RetrySenderTest {
         assertArrayEquals(expectedDurations, this.fakeSleeper.getSleepDurations().toArray());
     }
 
+    @Test 
+    public void testWaitLongerThanMaxWaitTime() throws Exception {
+        // The maxWaitTime is less than the total wait time of the sendRequest
+        assertThrows(SmartyException.class, () -> this.sendRequest("WaitTimeTooLong", 7));
+        assertEquals(2, this.mockCrashingSender.getSendCount());
+
+        // // The maxWaitTime is negative so it is ignored
+        this.sendRequest("WaitTimeTooLong", -1);
+        assertEquals(3, this.mockCrashingSender.getSendCount());
+
+        // The maxWaitTime is larger than the total wait time, no exception thrown
+        this.sendRequest("WaitTimeTooLong", 9);
+        assertEquals(4, this.mockCrashingSender.getSendCount());
+    }
+
     private void sendRequest(String requestBehavior) throws Exception {
         Request request = new Request();
         request.setUrlPrefix(requestBehavior);
         RetrySender retrySender = new RetrySender(15, this.fakeSleeper, this.fakeLogger, this.mockCrashingSender);
+
+        retrySender.send(request);
+    }
+
+    private void sendRequest(String requestBehavior, long maxWaitTime) throws Exception {
+        Request request = new Request();
+        request.setUrlPrefix(requestBehavior);
+        RetrySender retrySender = new RetrySender(15, this.fakeSleeper, this.fakeLogger, this.mockCrashingSender);
+
+        retrySender.WithMaxWaitTime(maxWaitTime);
 
         retrySender.send(request);
     }
