@@ -46,6 +46,7 @@ public class UsReverseGeoExample {
             System.out.println("State Abbreviation: " + address.getStateAbbreviation());
             System.out.println("ZIP Code: " + address.getZipCode());
             System.out.println("License: " + coordinate.getLicense());
+            System.out.println("Smartykey: " + address.getSmartykey());
             System.out.println();
         }
     }
