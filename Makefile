@@ -24,4 +24,28 @@ publish: compile
 	    -Dgpg.passphrase=${GPG_PASSPHRASE} \
 	    deploy
 
-.PHONY: clean test integration-test compile publish
+
+international_autocomplete_api:
+	mvn exec:java -Dexec.mainClass="examples.InternationalAutocompleteExample"
+
+international_street_api:
+	mvn exec:java -Dexec.mainClass="examples.InternationalExample"
+
+us_autocomplete_pro_api:
+	mvn exec:java -Dexec.mainClass="examples.UsAutocompleteProExample"
+
+us_extract_api:
+	mvn exec:java -Dexec.mainClass="examples.UsExtractExample"
+
+us_reverse_geo_api:
+	mvn exec:java -Dexec.mainClass="examples.UsReverseGeoExample"
+
+us_street_api:
+	mvn exec:java -Dexec.mainClass="examples.UsStreetSingleAddressExample" && mvn exec:java -Dexec.mainClass="examples.UsStreetMultipleAddressesExample"
+
+us_zipcode_api:
+	mvn exec:java -Dexec.mainClass="examples.UsZipCodeSingleLookupExample" && mvn exec:java -Dexec.mainClass="examples.UsZipCodeMultipleLookupsExample"
+
+examples: international_autocomplete_api international_street_api us_autocomplete_pro_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
+
+.PHONY: clean test integration-test compile publish examples international_autocomplete_api international_street_api us_autocomplete_pro_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
