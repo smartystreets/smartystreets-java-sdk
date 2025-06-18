@@ -20,8 +20,7 @@ public class InternationalAutocompleteExample {
         // for client-side requests (browser/mobile), use this code:
         //SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
 
-        ArrayList<String> licenses = new ArrayList<>();
-        Client client = new ClientBuilder(credentials).withLicenses(licenses).buildInternationalAutcompleteApiClient();
+        Client client = new ClientBuilder(credentials).buildInternationalAutcompleteApiClient();
         Lookup lookup = new Lookup("Louis");
 
         // Documentation for input fields can be found at:
