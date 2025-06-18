@@ -34,6 +34,9 @@ international_street_api:
 us_autocomplete_pro_api:
 	mvn exec:java -Dexec.mainClass="examples.UsAutocompleteProExample"
 
+us_enrichment_api:
+	mvn exec:java -Dexec.mainClass="examples.UsEnrichmentExample"
+
 us_extract_api:
 	mvn exec:java -Dexec.mainClass="examples.UsExtractExample"
 
@@ -46,6 +49,6 @@ us_street_api:
 us_zipcode_api:
 	mvn exec:java -Dexec.mainClass="examples.UsZipCodeSingleLookupExample" && mvn exec:java -Dexec.mainClass="examples.UsZipCodeMultipleLookupsExample"
 
-examples: international_autocomplete_api international_street_api us_autocomplete_pro_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
+examples: international_autocomplete_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
 
-.PHONY: clean test integration-test compile publish examples international_autocomplete_api international_street_api us_autocomplete_pro_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
+.PHONY: clean test integration-test compile publish examples international_autocomplete_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
