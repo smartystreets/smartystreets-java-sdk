@@ -20,6 +20,8 @@ public class StatusCodeSender implements Sender {
                 return response;
             case 401:
                 throw new BadCredentialsException("Unauthorized: The credentials were provided incorrectly or did not match any existing, active credentials.");
+            case 304:
+                throw new NotModifiedException("Record has not been modified since the last request.");
             case 402:
                 throw new PaymentRequiredException("Payment Required: There is no active subscription for the account associated with the credentials submitted with the request.");
             case 403:

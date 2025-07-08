@@ -4,7 +4,6 @@ import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * This client sends lookups to the SmartyStreets US Autocomplete Pro API, <br>
@@ -27,6 +26,7 @@ public class Client {
 
         Response response = this.sender.send(request);
 
+        //Need to go through and fix all of these
         Result result = this.serializer.deserialize(response.getPayload(), Result.class);
         Candidate[] candidates = result.getCandidates();
         lookup.setResult(candidates);

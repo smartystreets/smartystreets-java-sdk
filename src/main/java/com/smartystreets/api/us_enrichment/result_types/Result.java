@@ -10,6 +10,13 @@ public class Result extends EnrichmentToStringer {
     @JsonProperty("data_subset_name")
     private String dataSubsetName;
 
+    public void setEtag(String etag) {
+        this.etag = etag;
+    }
+
+    private String etag;
+
+
     public String getSmartyKey() {
         return smartyKey;
     }
@@ -20,6 +27,10 @@ public class Result extends EnrichmentToStringer {
 
     public String getDataSubsetName() {
         return dataSubsetName;
+    }
+
+    public String getEtag() {
+        return etag;
     }
 
 }
