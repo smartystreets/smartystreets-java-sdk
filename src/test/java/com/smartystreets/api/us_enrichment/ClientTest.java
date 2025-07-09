@@ -20,10 +20,10 @@ public class ClientTest {
         PrincipalResponse principalResponse = new PrincipalResponse();
         FakeSerializer serializer = new FakeSerializer(new PrincipalResponse[]{new PrincipalResponse()});
         Client client = new Client(sender, serializer);
-        PropertyPrincipalLookup lookup = new PropertyPrincipalLookup("123", "group_structural,sale_date", "", "");
+        PropertyPrincipalLookup lookup = new PropertyPrincipalLookup("123", "group_structural,sale_date", "taco", "");
         client.sendPropertyPrincipal(lookup);
 
-        Assert.assertEquals("http://localhost:8080/123/property/principal?", capturingSender.getRequest().getUrl());
+        Assert.assertEquals("http://localhost:8080/123/property/principal?include=group_structural%2Csale_date&exclude=taco", capturingSender.getRequest().getUrl());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class ClientTest {
         PropertyFinancialLookup lookup = new PropertyFinancialLookup("123", "group_structural,sale_date", "", "");
         client.sendPropertyFinancial(lookup);
 
-        Assert.assertEquals("http://localhost:8080/123/property/financial?", capturingSender.getRequest().getUrl());
+        Assert.assertEquals("http://localhost:8080/123/property/financial?include=group_structural%2Csale_date", capturingSender.getRequest().getUrl());
     }
 
     @Test
@@ -46,7 +46,6 @@ public class ClientTest {
         Client client = new Client(sender, serializer);
         GeoReferenceLookup lookup = new GeoReferenceLookup("123", "");
         client.sendGeoReference(lookup);
-
         Assert.assertEquals("http://localhost:8080/123/geo-reference?", capturingSender.getRequest().getUrl());
     }
 }

@@ -14,14 +14,14 @@ public class PropertyFinancialLookup extends Lookup {
     public PropertyFinancialLookup() {
     }
 
-    @Deprecated
+    // legacy constructor - we recommend using the empty constructor and set parameters afterward
     public PropertyFinancialLookup(String smartyKey, String include, String exclude, String eTag) {
         super(smartyKey, include, exclude, eTag);
     }
 
-    @Deprecated
+    // legacy constructor - we recommend using the empty constructor and set parameters afterward
     public PropertyFinancialLookup(AddressSearch addressSearch) {
-        super(addressSearch, "property", "financial");
+        super(addressSearch, "", "");
     }
 
     public FinancialResponse[] getResults() {
@@ -40,11 +40,13 @@ public class PropertyFinancialLookup extends Lookup {
         }
     }
 
-    public String getDataSet() {
+    @Override
+    public String getDataSetName() {
         return propertyDataSet;
     }
 
-    public String getDataSubset() {
+    @Override
+    public String getDataSubsetName() {
         return financialDataSubset;
     }
 }

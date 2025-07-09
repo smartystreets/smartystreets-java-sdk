@@ -19,14 +19,11 @@ import static org.junit.Assert.*;
 public class ResponseTest {
 
     private final SmartySerializer smartySerializer = new SmartySerializer();
-    private static final String validFinancialResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"property\",\"data_subset_name\":\"financial\",\"attributes\":{\"assessed_improvement_percent\":\"Assessed_Improvement_Percent\",\"veteran_tax_exemption\":\"Veteran_Tax_Exemption\",\"widow_tax_exemption\":\"Widow_Tax_Exemption\",\"financial_history\":[{\"code_title_company\":\"Code_Title_Company\"}]}}]";
-    private static final String validPrincipalResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"property\",\"data_subset_name\":\"principal\",\"attributes\":{\"1st_floor_sqft\":\"1st_Floor_Sqft\",\"lender_name_2\":\"Lender_Name_2\",\"lender_seller_carry_back\":\"Lender_Seller_Carry_Back\",\"year_built\":\"Year_Built\",\"zoning\":\"Zoning\"}}]";
+    private static final String validFinancialResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"property\",\"data_subset_name\":\"financial\",\"etag\":\"ABCD\",\"attributes\":{\"assessed_improvement_percent\":\"Assessed_Improvement_Percent\",\"veteran_tax_exemption\":\"Veteran_Tax_Exemption\",\"widow_tax_exemption\":\"Widow_Tax_Exemption\",\"financial_history\":[{\"code_title_company\":\"Code_Title_Company\"}]}}]";
+    private static final String validPrincipalResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"property\",\"data_subset_name\":\"principal\",\"etag\":\"ABCD\",\"attributes\":{\"1st_floor_sqft\":\"1st_Floor_Sqft\",\"lender_name_2\":\"Lender_Name_2\",\"lender_seller_carry_back\":\"Lender_Seller_Carry_Back\",\"year_built\":\"Year_Built\",\"zoning\":\"Zoning\"}}]";
     private static final String validSecondaryResponse = "[{\"smarty_key\":\"123\",\"root_address\":{\"secondary_count\":1,\"smarty_key\":\"root_smartykey\",\"primary_number\":\"root_primary\",\"street_predirection\":\"root_predirection\",\"street_name\":\"root_streetname\",\"street_suffix\":\"root_street_suffix\",\"street_postdirection\":\"root_postdirection\",\"city_name\":\"root_city\",\"state_abbreviation\":\"root_state\",\"zipcode\":\"root_zipcode\",\"plus4_code\":\"root_plus4\"},\"aliases\":[{\"smarty_key\":\"alias_smartykey\",\"primary_number\":\"alias_primary\",\"street_predirection\":\"alias_predirectional\",\"street_name\":\"alias_streetname\",\"street_suffix\":\"alias_streetsuffix\",\"street_postdirection\":\"alias_postdirection\",\"city_name\":\"alias_city\",\"state_abbreviation\":\"alias_state\",\"zipcode\":\"alias_zipcode\",\"plus4_code\":\"alias_plus4\"}],\"secondaries\":[{\"smarty_key\":\"secondary_smartykey\",\"secondary_designator\":\"secondary_designator\",\"secondary_number\":\"secondary_number\",\"plus4_code\":\"secondary_plus4\"}]}]";
     private static final String validSecondaryCountResponse = "[{\"smarty_key\":\"123\",\"count\":10}]";
-    private static final String validGeoReferenceResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"geo-reference\",\"etag\":\"5432\",\"attributes\":{\"census_block\":{\"accuracy\":\"block\",\"geoid\":\"180759630002012\"},\"census_county_division\":{\"accuracy\":\"exact\",\"code\":\"1807581764\",\"name\":\"Wayne\"},\"place\":{\"accuracy\":\"exact\",\"code\":\"1861236\",\"name\":\"Portland\",\"type\":\"incorporated\"}}}]";
-
-
-
+    private static final String validGeoReferenceResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"geo-reference\",\"etag\":\"ABCD\",\"attributes\":{\"census_block\":{\"accuracy\":\"block\",\"geoid\":\"180759630002012\"},\"census_county_division\":{\"accuracy\":\"exact\",\"code\":\"1807581764\",\"name\":\"Wayne\"},\"place\":{\"accuracy\":\"exact\",\"code\":\"1861236\",\"name\":\"Portland\",\"type\":\"incorporated\"}}}]";
 
     @Test
     public void testPrincipalFieldValues() throws IOException {
@@ -36,7 +33,7 @@ public class ResponseTest {
         assertEquals("123", result.getSmartyKey());
         assertEquals("property", result.getDatasetName());
         assertEquals("principal", result.getDataSubsetName());
-        assertEquals("5432", result.getEtag());
+        assertEquals("ABCD", result.getEtag());
 
         assertNotNull(result.getAttributes());
         PrincipalAttributes attributes = result.getAttributes();
@@ -54,7 +51,7 @@ public class ResponseTest {
         assertEquals("123", result.getSmartyKey());
         assertEquals("property", result.getDatasetName());
         assertEquals("financial", result.getDataSubsetName());
-        assertEquals("5432", result.getEtag());
+        assertEquals("ABCD", result.getEtag());
 
         assertNotNull(result.getAttributes());
         FinancialAttributes attributes = result.getAttributes();
@@ -130,7 +127,7 @@ public class ResponseTest {
 
         GeoReferenceResponse result = results[0];
         assertEquals("123", result.getSmartyKey());
-        assertEquals("5432", result.getEtag());
+        assertEquals("ABCD", result.getEtag());
 
         assertNotNull(result.getAttributes());
         GeoReferenceAttributes attributes = result.getAttributes();

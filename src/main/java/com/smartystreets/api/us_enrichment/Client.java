@@ -36,32 +36,30 @@ public class Client {
     }
 
     public FinancialResponse[] sendPropertyFinancial(PropertyFinancialLookup lookup) throws SmartyException, IOException, InterruptedException {
-        PropertyFinancialLookup financialLookup = new PropertyFinancialLookup(lookup.getSmartyKey(), lookup.getInclude(), lookup.getExclude(), lookup.getEtag());
-        send(financialLookup);
-        return financialLookup.getResults();
+        send(lookup);
+        return lookup.getResults();
     }
 
-    public PrincipalResponse[] sendPropertyPrincipal(PropertyPrincipalLookup lookup) throws SmartyException, IOException, InterruptedException {
-        PropertyPrincipalLookup principalLookup = new PropertyPrincipalLookup(lookup.getSmartyKey(), lookup.getInclude(), lookup.getExclude(), lookup.getEtag());
-        send(principalLookup);
-        return principalLookup.getResults();
-    }
-
-    //sendPropertyFinancialLookup is deprecated, rerouting to sendPropertyFinancial
+    //sendPropertyFinancialLookup is deprecated, use sendPropertyFinancial
     public FinancialResponse[] sendPropertyFinancialLookup(AddressSearch addressSearch) throws SmartyException, IOException, InterruptedException {
         PropertyFinancialLookup lookup = new PropertyFinancialLookup(addressSearch);
         send(lookup);
         return lookup.getResults();
     }
 
-    //sendPropertyPrincipalLookup is deprecated, rerouting to sendPropertyPrincipal
-    public PrincipalResponse[] sendPropertyPrincipalLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
-        PropertyPrincipalLookup lookup = new PropertyPrincipalLookup(smartyKey);
+    public PrincipalResponse[] sendPropertyPrincipal(PropertyPrincipalLookup lookup) throws SmartyException, IOException, InterruptedException {
         send(lookup);
         return lookup.getResults();
     }
 
-    //sendPropertyPrincipalLookup is deprecated, rerouting to sendPropertyPrincipal
+    //sendPropertyPrincipalLookup is deprecated, use sendPropertyPrincipal
+    public PrincipalResponse[] sendPropertyPrincipalLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
+        PropertyPrincipalLookup lookup = new PropertyPrincipalLookup(smartyKey,"","","");
+        send(lookup);
+        return lookup.getResults();
+    }
+
+    //sendPropertyPrincipalLookup is deprecated, use sendPropertyPrincipal
     public PrincipalResponse[] sendPropertyPrincipalLookup(AddressSearch addressSearch) throws SmartyException, IOException, InterruptedException {
         PropertyPrincipalLookup lookup = new PropertyPrincipalLookup(addressSearch);
         send(lookup);
@@ -69,29 +67,42 @@ public class Client {
     }
 
     public GeoReferenceResponse[] sendGeoReference(GeoReferenceLookup lookup) throws SmartyException, IOException, InterruptedException {
-        GeoReferenceLookup geoReferenceLookup = new GeoReferenceLookup(lookup.getSmartyKey(), lookup.getEtag());
-        send(geoReferenceLookup);
-        return geoReferenceLookup.getResults();
-    }
-
-    public SecondaryResponse[] sendSecondaryLookup(String smartKey) throws SmartyException, IOException, InterruptedException {
-        SecondaryLookup lookup = new SecondaryLookup(smartKey);
         send(lookup);
         return lookup.getResults();
     }
 
+    public SecondaryResponse[] sendSecondary(SecondaryLookup lookup) throws SmartyException, IOException, InterruptedException {
+        send(lookup);
+        return lookup.getResults();
+    }
+
+    //sendSecondaryLookup is deprecated, use sendSecondary
+    public SecondaryResponse[] sendSecondaryLookup(String smartyKey) throws SmartyException, IOException, InterruptedException {
+        SecondaryLookup lookup = new SecondaryLookup(smartyKey);
+        send(lookup);
+        return lookup.getResults();
+    }
+
+    //sendSecondaryLookup is deprecated, use sendSecondary
     public SecondaryResponse[] sendSecondaryLookup(AddressSearch addressSearch) throws SmartyException, IOException, InterruptedException {
         SecondaryLookup lookup = new SecondaryLookup(addressSearch);
         send(lookup);
         return lookup.getResults();
     }
 
+    public SecondaryCountResponse[] sendSecondaryCount(SecondaryCountLookup lookup) throws SmartyException, IOException, InterruptedException {
+        send(lookup);
+        return lookup.getResults();
+    }
+
+    //sendSecondaryCountLookup is deprecated, use sendSecondaryCount
     public SecondaryCountResponse[] sendSecondaryCountLookup(String smartKey) throws SmartyException, IOException, InterruptedException {
         SecondaryCountLookup lookup = new SecondaryCountLookup(smartKey);
         send(lookup);
         return lookup.getResults();
     }
 
+    //sendSecondaryCountLookup is deprecated, use sendSecondaryCount
     public SecondaryCountResponse[] sendSecondaryCountLookup(AddressSearch addressSearch) throws SmartyException, IOException, InterruptedException {
         SecondaryCountLookup lookup = new SecondaryCountLookup(addressSearch);
         send(lookup);
@@ -112,16 +123,35 @@ public class Client {
     }
 
     private Request buildRequest(Lookup lookup) throws UnsupportedEncodingException {
-        //TODO: BEA did we get this merge right? Does it handle include and exclude?
         Request request = new Request();
+        String dataSetUrl;
 
         request.getHeaders().put("Etag", lookup.getEtag());
 
-        if (lookup.getSmartyKey() == null || lookup.getSmartyKey().isEmpty()) {
-            request.setUrlComponents("/search/" + lookup.getDatasetName() + "/" + lookup.getDataSubsetName() + lookup.getAddressSearch().toSearchString());
+        if (lookup.getDataSubsetName() == "") {
+            dataSetUrl = lookup.getDataSetName();
         } else {
-            request.setUrlComponents("/" + lookup.getSmartyKey() + "/" + lookup.getDatasetName() + "/" + lookup.getDataSubsetName());
+            dataSetUrl = lookup.getDataSetName() + "/" + lookup.getDataSubsetName();
         }
+
+        if (lookup.getSmartyKey() == null || lookup.getSmartyKey().isEmpty()) {
+            request.setUrlComponents("/search/" + dataSetUrl);
+            request.putParameter("freeform", lookup.getAddressSearch().freeform());
+            request.putParameter("street", lookup.getAddressSearch().street());
+            request.putParameter("city", lookup.getAddressSearch().city());
+            request.putParameter("state", lookup.getAddressSearch().state());
+            request.putParameter("zipcode", lookup.getAddressSearch().zipcode());
+        } else {
+            request.setUrlComponents("/" + lookup.getSmartyKey() + "/" + dataSetUrl);
+        }
+
+        if (lookup.getInclude() != "") {
+            request.putParameter("include", lookup.getInclude());
+        }
+        if (lookup.getExclude() != "") {
+            request.putParameter("exclude", lookup.getExclude());
+        }
+
         return request;
     }
 }

@@ -19,7 +19,7 @@ public class GeoReferenceLookup extends Lookup {
         this.subset = subset;
     }
 
-    // This constructor is inadequate as it will only query the lastest census version of the data because there is not a way to set the data subset.
+    // This legacy constructor is inadequate as it will only query the lastest census version of the data because there is not a way to set the data subset.
     // Use GeoReferenceLookup(String subset) to set the data subset then set all other applicable lookup fields manually.
     public GeoReferenceLookup(String smartyKey, String etag) {
         super(smartyKey, etag);
@@ -41,11 +41,16 @@ public class GeoReferenceLookup extends Lookup {
         }
     }
 
-    public String getDataSet() {
+    @Override
+    public String getDataSetName() {
         return geoReferenceDataSet;
     }
 
-    public String getDataSubset() {
+    @Override
+    public String getDataSubsetName() {
+        if (this.subset == null) {
+            this.subset = "";
+        }
         return this.subset;
     }
 

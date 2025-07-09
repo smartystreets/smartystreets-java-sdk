@@ -6,9 +6,12 @@ import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.NotModifiedException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
-import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
+import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
+import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCountLookup;
+import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
+
 import com.smartystreets.api.us_enrichment.result_types.Result;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
@@ -34,43 +37,22 @@ public class UsEnrichmentExample {
         //make sure to Remove this when you are not testing. This is to hit rivendell
         Client client = new ClientBuilder(credentials).buildUsEnrichmentClient();
 
-        System.out.println("********* running enrichment test");
-        PrincipalResponse[] results = null;
         String smartyKey = "1682393594";
         String include = "group_structural,sale_date";
         String exclude = "";
-        String etag = "";
-        //Example of Etag from a previous query: GU4TINZRHA4TQMY
 
-        PropertyPrincipalLookup principalLookup = new PropertyPrincipalLookup(smartyKey, include, exclude, etag);
-        PropertyFinancialLookup financialLookup = new PropertyFinancialLookup(smartyKey, include, exclude, etag);
-        GeoReferenceLookup geoReferenceLookup = new GeoReferenceLookup("");
-        //TODO: BEA add for secondary and secondary count?
+        SecondaryLookup secondaryLookup = new SecondaryLookup();
 
-        //TODO: BEA merge issue in this example to handle etag
-        //TODO: BEA look at geo-reference and secondary examples
+        // ************************ Property Principal ************************
+//         PropertyPrincipalLookup principalLookup = new PropertyPrincipalLookup();
+//         principalLookup.setSmartyKey(smartyKey);
+//         principalLookup.setInclude(include);
+//         // principalLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+//         // principalLookup.setEtag("GMYDMOBZGIZTGMJQ");
+//
+//         PrincipalResponse[] principalResults = null;
 //         try {
-//             results = client.sendPropertyPrincipalLookup(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-//         }
-//         catch (SmartyException | IOException | InterruptedException ex) {
-//             System.out.println(ex.getMessage());
-//             ex.printStackTrace();
-//         }
-//
-//         if(results != null){
-//             System.out.println("Street Lookup:\n" + Arrays.toString(results));
-//         } else {
-//             System.out.println("Result was null");
-//         }
-
-//         results = null;
-//         try {
-//             results = client.sendPropertyPrincipalLookup("325023201");
-//         }
-//         catch (SmartyException | IOException | InterruptedException ex) {
-//             results = client.sendPropertyPrincipal(principalLookup);
-//
-//
+//             principalResults = client.sendPropertyPrincipal(principalLookup);
 //         } catch (NotModifiedException ex) {
 //             System.out.println(ex.getMessage());
 //             return;
@@ -79,45 +61,83 @@ public class UsEnrichmentExample {
 //             ex.printStackTrace();
 //         }
 //
-//         if (results != null) {
-//             System.out.println(Arrays.toString(results));
+//         if(principalResults != null){
+//             System.out.println("Address Lookup:\n" + Arrays.toString(principalResults));
 //         } else {
 //             System.out.println("Result was null");
 //         }
+
+        // ************************ Property Financial ************************
+//         PropertyFinancialLookup financialLookup = new PropertyFinancialLookup();
+//         financialLookup.setSmartyKey(smartyKey);
 //
 //         FinancialResponse[] financialResults = null;
 //         try {
-//             financialResults = client.sendPropertyFinancialLookup("325023201");
-//         }
-//         catch (SmartyException | IOException | InterruptedException ex) {
+//             financialResults = client.sendPropertyFinancial(financialLookup);
+//         } catch (NotModifiedException ex) {
+//             System.out.println(ex.getMessage());
+//             return;
+//         } catch (SmartyException | IOException | InterruptedException ex) {
 //             System.out.println(ex.getMessage());
 //             ex.printStackTrace();
 //         }
 //
-//         if (results != null) {
+//         if (financialResults != null) {
 //             System.out.println(Arrays.toString(financialResults));
 //         } else {
 //             System.out.println("Result was null");
 //         }
-//
-        GeoReferenceResponse[] geoReferenceResults = null;
+
+        // ************************ GeoReference ************************
+        GeoReferenceLookup geoReferenceLookup = new GeoReferenceLookup("");
         geoReferenceLookup.setSmartyKey(smartyKey);
+        // geoReferenceLookup.setEtag("your-etag-value");
+        // geoReferenceLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+
+        GeoReferenceResponse[] geoReferenceResults = null;
         try {
             geoReferenceResults = client.sendGeoReference(geoReferenceLookup);
+        } catch (NotModifiedException ex) {
+            System.out.println(ex.getMessage());
+            return;
         } catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
 
-        if (results != null) {
+        if (geoReferenceResults != null) {
             System.out.println(Arrays.toString(geoReferenceResults));
         } else {
             System.out.println("Result was null");
         }
 
+        GeoReferenceLookup geoReferenceLookup2 = new GeoReferenceLookup("2010");
+        geoReferenceLookup2.setSmartyKey(smartyKey);
+        geoReferenceResults = null;
+        try {
+            geoReferenceResults = client.sendGeoReference(geoReferenceLookup2);
+        } catch (NotModifiedException ex) {
+            System.out.println(ex.getMessage());
+            return;
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if (geoReferenceResults != null) {
+            System.out.println(Arrays.toString(geoReferenceResults));
+        } else {
+            System.out.println("Result was null");
+        }
+
+
+        // ************************ Secondary Count ************************
 //         SecondaryCountResponse[] secondaryCountResults = null;
 //         try {
 //             secondaryCountResults = client.sendSecondaryCountLookup("325023201");
+//         } catch (NotModifiedException ex) {
+//             System.out.println(ex.getMessage());
+//             return;
 //         } catch (SmartyException | IOException | InterruptedException ex) {
 //             System.out.println(ex.getMessage());
 //             ex.printStackTrace();
@@ -128,10 +148,14 @@ public class UsEnrichmentExample {
 //         } else {
 //             System.out.println("Result was null");
 //         }
-//
+
+        // ************************ Secondary ************************
 //         SecondaryResponse[] secondaryResults = null;
 //         try {
 //             secondaryResults = client.sendSecondaryLookup("325023201");
+//         } catch (NotModifiedException ex) {
+//             System.out.println(ex.getMessage());
+//             return;
 //         } catch (SmartyException | IOException | InterruptedException ex) {
 //             System.out.println(ex.getMessage());
 //             ex.printStackTrace();

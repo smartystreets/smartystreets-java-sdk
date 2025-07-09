@@ -14,13 +14,14 @@ public class PropertyPrincipalLookup extends Lookup {
     public PropertyPrincipalLookup() {
     }
 
-    @Deprecated
+    // legacy constructor - we recommend using the empty constructor and set parameters afterward
     public PropertyPrincipalLookup(String smartyKey, String include, String exclude, String etag) {
         super(smartyKey, include, exclude, etag);
     }
 
+    // legacy constructor - we recommend using the empty constructor and set parameters afterward
     public PropertyPrincipalLookup(AddressSearch addressSearch) {
-        super(addressSearch, "property", "principal");
+        super(addressSearch, "", "");
     }
 
     public PrincipalResponse[] getResults() {
@@ -39,11 +40,13 @@ public class PropertyPrincipalLookup extends Lookup {
         }
     }
 
-    public String getDataSet() {
+    @Override
+    public String getDataSetName() {
         return propertyDataSet;
     }
 
-    public String getDataSubset() {
+    @Override
+    public String getDataSubsetName() {
         return principalDataSubset;
     }
 

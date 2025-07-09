@@ -4,7 +4,7 @@ import com.smartystreets.api.Serializer;
 import com.smartystreets.api.us_enrichment.AddressSearch;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
-
+import okhttp3.Headers;
 import java.io.IOException;
 
 public class SecondaryLookup extends Lookup {
@@ -13,14 +13,14 @@ public class SecondaryLookup extends Lookup {
     public SecondaryLookup() {
     }
 
-    @Deprecated
+    // legacy constructor - we recommend using the empty constructor and set parameters afterward
     public SecondaryLookup(String smartyKey) {
-        super(smartyKey, "secondary", "");
+        super(smartyKey, "");
     }
 
-    @Deprecated
+    // legacy constructor - we recommend using the empty constructor and set parameters afterward
     public SecondaryLookup(AddressSearch addressSearch) {
-        super(addressSearch, "secondary", "");
+        super(addressSearch, "", "");
     }
 
     public SecondaryResponse[] getResults() {
@@ -32,15 +32,20 @@ public class SecondaryLookup extends Lookup {
     }
 
     @Override
-    public void deserializeAndSetResults(Serializer serializer, byte[] payload) throws IOException {
-        this.results = serializer.deserialize(payload, SecondaryResponse[].class);
+    public void deserializeAndSetResults(Serializer serializer, byte[] payload, Headers headers) throws IOException {
+        this.results = serializer.deserialize(payload, SecondaryResponse[].class, headers);
+        if (headers != null) {
+            this.results[0].setEtag(headers.get("etag"));
+        }
     }
 
-    public String getDataSet() {
+    @Override
+    public String getDataSetName() {
         return secondaryDataSet;
     }
 
-    public String getDataSubset() {
+    @Override
+    public String getDataSubsetName() {
         return emptyDataSubset;
     }
 }

@@ -1,17 +1,13 @@
 package com.smartystreets.api.us_enrichment.result_types.secondary;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.smartystreets.api.us_enrichment.result_types.Result;
 import java.util.ArrayList;
 
-public class SecondaryResponse {
-
+public class SecondaryResponse extends Result {
     private String smartyKey;
-
     private RootAddress rootAddress;
-
     private ArrayList<Alias> aliases;
-
     private ArrayList<Secondary> secondaries;
 
     @JsonProperty("smarty_key")
@@ -33,7 +29,6 @@ public class SecondaryResponse {
     public ArrayList<Secondary> getSecondaries() {
         return secondaries;
     }
-
 
     @Override
     public String toString() {
