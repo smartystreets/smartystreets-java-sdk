@@ -23,7 +23,7 @@ public class StatusCodeSender implements Sender {
             case 402:
                 throw new PaymentRequiredException("Payment Required: There is no active subscription for the account associated with the credentials submitted with the request.");
             case 403:
-                throw new ForbiddenException("Because the international service is currently in a limited release phase, only approved accounts may access the service.");
+                throw new ForbiddenException("Forbidden: The request contained valid data and was understood by the server, but the server is refusing action.");
             case 413:
                 throw new RequestEntityTooLargeException("Request Entity Too Large: The request body has exceeded the maximum size.");
             case 400:
@@ -37,7 +37,7 @@ public class StatusCodeSender implements Sender {
             case 504:
                 throw new GatewayTimeoutException("The upstream data provider did not respond in a timely fashion and the request failed. A serious, yet rare occurrence indeed.");
             default:
-                return null;
+                throw new SmartyException("Unexpected response code: " + response.getStatusCode());
         }
     }
 }
