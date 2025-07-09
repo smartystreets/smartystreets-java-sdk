@@ -31,68 +31,66 @@ public class UsEnrichmentExample {
         // We recommend storing your authentication credentials in environment variables.
         // for server-to-server requests, use this code:
         StaticCredentials credentials = new StaticCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
-
         // for client-side requests (browser/mobile), use this code:
         //SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
-        //make sure to Remove this when you are not testing. This is to hit rivendell
+
         Client client = new ClientBuilder(credentials).buildUsEnrichmentClient();
 
         String smartyKey = "1682393594";
+        String smartyKeyWithSecondaries = "325023201";
         String include = "group_structural,sale_date";
         String exclude = "";
 
-        SecondaryLookup secondaryLookup = new SecondaryLookup();
-
         // ************************ Property Principal ************************
-//         PropertyPrincipalLookup principalLookup = new PropertyPrincipalLookup();
-//         principalLookup.setSmartyKey(smartyKey);
-//         principalLookup.setInclude(include);
-//         // principalLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-//         // principalLookup.setEtag("GMYDMOBZGIZTGMJQ");
-//
-//         PrincipalResponse[] principalResults = null;
-//         try {
-//             principalResults = client.sendPropertyPrincipal(principalLookup);
-//         } catch (NotModifiedException ex) {
-//             System.out.println(ex.getMessage());
-//             return;
-//         } catch (SmartyException | IOException | InterruptedException ex) {
-//             System.out.println(ex.getMessage());
-//             ex.printStackTrace();
-//         }
-//
-//         if(principalResults != null){
-//             System.out.println("Address Lookup:\n" + Arrays.toString(principalResults));
-//         } else {
-//             System.out.println("Result was null");
-//         }
+        PropertyPrincipalLookup principalLookup = new PropertyPrincipalLookup();
+        principalLookup.setSmartyKey(smartyKey);
+        principalLookup.setInclude(include);
+        // To perform an address lookup instead of by SmartyKey you would uncomment the following line and comment setting the SmartyKey
+        // principalLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+        // To set the ETag value from a previous call, uncomment the following line and set the appropriate ETag value
+        // principalLookup.setEtag("GMYDMOBZGIZTGMJQ");
+
+        PrincipalResponse[] principalResults = null;
+        try {
+            principalResults = client.sendPropertyPrincipal(principalLookup);
+        } catch (NotModifiedException ex) {
+            System.out.println(ex.getMessage());
+            return;
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if(principalResults != null){
+            System.out.println("Address Lookup:\n" + Arrays.toString(principalResults));
+        } else {
+            System.out.println("Result was null");
+        }
 
         // ************************ Property Financial ************************
-//         PropertyFinancialLookup financialLookup = new PropertyFinancialLookup();
-//         financialLookup.setSmartyKey(smartyKey);
-//
-//         FinancialResponse[] financialResults = null;
-//         try {
-//             financialResults = client.sendPropertyFinancial(financialLookup);
-//         } catch (NotModifiedException ex) {
-//             System.out.println(ex.getMessage());
-//             return;
-//         } catch (SmartyException | IOException | InterruptedException ex) {
-//             System.out.println(ex.getMessage());
-//             ex.printStackTrace();
-//         }
-//
-//         if (financialResults != null) {
-//             System.out.println(Arrays.toString(financialResults));
-//         } else {
-//             System.out.println("Result was null");
-//         }
+        PropertyFinancialLookup financialLookup = new PropertyFinancialLookup();
+        financialLookup.setSmartyKey(smartyKey);
+
+        FinancialResponse[] financialResults = null;
+        try {
+            financialResults = client.sendPropertyFinancial(financialLookup);
+        } catch (NotModifiedException ex) {
+            System.out.println(ex.getMessage());
+            return;
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if (financialResults != null) {
+            System.out.println(Arrays.toString(financialResults));
+        } else {
+            System.out.println("Result was null");
+        }
 
         // ************************ GeoReference ************************
-        GeoReferenceLookup geoReferenceLookup = new GeoReferenceLookup("");
+        GeoReferenceLookup geoReferenceLookup = new GeoReferenceLookup(""); // the parameter is the subset (2010 or 2020)
         geoReferenceLookup.setSmartyKey(smartyKey);
-        // geoReferenceLookup.setEtag("your-etag-value");
-        // geoReferenceLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
 
         GeoReferenceResponse[] geoReferenceResults = null;
         try {
@@ -111,11 +109,13 @@ public class UsEnrichmentExample {
             System.out.println("Result was null");
         }
 
-        GeoReferenceLookup geoReferenceLookup2 = new GeoReferenceLookup("2010");
-        geoReferenceLookup2.setSmartyKey(smartyKey);
-        geoReferenceResults = null;
+        // ************************ Secondary Count ************************
+        SecondaryCountLookup secondaryCountLookup = new SecondaryCountLookup();
+        secondaryCountLookup.setSmartyKey(smartyKeyWithSecondaries);
+
+        SecondaryCountResponse[] secondaryCountResults = null;
         try {
-            geoReferenceResults = client.sendGeoReference(geoReferenceLookup2);
+            secondaryCountResults = client.sendSecondaryCount(secondaryCountLookup);
         } catch (NotModifiedException ex) {
             System.out.println(ex.getMessage());
             return;
@@ -124,50 +124,34 @@ public class UsEnrichmentExample {
             ex.printStackTrace();
         }
 
-        if (geoReferenceResults != null) {
-            System.out.println(Arrays.toString(geoReferenceResults));
+        if (secondaryCountResults != null){
+            System.out.println(Arrays.toString(secondaryCountResults));
         } else {
             System.out.println("Result was null");
         }
 
-
-        // ************************ Secondary Count ************************
-//         SecondaryCountResponse[] secondaryCountResults = null;
-//         try {
-//             secondaryCountResults = client.sendSecondaryCountLookup("325023201");
-//         } catch (NotModifiedException ex) {
-//             System.out.println(ex.getMessage());
-//             return;
-//         } catch (SmartyException | IOException | InterruptedException ex) {
-//             System.out.println(ex.getMessage());
-//             ex.printStackTrace();
-//         }
-//
-//         if (secondaryCountResults != null){
-//             System.out.println(Arrays.toString(secondaryCountResults));
-//         } else {
-//             System.out.println("Result was null");
-//         }
-
         // ************************ Secondary ************************
-//         SecondaryResponse[] secondaryResults = null;
-//         try {
-//             secondaryResults = client.sendSecondaryLookup("325023201");
-//         } catch (NotModifiedException ex) {
-//             System.out.println(ex.getMessage());
-//             return;
-//         } catch (SmartyException | IOException | InterruptedException ex) {
-//             System.out.println(ex.getMessage());
-//             ex.printStackTrace();
-//         }
-//
-//         if (secondaryResults != null){
-//             System.out.println(Arrays.stream(secondaryResults).flatMap(s -> s.getSecondaries().stream() ).map(Secondary::toString).collect(Collectors.joining("\n")));
-//         } else {
-//             System.out.println("Result was null");
-//         }
+        SecondaryLookup secondaryLookup = new SecondaryLookup();
+        secondaryLookup.setSmartyKey(smartyKeyWithSecondaries);
+
+        SecondaryResponse[] secondaryResults = null;
+        try {
+            secondaryResults = client.sendSecondary(secondaryLookup);
+        } catch (NotModifiedException ex) {
+            System.out.println(ex.getMessage());
+            return;
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if (secondaryResults != null){
+            System.out.println(Arrays.toString(secondaryResults));
+            System.out.println(Arrays.stream(secondaryResults).flatMap(s -> s.getSecondaries().stream() ).map(Secondary::toString).collect(Collectors.joining("\n")));
+        } else {
+            System.out.println("Result was null");
+        }
 
     }
-
 
 }
