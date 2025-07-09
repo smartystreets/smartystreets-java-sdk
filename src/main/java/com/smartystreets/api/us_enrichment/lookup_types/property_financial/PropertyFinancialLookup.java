@@ -11,11 +11,15 @@ import java.io.IOException;
 public class PropertyFinancialLookup extends Lookup {
     private FinancialResponse[] results;
 
+    public PropertyFinancialLookup() {
+    }
 
+    @Deprecated
     public PropertyFinancialLookup(String smartyKey, String include, String exclude, String eTag) {
         super(smartyKey, include, exclude, eTag);
     }
 
+    @Deprecated
     public PropertyFinancialLookup(AddressSearch addressSearch) {
         super(addressSearch, "property", "financial");
     }

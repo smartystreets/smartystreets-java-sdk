@@ -13,7 +13,14 @@ import static com.smartystreets.api.us_enrichment.lookup_types.Lookup.geoReferen
 
 public class GeoReferenceLookup extends Lookup {
     private GeoReferenceResponse[] results;
+    private String subset;
 
+    public GeoReferenceLookup(String subset) {
+        this.subset = subset;
+    }
+
+    // This constructor is inadequate as it will only query the lastest census version of the data because there is not a way to set the data subset.
+    // Use GeoReferenceLookup(String subset) to set the data subset then set all other applicable lookup fields manually.
     public GeoReferenceLookup(String smartyKey, String etag) {
         super(smartyKey, etag);
     }
@@ -39,8 +46,7 @@ public class GeoReferenceLookup extends Lookup {
     }
 
     public String getDataSubset() {
-        return emptyDataSubset;
+        return this.subset;
     }
-
 
 }

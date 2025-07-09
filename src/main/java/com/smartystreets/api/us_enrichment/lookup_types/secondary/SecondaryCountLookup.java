@@ -11,10 +11,15 @@ public class SecondaryCountLookup extends Lookup {
 
     private SecondaryCountResponse[] results;
 
+    public SecondaryCountLookup() {
+    }
+
+    @Deprecated
     public SecondaryCountLookup(String smartyKey) {
         super(smartyKey, "secondary", "count");
     }
 
+    @Deprecated
     public SecondaryCountLookup(AddressSearch addressSearch) {
         super(addressSearch, "secondary", "count");
     }
@@ -31,4 +36,13 @@ public class SecondaryCountLookup extends Lookup {
     public void deserializeAndSetResults(Serializer serializer, byte[] payload) throws IOException {
         this.results = serializer.deserialize(payload, SecondaryCountResponse[].class);
     }
+
+    public String getDataSet() {
+        return secondaryDataSet;
+    }
+
+    public String getDataSubset() {
+        return secondaryCountDataSubset;
+    }
+
 }

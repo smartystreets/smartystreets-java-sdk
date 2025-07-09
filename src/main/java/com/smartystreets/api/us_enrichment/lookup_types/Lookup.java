@@ -9,21 +9,27 @@ import java.io.IOException;
 import java.util.Map;
 
 public abstract class Lookup {
-    //TODO: BEA are thiese names used? Also need to add secondary to this list?
     private String smartyKey;
     private final String datasetName;
     private final String dataSubsetName;
     private AddressSearch addressSearch;
+
+    public static final String propertyDataSet = "property";
     public static final String financialDataSubset = "financial";
     public static final String principalDataSubset = "principal";
-    public static final String propertyDataSet = "property";
     public static final String geoReferenceDataSet = "geo-reference";
+    public static final String riskDataSet = "risk";
+    public static final String secondaryDataSet = "secondary";
+    public static final String secondaryCountDataSubset = "count";
     public static final String emptyDataSubset = "";
 
     private String smartyKey;
     private String eTag;
     private String include;
     private String exclude;
+
+    public Lookup() {
+    }
 
     public Lookup(String smartyKey, String include, String exclude, String eTag) {
         this.smartyKey = smartyKey;
@@ -47,7 +53,6 @@ public abstract class Lookup {
         return smartyKey;
     }
 
-
     public String getInclude() {
         return include;
     }
@@ -63,27 +68,17 @@ public abstract class Lookup {
     public AddressSearch getAddressSearch() { return addressSearch; }
 
     public abstract void deserializeAndSetResults(Serializer serializer, byte[] payload) throws IOException;
-
     public abstract String getDataSet();
-
     public abstract String getDataSubset();
-
 
     interface EnrichmentLookup {
         String getSmartyKey();
-
         String getDataSet();
-
         String getDataSubset();
-
         String getEtag();
-
         Lookup getLookup();
-
         void populate(Map<String, String> query);
-
         void deserializeAndSetResults(Serializer serializer, byte[] payload) throws IOException;
-
     }
 
 
@@ -101,5 +96,9 @@ public abstract class Lookup {
 
     public void setEtag(String etag) {
         this.eTag = etag;
+    }
+
+    public void setAddressSearch(AddressSearch search) {
+        this.addressSearch = search;
     }
 }

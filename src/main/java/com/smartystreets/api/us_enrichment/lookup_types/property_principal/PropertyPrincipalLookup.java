@@ -11,7 +11,10 @@ import java.io.IOException;
 public class PropertyPrincipalLookup extends Lookup {
     private PrincipalResponse[] results;
 
+    public PropertyPrincipalLookup() {
+    }
 
+    @Deprecated
     public PropertyPrincipalLookup(String smartyKey, String include, String exclude, String etag) {
         super(smartyKey, include, exclude, etag);
     }
