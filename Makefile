@@ -21,9 +21,9 @@ publish: compile
 	  && mvn \
 	    --batch-mode \
 	    --no-transfer-progress \
+	    -DskipITs \
 	    -Dgpg.passphrase=${GPG_PASSPHRASE} \
 	    deploy
-
 
 international_autocomplete_api:
 	mvn exec:java -Dexec.mainClass="examples.InternationalAutocompleteExample"
