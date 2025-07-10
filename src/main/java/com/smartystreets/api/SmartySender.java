@@ -52,8 +52,6 @@ public class SmartySender implements Sender {
                 return new TooManyRequestsResponse(httpResponse.headers(), statusCode, httpResponse.body().bytes());
             }
             return new Response(statusCode, httpResponse.body().bytes());
-        } catch(IOException ex) {
-            return new Response(ex.hashCode(), new byte[0]);
         }
     }
 
