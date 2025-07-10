@@ -6,9 +6,11 @@ import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.NotModifiedException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
+import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
+import com.smartystreets.api.us_enrichment.lookup_types.risk.RiskLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCountLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
 
@@ -16,10 +18,10 @@ import com.smartystreets.api.us_enrichment.result_types.Result;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
+import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.Secondary;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCountResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
-import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,6 +72,8 @@ public class UsEnrichmentExample {
         // ************************ Property Financial ************************
         PropertyFinancialLookup financialLookup = new PropertyFinancialLookup();
         financialLookup.setSmartyKey(smartyKey);
+        //financialLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+        //financialLookup.setEtag("GEYTENBXGY3TKMRU");
 
         FinancialResponse[] financialResults = null;
         try {
@@ -91,6 +95,8 @@ public class UsEnrichmentExample {
         // ************************ GeoReference ************************
         GeoReferenceLookup geoReferenceLookup = new GeoReferenceLookup(""); // the parameter is the subset (2010 or 2020)
         geoReferenceLookup.setSmartyKey(smartyKey);
+        //geoReferenceLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+        //geoReferenceLookup.setEtag("GEYTENBXGY3TKMRU");
 
         GeoReferenceResponse[] geoReferenceResults = null;
         try {
@@ -109,9 +115,34 @@ public class UsEnrichmentExample {
             System.out.println("Result was null");
         }
 
+        // ************************ Risk ************************
+        RiskLookup riskLookup = new RiskLookup();
+        riskLookup.setSmartyKey(smartyKey);
+        //riskLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+        //riskLookup.setEtag("GEYTENBXGY3TKMRU");
+
+        RiskResponse[] riskResults = null;
+        try {
+            riskResults = client.sendRisk(riskLookup);
+        } catch (NotModifiedException ex) {
+            System.out.println(ex.getMessage());
+            return;
+        } catch (SmartyException | IOException | InterruptedException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        if (riskResults != null) {
+            System.out.println(Arrays.toString(riskResults));
+        } else {
+            System.out.println("Result was null");
+        }
+
         // ************************ Secondary Count ************************
         SecondaryCountLookup secondaryCountLookup = new SecondaryCountLookup();
         secondaryCountLookup.setSmartyKey(smartyKeyWithSecondaries);
+        //secondaryCountLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+        //secondaryCountLookup.setEtag("GEYTENBXGY3TKMRU");
 
         SecondaryCountResponse[] secondaryCountResults = null;
         try {
@@ -133,6 +164,8 @@ public class UsEnrichmentExample {
         // ************************ Secondary ************************
         SecondaryLookup secondaryLookup = new SecondaryLookup();
         secondaryLookup.setSmartyKey(smartyKeyWithSecondaries);
+        //secondaryLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
+        //secondaryLookup.setEtag("GEYTENBXGY3TKMRU");
 
         SecondaryResponse[] secondaryResults = null;
         try {
