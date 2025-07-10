@@ -8,7 +8,10 @@ import com.smartystreets.api.us_enrichment.result_types.property_financial.Finan
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalAttributes;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
+import com.smartystreets.api.us_enrichment.result_types.risk.RiskAttributes;
+import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.*;
+import com.smartystreets.api.us_enrichment.result_types.MatchedAddress;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -24,6 +27,7 @@ public class ResponseTest {
     private static final String validSecondaryResponse = "[{\"smarty_key\":\"123\",\"root_address\":{\"secondary_count\":1,\"smarty_key\":\"root_smartykey\",\"primary_number\":\"root_primary\",\"street_predirection\":\"root_predirection\",\"street_name\":\"root_streetname\",\"street_suffix\":\"root_street_suffix\",\"street_postdirection\":\"root_postdirection\",\"city_name\":\"root_city\",\"state_abbreviation\":\"root_state\",\"zipcode\":\"root_zipcode\",\"plus4_code\":\"root_plus4\"},\"aliases\":[{\"smarty_key\":\"alias_smartykey\",\"primary_number\":\"alias_primary\",\"street_predirection\":\"alias_predirectional\",\"street_name\":\"alias_streetname\",\"street_suffix\":\"alias_streetsuffix\",\"street_postdirection\":\"alias_postdirection\",\"city_name\":\"alias_city\",\"state_abbreviation\":\"alias_state\",\"zipcode\":\"alias_zipcode\",\"plus4_code\":\"alias_plus4\"}],\"secondaries\":[{\"smarty_key\":\"secondary_smartykey\",\"secondary_designator\":\"secondary_designator\",\"secondary_number\":\"secondary_number\",\"plus4_code\":\"secondary_plus4\"}]}]";
     private static final String validSecondaryCountResponse = "[{\"smarty_key\":\"123\",\"count\":10}]";
     private static final String validGeoReferenceResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"geo-reference\",\"etag\":\"ABCD\",\"attributes\":{\"census_block\":{\"accuracy\":\"block\",\"geoid\":\"180759630002012\"},\"census_county_division\":{\"accuracy\":\"exact\",\"code\":\"1807581764\",\"name\":\"Wayne\"},\"place\":{\"accuracy\":\"exact\",\"code\":\"1861236\",\"name\":\"Portland\",\"type\":\"incorporated\"}}}]";
+    private static final String validRiskResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"risk\",\"etag\":\"ABCD\",\"matched_address\":{\"street\":\"street value\"},\"attributes\":{\"AGRIVALUE\":\"agrivalue\",\"AREA\":\"area\",\"NRI_VER\":\"nri_ver\"}}]";
 
     @Test
     public void testPrincipalFieldValues() throws IOException {
@@ -113,7 +117,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void testSecondaryCountFiedlValues() throws IOException {
+    public void testSecondaryCountFieldValues() throws IOException {
         SecondaryCountResponse[] results = smartySerializer.deserialize(validSecondaryCountResponse.getBytes(), SecondaryCountResponse[].class);
         SecondaryCountResponse result = results[0];
 
@@ -122,7 +126,7 @@ public class ResponseTest {
     }
 
     @Test
-    public void testGeoReferenceFieldsGetFilledInCorrectly() throws IOException {
+    public void testGeoReferenceFieldValues() throws IOException {
         GeoReferenceResponse[] results = smartySerializer.deserialize(validGeoReferenceResponse.getBytes(), GeoReferenceResponse[].class);
 
         GeoReferenceResponse result = results[0];
@@ -149,6 +153,24 @@ public class ResponseTest {
         assertEquals("1861236", attributes.place.code);
         assertEquals("Portland", attributes.place.name);
         assertEquals("incorporated", attributes.place.type);
+    }
+
+    @Test
+    public void testRiskFieldValues() throws IOException {
+        RiskResponse[] results = smartySerializer.deserialize(validRiskResponse.getBytes(), RiskResponse[].class);
+
+        RiskResponse result = results[0];
+        assertEquals("123", result.getSmartyKey());
+        assertEquals("ABCD", result.getEtag());
+
+        MatchedAddress matchedAddress = result.getMatchedAddress();
+        assertEquals("street value", matchedAddress.street);
+
+        assertNotNull(result.getAttributes());
+        RiskAttributes attributes = result.getAttributes();
+        assertEquals("agrivalue", attributes.AGRIVALUE);
+        assertEquals("area", attributes.AREA);
+        assertEquals("nri_ver", attributes.NRI_VER);
     }
 
 }
