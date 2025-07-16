@@ -61,6 +61,7 @@ public class Components implements Serializable {
     private String route;
     private String routeNumber;
     private String routeType;
+    private String useIndicator;
 
     //endregion
 
@@ -98,6 +99,11 @@ public class Components implements Serializable {
     @JsonProperty("route_type")
     public String getRouteType() {
         return routeType;
+    }
+
+    @JsonProperty("use_indicator")
+    public String getUseIndicator() {
+        return useIndicator;
     }
 
     @JsonProperty("country_iso_3")
