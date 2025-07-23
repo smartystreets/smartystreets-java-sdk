@@ -34,7 +34,7 @@ public class CandidateTest {
                 "\"post_box\":\"49\",\"post_box_type\":\"50\",\"post_box_number\":\"51\"," +
                 "\"additional_content\":\"112\",\"delivery_installation\":\"113\",\"delivery_installation_type\":\"114\"," +
                 "\"delivery_installation_qualifier_name\":\"115\",\"route\":\"116\",\"route_number\":\"117\"," +
-                "\"route_type\":\"118\",\"use_indicator\":\"119\"}," +
+                "\"route_type\":\"118\"}," +
                 "\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
                 "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\"}," +
                 "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\"," +
@@ -132,7 +132,6 @@ public class CandidateTest {
         assertEquals("116", components.getRoute());
         assertEquals("117", components.getRouteNumber());
         assertEquals("118", components.getRouteType());
-        assertEquals("119", components.getUseIndicator());
         //endregion
 
         //region [ Metadata ]
