@@ -50,6 +50,7 @@ public class Client {
         request.putParameter("locality", lookup.getLocality());
         request.putParameter("administrative_area", lookup.getAdministrativeArea());
         request.putParameter("postal_code", lookup.getPostalCode());
+        request.putParameter("features", lookup.getFeatures());
 
         return request;
     }
