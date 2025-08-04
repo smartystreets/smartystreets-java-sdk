@@ -30,7 +30,7 @@ public class AddressSearch {
     }
 
     public String city() {
-        return city;
+        return this.city;
     }
 
     public AddressSearch withCity(String city) {
@@ -39,7 +39,7 @@ public class AddressSearch {
     }
 
     public String state() {
-        return state;
+        return this.state;
     }
 
     public AddressSearch withState(String state) {
@@ -48,7 +48,7 @@ public class AddressSearch {
     }
 
     public String zipcode() {
-        return zipcode;
+        return this.zipcode;
     }
 
     public AddressSearch withZipcode(String zipcode) {

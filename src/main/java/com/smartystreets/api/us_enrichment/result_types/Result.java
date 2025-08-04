@@ -9,6 +9,14 @@ public class Result extends EnrichmentToStringer {
     private String datasetName;
     @JsonProperty("data_subset_name")
     private String dataSubsetName;
+    @JsonProperty("matched_address")
+    private MatchedAddress matchedAddress;
+
+    private String etag;
+
+    public void setEtag(String etag) {
+        this.etag = etag;
+    }
 
     public String getSmartyKey() {
         return smartyKey;
@@ -22,5 +30,12 @@ public class Result extends EnrichmentToStringer {
         return dataSubsetName;
     }
 
-}
+    public MatchedAddress getMatchedAddress() {
+        return matchedAddress;
+    }
 
+    public String getEtag() {
+        return etag;
+    }
+
+}

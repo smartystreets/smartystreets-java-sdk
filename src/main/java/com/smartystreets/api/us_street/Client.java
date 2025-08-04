@@ -46,7 +46,6 @@ public class Client {
         else
             request.setPayload(this.serializer.serialize(batch.getAllLookups()));
 
-
         Response response = this.sender.send(request);
 
         Candidate[] candidates = null;
