@@ -38,15 +38,17 @@ public class UsEnrichmentExample {
 
         Client client = new ClientBuilder(credentials).buildUsEnrichmentClient();
 
-        String smartyKey = "1682393594";
+        String smartyKey = "87844267";
         String smartyKeyWithSecondaries = "325023201";
-        String include = "group_structural,sale_date";
+        String include = "";   // example: "group_structural,sale_date";
         String exclude = "";
+        String features = "financial";
 
         // ************************ Property Principal ************************
         PropertyPrincipalLookup principalLookup = new PropertyPrincipalLookup();
         principalLookup.setSmartyKey(smartyKey);
         principalLookup.setInclude(include);
+        principalLookup.setFeatures(features);
         // To perform an address lookup instead of by SmartyKey you would uncomment the following line and comment setting the SmartyKey
         // principalLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
         // To set the ETag value from a previous call, uncomment the following line and set the appropriate ETag value

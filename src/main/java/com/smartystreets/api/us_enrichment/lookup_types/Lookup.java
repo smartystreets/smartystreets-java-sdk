@@ -15,6 +15,7 @@ public abstract class Lookup {
     private AddressSearch addressSearch;
     private String include;
     private String exclude;
+    private String features;
     private String eTag;
 
     public static final String propertyDataSet = "property";
@@ -68,6 +69,10 @@ public abstract class Lookup {
         return this.exclude;
     }
 
+    public String getFeatures() {
+        return this.features;
+    }
+
     public String getEtag() {
         return this.eTag;
     }
@@ -100,6 +105,10 @@ public abstract class Lookup {
 
     public void setExclude(String exclude) {
         this.exclude = exclude;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
     }
 
     public void setEtag(String etag) {

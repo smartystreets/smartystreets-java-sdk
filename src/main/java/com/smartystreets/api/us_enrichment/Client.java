@@ -158,6 +158,9 @@ public class Client {
         if (lookup.getExclude() != "") {
             request.putParameter("exclude", lookup.getExclude());
         }
+        if (lookup.getFeatures() != "") {
+            request.putParameter("features", lookup.getFeatures());
+        }
 
         return request;
     }

@@ -27,9 +27,10 @@ public class ClientTest {
         FakeSerializer serializer = new FakeSerializer(new PrincipalResponse[]{new PrincipalResponse()});
         Client client = new Client(sender, serializer);
         PropertyPrincipalLookup lookup = new PropertyPrincipalLookup("123", "group_structural,sale_date", "taco", "");
+        lookup.setFeatures("financial");
         client.sendPropertyPrincipal(lookup);
 
-        Assert.assertEquals("http://localhost:8080/123/property/principal?include=group_structural%2Csale_date&exclude=taco", capturingSender.getRequest().getUrl());
+        Assert.assertEquals("http://localhost:8080/123/property/principal?include=group_structural%2Csale_date&exclude=taco&features=financial", capturingSender.getRequest().getUrl());
     }
 
     @Test
