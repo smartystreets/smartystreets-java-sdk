@@ -26,6 +26,7 @@ public class Lookup {
     private String locality;
     private String administrativeArea;
     private String postalCode;
+    private String features;
 
     //endregion
 
@@ -153,6 +154,10 @@ public class Lookup {
         return postalCode;
     }
 
+    public String getFeatures() {
+        return features;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -223,6 +228,10 @@ public class Lookup {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
     }
 
     //endregion
