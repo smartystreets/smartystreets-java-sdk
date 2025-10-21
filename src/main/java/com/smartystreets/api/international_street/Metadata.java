@@ -16,6 +16,7 @@ Metadata implements Serializable {
     private String geocodePrecision;
     private String maxGeocodePrecision;
     private String addressFormat;
+    private String occupantUse;
 
     //endregion
 
@@ -42,6 +43,11 @@ Metadata implements Serializable {
     @JsonProperty("address_format")
     public String getAddressFormat() {
         return addressFormat;
+    }
+
+    @JsonProperty("occupant_use")
+    public String getOccupantUse() {
+        return occupantUse;
     }
 
     //endregion

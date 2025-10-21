@@ -33,14 +33,14 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
-        String expectedURL = "http://localhost/?search=1&max_results=2&include_only_cities=3&include_only_states=4&prefer_ratio=60&prefer_geolocation=state";
+        String expectedURL = "http://localhost/?search=1&max_results=2&include_only_cities=3&include_only_states=4&prefer_ratio=60&prefer_geolocation=city";
         Lookup lookup = new Lookup();
         lookup.setSearch("1");
         lookup.setMaxResults(2);
         lookup.addCityFilter("3");
         lookup.addStateFilter("4");
         lookup.setPreferRatio(60);
-        lookup.setGeolocateType(GeolocateType.STATE);
+        lookup.setGeolocateType(GeolocateType.CITY);
 
         client.send(lookup);
 

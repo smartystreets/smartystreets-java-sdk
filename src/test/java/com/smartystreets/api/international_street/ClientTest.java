@@ -29,7 +29,7 @@ public class ClientTest {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         String expectedUrl = "http://localhost/?input_id=1234&country=0&geocode=true&language=native&freeform=1" +
-                "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9";
+                "&address1=2&address2=3&address3=4&address4=5&organization=6&locality=7&administrative_area=8&postal_code=9&features=10";
         FakeSerializer serializer = new FakeSerializer(null);
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup();
@@ -46,6 +46,7 @@ public class ClientTest {
         lookup.setLocality("7");
         lookup.setAdministrativeArea("8");
         lookup.setPostalCode("9");
+        lookup.setFeatures("10");
 
         client.send(lookup);
 

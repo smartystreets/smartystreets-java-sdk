@@ -3,6 +3,7 @@ package com.smartystreets.api;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,6 @@ import java.util.Map;
 public class ClientBuilder {
     private final static String INTERNATIONAL_STREET_API_URL = "https://international-street.api.smarty.com/verify";
     private final static String INTERNATIONAL_AUTOCOMPLETE_API_URL = "https://international-autocomplete.api.smarty.com/v2/lookup";
-    private final static String US_AUTOCOMPLETE_API_URL = "https://us-autocomplete.api.smarty.com/suggest";
     private final static String US_AUTOCOMPLETE_API_PRO_URL = "https://us-autocomplete-pro.api.smarty.com/lookup";
     private final static String US_EXTRACT_API_URL = "https://us-extract.api.smarty.com/";
     private final static String US_STREET_API_URL = "https://us-street.api.smarty.com/street-address";
@@ -32,6 +32,7 @@ public class ClientBuilder {
     private Proxy proxy;
     private Map<String, Object> customHeaders;
     private List<String> licenses = new ArrayList<>();
+    private Map<String, String> customQueries;
     private String ip;
 
     private ClientBuilder() {
@@ -154,6 +155,39 @@ public class ClientBuilder {
         return this;
     }
 
+    /**
+     * Allows the caller to specify key and value pair that is added to the rerquest
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withCustomQuery(String key, String value) {
+        if (this.customQueries == null) {
+            this.customQueries = new HashMap<>();
+        }
+        this.customQueries.put(key, value);
+        return this;
+    }
+
+    /**
+     * Allows the caller to specify key and value pair and appends the value to the current value associated with the key, separated by a comma.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withCustomCommaSeparatedQuery(String key, String value) {
+        if (this.customQueries == null) {
+            this.customQueries = new HashMap<>();
+        }
+        this.customQueries.put(key, this.customQueries.getOrDefault(key, "") + (this.customQueries.containsKey(key) ? "," : "") + value);
+        return this;
+    }
+
+    /**
+     * Adds to the request query to use the component analysis feature.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withFeatureComponentAnalysis() {
+        return withCustomCommaSeparatedQuery("features", "component-analysis");
+    }
+
+
     public com.smartystreets.api.international_street.Client buildInternationalStreetApiClient() {
         this.ensureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
         return new com.smartystreets.api.international_street.Client(this.buildSender(), this.serializer);
@@ -162,11 +196,6 @@ public class ClientBuilder {
     public com.smartystreets.api.international_autocomplete.Client buildInternationalAutcompleteApiClient() {
         this.ensureURLPrefixNotNull(INTERNATIONAL_AUTOCOMPLETE_API_URL);
         return new com.smartystreets.api.international_autocomplete.Client(this.buildSender(), this.serializer);
-    }
-
-    public com.smartystreets.api.us_autocomplete.Client buildUsAutocompleteApiClient() {
-        this.ensureURLPrefixNotNull(US_AUTOCOMPLETE_API_URL);
-        return new com.smartystreets.api.us_autocomplete.Client(this.buildSender(), this.serializer);
     }
 
     public com.smartystreets.api.us_autocomplete_pro.Client buildUsAutocompleteProApiClient() {
@@ -216,6 +245,9 @@ public class ClientBuilder {
         }
         if (this.customHeaders != null) {
             sender = new CustomHeaderSender(this.customHeaders, sender);
+        }
+        if (this.customQueries != null) {
+            sender = new CustomQuerySender(this.customQueries, sender);
         }
         if (this.signer != null) {
             sender = new SigningSender(this.signer, sender);

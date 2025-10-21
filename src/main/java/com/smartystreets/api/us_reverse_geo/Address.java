@@ -12,6 +12,7 @@ public class Address implements Serializable {
     private String stateAbbreviation;
     private String zipCode;
     private String source;
+    private String smartykey;
 
     //endregion
 
@@ -27,5 +28,8 @@ public class Address implements Serializable {
 
     @JsonProperty("source")
     public String getSource() { return this.source; }
+
+    @JsonProperty("smarty_key")
+    public String getSmartykey() { return this.smartykey; }
 
 }
