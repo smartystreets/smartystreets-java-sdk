@@ -44,7 +44,7 @@ us_reverse_geo_api:
 	mvn exec:java -Dexec.mainClass="examples.UsReverseGeoExample"
 
 us_street_api:
-	mvn exec:java -Dexec.mainClass="examples.UsStreetSingleAddressExample" && mvn exec:java -Dexec.mainClass="examples.UsStreetMultipleAddressesExample"
+	mvn exec:java -Dexec.mainClass="examples.UsStreetSingleAddressExample" && mvn exec:java -Dexec.mainClass="examples.UsStreetMultipleAddressesExample" && mvn exec:java -Dexec.mainClass="examples.UsStreetComponentAnalysisExample"
 
 us_zipcode_api:
 	mvn exec:java -Dexec.mainClass="examples.UsZipCodeSingleLookupExample" && mvn exec:java -Dexec.mainClass="examples.UsZipCodeMultipleLookupsExample"
