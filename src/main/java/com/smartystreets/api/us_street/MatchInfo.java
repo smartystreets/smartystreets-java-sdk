@@ -7,8 +7,6 @@ import java.util.List;
 
 public class MatchInfo implements Serializable {
     private String status;
-
-
     private List<String> change;
 
     @JsonProperty("status")
