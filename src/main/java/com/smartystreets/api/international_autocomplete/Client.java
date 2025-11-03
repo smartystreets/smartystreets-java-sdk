@@ -4,7 +4,6 @@ import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * This client sends lookups to the SmartyStreets US Autocomplete Pro API, <br>

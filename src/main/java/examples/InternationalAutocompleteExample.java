@@ -1,7 +1,6 @@
 package examples;
 
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.international_autocomplete.Client;
@@ -9,7 +8,6 @@ import com.smartystreets.api.international_autocomplete.Lookup;
 import com.smartystreets.api.international_autocomplete.Candidate;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class InternationalAutocompleteExample {
     public static void main(String[] args) {

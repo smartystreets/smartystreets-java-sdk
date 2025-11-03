@@ -1,7 +1,6 @@
 package examples;
 
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_extract.*;
@@ -9,7 +8,6 @@ import com.smartystreets.api.us_street.Candidate;
 import com.smartystreets.api.us_street.MatchType;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class UsExtractExample {
     public static void main(String[] args) {
