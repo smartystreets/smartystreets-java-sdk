@@ -122,6 +122,7 @@ public class PrincipalAttributes extends Attributes {
     public String family_room;
     public String fence;
     public String fence_area;
+    public PrincipalFinancialHistoryEntry[] financial_history;
     public String fips_code;
     public String fire_resistance_code;
     public String fire_sprinklers_flag;

@@ -3,6 +3,7 @@ package com.smartystreets.api;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,7 @@ public class ClientBuilder {
     private Proxy proxy;
     private Map<String, Object> customHeaders;
     private List<String> licenses = new ArrayList<>();
+    private Map<String, String> customQueries;
     private String ip;
 
     private ClientBuilder() {
@@ -154,6 +156,39 @@ public class ClientBuilder {
         return this;
     }
 
+    /**
+     * Allows the caller to specify key and value pair that is added to the rerquest
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withCustomQuery(String key, String value) {
+        if (this.customQueries == null) {
+            this.customQueries = new HashMap<>();
+        }
+        this.customQueries.put(key, value);
+        return this;
+    }
+
+    /**
+     * Allows the caller to specify key and value pair and appends the value to the current value associated with the key, separated by a comma.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withCustomCommaSeparatedQuery(String key, String value) {
+        if (this.customQueries == null) {
+            this.customQueries = new HashMap<>();
+        }
+        this.customQueries.put(key, this.customQueries.getOrDefault(key, "") + (this.customQueries.containsKey(key) ? "," : "") + value);
+        return this;
+    }
+
+    /**
+     * Adds to the request query to use the component analysis feature.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withFeatureComponentAnalysis() {
+        return withCustomCommaSeparatedQuery("features", "component-analysis");
+    }
+
+
     public com.smartystreets.api.international_street.Client buildInternationalStreetApiClient() {
         this.ensureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
         return new com.smartystreets.api.international_street.Client(this.buildSender(), this.serializer);
@@ -216,6 +251,9 @@ public class ClientBuilder {
         }
         if (this.customHeaders != null) {
             sender = new CustomHeaderSender(this.customHeaders, sender);
+        }
+        if (this.customQueries != null) {
+            sender = new CustomQuerySender(this.customQueries, sender);
         }
         if (this.signer != null) {
             sender = new SigningSender(this.signer, sender);

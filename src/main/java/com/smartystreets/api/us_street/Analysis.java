@@ -22,6 +22,7 @@ public class Analysis implements Serializable {
     private String lacsLinkIndicator;
     private boolean suiteLinkMatch;
     private String enhancedMatch;
+    private ComponentAnalysis components;
 
     //endregion
 
@@ -85,6 +86,11 @@ public class Analysis implements Serializable {
     @JsonProperty("suitelink_match")
     public boolean isSuiteLinkMatch() {
         return this.suiteLinkMatch;
+    }
+
+    @JsonProperty("components")
+    public ComponentAnalysis getComponents() {
+        return this.components;
     }
 
     //endregion

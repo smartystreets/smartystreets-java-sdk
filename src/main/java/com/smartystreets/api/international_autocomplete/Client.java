@@ -26,6 +26,7 @@ public class Client {
 
         Response response = this.sender.send(request);
 
+        //Need to go through and fix all of these
         Result result = this.serializer.deserialize(response.getPayload(), Result.class);
         Candidate[] candidates = result.getCandidates();
         lookup.setResult(candidates);
