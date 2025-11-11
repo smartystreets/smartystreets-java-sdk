@@ -7,7 +7,6 @@ import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * This client sends lookups to the SmartyStreets US Street API, <br>

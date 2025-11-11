@@ -1,6 +1,5 @@
 package examples;
 
-import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_zipcode.*;

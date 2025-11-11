@@ -1,14 +1,11 @@
 package examples;
 
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.international_street.*;
 
 import java.io.IOException;
-
-import java.util.ArrayList;
 
 public class InternationalExample {
     public static void main(String[] args) {

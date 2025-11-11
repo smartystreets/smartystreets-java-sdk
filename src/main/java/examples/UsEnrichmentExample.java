@@ -1,12 +1,10 @@
 package examples;
 
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.NotModifiedException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
-import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
@@ -14,7 +12,6 @@ import com.smartystreets.api.us_enrichment.lookup_types.risk.RiskLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCountLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
 
-import com.smartystreets.api.us_enrichment.result_types.Result;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
@@ -24,7 +21,6 @@ import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCount
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 

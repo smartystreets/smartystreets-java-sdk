@@ -31,6 +31,9 @@ international_autocomplete_api:
 international_street_api:
 	mvn exec:java -Dexec.mainClass="examples.InternationalExample"
 
+international_postal_code_api:
+	mvn exec:java -Dexec.mainClass="examples.InternationalPostalCodeExample"
+
 us_autocomplete_pro_api:
 	mvn exec:java -Dexec.mainClass="examples.UsAutocompleteProExample"
 

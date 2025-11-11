@@ -1,16 +1,13 @@
 package examples;
 
 import com.smartystreets.api.StaticCredentials;
-import com.smartystreets.api.SharedCredentials;
 import com.smartystreets.api.exceptions.BatchFullException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
 import com.smartystreets.api.ClientBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class UsStreetMultipleAddressesExample {
     public static void main(String[] args) {

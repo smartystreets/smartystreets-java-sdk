@@ -23,6 +23,7 @@ public class ClientBuilder {
     private final static String US_ZIP_CODE_API_URL = "https://us-zipcode.api.smarty.com/lookup";
     private final static String US_REVERSE_GEO_API_URL = "https://us-reverse-geo.api.smarty.com/lookup";
     private static final String US_ENRICHMENT_API_URL = "https://us-enrichment.api.smarty.com/lookup";
+    private final static String INTERNATIONAL_POSTAL_CODE_API_URL = "https://international-postal-code.api.smarty.com/lookup";
     private Credentials signer;
     private Serializer serializer;
     private Sender httpSender;
@@ -226,6 +227,11 @@ public class ClientBuilder {
     public com.smartystreets.api.us_enrichment.Client buildUsEnrichmentClient() {
         this.ensureURLPrefixNotNull(US_ENRICHMENT_API_URL);
         return new com.smartystreets.api.us_enrichment.Client(this.buildSender(), this.serializer);
+    }
+
+    public com.smartystreets.api.international_postal_code.Client buildInternationalPostalCodeApiClient() {
+        this.ensureURLPrefixNotNull(INTERNATIONAL_POSTAL_CODE_API_URL);
+        return new com.smartystreets.api.international_postal_code.Client(this.buildSender(), this.serializer);
     }
 
     private Sender buildSender() {
