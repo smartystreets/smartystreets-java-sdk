@@ -1,4 +1,4 @@
-package com.smartystreets.api.us_enrichment;
+package com.smartystreets.api.us_enrichment.result_types;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
