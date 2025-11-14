@@ -1,7 +1,7 @@
 package com.smartystreets.api.us_enrichment.lookup_types;
 
 import com.smartystreets.api.Serializer;
-import com.smartystreets.api.us_enrichment.AddressSearch;
+import com.smartystreets.api.us_enrichment.result_types.AddressSearch;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
 import okhttp3.Headers;
 
