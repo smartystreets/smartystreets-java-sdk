@@ -36,7 +36,7 @@ public class CandidateTest {
                 "\"delivery_installation_qualifier_name\":\"115\",\"route\":\"116\",\"route_number\":\"117\"," +
                 "\"route_type\":\"118\"}," +
                 "\"metadata\":{\"latitude\":52.0,\"longitude\":53.0," +
-                "\"geocode_precision\":\"54\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\",\"occupant_use\":\"56.1\"}," +
+                "\"geocode_precision\":\"54\",\"geocode_classification\":\"multiple-point-average\",\"max_geocode_precision\":\"55\",\"address_format\":\"56\",\"occupant_use\":\"56.1\"}," +
                 "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\"," +
                 "\"max_address_precision\":\"59\",\"changes\":{\"organization\":\"60\"," +
                 "\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\",\"address4\":\"64\",\"address5\":\"65\"," +
@@ -140,6 +140,7 @@ public class CandidateTest {
         assertEquals(52, metadata.getLatitude(), 0.001);
         assertEquals(53, metadata.getLongitude(), 0.001);
         assertEquals("54", metadata.getGeocodePrecision());
+        assertEquals("multiple-point-average", metadata.getGeocodeClassification());
         assertEquals("55", metadata.getMaxGeocodePrecision());
         assertEquals("56", metadata.getAddressFormat());
         assertEquals("56.1", metadata.getOccupantUse());
