@@ -3,9 +3,6 @@ package com.smartystreets.api.us_enrichment;
 import com.smartystreets.api.SmartySerializer;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceAttributes;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
-import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialAttributes;
-import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialHistoryEntry;
-import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalAttributes;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalFinancialHistoryEntry;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
@@ -23,7 +20,6 @@ import static org.junit.Assert.*;
 public class ResponseTest {
 
     private final SmartySerializer smartySerializer = new SmartySerializer();
-    private static final String validFinancialResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"property\",\"data_subset_name\":\"financial\",\"etag\":\"ABCD\",\"attributes\":{\"assessed_improvement_percent\":\"Assessed_Improvement_Percent\",\"veteran_tax_exemption\":\"Veteran_Tax_Exemption\",\"widow_tax_exemption\":\"Widow_Tax_Exemption\",\"financial_history\":[{\"code_title_company\":\"Code_Title_Company\"}]}}]";
     private static final String validPrincipalResponse = "[{\"smarty_key\":\"123\",\"data_set_name\":\"property\",\"data_subset_name\":\"principal\",\"etag\":\"ABCD\",\"attributes\":{\"1st_floor_sqft\":\"1st_Floor_Sqft\",\"lender_name_2\":\"Lender_Name_2\",\"lender_seller_carry_back\":\"Lender_Seller_Carry_Back\",\"year_built\":\"Year_Built\",\"zoning\":\"Zoning\",\"financial_history\":[{\"code_title_company\":\"Code_Title_Company\"}]}}]";
     private static final String validSecondaryResponse = "[{\"smarty_key\":\"123\",\"root_address\":{\"secondary_count\":1,\"smarty_key\":\"root_smartykey\",\"primary_number\":\"root_primary\",\"street_predirection\":\"root_predirection\",\"street_name\":\"root_streetname\",\"street_suffix\":\"root_street_suffix\",\"street_postdirection\":\"root_postdirection\",\"city_name\":\"root_city\",\"state_abbreviation\":\"root_state\",\"zipcode\":\"root_zipcode\",\"plus4_code\":\"root_plus4\"},\"aliases\":[{\"smarty_key\":\"alias_smartykey\",\"primary_number\":\"alias_primary\",\"street_predirection\":\"alias_predirectional\",\"street_name\":\"alias_streetname\",\"street_suffix\":\"alias_streetsuffix\",\"street_postdirection\":\"alias_postdirection\",\"city_name\":\"alias_city\",\"state_abbreviation\":\"alias_state\",\"zipcode\":\"alias_zipcode\",\"plus4_code\":\"alias_plus4\"}],\"secondaries\":[{\"smarty_key\":\"secondary_smartykey\",\"secondary_designator\":\"secondary_designator\",\"secondary_number\":\"secondary_number\",\"plus4_code\":\"secondary_plus4\"}]}]";
     private static final String validSecondaryCountResponse = "[{\"smarty_key\":\"123\",\"count\":10}]";
@@ -48,28 +44,6 @@ public class ResponseTest {
         assertEquals("Zoning", attributes.zoning);
 
         PrincipalFinancialHistoryEntry[] financial_history = attributes.financial_history;
-        assertEquals(1, financial_history.length);
-        assertEquals("Code_Title_Company", financial_history[0].code_title_company);
-    }
-
-    @Test
-    public void testFinancialFieldValues() throws IOException {
-        FinancialResponse[] results = smartySerializer.deserialize(validFinancialResponse.getBytes(), FinancialResponse[].class);
-
-        FinancialResponse result = results[0];
-        assertEquals("123", result.getSmartyKey());
-        assertEquals("property", result.getDatasetName());
-        assertEquals("financial", result.getDataSubsetName());
-        assertEquals("ABCD", result.getEtag());
-
-        assertNotNull(result.getAttributes());
-        FinancialAttributes attributes = result.getAttributes();
-
-        assertEquals("Assessed_Improvement_Percent", attributes.assessed_improvement_percent);
-        assertEquals("Veteran_Tax_Exemption", attributes.veteran_tax_exemption);
-        assertEquals("Widow_Tax_Exemption", attributes.widow_tax_exemption);
-
-        FinancialHistoryEntry[] financial_history = attributes.financial_history;
         assertEquals(1, financial_history.length);
         assertEquals("Code_Title_Company", financial_history[0].code_title_company);
     }

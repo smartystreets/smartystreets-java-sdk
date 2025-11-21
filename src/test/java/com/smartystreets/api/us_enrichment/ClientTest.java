@@ -4,10 +4,8 @@ import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.RequestCapturingSender;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
-import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
-import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
 import com.smartystreets.api.us_enrichment.lookup_types.risk.RiskLookup;
@@ -31,19 +29,6 @@ public class ClientTest {
         client.sendPropertyPrincipal(lookup);
 
         Assert.assertEquals("http://localhost:8080/123/property/principal?include=group_structural%2Csale_date&exclude=taco&features=financial", capturingSender.getRequest().getUrl());
-    }
-
-    @Test
-    public void testSendingFinancialLookup() throws Exception {
-        RequestCapturingSender capturingSender = new RequestCapturingSender();
-        URLPrefixSender sender = new URLPrefixSender("http://localhost:8080", capturingSender);
-        FakeSerializer serializer = new FakeSerializer(new FinancialResponse[]{new FinancialResponse()});
-        Client client = new Client(sender, serializer);
-        PropertyFinancialLookup lookup = new PropertyFinancialLookup();
-        lookup.setSmartyKey("123");
-        lookup.setInclude("group_structural,sale_date");
-        client.sendPropertyFinancial(lookup);
-        Assert.assertEquals("http://localhost:8080/123/property/financial?include=group_structural%2Csale_date", capturingSender.getRequest().getUrl());
     }
 
     @Test

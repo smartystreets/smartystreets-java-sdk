@@ -5,7 +5,6 @@ import com.smartystreets.api.StaticCredentials;
 import com.smartystreets.api.exceptions.NotModifiedException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
-import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.risk.RiskLookup;
@@ -13,7 +12,6 @@ import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCount
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
 
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
-import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.Secondary;
@@ -63,29 +61,6 @@ public class UsEnrichmentExample {
 
         if(principalResults != null){
             System.out.println("Address Lookup:\n" + Arrays.toString(principalResults));
-        } else {
-            System.out.println("Result was null");
-        }
-
-        // ************************ Property Financial ************************
-        PropertyFinancialLookup financialLookup = new PropertyFinancialLookup();
-        financialLookup.setSmartyKey(smartyKey);
-        //financialLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-        //financialLookup.setEtag("GEYTENBXGY3TKMRU");
-
-        FinancialResponse[] financialResults = null;
-        try {
-            financialResults = client.sendPropertyFinancial(financialLookup);
-        } catch (NotModifiedException ex) {
-            System.out.println(ex.getMessage());
-            return;
-        } catch (SmartyException | IOException | InterruptedException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-
-        if (financialResults != null) {
-            System.out.println(Arrays.toString(financialResults));
         } else {
             System.out.println("Result was null");
         }
