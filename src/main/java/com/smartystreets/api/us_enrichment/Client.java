@@ -6,9 +6,7 @@ import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
-import com.smartystreets.api.us_enrichment.lookup_types.property_financial.PropertyFinancialLookup;
 import com.smartystreets.api.us_enrichment.result_types.AddressSearch;
-import com.smartystreets.api.us_enrichment.result_types.property_financial.FinancialResponse;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
@@ -38,18 +36,7 @@ public class Client {
         this.serializer = serializer;
     }
 
-    public FinancialResponse[] sendPropertyFinancial(PropertyFinancialLookup lookup) throws SmartyException, IOException, InterruptedException {
-        send(lookup);
-        return lookup.getResults();
-    }
-
-    //sendPropertyFinancialLookup is deprecated, use sendPropertyFinancial
-    public FinancialResponse[] sendPropertyFinancialLookup(AddressSearch addressSearch) throws SmartyException, IOException, InterruptedException {
-        PropertyFinancialLookup lookup = new PropertyFinancialLookup(addressSearch);
-        send(lookup);
-        return lookup.getResults();
-    }
-
+    //sendPropertyPrincipalLookup is deprecated, use sendPropertyPrincipal
     public PrincipalResponse[] sendPropertyPrincipal(PropertyPrincipalLookup lookup) throws SmartyException, IOException, InterruptedException {
         send(lookup);
         return lookup.getResults();
