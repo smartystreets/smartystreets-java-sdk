@@ -74,7 +74,7 @@ public class Client {
         request.putParameter("format", address.getFormat());
 
         if (address.getMaxCandidates() == 1 && (address.getMatch() != null && address.getMatch().equals("enhanced")))
-            request.putParameter("candidates", "5");
+            request.putParameter("candidates", "1");
         else
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
         
