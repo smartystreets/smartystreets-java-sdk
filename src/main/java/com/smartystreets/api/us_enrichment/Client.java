@@ -150,6 +150,10 @@ public class Client {
             request.putParameter("features", lookup.getFeatures());
         }
 
+        for (Map.Entry<String, String> entry : lookup.getCustomParamMap().entrySet()) {
+            request.putParameter(entry.getKey(), entry.getValue());
+        }
+
         return request;
     }
 }

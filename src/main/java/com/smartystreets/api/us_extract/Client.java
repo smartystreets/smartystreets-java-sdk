@@ -7,6 +7,7 @@ import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This client sends lookups to the SmartyStreets US Extract API, <br>
@@ -43,6 +44,10 @@ public class Client {
         request.putParameter("addr_line_breaks", String.valueOf(lookup.addressesHaveLineBreaks()));
         request.putParameter("addr_per_line", String.valueOf(lookup.getAddressesPerLine()));
         request.putParameter("match", lookup.getMatch());
+
+        for (Map.Entry<String, String> entry : lookup.getCustomParamMap().entrySet()) {
+            request.putParameter(entry.getKey(), entry.getValue());
+        }
 
         return request;
     }

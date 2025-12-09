@@ -8,6 +8,7 @@ import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Map;
 
 public class Client {
     private final Sender sender;
@@ -25,6 +26,10 @@ public class Client {
         request.putParameter("latitude", decimalFormat.format(lookup.getLatitude()));
         request.putParameter("longitude", decimalFormat.format(lookup.getLongitude()));
         request.putParameter("source", lookup.getSource());
+
+        for (Map.Entry<String, String> entry : lookup.getCustomParamMap().entrySet()) {
+            request.putParameter(entry.getKey(), entry.getValue());
+        }
 
         Response httpResponse = this.sender.send(request);
 

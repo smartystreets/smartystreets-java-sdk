@@ -27,6 +27,9 @@ public class UsZipCodeSingleLookupExample {
         lookup.setState("California");
         lookup.setZipCode("94043");
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("zipcode", "94043");
+
         try {
             client.send(lookup);
         }

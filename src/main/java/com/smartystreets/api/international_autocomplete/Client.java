@@ -4,6 +4,7 @@ import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This client sends lookups to the SmartyStreets US Autocomplete Pro API, <br>
@@ -46,6 +47,10 @@ public class Client {
         request.putParameter("max_results", String.valueOf(lookup.getMaxResults()));
         request.putParameter("include_only_locality", lookup.getLocality());
         request.putParameter("include_only_postal_code", lookup.getPostalCode());
+
+        for (Map.Entry<String, String> entry : lookup.getCustomParamMap().entrySet()) {
+            request.putParameter(entry.getKey(), entry.getValue());
+        }
 
         return request;
     }

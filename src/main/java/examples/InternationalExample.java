@@ -33,6 +33,9 @@ public class InternationalExample {
         lookup.setPostalCode("02516-050");
         lookup.setGeocode(true); // Must be expressly set to get latitude and longitude.
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("input_id", "ID-8675309");
+
         try {
             Candidate[] candidates = client.send(lookup); // The candidates are also stored in the lookup's 'result' field.
 

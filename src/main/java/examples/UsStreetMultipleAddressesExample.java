@@ -40,6 +40,9 @@ public class UsStreetMultipleAddressesExample {
                                               // this will always return at least one result even if the address is invalid.
                                               // Refer to the documentation for additional MatchStrategy options.
 
+        //uncomment the line below to add a custom parameter
+        //address0.addCustomParameter("InputId", "24601");
+
         Lookup address1 = new Lookup("1 Rosedale, Baltimore, Maryland"); // Freeform addresses work too.
         address1.setMaxCandidates(5); // Allows up to ten possible matches to be returned (default is 1).
 

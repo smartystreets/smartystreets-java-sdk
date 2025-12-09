@@ -7,6 +7,7 @@ import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.exceptions.UnprocessableEntityException;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Client for the International Postal Code API. Sends Lookup objects and populates results.
@@ -39,6 +40,11 @@ public class Client {
         //request.putParameter("features", lookup.getFeatures()); // future
         request.putParameter("administrative_area", lookup.getAdministrativeArea());
         request.putParameter("postal_code", lookup.getPostalCode());
+
+        for (Map.Entry<String, String> entry : lookup.getCustomParamMap().entrySet()) {
+            request.putParameter(entry.getKey(), entry.getValue());
+        }
+
         return request;
     }
 

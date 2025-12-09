@@ -48,6 +48,9 @@ public class UsEnrichmentExample {
         // To set the ETag value from a previous call, uncomment the following line and set the appropriate ETag value
         // principalLookup.setEtag("GMYDMOBZGIZTGMJQ");
 
+        //uncomment the below line to add a custom parameter
+        //principalLookup.addCustomParameter("zipcode", "08876");
+
         PrincipalResponse[] principalResults = null;
         try {
             principalResults = client.sendPropertyPrincipal(principalLookup);

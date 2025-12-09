@@ -2,6 +2,9 @@ package com.smartystreets.api.international_postal_code;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Lookup input for International Postal Code API (see Go Lookup struct/docs)
  * Holds input data and the resulting candidates.
@@ -20,12 +23,14 @@ public class Lookup {
     private String administrativeArea;
     @JsonProperty("postal_code")
     private String postalCode;
-    
+
     // Result set after API call
     private Candidate[] result;
+    private Map<String, String> customParamMap;
 
     public Lookup() {
         this.result = new Candidate[0];
+        this.customParamMap = new HashMap<>();
     }
 
     // region [Getters]
@@ -38,6 +43,7 @@ public class Lookup {
     public String getPostalCode() { return postalCode; }
     public Candidate[] getResult() { return result; }
     public Candidate getResult(int i) { return result[i]; }
+    public Map<String, String> getCustomParamMap() { return customParamMap; }
     // endregion
 
     // region [Setters]
@@ -49,5 +55,6 @@ public class Lookup {
     public void setAdministrativeArea(String administrativeArea) { this.administrativeArea = administrativeArea; }
     public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
     public void setResult(Candidate[] candidates) { this.result = candidates; }
+    public void addCustomParameter(String parameter, String value) { this.customParamMap.put(parameter, value); }
     // endregion
 }

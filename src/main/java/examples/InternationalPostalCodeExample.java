@@ -21,6 +21,9 @@ public class InternationalPostalCodeExample {
         lookup.setCountry("Brazil");
         lookup.setPostalCode("02516");
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("postal_code", "02516");
+
         client.send(lookup);
 
         System.out.println("Results:");

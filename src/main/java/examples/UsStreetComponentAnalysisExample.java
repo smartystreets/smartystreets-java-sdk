@@ -32,6 +32,9 @@ public class UsStreetComponentAnalysisExample {
         lookup.setZipCode("21229");
         lookup.setMatch(MatchType.ENHANCED); // Enhanced matching is required to return component analysis results.
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("city", "baltimore");
+
         try {
             client.send(lookup);
         }

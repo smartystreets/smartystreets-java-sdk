@@ -1,6 +1,8 @@
 package com.smartystreets.api.us_reverse_geo;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Lookup implements Serializable {
 
@@ -11,10 +13,14 @@ public class Lookup implements Serializable {
     private String source;
 
     private SmartyResponse response;
+    private Map<String, String> customParamMap;
 
     //endregion
 
-    public Lookup() { this.response = new SmartyResponse(); }
+    public Lookup() {
+        this.response = new SmartyResponse();
+        this.customParamMap = new HashMap<>();
+    }
 
     public Lookup(double latitude, double longitude) {
         this();
@@ -34,5 +40,13 @@ public class Lookup implements Serializable {
 
     public void setResponse(SmartyResponse response) {
         this.response = response;
+    }
+
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
+    }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
     }
 }

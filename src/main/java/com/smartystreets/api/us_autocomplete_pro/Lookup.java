@@ -3,7 +3,9 @@ package com.smartystreets.api.us_autocomplete_pro;
 import com.smartystreets.api.GeolocateType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
@@ -30,6 +32,7 @@ public class Lookup {
     private GeolocateType preferGeolocation;
     private String selected;
     private String source;
+    private Map<String, String> customParamMap;
 
     //endregion
 
@@ -49,6 +52,7 @@ public class Lookup {
         this.preferState = new ArrayList<>();
         this.preferZipcode = new ArrayList<>();
         this.preferRatio = this.PREFER_RATIO_DEFAULT;
+        this.customParamMap = new HashMap<>();
     }
 
     /**
@@ -125,6 +129,10 @@ public class Lookup {
         if (this.maxResults == this.MAX_RESULTS_DEFAULT)
             return null;
         return Integer.toString(this.maxResults);
+    }
+
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
     }
 
     //endregion
@@ -204,6 +212,10 @@ public class Lookup {
     public void addPreferState(String state) { this.preferState.add(state); }
 
     public void addPreferZipcode(String zipcode) { this.preferZipcode.add(zipcode); }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
+    }
 
     //endregion
 }

@@ -7,6 +7,7 @@ import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This client sends lookups to the SmartyStreets US ZIP Code API, <br>
@@ -60,6 +61,10 @@ public class Client {
         //This is a temporary flag meant to fix an intermittent data issue
         //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
         request.putParameter("compatibility", lookup.getCompatibility());
+
+        for (Map.Entry<String, String> entry : lookup.getCustomParamMap().entrySet()) {
+            request.putParameter(entry.getKey(), entry.getValue());
+        }
     }
 
 

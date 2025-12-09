@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * In addition to holding the input data for this lookup, this class<br>
@@ -34,6 +36,8 @@ public class Lookup implements Serializable {
     //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
     private String compatibility;
 
+    private Map<String, String> customParamMap;
+
     //endregion
 
     //region [ Constructors ]
@@ -41,6 +45,7 @@ public class Lookup implements Serializable {
     public Lookup() {
         this.candidates = 1;
         this.result = new ArrayList<>();
+        this.customParamMap = new HashMap<>();
     }
 
     /**
@@ -177,6 +182,11 @@ public class Lookup implements Serializable {
         return this.candidates;
     }
 
+    @JsonProperty("custom_param_map")
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -274,6 +284,10 @@ public class Lookup implements Serializable {
         } else {
             throw new IllegalArgumentException("Max candidates must be a positive integer.");
         }
+    }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
     }
 
     //endregion

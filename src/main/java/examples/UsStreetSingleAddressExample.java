@@ -40,6 +40,9 @@ public class UsStreetSingleAddressExample {
                                             // this will always return at least one result even if the address is invalid.
                                             // Refer to the documentation for additional MatchStrategy options.
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("county_source", "geographic");
+
         try {
             client.send(lookup);
         }

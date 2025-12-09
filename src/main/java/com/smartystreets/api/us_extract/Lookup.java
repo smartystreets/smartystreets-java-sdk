@@ -3,6 +3,9 @@ package com.smartystreets.api.us_extract;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smartystreets.api.us_street.MatchType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  *     will contain the result of the lookup after it comes back from the API.
@@ -19,12 +22,14 @@ public class Lookup {
     private String text;
 
     private String match;
+    private Map<String, String> customParamMap;
 
     //endregion
 
     public Lookup() {
         this.result = new Result();
         this.addressesHaveLineBreaks = true;
+        this.customParamMap = new HashMap<>();
     }
 
     /**
@@ -74,6 +79,10 @@ public class Lookup {
         return null;
     }
 
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -104,6 +113,10 @@ public class Lookup {
 
     public void setMatch(MatchType match) {
         this.match = match.getName();
+    }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
     }
 
     //endregion

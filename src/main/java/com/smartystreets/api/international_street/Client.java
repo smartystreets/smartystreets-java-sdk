@@ -8,6 +8,7 @@ import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.exceptions.UnprocessableEntityException;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This client sends lookups to the SmartyStreets International Street API, <br>
@@ -51,6 +52,10 @@ public class Client {
         request.putParameter("administrative_area", lookup.getAdministrativeArea());
         request.putParameter("postal_code", lookup.getPostalCode());
         request.putParameter("features", lookup.getFeatures());
+
+        for (Map.Entry<String, String> entry : lookup.getCustomParamMap().entrySet()) {
+            request.putParameter(entry.getKey(), entry.getValue());
+        }
 
         return request;
     }

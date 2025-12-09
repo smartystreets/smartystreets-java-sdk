@@ -39,6 +39,9 @@ public class UsAutocompleteProExample {
             lookup.setPreferRatio(33);
             lookup.setSource("all");
 
+            //uncomment the below line to add a custom parameter
+            //lookup.addCustomParameter("source", "all");
+
             client.send(lookup); // The client will also return the suggestions directly
 
             System.out.println();

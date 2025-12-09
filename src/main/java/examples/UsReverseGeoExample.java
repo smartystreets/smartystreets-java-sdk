@@ -22,6 +22,9 @@ public class UsReverseGeoExample {
 
         Lookup lookup = new Lookup(40.27644, -111.65747);
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("source", "all");
+
         try {
             client.send(lookup);
         } catch (SmartyException | IOException | InterruptedException ex) {

@@ -33,6 +33,9 @@ public class UsExtractExample {
         lookup.getAddressesPerLine();
         lookup.setMatch(MatchType.ENHANCED);
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("addr_line_breaks", "false");
+
         try {
             Result result = client.send(lookup);
 

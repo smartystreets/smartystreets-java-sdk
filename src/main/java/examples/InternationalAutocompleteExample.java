@@ -28,6 +28,9 @@ public class InternationalAutocompleteExample {
         lookup.setCountry("FRA");
         lookup.setLocality("Paris");
 
+        //uncomment the line below to add a custom parameter
+        //lookup.addCustomParameter("max_results", "3");
+
         try {
             client.send(lookup);
 

@@ -28,6 +28,10 @@ public class UsZipCodeMultipleLookupsExample {
         lookup0.setInputId("dfc33cb6-829e-4fea-aa1b-b6d6580f0817"); // Optional ID from your system
         lookup0.setZipCode("42223");   // A Lookup may have a ZIP Code, city and state, or city, state, and ZIP Code
 
+        //uncomment the lines below to add custom parameters
+        //lookup0.addCustomParameter("city", "Schenectady");
+        //lookup0.addCustomParameter("state", "NY");
+
         Lookup lookup1 = new Lookup();
         lookup1.setCity("Phoenix");
         lookup1.setState("Arizona");

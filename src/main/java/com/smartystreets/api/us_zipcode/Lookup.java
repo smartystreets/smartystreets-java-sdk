@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
@@ -24,11 +26,13 @@ public class Lookup implements Serializable {
     //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
     private String compatibility;
 
+    private Map<String, String> customParamMap;
 
     //endregion
 
     public Lookup() {
         this.result = new Result();
+        this.customParamMap = new HashMap<>();
     }
 
     public Lookup(String zipcode) {
@@ -82,6 +86,11 @@ public class Lookup implements Serializable {
         return this.compatibility;
     }
 
+    @JsonProperty("custom_param_map")
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -119,6 +128,10 @@ public class Lookup implements Serializable {
     public Lookup setInputId(String inputId) {
         this.inputId = inputId;
         return this;
+    }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
     }
 
     //endregion

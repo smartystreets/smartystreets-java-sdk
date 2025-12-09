@@ -6,6 +6,7 @@ import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenc
 import okhttp3.Headers;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Lookup {
@@ -17,6 +18,7 @@ public abstract class Lookup {
     private String exclude;
     private String features;
     private String eTag;
+    private Map<String, String> customParamMap;
 
     public static final String propertyDataSet = "property";
     public static final String financialDataSubset = "financial";
@@ -32,6 +34,7 @@ public abstract class Lookup {
     public Lookup() {
         this.datasetName = "";
         this.dataSubsetName = "";
+        this.customParamMap = new HashMap<>();
     }
 
     public Lookup(String smartyKey, String include, String exclude, String eTag) {
@@ -41,6 +44,7 @@ public abstract class Lookup {
         this.include = include;
         this.exclude = exclude;
         this.eTag = eTag;
+        this.customParamMap = new HashMap<>();
     }
 
     public Lookup(String smartyKey, String eTag) {
@@ -48,6 +52,7 @@ public abstract class Lookup {
         this.datasetName = "";
         this.dataSubsetName = "";
         this.eTag = eTag;
+        this.customParamMap = new HashMap<>();
     }
 
     // This constructor is around for legacy purposes as datasetName and dataSubsetName are never used in this superclass
@@ -55,6 +60,7 @@ public abstract class Lookup {
         this.addressSearch = search;
         this.datasetName = datasetName; // not used
         this.dataSubsetName = dataSubsetName; // not used
+        this.customParamMap = new HashMap<>();
     }
 
     public String getSmartyKey() {
@@ -79,6 +85,10 @@ public abstract class Lookup {
 
     public AddressSearch getAddressSearch() {
         return addressSearch;
+    }
+
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
     }
 
     public abstract void deserializeAndSetResults(Serializer serializer, byte[] payload, Headers headers) throws IOException;
@@ -117,5 +127,9 @@ public abstract class Lookup {
 
     public void setAddressSearch(AddressSearch search) {
         this.addressSearch = search;
+    }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
     }
 }

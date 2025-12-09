@@ -1,5 +1,8 @@
 package com.smartystreets.api.international_autocomplete;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  * will contain the result of the lookup after it comes back from the API.
@@ -19,6 +22,7 @@ public class Lookup {
     private int maxResults;
     private String locality;
     private String postalCode;
+    private Map<String, String> customParamMap;
 
 //endregion
 
@@ -29,6 +33,7 @@ public class Lookup {
      */
     public Lookup() {
         this.maxResults = MAX_RESULTS_DEFAULT;
+        this.customParamMap = new HashMap<>();
     }
 
     /**
@@ -75,6 +80,10 @@ public class Lookup {
         return this.postalCode;
     }
 
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -104,6 +113,10 @@ public class Lookup {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
     }
 
     //endregion

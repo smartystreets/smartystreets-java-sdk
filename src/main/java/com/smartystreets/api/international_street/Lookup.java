@@ -2,6 +2,9 @@ package com.smartystreets.api.international_street;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  *     will contain the result of the lookup after it comes back from the API.
@@ -27,6 +30,7 @@ public class Lookup {
     private String administrativeArea;
     private String postalCode;
     private String features;
+    private Map<String, String> customParamMap;
 
     //endregion
 
@@ -34,6 +38,7 @@ public class Lookup {
 
     public Lookup() {
         this.result = new Candidate[0];
+        this.customParamMap = new HashMap<>();
     }
 
     public Lookup(String freeform, String country) {
@@ -158,6 +163,10 @@ public class Lookup {
         return features;
     }
 
+    public Map<String, String> getCustomParamMap() {
+        return this.customParamMap;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -232,6 +241,10 @@ public class Lookup {
 
     public void setFeatures(String features) {
         this.features = features;
+    }
+
+    public void addCustomParameter(String parameter, String value) {
+        this.customParamMap.put(parameter, value);
     }
 
     //endregion
