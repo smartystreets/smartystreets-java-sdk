@@ -1,5 +1,6 @@
 package examples;
 
+import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.ClientBuilder;
 import com.smartystreets.api.international_postal_code.Candidate;
 import com.smartystreets.api.international_postal_code.Client;
@@ -7,11 +8,12 @@ import com.smartystreets.api.international_postal_code.Lookup;
 
 public class InternationalPostalCodeExample {
     public static void main(String[] args) throws Exception {
-        // To run: set environment variables or replace with your credentials.
-        String authId = System.getenv("SMARTY_AUTH_ID");
-        String authToken = System.getenv("SMARTY_AUTH_TOKEN");
+        // We recommend storing your authentication credentials in environment variables.
+        // for client-side requests (browser/mobile), use this code:
+        // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
+        BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
-        Client client = new ClientBuilder(authId, authToken)
+        Client client = new ClientBuilder(credentials)
                 .buildInternationalPostalCodeApiClient();
 
         Lookup lookup = new Lookup();
