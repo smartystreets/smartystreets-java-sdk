@@ -77,7 +77,7 @@ public class Client {
             matchStrategy = "enhanced";
         }
 
-        if (address.getMaxCandidates() != 1) {
+        if (address.getMaxCandidates() != 0) {
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
         } else if (matchStrategy.equals("enhanced")) {
             request.putParameter("candidates", "5");

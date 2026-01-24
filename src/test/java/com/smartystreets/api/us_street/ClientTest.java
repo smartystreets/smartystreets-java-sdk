@@ -125,6 +125,42 @@ public class ClientTest {
         assertEquals("http://localhost/?candidates=3", capturingSender.getRequest().getUrl());
     }
 
+    @Test
+    public void testExplicitMaxCandidatesWithEnhancedMode() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setMatch(MatchType.ENHANCED);
+        lookup.setMaxCandidates(3);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?candidates=3&match=enhanced", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testDefaultCandidatesWithEnhancedModeSetToFive() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setMatch(MatchType.ENHANCED);
+
+        client.send(lookup);
+
+        // When maxCandidates is 0 (default) and enhanced mode, candidates should be 5
+        assertEquals("http://localhost/?candidates=5&match=enhanced", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testLookupDefaultMaxCandidatesIsZero() {
+        Lookup lookup = new Lookup();
+        assertEquals(0, lookup.getMaxCandidates());
+    }
+
     //endregion
 
     //region [ Batch Lookup ]
