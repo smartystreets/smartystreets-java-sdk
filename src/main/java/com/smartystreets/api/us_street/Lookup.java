@@ -39,7 +39,7 @@ public class Lookup implements Serializable {
     //region [ Constructors ]
 
     public Lookup() {
-        this.candidates = 1;
+        this.candidates = 0;
         this.result = new ArrayList<>();
     }
 

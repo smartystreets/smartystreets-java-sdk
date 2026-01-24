@@ -86,6 +86,25 @@ public class SmartySender implements Sender {
         return new Response(statusCode, httpResponse.body().toString().getBytes());
     }
 
+    /**
+     * Closes the OkHttpClient, releasing all resources including connection pools and threads.
+     * This should be called when the client is no longer needed to ensure clean shutdown.
+     */
+    @Override
+    public void close() {
+        // Evict all idle connections from the pool
+        client.connectionPool().evictAll();
+        // Shutdown the dispatcher's executor service gracefully
+        client.dispatcher().executorService().shutdown();
+        // Brief pause to allow OkHttp's internal threads to complete cleanup
+        // This prevents ClassNotFoundException when running via Maven's exec:java
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     static void enableLogging() {
         Logger logger = Logger.getLogger(OkHttpClient.class.getName());
         logger.setLevel(Level.ALL);

@@ -16,11 +16,10 @@ public class UsAutocompleteProExample {
         // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
-        Client client = new ClientBuilder(credentials).buildUsAutocompleteProApiClient();
-        Lookup lookup = new Lookup("1042 W Center");
-        lookup.setMaxResults(5);
+        try (Client client = new ClientBuilder(credentials).buildUsAutocompleteProApiClient()) {
+            Lookup lookup = new Lookup("1042 W Center");
+            lookup.setMaxResults(5);
 
-        try {
             client.send(lookup);
 
             System.out.println("*** Result with no filter ***");

@@ -3,13 +3,14 @@ package com.smartystreets.api.international_autocomplete;
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
  * This client sends lookups to the SmartyStreets US Autocomplete Pro API, <br>
  *     and attaches the results to the appropriate Lookup objects.
  */
-public class Client {
+public class Client implements Closeable {
     private final Sender sender;
     private final Serializer serializer;
 
@@ -48,5 +49,10 @@ public class Client {
         request.putParameter("include_only_postal_code", lookup.getPostalCode());
 
         return request;
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

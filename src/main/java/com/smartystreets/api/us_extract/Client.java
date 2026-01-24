@@ -6,13 +6,14 @@ import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
  * This client sends lookups to the SmartyStreets US Extract API, <br>
  *     and attaches the results to the Lookup objects.
  */
-public class Client {
+public class Client implements Closeable {
     private Sender sender;
     private Serializer serializer;
 
@@ -45,5 +46,10 @@ public class Client {
         request.putParameter("match", lookup.getMatch());
 
         return request;
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

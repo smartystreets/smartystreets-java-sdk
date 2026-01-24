@@ -15,51 +15,49 @@ public class UsStreetSingleAddressExample {
         // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
-        Client client = new ClientBuilder(credentials)
+        try (Client client = new ClientBuilder(credentials)
         //        .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
-                .buildUsStreetApiClient();
+                .buildUsStreetApiClient()) {
 
-        // Documentation for input fields can be found at:
-        // https://smartystreets.com/docs/us-street-api#input-fields
+            // Documentation for input fields can be found at:
+            // https://smartystreets.com/docs/us-street-api#input-fields
 
-        Lookup lookup = new Lookup();
-        lookup.setInputId("24601"); // Optional ID from your system
-        lookup.setAddressee("John Doe");
-        lookup.setStreet("1600 Amphitheatre Pkwy");
-        lookup.setStreet2("closet under the stairs");
-        lookup.setSecondary("APT 2");
-        lookup.setUrbanization(""); // Only applies to Puerto Rico addresses
-        lookup.setCity("Mountain View");
-        lookup.setState("CA");
-        lookup.setZipCode("94043");
-        lookup.setCountySource(CountySource.GEOGRAPHIC);
-        lookup.setMaxCandidates(3);
-        lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match,
-                                            // this will always return at least one result even if the address is invalid.
-                                            // Refer to the documentation for additional MatchStrategy options.
+            Lookup lookup = new Lookup();
+            lookup.setInputId("24601"); // Optional ID from your system
+            lookup.setAddressee("John Doe");
+            lookup.setStreet("1600 Amphitheatre Pkwy");
+            lookup.setStreet2("closet under the stairs");
+            lookup.setSecondary("APT 2");
+            lookup.setUrbanization(""); // Only applies to Puerto Rico addresses
+            lookup.setCity("Mountain View");
+            lookup.setState("CA");
+            lookup.setZipCode("94043");
+            lookup.setCountySource(CountySource.GEOGRAPHIC);
+            lookup.setMaxCandidates(3);
+            lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match,
+                                                // this will always return at least one result even if the address is invalid.
+                                                // Refer to the documentation for additional MatchStrategy options.
 
-        try {
             client.send(lookup);
-        }
-        catch (SmartyException | IOException | InterruptedException ex) {
+
+            List<Candidate> results = lookup.getResult();
+
+            if (results.isEmpty()) {
+                System.out.println("No candidates. This means the address is not valid.");
+                return;
+            }
+
+            Candidate firstCandidate = results.get(0);
+
+            System.out.println("There is at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid.\n");
+            System.out.println("Input ID: " + firstCandidate.getInputId());
+            System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
+            System.out.println("County: " + firstCandidate.getMetadata().getCountyName());
+            System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
+            System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
+        } catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-
-        List<Candidate> results = lookup.getResult();
-
-        if (results.isEmpty()) {
-            System.out.println("No candidates. This means the address is not valid.");
-            return;
-        }
-
-        Candidate firstCandidate = results.get(0);
-
-        System.out.println("There is at least one candidate.\n If the match parameter is set to STRICT, the address is valid.\n Otherwise, check the Analysis output fields to see if the address is valid.\n");
-        System.out.println("Input ID: " + firstCandidate.getInputId());
-        System.out.println("ZIP Code: " + firstCandidate.getComponents().getZipCode());
-        System.out.println("County: " + firstCandidate.getMetadata().getCountyName());
-        System.out.println("Latitude: " + firstCandidate.getMetadata().getLatitude());
-        System.out.println("Longitude: " + firstCandidate.getMetadata().getLongitude());
     }
 }

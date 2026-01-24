@@ -24,7 +24,7 @@ public class ClientTest {
 
         client.send(new Lookup("freeform"));
 
-        assertEquals("http://localhost/?street=freeform&candidates=1", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?street=freeform&candidates=5&match=enhanced", capturingSender.getRequest().getUrl());
 
     }
 
@@ -51,7 +51,7 @@ public class ClientTest {
 
         assertEquals("http://localhost/?input_id=1234&street=1&street2=3" +
                 "&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0" +
-                "&urbanization=4&match=enhanced&candidates=5", capturingSender.getRequest().getUrl());
+                "&urbanization=4&candidates=5&match=enhanced", capturingSender.getRequest().getUrl());
 
     }
 
@@ -80,8 +80,85 @@ public class ClientTest {
 
         assertEquals("http://localhost/?input_id=1234&street=1&street2=3" +
                 "&secondary=2&city=5&state=6&zipcode=7&lastline=8&addressee=0" +
-                "&urbanization=4&county_source=geographic&match=enhanced&format=project-usa&candidates=5", capturingSender.getRequest().getUrl());
+                "&urbanization=4&county_source=geographic&format=project-usa&candidates=5&match=enhanced", capturingSender.getRequest().getUrl());
 
+    }
+
+    @Test
+    public void testDefaultMatchStrategyIsEnhanced() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+
+        client.send(new Lookup());
+
+        assertEquals("http://localhost/?candidates=5&match=enhanced", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testExplicitMatchStrict() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setMatch(MatchType.STRICT);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testExplicitMatchStrictWithCandidates() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setMatch(MatchType.STRICT);
+        lookup.setMaxCandidates(3);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?candidates=3", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testExplicitMaxCandidatesWithEnhancedMode() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setMatch(MatchType.ENHANCED);
+        lookup.setMaxCandidates(3);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?candidates=3&match=enhanced", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testDefaultCandidatesWithEnhancedModeSetToFive() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setMatch(MatchType.ENHANCED);
+
+        client.send(lookup);
+
+        // When maxCandidates is 0 (default) and enhanced mode, candidates should be 5
+        assertEquals("http://localhost/?candidates=5&match=enhanced", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testLookupDefaultMaxCandidatesIsZero() {
+        Lookup lookup = new Lookup();
+        assertEquals(0, lookup.getMaxCandidates());
     }
 
     //endregion

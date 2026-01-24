@@ -16,22 +16,21 @@ public class UsExtractExample {
         // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
-        Client client = new ClientBuilder(credentials).buildUsExtractApiClient();
-        String text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
-                "\r\nLos Vegas, Nevada." +
-                "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho." +
-                "\r\n808 County Road 408 Brady, Tx.";
+        try (Client client = new ClientBuilder(credentials).buildUsExtractApiClient()) {
+            String text = "Here is some text.\r\nMy address is 3785 Las Vegs Av." +
+                    "\r\nLos Vegas, Nevada." +
+                    "\r\nMeet me at 1 Rosedale Baltimore Maryland, not at 123 Phony Street, Boise Idaho." +
+                    "\r\n808 County Road 408 Brady, Tx.";
 
-        // Documentation for input fields can be found at:
-        // https://smartystreets.com/docs/cloud/us-extract-api#http-request-input-fields
+            // Documentation for input fields can be found at:
+            // https://smartystreets.com/docs/cloud/us-extract-api#http-request-input-fields
 
-        Lookup lookup = new Lookup(text);
-        lookup.isAggressive(true);
-        lookup.addressesHaveLineBreaks();
-        lookup.getAddressesPerLine();
-        lookup.setMatch(MatchType.ENHANCED);
+            Lookup lookup = new Lookup(text);
+            lookup.isAggressive(true);
+            lookup.addressesHaveLineBreaks();
+            lookup.getAddressesPerLine();
+            lookup.setMatch(MatchType.ENHANCED);
 
-        try {
             Result result = client.send(lookup);
 
             Metadata metadata = result.getMetadata();

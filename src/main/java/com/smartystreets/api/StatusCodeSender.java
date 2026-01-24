@@ -42,4 +42,9 @@ public class StatusCodeSender implements Sender {
                 throw new SmartyException("Unexpected response code: " + response.getStatusCode());
         }
     }
+
+    @Override
+    public void close() throws IOException {
+        this.inner.close();
+    }
 }

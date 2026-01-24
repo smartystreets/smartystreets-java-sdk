@@ -6,13 +6,14 @@ import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
  * This client sends lookups to the SmartyStreets US ZIP Code API, <br>
  *     and attaches the results to the appropriate Lookup objects.
  */
-public class Client {
+public class Client implements Closeable {
     private final Sender sender;
     private final Serializer serializer;
 
@@ -67,5 +68,10 @@ public class Client {
         for (int i = 0; i < results.length; i++) {
             batch.get(i).setResult(results[i]);
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

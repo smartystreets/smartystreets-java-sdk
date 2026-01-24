@@ -17,4 +17,9 @@ public class SigningSender implements Sender {
         this.signer.sign(request);
         return this.inner.send(request);
     }
+
+    @Override
+    public void close() throws IOException {
+        this.inner.close();
+    }
 }

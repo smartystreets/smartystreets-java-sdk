@@ -6,13 +6,14 @@ import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
  * This client sends lookups to the SmartyStreets US Street API, <br>
  * and attaches the results to the appropriate Lookup objects.
  */
-public class Client {
+public class Client implements Closeable {
     private final Sender sender;
     private final Serializer serializer;
 
@@ -70,14 +71,23 @@ public class Client {
         request.putParameter("addressee", address.getAddressee());
         request.putParameter("urbanization", address.getUrbanization());
         request.putParameter("county_source", address.getCountySource());
-        request.putParameter("match", address.getMatch());
         request.putParameter("format", address.getFormat());
 
-        if (address.getMaxCandidates() == 1 && (address.getMatch() != null && address.getMatch().equals("enhanced")))
-            request.putParameter("candidates", "5");
-        else
+        String matchStrategy = address.getMatch();
+        if (matchStrategy == null) {
+            matchStrategy = "enhanced";
+        }
+
+        if (address.getMaxCandidates() != 0) {
             request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
-        
+        } else if (matchStrategy.equals("enhanced")) {
+            request.putParameter("candidates", "5");
+        }
+
+        if (!matchStrategy.equals("strict")) {
+            request.putParameter("match", matchStrategy);
+        }
+
         //This is a temporary flag meant to fix an intermittent data issue
         //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
         request.putParameter("compatibility", address.getCompatibility());
@@ -88,5 +98,10 @@ public class Client {
     private void assignCandidatesToLookups(Batch batch, Candidate[] candidates) {
         for (Candidate candidate : candidates)
             batch.get(candidate.getInputIndex()).addToResult(candidate);
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

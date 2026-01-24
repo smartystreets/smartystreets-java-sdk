@@ -76,4 +76,8 @@ public class RetrySender implements Sender {
 
     }
 
+    @Override
+    public void close() throws IOException {
+        this.inner.close();
+    }
 }
