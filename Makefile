@@ -25,32 +25,36 @@ publish: compile
 	    -Dgpg.passphrase=${GPG_PASSPHRASE} \
 	    deploy
 
+# OkHttp uses daemon threads for internal task runners that are shared globally.
+# Setting cleanupDaemonThreads=false prevents Maven from waiting 15s for these threads.
+EXEC_OPTS := -Dexec.cleanupDaemonThreads=false
+
 international_autocomplete_api:
-	mvn exec:java -Dexec.mainClass="examples.InternationalAutocompleteExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.InternationalAutocompleteExample"
 
 international_street_api:
-	mvn exec:java -Dexec.mainClass="examples.InternationalExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.InternationalExample"
 
 international_postal_code_api:
-	mvn exec:java -Dexec.mainClass="examples.InternationalPostalCodeExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.InternationalPostalCodeExample"
 
 us_autocomplete_pro_api:
-	mvn exec:java -Dexec.mainClass="examples.UsAutocompleteProExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsAutocompleteProExample"
 
 us_enrichment_api:
-	mvn exec:java -Dexec.mainClass="examples.UsEnrichmentExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsEnrichmentExample"
 
 us_extract_api:
-	mvn exec:java -Dexec.mainClass="examples.UsExtractExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsExtractExample"
 
 us_reverse_geo_api:
-	mvn exec:java -Dexec.mainClass="examples.UsReverseGeoExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsReverseGeoExample"
 
 us_street_api:
-	mvn exec:java -Dexec.mainClass="examples.UsStreetSingleAddressExample" && mvn exec:java -Dexec.mainClass="examples.UsStreetMultipleAddressesExample" && mvn exec:java -Dexec.mainClass="examples.UsStreetComponentAnalysisExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetSingleAddressExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetMultipleAddressesExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetComponentAnalysisExample"
 
 us_zipcode_api:
-	mvn exec:java -Dexec.mainClass="examples.UsZipCodeSingleLookupExample" && mvn exec:java -Dexec.mainClass="examples.UsZipCodeMultipleLookupsExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsZipCodeSingleLookupExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsZipCodeMultipleLookupsExample"
 
 examples: international_autocomplete_api international_street_api us_autocomplete_pro_api us_enrichment_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
 

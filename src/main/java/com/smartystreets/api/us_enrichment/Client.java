@@ -19,6 +19,7 @@ import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCount
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
 
 import java.awt.*;
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.http.HttpHeaders;
@@ -27,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.UnsupportedEncodingException;
 
-public class Client {
+public class Client implements Closeable {
     private Sender sender;
     private Serializer serializer;
 
@@ -151,5 +152,10 @@ public class Client {
         }
 
         return request;
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

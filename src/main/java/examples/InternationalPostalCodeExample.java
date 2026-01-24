@@ -13,33 +13,34 @@ public class InternationalPostalCodeExample {
         // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
-        Client client = new ClientBuilder(credentials)
-                .buildInternationalPostalCodeApiClient();
+        try (Client client = new ClientBuilder(credentials)
+                .buildInternationalPostalCodeApiClient()) {
 
-        Lookup lookup = new Lookup();
-        lookup.setInputId("ID-8675309");
-        lookup.setLocality("Sao Paulo");
-        lookup.setAdministrativeArea("SP");
-        lookup.setCountry("Brazil");
-        lookup.setPostalCode("02516");
+            Lookup lookup = new Lookup();
+            lookup.setInputId("ID-8675309");
+            lookup.setLocality("Sao Paulo");
+            lookup.setAdministrativeArea("SP");
+            lookup.setCountry("Brazil");
+            lookup.setPostalCode("02516");
 
-        client.send(lookup);
+            client.send(lookup);
 
-        System.out.println("Results:");
-        System.out.println();
-        for (Candidate candidate : lookup.getResult()) {
-            display(candidate.getInputId());
-            display(candidate.getCountryIso3());
-            display(candidate.getLocality());
-            display(candidate.getDependentLocality());
-            display(candidate.getDoubleDependentLocality());
-            display(candidate.getSubAdministrativeArea());
-            display(candidate.getAdministrativeArea());
-            display(candidate.getSuperAdministrativeArea());
-            display(candidate.getPostalCode());
+            System.out.println("Results:");
             System.out.println();
+            for (Candidate candidate : lookup.getResult()) {
+                display(candidate.getInputId());
+                display(candidate.getCountryIso3());
+                display(candidate.getLocality());
+                display(candidate.getDependentLocality());
+                display(candidate.getDoubleDependentLocality());
+                display(candidate.getSubAdministrativeArea());
+                display(candidate.getAdministrativeArea());
+                display(candidate.getSuperAdministrativeArea());
+                display(candidate.getPostalCode());
+                System.out.println();
+            }
+            System.out.println("OK");
         }
-        System.out.println("OK");
     }
     private static void display(String value) {
         if (value != null && value.length() > 0) {

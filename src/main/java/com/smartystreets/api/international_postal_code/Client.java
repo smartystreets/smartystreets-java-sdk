@@ -6,13 +6,15 @@ import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.exceptions.UnprocessableEntityException;
+
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
  * Client for the International Postal Code API. Sends Lookup objects and populates results.
  * @see "https://smartystreets.com/docs/cloud/international-postal-code-api"
  */
-public class Client {
+public class Client implements Closeable {
     private final Sender sender;
     private final Serializer serializer;
 
@@ -54,5 +56,10 @@ public class Client {
 
     private boolean isMissing(String value) {
         return value == null || value.isEmpty();
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

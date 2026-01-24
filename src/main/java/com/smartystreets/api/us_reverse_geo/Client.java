@@ -6,10 +6,11 @@ import com.smartystreets.api.Sender;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.exceptions.SmartyException;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-public class Client {
+public class Client implements Closeable {
     private final Sender sender;
     private final Serializer serializer;
 
@@ -30,5 +31,10 @@ public class Client {
 
         SmartyResponse response = this.serializer.deserialize(httpResponse.getPayload(), SmartyResponse.class);
         lookup.setResponse(response);
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

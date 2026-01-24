@@ -14,35 +14,34 @@ public class UsReverseGeoExample {
         // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
-        Client client = new ClientBuilder(credentials)
+        try (Client client = new ClientBuilder(credentials)
 //                .withProxy(Proxy.Type.HTTP, "localhost", 8080) // Uncomment this line to try it with a proxy
-                .buildUsReverseGeoClient();
+                .buildUsReverseGeoClient()) {
 
-        Lookup lookup = new Lookup(40.27644, -111.65747);
+            Lookup lookup = new Lookup(40.27644, -111.65747);
 
-        try {
             client.send(lookup);
+
+            Result[] results = lookup.getResponse().getResults();
+
+            System.out.printf("Results for input: (%f, %f)\n\n", lookup.getLatitude(), lookup.getLongitude());
+            for (Result result : results) {
+                Coordinate coordinate = result.getCoordinate();
+                Address address = result.getAddress();
+                System.out.println("Latitude: " + coordinate.getLatitude());
+                System.out.println("Longitude: " + coordinate.getLongitude());
+                System.out.println("Distance: " + result.getDistance().toString());
+                System.out.println("Street: " + address.getStreet());
+                System.out.println("City: " + address.getCity());
+                System.out.println("State Abbreviation: " + address.getStateAbbreviation());
+                System.out.println("ZIP Code: " + address.getZipCode());
+                System.out.println("License: " + coordinate.getLicense());
+                System.out.println("Smartykey: " + address.getSmartykey());
+                System.out.println();
+            }
         } catch (SmartyException | IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
-        }
-
-        Result[] results = lookup.getResponse().getResults();
-
-        System.out.printf("Results for input: (%f, %f)\n\n", lookup.getLatitude(), lookup.getLongitude());
-        for (Result result : results) {
-            Coordinate coordinate = result.getCoordinate();
-            Address address = result.getAddress();
-            System.out.println("Latitude: " + coordinate.getLatitude());
-            System.out.println("Longitude: " + coordinate.getLongitude());
-            System.out.println("Distance: " + result.getDistance().toString());
-            System.out.println("Street: " + address.getStreet());
-            System.out.println("City: " + address.getCity());
-            System.out.println("State Abbreviation: " + address.getStateAbbreviation());
-            System.out.println("ZIP Code: " + address.getZipCode());
-            System.out.println("License: " + coordinate.getLicense());
-            System.out.println("Smartykey: " + address.getSmartykey());
-            System.out.println();
         }
     }
 }

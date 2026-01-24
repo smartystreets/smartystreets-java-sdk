@@ -22,4 +22,9 @@ public class CustomHeaderSender implements Sender {
 
         return this.inner.send(request);
     }
+
+    @Override
+    public void close() throws IOException {
+        this.inner.close();
+    }
 }

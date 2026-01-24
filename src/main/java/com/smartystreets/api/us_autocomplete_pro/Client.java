@@ -4,6 +4,7 @@ package com.smartystreets.api.us_autocomplete_pro;
 import com.smartystreets.api.*;
 import com.smartystreets.api.exceptions.SmartyException;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * This client sends lookups to the SmartyStreets US Autocomplete Pro API, <br>
  *     and attaches the results to the appropriate Lookup objects.
  */
-public class Client {
+public class Client implements Closeable {
     private final Sender sender;
     private final Serializer serializer;
 
@@ -75,5 +76,10 @@ public class Client {
             filterList = filterList.substring(0, filterList.length()-1);
 
         return filterList;
+    }
+
+    @Override
+    public void close() throws IOException {
+        this.sender.close();
     }
 }

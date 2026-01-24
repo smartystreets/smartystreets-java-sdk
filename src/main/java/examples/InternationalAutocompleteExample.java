@@ -16,17 +16,15 @@ public class InternationalAutocompleteExample {
         // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
-        Client client = new ClientBuilder(credentials).buildInternationalAutcompleteApiClient();
-        Lookup lookup = new Lookup("Louis");
+        try (Client client = new ClientBuilder(credentials).buildInternationalAutcompleteApiClient()) {
+            Lookup lookup = new Lookup("Louis");
 
-        // Documentation for input fields can be found at:
-        // https://smartystreets.com/docs/cloud/international-address-autocomplete-api#pro-http-request-url
+            // Documentation for input fields can be found at:
+            // https://smartystreets.com/docs/cloud/international-address-autocomplete-api#pro-http-request-url
 
+            lookup.setCountry("FRA");
+            lookup.setLocality("Paris");
 
-        lookup.setCountry("FRA");
-        lookup.setLocality("Paris");
-
-        try {
             client.send(lookup);
 
             System.out.println("*** Result ***");
