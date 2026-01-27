@@ -3,7 +3,6 @@ package com.smartystreets.api;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,9 +23,7 @@ public class SmartyApiIT {
 
     @Test
     public void testInternationalAutocomplete() throws Exception {
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("international-autocomplete-v2-cloud");
-        com.smartystreets.api.international_autocomplete.Client client = new ClientBuilder(credentials).withLicenses(licenses).buildInternationalAutcompleteApiClient();
+        com.smartystreets.api.international_autocomplete.Client client = new ClientBuilder(credentials).buildInternationalAutcompleteApiClient();
 
         com.smartystreets.api.international_autocomplete.Lookup lookup = new com.smartystreets.api.international_autocomplete.Lookup("Louis");
         lookup.setCountry("FRA");
@@ -42,9 +39,7 @@ public class SmartyApiIT {
 
     @Test
     public void testInternational() throws Exception {
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("international-global-plus-cloud");
-        com.smartystreets.api.international_street.Client client = new ClientBuilder(credentials).withLicenses(licenses)
+        com.smartystreets.api.international_street.Client client = new ClientBuilder(credentials)
                 .buildInternationalStreetApiClient();
 
         com.smartystreets.api.international_street.Lookup lookup = new com.smartystreets.api.international_street.Lookup("Rua Padre Antonio D'Angelo 121 Casa Verde, Sao Paulo", "Brazil");
@@ -68,9 +63,7 @@ public class SmartyApiIT {
 
     @Test
     public void testUSAutocompletePro() throws Exception {
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("us-autocomplete-pro-cloud");
-        com.smartystreets.api.us_autocomplete_pro.Client client = new ClientBuilder(credentials).withLicenses(licenses).buildUsAutocompleteProApiClient();
+        com.smartystreets.api.us_autocomplete_pro.Client client = new ClientBuilder(credentials).buildUsAutocompleteProApiClient();
         com.smartystreets.api.us_autocomplete_pro.Lookup lookup = new com.smartystreets.api.us_autocomplete_pro.Lookup("1042 W Center");
         lookup.setMaxResults(5);
 
@@ -116,9 +109,7 @@ public class SmartyApiIT {
 
     @Test
     public void testReverseGeo() throws Exception {
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("us-reverse-geocoding-cloud");
-        com.smartystreets.api.us_reverse_geo.Client client = new ClientBuilder(credentials).withLicenses(licenses)
+        com.smartystreets.api.us_reverse_geo.Client client = new ClientBuilder(credentials)
                 .buildUsReverseGeoClient();
 
         com.smartystreets.api.us_reverse_geo.Lookup lookup = new com.smartystreets.api.us_reverse_geo.Lookup(40.27644, -111.65747);
@@ -133,9 +124,7 @@ public class SmartyApiIT {
 
     @Test
     public void testUsStreetMultiple() throws Exception {
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("us-core-cloud");
-        com.smartystreets.api.us_street.Client client = new ClientBuilder(credentials).withLicenses(licenses)
+        com.smartystreets.api.us_street.Client client = new ClientBuilder(credentials)
                 .buildUsStreetApiClient();
         com.smartystreets.api.us_street.Batch batch = new com.smartystreets.api.us_street.Batch();
 
@@ -181,9 +170,7 @@ public class SmartyApiIT {
 
     @Test
     public void testUSStreetSingle() throws Exception {
-        ArrayList<String> licenses = new ArrayList<>();
-        licenses.add("us-core-cloud");
-        com.smartystreets.api.us_street.Client client = new ClientBuilder(credentials).withLicenses(licenses)
+        com.smartystreets.api.us_street.Client client = new ClientBuilder(credentials)
                 .buildUsStreetApiClient();
 
         com.smartystreets.api.us_street.Lookup lookup = new com.smartystreets.api.us_street.Lookup();
