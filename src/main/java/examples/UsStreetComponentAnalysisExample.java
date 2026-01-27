@@ -4,8 +4,7 @@ import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_street.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import com.smartystreets.api.ClientBuilder;
 
 import java.io.IOException;
@@ -43,8 +42,9 @@ public class UsStreetComponentAnalysisExample {
             // Here is an example of how to access component analysis
             ComponentAnalysis componentAnalysis = firstCandidate.getAnalysis().getComponents();
 
-            ObjectMapper mapper = new ObjectMapper()
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            JsonMapper mapper = JsonMapper.builder()
+                .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
+                .build();
 
             System.out.println("Component Analysis Results:\n" + mapper.writeValueAsString(componentAnalysis));
         } catch (SmartyException | IOException | InterruptedException ex) {
