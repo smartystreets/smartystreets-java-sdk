@@ -9,5 +9,9 @@
       "Bash(mvn *)",
       "Bash(java *)"
     ]
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
   }
 }
