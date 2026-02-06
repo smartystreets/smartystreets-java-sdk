@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
 public class Request {
     private static final String CHARSET = "UTF-8";
     private final Map<String, Object> headers;
