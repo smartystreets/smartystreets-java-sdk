@@ -19,9 +19,9 @@ public class CustomHeaderSender implements Sender {
         for (Map.Entry<String, CustomHeader> entry : this.headers.entrySet()) {
             CustomHeader header = entry.getValue();
             if (header.isAppend()) {
-                request.appendHeader(entry.getKey(), header.value, header.separator);
+                request.appendHeader(entry.getKey(), header.getValue(), header.getSeparator());
             } else {
-                request.putHeader(entry.getKey(), header.value);
+                request.putHeader(entry.getKey(), header.getValue());
             }
         }
 
