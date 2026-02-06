@@ -9,6 +9,9 @@ class CustomHeader {
     }
 
     CustomHeader(Object value, String separator) {
+        if (value == null) {
+            throw new IllegalArgumentException("header value must not be null");
+        }
         this.value = value;
         this.separator = separator;
     }
