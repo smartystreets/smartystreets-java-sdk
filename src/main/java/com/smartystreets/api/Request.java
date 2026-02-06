@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Request {
     private static final String CHARSET = "UTF-8";
@@ -31,7 +32,7 @@ public class Request {
     void appendHeader(String name, Object value, String separator) {
         Object existing = this.headers.get(name);
         if (existing != null) {
-            this.headers.put(name, existing + separator + value);
+            this.headers.put(name, Optional.ofNullable(existing).orElse("").toString() + separator + value);
         } else {
             this.headers.put(name, value);
         }
