@@ -13,17 +13,17 @@ import com.smartystreets.api.mocks.RequestCapturingSender;
 public class XForwardedForTest {
     @Test
     public void testAllCustomHeadersAreAddedToTheRequest() throws Exception {
-        HashMap<String, Object> headers = new HashMap<>();
-        headers.put("X-Forwarded-For", "ip");
+        HashMap<String, CustomHeader> headers = new HashMap<>();
+        headers.put("X-Forwarded-For", new CustomHeader("ip"));
         RequestCapturingSender inner = new RequestCapturingSender();
-        CustomHeaderSender sender = new CustomHeaderSender(headers, null, inner);
+        CustomHeaderSender sender = new CustomHeaderSender(headers, inner);
         Request request = new Request();
-        
+
         sender.send(request);
 
         Map<String, Object> requestHeaders = inner.getRequest().getHeaders();
         assertNotNull("Headers here.", requestHeaders);
-        assertEquals(headers.get("X-Forwarded-For"), inner.getRequest().getHeaders().get("X-Forwarded-For"));
-        
+        assertEquals("ip", inner.getRequest().getHeaders().get("X-Forwarded-For"));
+
     }
 }
