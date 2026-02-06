@@ -28,6 +28,15 @@ public class Request {
         this.headers.put(name, value);
     }
 
+    void appendHeader(String name, Object value, String separator) {
+        Object existing = this.headers.get(name);
+        if (existing != null) {
+            this.headers.put(name, existing.toString() + separator + value);
+        } else {
+            this.headers.put(name, value);
+        }
+    }
+
     public void putParameter(String name, String value) {
         if (name == null || value == null || name.length() == 0)
             return;

@@ -13,9 +13,9 @@ public class CustomHeaderSenderTest {
 
     @Test
     public void testAllCustomHeadersAreAddedToTheRequest() throws Exception {
-        HashMap<String, Object> headers = new HashMap<>();
-        headers.put("A", "1");
-        headers.put("B", "2");
+        HashMap<String, CustomHeader> headers = new HashMap<>();
+        headers.put("A", new CustomHeader("1"));
+        headers.put("B", new CustomHeader("2"));
         RequestCapturingSender inner = new RequestCapturingSender();
         CustomHeaderSender sender = new CustomHeaderSender(headers, inner);
         Request request = new Request();
@@ -23,6 +23,34 @@ public class CustomHeaderSenderTest {
 
         Map<String, Object> requestHeaders = inner.getRequest().getHeaders();
         assertNotNull("There should be headers here.", requestHeaders);
-        assertEquals(headers.get("A"), inner.getRequest().getHeaders().get("A"));
+        assertEquals("1", inner.getRequest().getHeaders().get("A"));
+    }
+
+    @Test
+    public void testMultipleAppendedHeadersAccumulate() throws Exception {
+        HashMap<String, CustomHeader> headers = new HashMap<>();
+        headers.put("User-Agent", new CustomHeader("a" + " " + "b", " "));
+        RequestCapturingSender inner = new RequestCapturingSender();
+        CustomHeaderSender sender = new CustomHeaderSender(headers, inner);
+        Request request = new Request();
+        request.putHeader("User-Agent", "base");
+        sender.send(request);
+
+        assertEquals("base a b", inner.getRequest().getHeaders().get("User-Agent"));
+    }
+
+    @Test
+    public void testAppendedHeadersAreJoinedWithSeparator() throws Exception {
+        HashMap<String, CustomHeader> headers = new HashMap<>();
+        headers.put("User-Agent", new CustomHeader("custom-value", " "));
+        RequestCapturingSender inner = new RequestCapturingSender();
+        CustomHeaderSender sender = new CustomHeaderSender(headers, inner);
+        Request request = new Request();
+        request.putHeader("User-Agent", "base-value");
+        sender.send(request);
+
+        Map<String, Object> requestHeaders = inner.getRequest().getHeaders();
+        assertNotNull("There should be headers here.", requestHeaders);
+        assertEquals("base-value custom-value", requestHeaders.get("User-Agent"));
     }
 }

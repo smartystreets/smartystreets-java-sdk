@@ -31,7 +31,7 @@ public class ClientBuilder {
     private int maxTimeout;
     private String urlPrefix;
     private Proxy proxy;
-    private Map<String, Object> customHeaders;
+    private Map<String, CustomHeader> customHeaders = new HashMap<>();
     private List<String> licenses = new ArrayList<>();
     private Map<String, String> customQueries;
     private String ip;
@@ -113,7 +113,28 @@ public class ClientBuilder {
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withCustomHeaders(Map<String, Object> customHeaders) {
-        this.customHeaders = customHeaders;
+        for (Map.Entry<String, Object> entry : customHeaders.entrySet()) {
+            this.customHeaders.put(entry.getKey(), new CustomHeader(entry.getValue()));
+        }
+        return this;
+    }
+
+    /**
+     * Appends the provided value to the existing header value using the specified separator,
+     * rather than adding a separate header value. This is useful for single-value headers like User-Agent.
+     *
+     * @param key       The header name.
+     * @param value     The value to append.
+     * @param separator The separator to use when joining values.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withAppendedHeader(String key, String value, String separator) {
+        CustomHeader existing = this.customHeaders.get(key);
+        if (existing != null && existing.isAppend()) {
+            this.customHeaders.put(key, new CustomHeader(existing.getValue() + separator + value, separator));
+        } else {
+            this.customHeaders.put(key, new CustomHeader(value, separator));
+        }
         return this;
     }
 
@@ -247,9 +268,9 @@ public class ClientBuilder {
 
         sender = new StatusCodeSender(sender);
         if (this.ip != null) {
-            customHeaders.put("X-Forwarded-For", this.ip);
+            customHeaders.put("X-Forwarded-For", new CustomHeader(this.ip));
         }
-        if (this.customHeaders != null) {
+        if (!this.customHeaders.isEmpty()) {
             sender = new CustomHeaderSender(this.customHeaders, sender);
         }
         if (this.customQueries != null) {
