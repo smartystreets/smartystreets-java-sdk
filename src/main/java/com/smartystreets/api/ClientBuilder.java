@@ -31,7 +31,7 @@ public class ClientBuilder {
     private int maxTimeout;
     private String urlPrefix;
     private Proxy proxy;
-    private Map<String, CustomHeader> customHeaders;
+    private Map<String, CustomHeader> customHeaders = new HashMap<>();
     private List<String> licenses = new ArrayList<>();
     private Map<String, String> customQueries;
     private String ip;
@@ -113,9 +113,6 @@ public class ClientBuilder {
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withCustomHeaders(Map<String, Object> customHeaders) {
-        if (this.customHeaders == null) {
-            this.customHeaders = new HashMap<>();
-        }
         for (Map.Entry<String, Object> entry : customHeaders.entrySet()) {
             this.customHeaders.put(entry.getKey(), new CustomHeader(entry.getValue()));
         }
@@ -132,9 +129,6 @@ public class ClientBuilder {
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withAppendedHeader(String key, String value, String separator) {
-        if (this.customHeaders == null) {
-            this.customHeaders = new HashMap<>();
-        }
         CustomHeader existing = this.customHeaders.get(key);
         if (existing != null && existing.isAppend()) {
             this.customHeaders.put(key, new CustomHeader(existing.getValue() + separator + value, separator));
@@ -274,12 +268,9 @@ public class ClientBuilder {
 
         sender = new StatusCodeSender(sender);
         if (this.ip != null) {
-            if (this.customHeaders == null) {
-                this.customHeaders = new HashMap<>();
-            }
             customHeaders.put("X-Forwarded-For", new CustomHeader(this.ip));
         }
-        if (this.customHeaders != null) {
+        if (!this.customHeaders.isEmpty()) {
             sender = new CustomHeaderSender(this.customHeaders, sender);
         }
         if (this.customQueries != null) {
