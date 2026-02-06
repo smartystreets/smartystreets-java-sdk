@@ -113,7 +113,9 @@ public class ClientBuilder {
      * @return Returns <b>this</b> to accommodate method chaining.
      */
     public ClientBuilder withCustomHeaders(Map<String, Object> customHeaders) {
-        this.customHeaders = new HashMap<>();
+        if (this.customHeaders == null) {
+            this.customHeaders = new HashMap<>();
+        }
         for (Map.Entry<String, Object> entry : customHeaders.entrySet()) {
             this.customHeaders.put(entry.getKey(), new CustomHeader(entry.getValue()));
         }
