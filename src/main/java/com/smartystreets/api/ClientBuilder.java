@@ -32,6 +32,7 @@ public class ClientBuilder {
     private String urlPrefix;
     private Proxy proxy;
     private Map<String, Object> customHeaders;
+    private Map<String, String> appendHeaders;
     private List<String> licenses = new ArrayList<>();
     private Map<String, String> customQueries;
     private String ip;
@@ -114,6 +115,27 @@ public class ClientBuilder {
      */
     public ClientBuilder withCustomHeaders(Map<String, Object> customHeaders) {
         this.customHeaders = customHeaders;
+        return this;
+    }
+
+    /**
+     * Appends the provided value to the existing header value using the specified separator,
+     * rather than adding a separate header value. This is useful for single-value headers like User-Agent.
+     *
+     * @param key       The header name.
+     * @param value     The value to append.
+     * @param separator The separator to use when joining values.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withAppendedHeader(String key, String value, String separator) {
+        if (this.appendHeaders == null) {
+            this.appendHeaders = new HashMap<>();
+        }
+        if (this.customHeaders == null) {
+            this.customHeaders = new HashMap<>();
+        }
+        this.appendHeaders.put(key, separator);
+        this.customHeaders.put(key, value);
         return this;
     }
 
@@ -250,7 +272,7 @@ public class ClientBuilder {
             customHeaders.put("X-Forwarded-For", this.ip);
         }
         if (this.customHeaders != null) {
-            sender = new CustomHeaderSender(this.customHeaders, sender);
+            sender = new CustomHeaderSender(this.customHeaders, this.appendHeaders, sender);
         }
         if (this.customQueries != null) {
             sender = new CustomQuerySender(this.customQueries, sender);

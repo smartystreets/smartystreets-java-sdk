@@ -16,7 +16,7 @@ public class XForwardedForTest {
         HashMap<String, Object> headers = new HashMap<>();
         headers.put("X-Forwarded-For", "ip");
         RequestCapturingSender inner = new RequestCapturingSender();
-        CustomHeaderSender sender = new CustomHeaderSender(headers, inner);
+        CustomHeaderSender sender = new CustomHeaderSender(headers, null, inner);
         Request request = new Request();
         
         sender.send(request);
