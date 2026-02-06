@@ -135,7 +135,12 @@ public class ClientBuilder {
         if (this.customHeaders == null) {
             this.customHeaders = new HashMap<>();
         }
-        this.customHeaders.put(key, new CustomHeader(value, separator));
+        CustomHeader existing = this.customHeaders.get(key);
+        if (existing != null && existing.isAppend()) {
+            this.customHeaders.put(key, new CustomHeader(existing.getValue() + separator + value, separator));
+        } else {
+            this.customHeaders.put(key, new CustomHeader(value, separator));
+        }
         return this;
     }
 
