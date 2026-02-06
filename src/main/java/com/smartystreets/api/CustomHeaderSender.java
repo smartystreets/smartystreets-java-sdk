@@ -22,12 +22,7 @@ public class CustomHeaderSender implements Sender {
             String key = (String) entry.getKey();
             if (this.appendHeaders != null && this.appendHeaders.containsKey(key)) {
                 String separator = this.appendHeaders.get(key);
-                Object existing = request.getHeaders().get(key);
-                if (existing != null) {
-                    request.putHeader(key, existing + separator + entry.getValue());
-                } else {
-                    request.putHeader(key, entry.getValue());
-                }
+                request.appendHeader(key, entry.getValue(), separator);
             } else {
                 request.putHeader(key, entry.getValue());
             }
