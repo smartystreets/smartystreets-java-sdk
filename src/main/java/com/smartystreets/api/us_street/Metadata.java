@@ -27,6 +27,9 @@ public class Metadata implements Serializable {
     private String timeZone;
     private double utcOffset;
     private boolean obeysDst;
+    private String ianaTimeZone;
+    private double ianaUtcOffset;
+    private boolean ianaDst;
     private boolean ewsMatch;
 
     //endregion
@@ -106,8 +109,6 @@ public class Metadata implements Serializable {
         return this.timeZone;
     }
 
-    // TODO: Coordinate Licensei
-
     @JsonProperty("utc_offset")
     public double getUtcOffset() {
         return this.utcOffset;
@@ -116,6 +117,21 @@ public class Metadata implements Serializable {
     @JsonProperty("dst")
     public boolean obeysDst() {
         return this.obeysDst;
+    }
+
+    @JsonProperty("iana_time_zone")
+    public String getIanaTimeZone() {
+        return this.ianaTimeZone;
+    }
+
+    @JsonProperty("iana_utc_offset")
+    public double getIanaUtcOffset() {
+        return this.ianaUtcOffset;
+    }
+
+    @JsonProperty("iana_dst")
+    public boolean isIanaDst() {
+        return this.ianaDst;
     }
 
     @JsonProperty("ews_match")
