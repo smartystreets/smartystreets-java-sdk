@@ -9,7 +9,7 @@ public class ClientBuilderTest {
     @Test
     public void testWithFeatureIANATimeZone() {
         ClientBuilder builder = new ClientBuilder("id", "token")
-                .withFeatureIANATimeZone();
+                .withFeatureIanaTimeZone();
 
         assertEquals("iana-timezone", builder.getCustomQueries().get("features"));
     }
@@ -18,7 +18,7 @@ public class ClientBuilderTest {
     public void testWithFeatureIANATimeZoneAppendsWhenCombinedWithComponentAnalysis() {
         ClientBuilder builder = new ClientBuilder("id", "token")
                 .withFeatureComponentAnalysis()
-                .withFeatureIANATimeZone();
+                .withFeatureIanaTimeZone();
 
         assertEquals("component-analysis,iana-timezone", builder.getCustomQueries().get("features"));
     }

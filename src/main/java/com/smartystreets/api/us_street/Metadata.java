@@ -29,7 +29,7 @@ public class Metadata implements Serializable {
     private boolean obeysDst;
     private String ianaTimeZone;
     private double ianaUtcOffset;
-    private boolean ianaDst;
+    private boolean obeysIanaDst;
     private boolean ewsMatch;
 
     //endregion
@@ -130,8 +130,8 @@ public class Metadata implements Serializable {
     }
 
     @JsonProperty("iana_dst")
-    public boolean isIanaDst() {
-        return this.ianaDst;
+    public boolean obeysIanaDst() {
+        return this.obeysIanaDst;
     }
 
     @JsonProperty("ews_match")

@@ -173,7 +173,7 @@ public class CandidateTest {
         assertEquals(true, candidates[0].getMetadata().obeysDst());
         assertEquals("America/Denver", candidates[0].getMetadata().getIanaTimeZone());
         assertEquals(-7, candidates[0].getMetadata().getIanaUtcOffset(), 1);
-        assertEquals(true, candidates[0].getMetadata().isIanaDst());
+        assertEquals(true, candidates[0].getMetadata().obeysIanaDst());
         assertEquals(true, candidates[0].getMetadata().isEwsMatch());
         assertEquals("S", candidates[0].getAnalysis().getDpvMatchCode());
         assertEquals("AACCRR", candidates[0].getAnalysis().getDpvFootnotes());

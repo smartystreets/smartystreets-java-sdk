@@ -210,10 +210,9 @@ public class ClientBuilder {
     }
 
     /**
-     * Adds to the request query to use the IANA timezone feature.
-     * @return Returns <b>this</b> to accommodate method chaining.
+     * withFeatureIanaTimeZone turns on the IANA timezone feature for the request.
      */
-    public ClientBuilder withFeatureIANATimeZone() {
+    public ClientBuilder withFeatureIanaTimeZone() {
         return withCustomCommaSeparatedQuery("features", "iana-timezone");
     }
 
