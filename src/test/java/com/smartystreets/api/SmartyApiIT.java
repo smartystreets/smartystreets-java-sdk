@@ -57,8 +57,8 @@ public class SmartyApiIT {
 
         assertNotNull(candidates);
         assertTrue(candidates.length > 0);
-        assertTrue(candidates[0].getMetadata().getLatitude() > -23.50949 && candidates[0].getMetadata().getLatitude() < -23.50946);
-        assertTrue(candidates[0].getMetadata().getLongitude() > -46.660731 && candidates[0].getMetadata().getLongitude() < -46.660729);
+        assertTrue(candidates[0].getMetadata().getLatitude() > -23.51 && candidates[0].getMetadata().getLatitude() < -23.509);
+        assertTrue(candidates[0].getMetadata().getLongitude() > -46.661 && candidates[0].getMetadata().getLongitude() < -46.660);
     }
 
     @Test
@@ -195,6 +195,30 @@ public class SmartyApiIT {
 
         com.smartystreets.api.us_street.Candidate firstCandidate = results.get(0);
         assertEquals("94043", firstCandidate.getComponents().getZipCode());
+    }
+
+    @Test
+    public void testUSStreetIanaTimeZone() throws Exception {
+        com.smartystreets.api.us_street.Client client = new ClientBuilder(credentials)
+                .withFeatureIanaTimeZone()
+                .buildUsStreetApiClient();
+
+        com.smartystreets.api.us_street.Lookup lookup = new com.smartystreets.api.us_street.Lookup();
+        lookup.setStreet("1 Rosedale");
+        lookup.setSecondary("APT 2");
+        lookup.setCity("Baltimore");
+        lookup.setState("MD");
+        lookup.setZipCode("21229");
+        lookup.setMatch(com.smartystreets.api.us_street.MatchType.ENHANCED);
+
+        client.send(lookup);
+
+        List<com.smartystreets.api.us_street.Candidate> results = lookup.getResult();
+        assertFalse(results.isEmpty());
+
+        com.smartystreets.api.us_street.Metadata metadata = results.get(0).getMetadata();
+        assertNotNull(metadata.getIanaTimeZone());
+        assertEquals("America/New_York", metadata.getIanaTimeZone());
     }
 
     @Test

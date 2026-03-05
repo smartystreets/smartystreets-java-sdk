@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 make test              # Run unit tests (mvn test)
-make integration-test  # Run integration tests (mvn integration-test)
+make integration-test  # Run integration tests (requires SMARTY_AUTH_ID and SMARTY_AUTH_TOKEN env vars)
 make compile           # Clean, test, then compile
 make clean             # Clean and reset version files
 make publish           # Full publish workflow with version updates
@@ -26,27 +26,41 @@ mvn test -Dtest=ClientTest#testMethodName
 
 This is the official SmartyStreets Java SDK for address validation and geocoding APIs. Requires Java 11+.
 
+### Dependencies
+
+- **Jackson 3.x** (`tools.jackson.core:jackson-databind`) for JSON serialization
+- **OkHttp 5.x** (`com.squareup.okhttp3:okhttp-jvm`) for HTTP
+- **JUnit 4** + **Mockito 5** for testing
+
+### Version Management
+
+`pom.xml` version and `Version.java` both contain `0.0.0` as a placeholder. **DO NOT EDIT** — these are updated automatically by the build job during release.
+
 ### Sender Chain (Decorator Pattern)
 
-HTTP requests flow through a chain of decorators, each implementing `Sender`:
+HTTP requests flow through a chain of decorators, each implementing `Sender`. Built bottom-up in `ClientBuilder.buildSender()`:
 
 ```
-RetrySender → LicenseSender → URLPrefixSender → SigningSender →
+LicenseSender → RetrySender → URLPrefixSender → SigningSender →
 CustomQuerySender → CustomHeaderSender → StatusCodeSender → SmartySender
 ```
 
-- `SmartySender`: OkHttp3-based HTTP client
+- `SmartySender`: OkHttp-based HTTP client (innermost)
 - `StatusCodeSender`: Maps HTTP status codes to exceptions (401→BadCredentialsException, etc.)
+- `CustomHeaderSender`/`CustomQuerySender`: Added conditionally when custom headers/queries are configured
+- `SigningSender`: Adds authentication credentials to the request
 - `RetrySender`: Exponential backoff, handles 429 rate limiting
-- `SigningSender`: Adds authentication headers
+- `LicenseSender`: Adds license query parameter (outermost)
 
 ### API Module Pattern
 
 Each API (us_street, us_zipcode, international_street, etc.) follows the same structure:
-- `Client.java`: Sends lookups and populates results
+- `Client.java`: Sends lookups and populates results. Implements `Closeable` — must be closed to shut down OkHttp threads.
 - `Lookup.java`: Input container for address/parameters
 - `Batch.java`: Container for 1-100 lookups (batch operations)
 - `Candidate.java` or `Result.java`: Output container with validated data
+
+Single lookups are sent as GET with query parameters. Batch (2+) lookups use POST with a JSON body.
 
 ### Key Entry Points
 
