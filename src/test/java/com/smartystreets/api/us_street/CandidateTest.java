@@ -60,6 +60,9 @@ public class CandidateTest {
                 + "\"time_zone\": \"Mountain\",\n"
                 + "\"utc_offset\": -7,\n"
                 + "\"dst\": true,\n"
+                + "\"iana_time_zone\": \"America/Denver\",\n"
+                + "\"iana_utc_offset\": -7,\n"
+                + "\"iana_dst\": true,\n"
                 + "\"ews_match\": true\n"
                 + "},\n"
                 + "\"analysis\": {\n"
@@ -168,6 +171,9 @@ public class CandidateTest {
         assertEquals("Mountain", candidates[0].getMetadata().getTimeZone());
         assertEquals(-7, candidates[0].getMetadata().getUtcOffset(), 1);
         assertEquals(true, candidates[0].getMetadata().obeysDst());
+        assertEquals("America/Denver", candidates[0].getMetadata().getIanaTimeZone());
+        assertEquals(-7, candidates[0].getMetadata().getIanaUtcOffset(), 1);
+        assertEquals(true, candidates[0].getMetadata().obeysIanaDst());
         assertEquals(true, candidates[0].getMetadata().isEwsMatch());
         assertEquals("S", candidates[0].getAnalysis().getDpvMatchCode());
         assertEquals("AACCRR", candidates[0].getAnalysis().getDpvFootnotes());

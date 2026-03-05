@@ -209,6 +209,17 @@ public class ClientBuilder {
         return withCustomCommaSeparatedQuery("features", "component-analysis");
     }
 
+    /**
+     * withFeatureIanaTimeZone turns on the IANA timezone feature for the request.
+     */
+    public ClientBuilder withFeatureIanaTimeZone() {
+        return withCustomCommaSeparatedQuery("features", "iana-timezone");
+    }
+
+    // Package-private for testing
+    Map<String, String> getCustomQueries() {
+        return this.customQueries;
+    }
 
     public com.smartystreets.api.international_street.Client buildInternationalStreetApiClient() {
         this.ensureURLPrefixNotNull(INTERNATIONAL_STREET_API_URL);
