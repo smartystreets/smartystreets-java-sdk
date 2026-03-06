@@ -37,6 +37,7 @@ public class UsStreetSingleAddressExample {
             lookup.setMatch(MatchType.INVALID); // "invalid" is the most permissive match,
                                                 // this will always return at least one result even if the address is invalid.
                                                 // Refer to the documentation for additional MatchStrategy options.
+            lookup.addCustomParameter("source", "example"); // Custom parameters are sent as top-level query params.
 
             client.send(lookup);
 

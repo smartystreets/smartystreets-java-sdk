@@ -50,6 +50,7 @@ public class UsStreetMultipleAddressesExample {
             address3.setInputId("8675309");
             address3.setStreet("1 Infinite Loop");
             address3.setZipCode("95014"); // You can just input the street and ZIP if you want.
+            address3.addCustomParameter("source", "example"); // Custom parameters are sent as top-level JSON keys in batch.
 
             batch.add(address0);
             batch.add(address1);

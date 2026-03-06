@@ -107,7 +107,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?match=strict", capturingSender.getRequest().getUrl());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class ClientTest {
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?candidates=3", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?candidates=3&match=strict", capturingSender.getRequest().getUrl());
     }
 
     @Test
@@ -159,6 +159,44 @@ public class ClientTest {
     public void testLookupDefaultMaxCandidatesIsZero() {
         Lookup lookup = new Lookup();
         assertEquals(0, lookup.getMaxCandidates());
+    }
+
+    //endregion
+
+    @Test
+    public void testCustomParametersInQueryString() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("freeform");
+        lookup.addCustomParameter("custom_key", "custom_value");
+
+        client.send(lookup);
+
+        String url = capturingSender.getRequest().getUrl();
+        assertTrue(url.contains("custom_key=custom_value"));
+        assertTrue(url.contains("match=enhanced"));
+        assertTrue(url.contains("candidates=5"));
+    }
+
+    @Test
+    public void testLookupDefaultMatchIsEnhanced() {
+        Lookup lookup = new Lookup();
+        assertEquals("enhanced", lookup.defaultMatch());
+    }
+
+    @Test
+    public void testLookupDefaultCandidatesIsFiveForEnhanced() {
+        Lookup lookup = new Lookup();
+        assertEquals(5, lookup.defaultCandidates());
+    }
+
+    @Test
+    public void testLookupDefaultCandidatesIsZeroForStrict() {
+        Lookup lookup = new Lookup();
+        lookup.setMatch(MatchType.STRICT);
+        assertEquals(0, lookup.defaultCandidates());
     }
 
     //endregion

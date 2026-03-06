@@ -1,10 +1,15 @@
 package com.smartystreets.api.us_street;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * In addition to holding the input data for this lookup, this class<br>
@@ -34,6 +39,9 @@ public class Lookup implements Serializable {
     //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
     private String compatibility;
 
+    @JsonIgnore
+    private Map<String, String> customParameters;
+
     //endregion
 
     //region [ Constructors ]
@@ -58,6 +66,33 @@ public class Lookup implements Serializable {
 
     void addToResult(Candidate newCandidate) {
         this.result.add(newCandidate);
+    }
+
+    String defaultMatch() {
+        String m = getMatch();
+        return (m == null) ? "enhanced" : m;
+    }
+
+    int defaultCandidates() {
+        String m = defaultMatch();
+        int c = getMaxCandidates();
+        if (c == 0 && "enhanced".equals(m)) return 5;
+        return c;
+    }
+
+    @JsonGetter("match")
+    String getMatchForSerialization() {
+        return defaultMatch();
+    }
+
+    @JsonGetter("candidates")
+    int getCandidatesForSerialization() {
+        return defaultCandidates();
+    }
+
+    @JsonAnyGetter
+    Map<String, String> getCustomParametersForSerialization() {
+        return customParameters;
     }
 
     //endregion
@@ -137,7 +172,7 @@ public class Lookup implements Serializable {
         return this.countySource;
     }
 
-    @JsonProperty("match")
+    @JsonIgnore
     public String getMatch() {
         if (this.match == null)
             return null;
@@ -172,7 +207,7 @@ public class Lookup implements Serializable {
         return null;
     }
 
-    @JsonProperty("candidates")
+    @JsonIgnore
     public int getMaxCandidates() {
         return this.candidates;
     }
@@ -274,6 +309,16 @@ public class Lookup implements Serializable {
         } else {
             throw new IllegalArgumentException("Max candidates must be a positive integer.");
         }
+    }
+
+    public void addCustomParameter(String key, String value) {
+        if (customParameters == null) customParameters = new HashMap<>();
+        customParameters.put(key, value);
+    }
+
+    @JsonIgnore
+    public Map<String, String> getCustomParameters() {
+        return customParameters;
     }
 
     //endregion

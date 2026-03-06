@@ -8,6 +8,7 @@ import com.smartystreets.api.exceptions.SmartyException;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * This client sends lookups to the SmartyStreets US Street API, <br>
@@ -73,25 +74,22 @@ public class Client implements Closeable {
         request.putParameter("county_source", address.getCountySource());
         request.putParameter("format", address.getFormat());
 
-        String matchStrategy = address.getMatch();
-        if (matchStrategy == null) {
-            matchStrategy = "enhanced";
+        int candidates = address.defaultCandidates();
+        if (candidates > 0) {
+            request.putParameter("candidates", Integer.toString(candidates));
         }
 
-        if (address.getMaxCandidates() != 0) {
-            request.putParameter("candidates", Integer.toString(address.getMaxCandidates()));
-        } else if (matchStrategy.equals("enhanced")) {
-            request.putParameter("candidates", "5");
-        }
-
-        if (!matchStrategy.equals("strict")) {
-            request.putParameter("match", matchStrategy);
-        }
+        request.putParameter("match", address.defaultMatch());
 
         //This is a temporary flag meant to fix an intermittent data issue
         //Unless explicitly instructed by the Smarty Tech Support team, DO NOT use this parameter
         request.putParameter("compatibility", address.getCompatibility());
 
+        if (address.getCustomParameters() != null) {
+            for (Map.Entry<String, String> entry : address.getCustomParameters().entrySet()) {
+                request.putParameter(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
 
