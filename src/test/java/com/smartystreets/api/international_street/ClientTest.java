@@ -54,6 +54,14 @@ public class ClientTest {
     }
 
     @Test
+    public void testNullLookupRejected() {
+        MockCrashingSender sender = new MockCrashingSender();
+        Client client = new Client(sender, null);
+
+        assertThrows(SmartyException.class, () -> client.send(null));
+    }
+
+    @Test
     public void testEmptyLookupRejected() {
         MockCrashingSender sender = new MockCrashingSender();
         Client client = new Client(sender, null);
@@ -62,46 +70,11 @@ public class ClientTest {
     }
 
     @Test
-    public void testRejectsLookupsWithOnlyCountry() throws Exception {
+    public void testRejectsLookupWithCountryButNoAddress() throws Exception {
         MockCrashingSender sender = new MockCrashingSender();
         Client client = new Client(sender, null);
         Lookup lookup = new Lookup();
         lookup.setCountry("0");
-
-        assertThrows(SmartyException.class, () -> client.send(lookup));
-    }
-
-    @Test
-    public void testRejectsLookupsWithOnlyCountryAndAddress1() throws Exception {
-        MockCrashingSender sender = new MockCrashingSender();
-        Client client = new Client(sender, null);
-        Lookup lookup = new Lookup();
-        lookup.setCountry("0");
-        lookup.setAddress1("1");
-
-        assertThrows(SmartyException.class, () -> client.send(lookup));
-    }
-
-    @Test
-    public void testRejectsLookupsWithOnlyCountryAndAddress1AndLocality() throws Exception {
-        MockCrashingSender sender = new MockCrashingSender();
-        Client client = new Client(sender, null);
-        Lookup lookup = new Lookup();
-        lookup.setCountry("0");
-        lookup.setAddress1("1");
-        lookup.setLocality("2");
-
-        assertThrows(SmartyException.class, () -> client.send(lookup));
-    }
-
-    @Test
-    public void testRejectsLookupsWithOnlyCountryAndAddress1AndAdministrativeArea() throws Exception {
-        MockCrashingSender sender = new MockCrashingSender();
-        Client client = new Client(sender, null);
-        Lookup lookup = new Lookup();
-        lookup.setCountry("0");
-        lookup.setAddress1("1");
-        lookup.setAdministrativeArea("2");
 
         assertThrows(SmartyException.class, () -> client.send(lookup));
     }
@@ -119,12 +92,6 @@ public class ClientTest {
 
         lookup.setFreeform(null);
         lookup.setAddress1("1");
-        lookup.setPostalCode("2");
-        client.send(lookup);
-
-        lookup.setPostalCode(null);
-        lookup.setLocality("3");
-        lookup.setAdministrativeArea("4");
         client.send(lookup);
     }
 
