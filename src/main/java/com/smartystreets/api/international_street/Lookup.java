@@ -65,24 +65,8 @@ public class Lookup {
         return fieldIsMissing(this.getCountry());
     }
 
-    boolean hasFreeform() {
-        return fieldIsSet(this.getFreeform());
-    }
-
-    boolean missingAddress1() {
-        return fieldIsMissing(this.getAddress1());
-    }
-
-    boolean hasPostalCode() {
-        return fieldIsSet(this.getPostalCode());
-    }
-
-    boolean missingLocalityOrAdministrativeArea() {
-        return fieldIsMissing(this.getLocality()) || fieldIsMissing(this.getAdministrativeArea());
-    }
-
-    private boolean fieldIsSet(String field) {
-        return !fieldIsMissing(field);
+    boolean missingFreeformAndAddress1() {
+        return fieldIsMissing(this.getFreeform()) && fieldIsMissing(this.getAddress1());
     }
 
     private boolean fieldIsMissing(String field) {

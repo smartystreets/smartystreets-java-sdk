@@ -57,20 +57,14 @@ public class Client implements Closeable {
     }
 
     private void ensureEnoughInfo(Lookup lookup) throws SmartyException {
+        if (lookup == null)
+            throw new UnprocessableEntityException("Lookup cannot be nil.");
+
         if (lookup.missingCountry())
             throw new UnprocessableEntityException("Country field is required.");
 
-        if (lookup.hasFreeform())
-            return;
-
-        if (lookup.missingAddress1())
+        if (lookup.missingFreeformAndAddress1())
             throw new UnprocessableEntityException("Either freeform or address1 is required.");
-
-        if (lookup.hasPostalCode())
-            return;
-
-        if (lookup.missingLocalityOrAdministrativeArea())
-            throw new UnprocessableEntityException("Insufficient information: One or more required fields were not set on the lookup.");
     }
 
     @Override
