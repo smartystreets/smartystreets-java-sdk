@@ -45,6 +45,10 @@ public class Client implements Closeable {
         request.putParameter("country", lookup.getCountry());
         request.putParameter("search", lookup.getSearch());
         request.putParameter("max_results", String.valueOf(lookup.getMaxResults()));
+        request.putParameter("max_group_results", String.valueOf(lookup.getMaxGroupResults()));
+        if (lookup.isGeolocation()) {
+            request.putParameter("geolocation", "on");
+        }
         request.putParameter("include_only_locality", lookup.getLocality());
         request.putParameter("include_only_postal_code", lookup.getPostalCode());
 

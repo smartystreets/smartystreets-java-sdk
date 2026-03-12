@@ -24,6 +24,8 @@ public class InternationalAutocompleteExample {
 
             lookup.setCountry("FRA");
             lookup.setLocality("Paris");
+            lookup.setMaxGroupResults(50);
+            lookup.setGeolocation(true);
 
             client.send(lookup);
 

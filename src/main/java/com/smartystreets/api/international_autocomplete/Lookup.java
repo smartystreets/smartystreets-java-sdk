@@ -9,6 +9,7 @@ package com.smartystreets.api.international_autocomplete;
 public class Lookup {
     static final int MAX_RESULTS_DEFAULT = 5;
     static final int DISTANCE_DEFAULT = 5;
+    static final int MAX_GROUP_RESULTS_DEFAULT = 100;
 
     //region [ Fields ]
 
@@ -17,6 +18,8 @@ public class Lookup {
     private String search;
     private String addressID;
     private int maxResults;
+    private int maxGroupResults;
+    private boolean geolocation;
     private String locality;
     private String postalCode;
 
@@ -29,6 +32,7 @@ public class Lookup {
      */
     public Lookup() {
         this.maxResults = MAX_RESULTS_DEFAULT;
+        this.maxGroupResults = MAX_GROUP_RESULTS_DEFAULT;
     }
 
     /**
@@ -67,6 +71,14 @@ public class Lookup {
         return this.maxResults;
     }
 
+    public int getMaxGroupResults() {
+        return this.maxGroupResults;
+    }
+
+    public boolean isGeolocation() {
+        return this.geolocation;
+    }
+
     public String getLocality() {
         return this.locality;
     }
@@ -96,6 +108,14 @@ public class Lookup {
 
     public void setMaxResults(int maxResults) {
         this.maxResults = maxResults;
+    }
+
+    public void setMaxGroupResults(int maxGroupResults) {
+        this.maxGroupResults = maxGroupResults;
+    }
+
+    public void setGeolocation(boolean geolocation) {
+        this.geolocation = geolocation;
     }
 
     public void setLocality(String locality) {

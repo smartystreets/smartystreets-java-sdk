@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class ClientTest {
     //region [ Single Lookup ]
@@ -23,7 +25,7 @@ public class ClientTest {
 
         client.send(new Lookup("1"));
 
-        assertEquals("http://localhost/?search=1&max_results=5", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?search=1&max_results=5&max_group_results=100", capturingSender.getRequest().getUrl());
     }
 
     @Test
@@ -32,7 +34,7 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
-        String expectedURL = "http://localhost/?country=1&search=2&max_results=5&include_only_locality=4&include_only_postal_code=5";
+        String expectedURL = "http://localhost/?country=1&search=2&max_results=5&max_group_results=100&include_only_locality=4&include_only_postal_code=5";
         Lookup lookup = new Lookup();
         lookup.setCountry("1");
         lookup.setSearch("2");
@@ -50,7 +52,7 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
-        String expectedURL = "http://localhost/?country=1&search=2&max_results=10&include_only_locality=4&include_only_postal_code=5";
+        String expectedURL = "http://localhost/?country=1&search=2&max_results=10&max_group_results=100&include_only_locality=4&include_only_postal_code=5";
         Lookup lookup = new Lookup();
         lookup.setCountry("1");
         lookup.setSearch("2");
@@ -61,6 +63,43 @@ public class ClientTest {
         client.send(lookup);
 
         assertEquals(expectedURL, capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testSendingLookupWithGeolocation() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("1");
+        lookup.setGeolocation(true);
+
+        client.send(lookup);
+
+        assertTrue(capturingSender.getRequest().getUrl().contains("geolocation=on"));
+    }
+
+    @Test
+    public void testSendingLookupWithCustomMaxGroupResults() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("1");
+        lookup.setMaxGroupResults(50);
+
+        client.send(lookup);
+
+        assertTrue(capturingSender.getRequest().getUrl().contains("max_group_results=50"));
+    }
+
+    @Test
+    public void testDefaultValues() {
+        Lookup lookup = new Lookup();
+
+        assertEquals(5, lookup.getMaxResults());
+        assertEquals(100, lookup.getMaxGroupResults());
+        assertFalse(lookup.isGeolocation());
     }
 
     //endregion
