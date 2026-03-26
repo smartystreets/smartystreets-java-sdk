@@ -27,6 +27,7 @@ public class ClientBuilder {
     private Credentials signer;
     private Serializer serializer;
     private Sender httpSender;
+    private Sender wrappedHttpSender;
     private int maxRetries;
     private int maxTimeout;
     private String urlPrefix;
@@ -79,6 +80,17 @@ public class ClientBuilder {
      */
     public ClientBuilder withSender(Sender sender) {
         this.httpSender = sender;
+        return this;
+    }
+
+    /**
+     * Replaces the innermost SmartySender while keeping the rest of the sender chain intact.
+     *
+     * @param sender The sender to use as the HTTP transport layer.
+     * @return Returns <b>this</b> to accommodate method chaining.
+     */
+    public ClientBuilder withWrappedSender(Sender sender) {
+        this.wrappedHttpSender = sender;
         return this;
     }
 
@@ -271,7 +283,9 @@ public class ClientBuilder {
             return this.httpSender;
 
         Sender sender;
-        if (this.proxy != null) {
+        if (this.wrappedHttpSender != null) {
+            sender = this.wrappedHttpSender;
+        } else if (this.proxy != null) {
             sender = new SmartySender(this.maxTimeout, this.proxy);
         } else {
             sender = new SmartySender(this.maxTimeout);
