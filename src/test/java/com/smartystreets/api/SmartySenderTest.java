@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -90,6 +89,33 @@ public class SmartySenderTest {
         Response response = sender.send(request);
 
         assertEquals(400, response.getStatusCode());
+    }
+
+    @Test(expected = IOException.class)
+    public void testIOExceptionPropagates() throws Exception {
+        final OkHttpClient okHttpClient = mock(OkHttpClient.class);
+        final Call remoteCall = mock(Call.class);
+        when(remoteCall.execute()).thenThrow(new IOException("connection reset"));
+        when(okHttpClient.newCall(any())).thenReturn(remoteCall);
+
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, okHttpClient);
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
+
+        sender.send(request);
+    }
+
+    @Test
+    public void testResponseContainsTooManyRequestsOn429() throws Exception {
+        String responseBody = "rate limited";
+        SmartySender sender = new SmartySender(MAX_TIMEOUT, mockHttpClient(responseBody, 429));
+        Request request = new Request();
+        request.setUrlPrefix("http://localhost");
+
+        Response response = sender.send(request);
+
+        assertEquals(429, response.getStatusCode());
+        assertTrue(response instanceof TooManyRequestsResponse);
     }
 
     private static OkHttpClient mockHttpClient(final String serializedBody, final int code) throws IOException {

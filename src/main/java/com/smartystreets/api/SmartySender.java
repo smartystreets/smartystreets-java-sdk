@@ -52,8 +52,6 @@ public class SmartySender implements Sender {
                 return new TooManyRequestsResponse(httpResponse.headers(), statusCode, httpResponse.body().bytes());
             }
             return new Response(statusCode, httpResponse.body().bytes(),httpResponse.headers());
-        } catch(IOException ex) {
-            return new Response(ex.hashCode(), new byte[0]);
         }
     }
 
@@ -76,14 +74,6 @@ public class SmartySender implements Sender {
         }
 
         return requestBuilder.post(RequestBody.create(smartyRequest.getPayload())).build();
-    }
-
-    private Response buildResponse(okhttp3.Response httpResponse) {
-        int statusCode = httpResponse.code();
-        if (statusCode == 429){
-            return new TooManyRequestsResponse(httpResponse.headers(), statusCode, httpResponse.body().toString().getBytes());
-        }
-        return new Response(statusCode, httpResponse.body().toString().getBytes());
     }
 
     /**
