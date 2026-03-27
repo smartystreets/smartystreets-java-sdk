@@ -29,6 +29,22 @@ public class ClientBuilderTest {
         assertEquals("component-analysis,iana-timezone", builder.getCustomQueries().get("features"));
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void testWithSender_ThrowsWhenCombinedWithMaxTimeout() throws Exception {
+        new ClientBuilder("test-id", "test-token")
+                .withSender(new RequestCapturingSender())
+                .withMaxTimeout(5000)
+                .buildUsStreetApiClient();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testWithSender_ThrowsWhenCombinedWithProxy() throws Exception {
+        new ClientBuilder("test-id", "test-token")
+                .withSender(new RequestCapturingSender())
+                .withProxy(java.net.Proxy.Type.HTTP, "localhost", 8080)
+                .buildUsStreetApiClient();
+    }
+
     @Test
     public void testWithSender_WrapsWithMiddlewareChain() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
