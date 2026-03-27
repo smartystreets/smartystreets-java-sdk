@@ -30,10 +30,10 @@ public class ClientBuilderTest {
     }
 
     @Test
-    public void testWithWrappedSender_WrapsWithMiddlewareChain() throws Exception {
+    public void testWithSender_WrapsWithMiddlewareChain() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         Client client = (Client) new ClientBuilder("test-id", "test-token")
-                .withWrappedSender(capturingSender)
+                .withSender(capturingSender)
                 .buildUsStreetApiClient();
 
         Lookup lookup = new Lookup();
