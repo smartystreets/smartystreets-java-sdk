@@ -267,11 +267,17 @@ public class ClientBuilder {
     }
 
     private Sender buildSender() {
-        if (this.httpSender != null)
-            return this.httpSender;
-
+        if (this.httpSender != null) {
+            java.util.List<String> conflicts = new java.util.ArrayList<>();
+            if (this.maxTimeout != 10000) conflicts.add("withMaxTimeout()");
+            if (this.proxy != null) conflicts.add("withProxy()");
+            if (!conflicts.isEmpty())
+                throw new IllegalStateException("withSender() cannot be combined with: " + String.join(", ", conflicts) + ". These options only apply to the built-in HTTP transport.");
+        }
         Sender sender;
-        if (this.proxy != null) {
+        if (this.httpSender != null) {
+            sender = this.httpSender;
+        } else if (this.proxy != null) {
             sender = new SmartySender(this.maxTimeout, this.proxy);
         } else {
             sender = new SmartySender(this.maxTimeout);
