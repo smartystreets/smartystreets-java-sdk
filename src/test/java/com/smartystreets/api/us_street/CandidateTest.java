@@ -22,6 +22,7 @@ public class CandidateTest {
                 + "\"last_line\": \"Provo UT 84604-4405\",\n"
                 + "\"delivery_point_barcode\": \"846044405140\",\n"
                 + "\"smarty_key\": \"1750774478\",\n"
+                + "\"smarty_key_ext\": \"ext-value\",\n"
                 + "\"components\": {\n"
                 + "\"primary_number\": \"3214\",\n"
                 + "\"street_predirection\": \"N\",\n"
@@ -137,6 +138,7 @@ public class CandidateTest {
         assertEquals("Provo UT 84604-4405", candidates[0].getLastLine());
         assertEquals("846044405140", candidates[0].getDeliveryPointBarcode());
         assertEquals("1750774478", candidates[0].getSmartyKey());
+        assertEquals("ext-value", candidates[0].getSmartyKeyExt());
         assertEquals("3214", candidates[0].getComponents().getPrimaryNumber());
         assertEquals("N", candidates[0].getComponents().getStreetPredirection());
         assertEquals("Q", candidates[0].getComponents().getStreetPostdirection());
