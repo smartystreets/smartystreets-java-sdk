@@ -3,8 +3,6 @@ package com.smartystreets.api.us_enrichment.lookup_types.georeference;
 import com.smartystreets.api.Serializer;
 import com.smartystreets.api.us_enrichment.lookup_types.Lookup;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
-import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
-import okhttp3.Headers;
 
 import java.io.IOException;
 
@@ -19,7 +17,7 @@ public class GeoReferenceLookup extends Lookup {
         this.subset = subset;
     }
 
-    // This legacy constructor is inadequate as it will only query the lastest census version of the data because there is not a way to set the data subset.
+    // This legacy constructor is inadequate as it will only query the latest census version of the data because there is not a way to set the data subset.
     // Use GeoReferenceLookup(String subset) to set the data subset then set all other applicable lookup fields manually.
     public GeoReferenceLookup(String smartyKey, String etag) {
         super(smartyKey, etag);
@@ -34,11 +32,8 @@ public class GeoReferenceLookup extends Lookup {
     }
 
     @Override
-    public void deserializeAndSetResults(Serializer serializer, byte[] payload, Headers headers) throws IOException {
-        this.results = serializer.deserialize(payload, GeoReferenceResponse[].class, headers);
-        if (headers != null) {
-            this.results[0].setEtag(headers.get("etag"));
-        }
+    public void deserializeAndSetResults(Serializer serializer, byte[] payload) throws IOException {
+        this.results = serializer.deserialize(payload, GeoReferenceResponse[].class);
     }
 
     @Override

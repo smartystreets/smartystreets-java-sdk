@@ -8,6 +8,10 @@ import com.smartystreets.api.us_enrichment.result_types.property_principal.Princ
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
 import com.smartystreets.api.us_enrichment.result_types.risk.RiskAttributes;
 import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
+import com.smartystreets.api.us_enrichment.result_types.business.BusinessAttributes;
+import com.smartystreets.api.us_enrichment.result_types.business.BusinessDetailResponse;
+import com.smartystreets.api.us_enrichment.result_types.business.BusinessEntry;
+import com.smartystreets.api.us_enrichment.result_types.business.BusinessSummaryResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.*;
 import com.smartystreets.api.us_enrichment.result_types.MatchedAddress;
 import org.junit.Test;
@@ -132,6 +136,52 @@ public class ResponseTest {
         assertEquals("1861236", attributes.place.code);
         assertEquals("Portland", attributes.place.name);
         assertEquals("incorporated", attributes.place.type);
+    }
+
+    private static final String validBusinessSummaryResponse = "[{\"smarty_key\":\"1962995076\",\"data_set_name\":\"business\",\"businesses\":[{\"company_name\":\"Acme Corp\",\"business_id\":\"ABC123\"},{\"company_name\":\"Beta LLC\",\"business_id\":\"DEF456\"}]}]";
+    private static final String validBusinessDetailResponse = "[{\"smarty_key\":\"7\",\"data_set_name\":\"business\",\"business_id\":\"ABC123\",\"attributes\":{\"company_name\":\"Acme Corp\",\"ein\":\"12-3456789\",\"primary_sic_code\":\"1234\",\"fortune_1000_rank\":\"250\",\"year_established\":\"1998\",\"url\":\"acme.example\",\"email\":\"hello@acme.example\",\"phone\":\"555-1234\",\"latitude\":\"40.7128\",\"longitude\":\"-74.0060\",\"city_name\":\"New York\",\"state_abbreviation\":\"NY\",\"zipcode\":\"10001\"}}]";
+
+    @Test
+    public void testBusinessSummaryFieldValues() throws IOException {
+        BusinessSummaryResponse[] results = smartySerializer.deserialize(validBusinessSummaryResponse.getBytes(), BusinessSummaryResponse[].class);
+
+        BusinessSummaryResponse result = results[0];
+        assertEquals("1962995076", result.getSmartyKey());
+        assertEquals("business", result.getDataSetName());
+
+        BusinessEntry[] entries = result.getBusinesses();
+        assertNotNull(entries);
+        assertEquals(2, entries.length);
+        assertEquals("Acme Corp", entries[0].getCompanyName());
+        assertEquals("ABC123", entries[0].getBusinessId());
+        assertEquals("Beta LLC", entries[1].getCompanyName());
+        assertEquals("DEF456", entries[1].getBusinessId());
+    }
+
+    @Test
+    public void testBusinessDetailFieldValues() throws IOException {
+        BusinessDetailResponse[] results = smartySerializer.deserialize(validBusinessDetailResponse.getBytes(), BusinessDetailResponse[].class);
+
+        BusinessDetailResponse result = results[0];
+        assertEquals("7", result.getSmartyKey());
+        assertEquals("business", result.getDataSetName());
+        assertEquals("ABC123", result.getBusinessId());
+
+        BusinessAttributes attributes = result.getAttributes();
+        assertNotNull(attributes);
+        assertEquals("Acme Corp", attributes.companyName);
+        assertEquals("12-3456789", attributes.ein);
+        assertEquals("1234", attributes.primarySicCode);
+        assertEquals("250", attributes.fortune1000Rank);
+        assertEquals("1998", attributes.yearEstablished);
+        assertEquals("acme.example", attributes.url);
+        assertEquals("hello@acme.example", attributes.email);
+        assertEquals("555-1234", attributes.phone);
+        assertEquals("40.7128", attributes.latitude);
+        assertEquals("-74.0060", attributes.longitude);
+        assertEquals("New York", attributes.cityName);
+        assertEquals("NY", attributes.stateAbbreviation);
+        assertEquals("10001", attributes.zipcode);
     }
 
     @Test

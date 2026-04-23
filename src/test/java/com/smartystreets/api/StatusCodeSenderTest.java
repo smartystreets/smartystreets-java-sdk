@@ -1,10 +1,13 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.*;
+import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.MockStatusCodeSender;
+import okhttp3.Headers;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 
 public class StatusCodeSenderTest {
@@ -46,6 +49,32 @@ public class StatusCodeSenderTest {
     @Test
     public void test503ResponseThrowsServiceUnavailableException() throws Exception {
         this.assertSend(503, ServiceUnavailableException.class);
+    }
+
+    @Test
+    public void test304CarriesResponseEtag() {
+        Headers headers = new Headers.Builder().add("Etag", "server-refreshed-etag").build();
+        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(304, null, headers)));
+
+        NotModifiedException ex = assertThrows(NotModifiedException.class, () -> sender.send(new Request()));
+        assertEquals("server-refreshed-etag", ex.getResponseEtag());
+    }
+
+    @Test
+    public void test304ResponseEtagCaseInsensitive() {
+        Headers headers = new Headers.Builder().add("ETag", "case-insensitive-etag").build();
+        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(304, null, headers)));
+
+        NotModifiedException ex = assertThrows(NotModifiedException.class, () -> sender.send(new Request()));
+        assertEquals("case-insensitive-etag", ex.getResponseEtag());
+    }
+
+    @Test
+    public void test304ResponseEtagNullWhenHeaderAbsent() {
+        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(304, null)));
+
+        NotModifiedException ex = assertThrows(NotModifiedException.class, () -> sender.send(new Request()));
+        assertNull(ex.getResponseEtag());
     }
 
     private void assertSend(int statusCode, Class<? extends Throwable> exceptionType) throws Exception {

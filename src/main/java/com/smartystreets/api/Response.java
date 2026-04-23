@@ -2,8 +2,6 @@ package com.smartystreets.api;
 
 import okhttp3.Headers;
 
-import java.net.http.HttpHeaders;
-
 public class Response {
     private int statusCode;
     private byte[] payload;
@@ -35,6 +33,10 @@ public class Response {
 
     public byte[] getPayload() {
         return this.payload;
+    }
+
+    public String getEtag() {
+        return headers == null ? null : headers.get("Etag");
     }
 
     //endregion

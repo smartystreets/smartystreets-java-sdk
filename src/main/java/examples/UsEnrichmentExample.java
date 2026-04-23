@@ -45,7 +45,7 @@ public class UsEnrichmentExample {
             // To perform an address lookup instead of by SmartyKey you would uncomment the following line and comment setting the SmartyKey
             // principalLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
             // To set the ETag value from a previous call, uncomment the following line and set the appropriate ETag value
-            // principalLookup.setEtag("GMYDMOBZGIZTGMJQ");
+            // principalLookup.setRequestEtag("GMYDMOBZGIZTGMJQ");
 
             PrincipalResponse[] principalResults = null;
             try {
@@ -68,7 +68,7 @@ public class UsEnrichmentExample {
             GeoReferenceLookup geoReferenceLookup = new GeoReferenceLookup(""); // the parameter is the subset (2010 or 2020)
             geoReferenceLookup.setSmartyKey(smartyKey);
             //geoReferenceLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-            //geoReferenceLookup.setEtag("GEYTENBXGY3TKMRU");
+            //geoReferenceLookup.setRequestEtag("GEYTENBXGY3TKMRU");
 
             GeoReferenceResponse[] geoReferenceResults = null;
             try {
@@ -91,7 +91,7 @@ public class UsEnrichmentExample {
             RiskLookup riskLookup = new RiskLookup();
             riskLookup.setSmartyKey(smartyKey);
             //riskLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-            //riskLookup.setEtag("GEYTENBXGY3TKMRU");
+            //riskLookup.setRequestEtag("GEYTENBXGY3TKMRU");
 
             RiskResponse[] riskResults = null;
             try {
@@ -114,7 +114,7 @@ public class UsEnrichmentExample {
             SecondaryCountLookup secondaryCountLookup = new SecondaryCountLookup();
             secondaryCountLookup.setSmartyKey(smartyKeyWithSecondaries);
             //secondaryCountLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-            //secondaryCountLookup.setEtag("GEYTENBXGY3TKMRU");
+            //secondaryCountLookup.setRequestEtag("GEYTENBXGY3TKMRU");
 
             SecondaryCountResponse[] secondaryCountResults = null;
             try {
@@ -137,7 +137,7 @@ public class UsEnrichmentExample {
             SecondaryLookup secondaryLookup = new SecondaryLookup();
             secondaryLookup.setSmartyKey(smartyKeyWithSecondaries);
             //secondaryLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-            //secondaryLookup.setEtag("GEYTENBXGY3TKMRU");
+            //secondaryLookup.setRequestEtag("GEYTENBXGY3TKMRU");
 
             SecondaryResponse[] secondaryResults = null;
             try {
