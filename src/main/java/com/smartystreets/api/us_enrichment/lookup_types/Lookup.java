@@ -11,7 +11,6 @@ public abstract class Lookup extends EnrichmentLookupBase {
     public static final String financialDataSubset = "financial";
     public static final String principalDataSubset = "principal";
     public static final String geoReferenceDataSet = "geo-reference";
-    public static final String riskDataSet = "risk";
     public static final String secondaryDataSet = "secondary";
     public static final String secondaryCountDataSubset = "count";
     public static final String businessDataSet = "business";

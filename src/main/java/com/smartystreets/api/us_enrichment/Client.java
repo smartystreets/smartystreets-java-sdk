@@ -11,7 +11,6 @@ import com.smartystreets.api.us_enrichment.lookup_types.business.BusinessDetailL
 import com.smartystreets.api.us_enrichment.lookup_types.business.BusinessSummaryLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
-import com.smartystreets.api.us_enrichment.lookup_types.risk.RiskLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCountLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
 import com.smartystreets.api.us_enrichment.result_types.AddressSearch;
@@ -19,7 +18,6 @@ import com.smartystreets.api.us_enrichment.result_types.business.BusinessDetailR
 import com.smartystreets.api.us_enrichment.result_types.business.BusinessSummaryResponse;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
-import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCountResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
 
@@ -59,11 +57,6 @@ public class Client implements Closeable {
     }
 
     public GeoReferenceResponse[] sendGeoReference(GeoReferenceLookup lookup) throws SmartyException, IOException, InterruptedException {
-        send(lookup);
-        return lookup.getResults();
-    }
-
-    public RiskResponse[] sendRisk(RiskLookup lookup) throws SmartyException, IOException, InterruptedException {
         send(lookup);
         return lookup.getResults();
     }

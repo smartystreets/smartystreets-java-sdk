@@ -15,7 +15,6 @@ import com.smartystreets.api.us_enrichment.lookup_types.business.BusinessDetailL
 import com.smartystreets.api.us_enrichment.lookup_types.business.BusinessSummaryLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
-import com.smartystreets.api.us_enrichment.lookup_types.risk.RiskLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCountLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
 import com.smartystreets.api.us_enrichment.result_types.AddressSearch;
@@ -23,7 +22,6 @@ import com.smartystreets.api.us_enrichment.result_types.business.BusinessDetailR
 import com.smartystreets.api.us_enrichment.result_types.business.BusinessSummaryResponse;
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
-import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCountResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
 import okhttp3.Headers;
@@ -65,19 +63,6 @@ public class ClientTest {
         lookup.setSmartyKey("123");
         client.sendGeoReference(lookup);
         assertEquals("http://localhost:8080/123/geo-reference/2010?", capturingSender.getRequest().getUrl());
-    }
-
-    @Test
-    public void testSendingRiskLookup() throws Exception {
-        RequestCapturingSender capturingSender = new RequestCapturingSender();
-        URLPrefixSender sender = new URLPrefixSender("http://localhost:8080", capturingSender);
-        FakeSerializer serializer = new FakeSerializer(new RiskResponse[]{new RiskResponse()});
-        Client client = new Client(sender, serializer);
-        RiskLookup lookup = new RiskLookup();
-        lookup.setSmartyKey("123");
-
-        client.sendRisk(lookup);
-        assertEquals("http://localhost:8080/123/risk?", capturingSender.getRequest().getUrl());
     }
 
     @Test

@@ -7,13 +7,11 @@ import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.georeference.GeoReferenceLookup;
-import com.smartystreets.api.us_enrichment.lookup_types.risk.RiskLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryCountLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.secondary.SecondaryLookup;
 
 import com.smartystreets.api.us_enrichment.result_types.georeference.GeoReferenceResponse;
 import com.smartystreets.api.us_enrichment.result_types.property_principal.PrincipalResponse;
-import com.smartystreets.api.us_enrichment.result_types.risk.RiskResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.Secondary;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryCountResponse;
 import com.smartystreets.api.us_enrichment.result_types.secondary.SecondaryResponse;
@@ -83,29 +81,6 @@ public class UsEnrichmentExample {
 
             if (geoReferenceResults != null) {
                 System.out.println(Arrays.toString(geoReferenceResults));
-            } else {
-                System.out.println("Result was null");
-            }
-
-            // ************************ Risk ************************
-            RiskLookup riskLookup = new RiskLookup();
-            riskLookup.setSmartyKey(smartyKey);
-            //riskLookup.setAddressSearch(new AddressSearch().withStreet("56 Union Ave").withCity("Somerville").withState("NJ").withZipcode("08876"));
-            //riskLookup.setRequestEtag("GEYTENBXGY3TKMRU");
-
-            RiskResponse[] riskResults = null;
-            try {
-                riskResults = client.sendRisk(riskLookup);
-            } catch (NotModifiedException ex) {
-                System.out.println(ex.getMessage());
-                return;
-            } catch (SmartyException | InterruptedException ex) {
-                System.out.println(ex.getMessage());
-                ex.printStackTrace();
-            }
-
-            if (riskResults != null) {
-                System.out.println(Arrays.toString(riskResults));
             } else {
                 System.out.println("Result was null");
             }
