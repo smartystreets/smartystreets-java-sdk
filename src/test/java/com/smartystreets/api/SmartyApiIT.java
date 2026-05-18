@@ -1,5 +1,6 @@
 package com.smartystreets.api;
 
+import com.smartystreets.api.exceptions.UnprocessableEntityException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -35,6 +36,24 @@ public class SmartyApiIT {
         com.smartystreets.api.international_autocomplete.Candidate[] candidates = lookup.getResult();
         assertNotNull(candidates);
         assertTrue(candidates.length > 0);
+    }
+
+    @Test
+    public void test422SurfacesApiErrorMessage() throws Exception {
+        com.smartystreets.api.international_street.Client client = new ClientBuilder(credentials)
+                .buildInternationalStreetApiClient();
+
+        com.smartystreets.api.international_street.Lookup lookup = new com.smartystreets.api.international_street.Lookup();
+        lookup.setFreeform("123 Anywhere St");
+        lookup.setCountry("Narnia");
+
+        UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> client.send(lookup));
+
+        // We don't pin the exact wording — the API owns that. But it must not be the SDK's
+        // old canned fallback (which was returned for any 422 before the parser landed).
+        assertNotEquals("GET request lacked required fields.", ex.getMessage());
+        assertNotNull(ex.getMessage());
+        assertFalse(ex.getMessage().isBlank());
     }
 
     @Test
