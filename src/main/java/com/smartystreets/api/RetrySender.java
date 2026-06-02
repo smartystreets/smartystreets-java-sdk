@@ -26,12 +26,15 @@ public class RetrySender implements Sender {
     }
 
     public Response send(Request request) throws SmartyException, IOException, InterruptedException {
-        int totalWaitTime = 0;
+        long totalWaitTime = 0;
         for (int i = 0; i <= this.maxRetries; i++) {
             Response response = this.trySend(request, i);
             if (response instanceof TooManyRequestsResponse) {
-                 long wait = 10L;
-                 String retryAfter = ((TooManyRequestsResponse) response).getHeaders().get("Retry-After");
+                if (i >= this.maxRetries) {
+                    throw new SmartyException("Too many requests. Retry limit of " + this.maxRetries + " reached.");
+                }
+                long wait = 10L;
+                String retryAfter = ((TooManyRequestsResponse) response).getHeaders().get("Retry-After");
                 if (retryAfter != null && retryAfter.length() > 0) {
                     wait = Long.parseLong(retryAfter);
                 }
@@ -40,15 +43,10 @@ public class RetrySender implements Sender {
                 }
                 totalWaitTime += wait;
                 if (maxWaitTime > 0 && totalWaitTime > maxWaitTime) {
-                    throw new SmartyException("In RetrySender, the wait time is longer than the maxWaitTime.");
+                    throw new SmartyException("In RetrySender, waited too long for rate limit to clear. Giving up.");
                 }
-                //this.logger.log("The rate limit for requests has been exceeded. Sleeping " + wait + " seconds...");
                 this.sleeper.sleep(wait);
-                i = 0;
-                response = null;
-            }
-
-            if (response != null) {
+            } else if (response != null) {
                 return response;
             }
         }

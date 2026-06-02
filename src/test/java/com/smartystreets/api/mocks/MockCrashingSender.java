@@ -46,6 +46,10 @@ public class MockCrashingSender implements Sender {
             }
         }
 
+        if (request.getUrl().contains("AlwaysTooManyRequests")) {
+            response = new TooManyRequestsResponse(Headers.of(), STATUS_CODE, new byte[]{});
+        }
+
         return response;
     }
 
