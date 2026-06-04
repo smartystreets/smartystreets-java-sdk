@@ -47,9 +47,23 @@ public class RetrySenderTest {
     public void testBackoffDoesNotExceedMax() throws Exception {
         Long[] expectedDurations = new Long[] {0L,1L,2L,3L,4L,5L,6L,7L,8L,9L,10L,10L,10L,10L};
 
-        this.sendRequest("RetryFifteenTimes");
+        Request request = new Request();
+        request.setUrlPrefix("RetryFifteenTimes");
+        RetrySender retrySender = new RetrySender(15, this.fakeSleeper, this.fakeLogger, this.mockCrashingSender);
+        retrySender.send(request);
 
         assertEquals(15, this.mockCrashingSender.getSendCount());
+        assertArrayEquals(expectedDurations, this.fakeSleeper.getSleepDurations().toArray());
+    }
+
+    @Test
+    public void testRateLimitRespectsMaxRetries() throws Exception {
+        // With maxRetries=5: sends 6 times (initial + 5 retries), sleeps 5 times using the 10s default, then throws
+        Long[] expectedDurations = new Long[] {10L, 10L, 10L, 10L, 10L};
+
+        assertThrows(SmartyException.class, () -> this.sendRequest("AlwaysTooManyRequests"));
+
+        assertEquals(6, this.mockCrashingSender.getSendCount());
         assertArrayEquals(expectedDurations, this.fakeSleeper.getSleepDurations().toArray());
     }
 
@@ -63,13 +77,13 @@ public class RetrySenderTest {
         assertArrayEquals(expectedDurations, this.fakeSleeper.getSleepDurations().toArray());
     }
 
-    @Test 
+    @Test
     public void testWaitLongerThanMaxWaitTime() throws Exception {
         // The maxWaitTime is less than the total wait time of the sendRequest
         assertThrows(SmartyException.class, () -> this.sendRequest("WaitTimeTooLong", 7));
         assertEquals(2, this.mockCrashingSender.getSendCount());
 
-        // // The maxWaitTime is negative so it is ignored
+        // The maxWaitTime is negative so it is ignored
         this.sendRequest("WaitTimeTooLong", -1);
         assertEquals(3, this.mockCrashingSender.getSendCount());
 
@@ -81,7 +95,7 @@ public class RetrySenderTest {
     private void sendRequest(String requestBehavior) throws Exception {
         Request request = new Request();
         request.setUrlPrefix(requestBehavior);
-        RetrySender retrySender = new RetrySender(15, this.fakeSleeper, this.fakeLogger, this.mockCrashingSender);
+        RetrySender retrySender = new RetrySender(5, this.fakeSleeper, this.fakeLogger, this.mockCrashingSender);
 
         retrySender.send(request);
     }
@@ -89,7 +103,7 @@ public class RetrySenderTest {
     private void sendRequest(String requestBehavior, long maxWaitTime) throws Exception {
         Request request = new Request();
         request.setUrlPrefix(requestBehavior);
-        RetrySender retrySender = new RetrySender(15, this.fakeSleeper, this.fakeLogger, this.mockCrashingSender);
+        RetrySender retrySender = new RetrySender(5, this.fakeSleeper, this.fakeLogger, this.mockCrashingSender);
 
         retrySender.WithMaxWaitTime(maxWaitTime);
 
