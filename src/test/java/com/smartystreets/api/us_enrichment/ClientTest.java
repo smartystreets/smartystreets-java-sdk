@@ -137,6 +137,36 @@ public class ClientTest {
         assertEquals("http://localhost:8080/search/business?freeform=freeform", capturingSender.getRequest().getUrl());
     }
 
+    @Test
+    public void testSendingBusinessSummaryBusinessNameSearch() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost:8080", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new BusinessSummaryResponse[]{new BusinessSummaryResponse()});
+        Client client = new Client(sender, serializer);
+
+        BusinessSummaryLookup lookup = new BusinessSummaryLookup();
+        lookup.setAddressSearch(new AddressSearch()
+                .withBusinessName("Style Studio"));
+        client.sendBusinessSummary(lookup);
+
+        assertEquals("http://localhost:8080/search/business?business_name=Style+Studio", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testBusinessNameOmittedWhenNotSet() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost:8080", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new BusinessSummaryResponse[]{new BusinessSummaryResponse()});
+        Client client = new Client(sender, serializer);
+
+        BusinessSummaryLookup lookup = new BusinessSummaryLookup();
+        lookup.setAddressSearch(new AddressSearch()
+                .withFreeform("freeform"));
+        client.sendBusinessSummary(lookup);
+
+        assertFalse(capturingSender.getRequest().getUrl().contains("business_name"));
+    }
+
     // ================ Business.Detail URL tests ================
 
     @Test
