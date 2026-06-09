@@ -7,6 +7,24 @@ on:
       - '!**-dev**'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [11, 17, 21, 24]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+
+      - name: Run tests
+        run: make test
+
   release:
     runs-on: ubuntu-latest
     needs: publish
@@ -30,6 +48,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

@@ -24,7 +24,7 @@ mvn test -Dtest=ClientTest#testMethodName
 
 ## Architecture
 
-This is the official SmartyStreets Java SDK for address validation and geocoding APIs. Requires Java 11+.
+This is the official SmartyStreets Java SDK for address validation and geocoding APIs. Requires Java 17+.
 
 ### Dependencies
 
