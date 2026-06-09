@@ -42,7 +42,7 @@ public class CandidateTest {
                 "\"max_address_precision\":\"59\",\"changes\":{\"organization\":\"60\"," +
                 "\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\",\"address4\":\"64\",\"address5\":\"65\"," +
                 "\"address6\":\"66\",\"address7\":\"67\",\"address8\":\"68\"," +
-                "\"country\":\"125\",\"components\":{\"super_administrative_area\":\"73\"," +
+                "\"components\":{\"super_administrative_area\":\"73\"," +
                 "\"administrative_area\":\"74\",\"attention\":\"126\"," +
                 "\"sub_administrative_area\":\"75\",\"building\":\"76\"," +
                 "\"dependent_locality\":\"77\",\"dependent_locality_name\":\"78\",\"double_dependent_locality\":\"79\"," +
@@ -168,7 +168,6 @@ public class CandidateTest {
         assertEquals("66", changes.getAddress6());
         assertEquals("67", changes.getAddress7());
         assertEquals("68", changes.getAddress8());
-        assertEquals("125", changes.getCountry());
 
         //region [ Components ]
         Components ccomponents = changes.getComponents();
