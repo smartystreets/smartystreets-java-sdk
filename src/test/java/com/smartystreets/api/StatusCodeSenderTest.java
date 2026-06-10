@@ -44,8 +44,57 @@ public class StatusCodeSenderTest {
     }
 
     @Test
+    public void test408ResponseThrowsRequestTimeoutException() {
+        RequestTimeoutException ex = assertThrows(RequestTimeoutException.class,
+                () -> sendStatus(408, null));
+        assertEquals("Request timeout error.", ex.getMessage());
+    }
+
+    @Test
+    public void test408UsesApiErrorMessageWhenPresent() {
+        RequestTimeoutException ex = assertThrows(RequestTimeoutException.class,
+                () -> sendStatus(408, "{\"errors\":[{\"message\":\"API timeout message\"}]}"));
+        assertEquals("API timeout message", ex.getMessage());
+    }
+
+    @Test
     public void test500ResponseThrowsInternalServerErrorException() throws Exception {
         this.assertSend(500, InternalServerErrorException.class);
+    }
+
+    @Test
+    public void test502ResponseThrowsBadGatewayException() {
+        BadGatewayException ex = assertThrows(BadGatewayException.class,
+                () -> sendStatus(502, null));
+        assertEquals("Bad Gateway error.", ex.getMessage());
+    }
+
+    @Test
+    public void test502UsesApiErrorMessageWhenPresent() {
+        BadGatewayException ex = assertThrows(BadGatewayException.class,
+                () -> sendStatus(502, "{\"errors\":[{\"message\":\"API bad gateway message\"}]}"));
+        assertEquals("API bad gateway message", ex.getMessage());
+    }
+
+    @Test
+    public void test400FallsBackToStandardMessage() {
+        BadRequestException ex = assertThrows(BadRequestException.class,
+                () -> sendStatus(400, null));
+        assertEquals("Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON.", ex.getMessage());
+    }
+
+    @Test
+    public void testUnexpectedStatusCodeFallsBackToStandardMessage() {
+        SmartyException ex = assertThrows(SmartyException.class,
+                () -> sendStatus(418, null));
+        assertEquals("The server returned an unexpected HTTP status code: 418", ex.getMessage());
+    }
+
+    @Test
+    public void testUnexpectedStatusCodeUsesApiErrorMessageWhenPresent() {
+        SmartyException ex = assertThrows(SmartyException.class,
+                () -> sendStatus(418, "{\"errors\":[{\"message\":\"API teapot message\"}]}"));
+        assertEquals("API teapot message", ex.getMessage());
     }
 
     @Test
@@ -151,5 +200,11 @@ public class StatusCodeSenderTest {
         StatusCodeSender sender = new StatusCodeSender(new MockStatusCodeSender(statusCode));
 
         assertThrows(SmartyException.class, () -> sender.send(new Request()));
+    }
+
+    private void sendStatus(int statusCode, String body) throws Exception {
+        byte[] payload = body == null ? null : body.getBytes(StandardCharsets.UTF_8);
+        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(statusCode, payload)));
+        sender.send(new Request());
     }
 }

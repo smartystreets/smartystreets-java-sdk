@@ -33,20 +33,24 @@ public class StatusCodeSender implements Sender {
                 throw new PaymentRequiredException(messageFrom(response, "Payment Required: There is no active subscription for the account associated with the credentials submitted with the request."));
             case 403:
                 throw new ForbiddenException(messageFrom(response, "Forbidden: The request contained valid data and was understood by the server, but the server is refusing action."));
+            case 408:
+                throw new RequestTimeoutException(messageFrom(response, "Request timeout error."));
             case 413:
                 throw new RequestEntityTooLargeException(messageFrom(response, "Request Entity Too Large: The request body has exceeded the maximum size."));
             case 400:
-                throw new BadRequestException(messageFrom(response, "Bad Request (Malformed Payload): A GET request lacked a street field or the request body of a POST request contained malformed JSON."));
+                throw new BadRequestException(messageFrom(response, "Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON."));
             case 422:
                 throw new UnprocessableEntityException(messageFrom(response, "GET request lacked required fields."));
             case 500:
                 throw new InternalServerErrorException(messageFrom(response, "Internal Server Error."));
+            case 502:
+                throw new BadGatewayException(messageFrom(response, "Bad Gateway error."));
             case 503:
                 throw new ServiceUnavailableException(messageFrom(response, "Service Unavailable. Try again later."));
             case 504:
                 throw new GatewayTimeoutException(messageFrom(response, "The upstream data provider did not respond in a timely fashion and the request failed. A serious, yet rare occurrence indeed."));
             default:
-                throw new SmartyException(messageFrom(response, "Unexpected response code: " + response.getStatusCode()));
+                throw new SmartyException(messageFrom(response, "The server returned an unexpected HTTP status code: " + response.getStatusCode()));
         }
     }
 
