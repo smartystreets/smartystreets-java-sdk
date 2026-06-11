@@ -1,12 +1,7 @@
-name: Java Tests
+name: Run Tests
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - '**'
+  workflow_call:
 
 jobs:
   test:

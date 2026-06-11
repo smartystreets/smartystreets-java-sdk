@@ -1,0 +1,13 @@
+name: Java Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml

@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 make test              # Run unit tests (mvn test)
 make integration-test  # Run integration tests (requires SMARTY_AUTH_ID and SMARTY_AUTH_TOKEN env vars)
-make compile           # Clean, test, then compile
+make compile           # Clean, then compile
 make clean             # Clean and reset version files
 make publish           # Full publish workflow with version updates
 ```
