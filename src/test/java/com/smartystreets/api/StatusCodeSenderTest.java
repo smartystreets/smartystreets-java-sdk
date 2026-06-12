@@ -47,7 +47,7 @@ public class StatusCodeSenderTest {
     public void test408ResponseThrowsRequestTimeoutException() {
         RequestTimeoutException ex = assertThrows(RequestTimeoutException.class,
                 () -> sendStatus(408, null));
-        assertEquals("Request timeout error.", ex.getMessage());
+        assertEquals("Request timeout error. Body:", ex.getMessage());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class StatusCodeSenderTest {
     public void test502ResponseThrowsBadGatewayException() {
         BadGatewayException ex = assertThrows(BadGatewayException.class,
                 () -> sendStatus(502, null));
-        assertEquals("Bad Gateway error.", ex.getMessage());
+        assertEquals("Bad Gateway error. Body:", ex.getMessage());
     }
 
     @Test
@@ -80,14 +80,14 @@ public class StatusCodeSenderTest {
     public void test400FallsBackToStandardMessage() {
         BadRequestException ex = assertThrows(BadRequestException.class,
                 () -> sendStatus(400, null));
-        assertEquals("Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON.", ex.getMessage());
+        assertEquals("Bad Request (Malformed Payload): A GET request lacked a required field or the request body of a POST request contained malformed JSON. Body:", ex.getMessage());
     }
 
     @Test
     public void testUnexpectedStatusCodeFallsBackToStandardMessage() {
         SmartyException ex = assertThrows(SmartyException.class,
                 () -> sendStatus(418, null));
-        assertEquals("The server returned an unexpected HTTP status code: 418", ex.getMessage());
+        assertEquals("The server returned an unexpected HTTP status code: 418 Body:", ex.getMessage());
     }
 
     @Test
@@ -147,11 +147,20 @@ public class StatusCodeSenderTest {
     }
 
     @Test
+    public void testJoinsMultipleApiErrorMessages() {
+        byte[] body = "{\"errors\":[{\"message\":\"First problem.\"},{\"message\":\"Second problem.\"}]}".getBytes(StandardCharsets.UTF_8);
+        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, body)));
+
+        UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
+        assertEquals("First problem. Second problem.", ex.getMessage());
+    }
+
+    @Test
     public void test422FallsBackWhenBodyEmpty() {
         StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, new byte[0])));
 
         UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
-        assertEquals("GET request lacked required fields.", ex.getMessage());
+        assertEquals("GET request lacked required fields. Body:", ex.getMessage());
     }
 
     @Test
@@ -159,41 +168,50 @@ public class StatusCodeSenderTest {
         StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, null)));
 
         UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
-        assertEquals("GET request lacked required fields.", ex.getMessage());
+        assertEquals("GET request lacked required fields. Body:", ex.getMessage());
     }
 
     @Test
-    public void test422FallsBackWhenBodyMalformed() {
+    public void test422FallsBackWhenBodyMalformedAndAppendsBody() {
         StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, "not json".getBytes(StandardCharsets.UTF_8))));
 
         UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
-        assertEquals("GET request lacked required fields.", ex.getMessage());
+        assertEquals("GET request lacked required fields. Body: not json", ex.getMessage());
     }
 
     @Test
-    public void test422FallsBackWhenErrorsArrayMissing() {
+    public void test422FallsBackWhenErrorsArrayMissingAndAppendsBody() {
         StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, "{\"other\":\"shape\"}".getBytes(StandardCharsets.UTF_8))));
 
         UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
-        assertEquals("GET request lacked required fields.", ex.getMessage());
+        assertEquals("GET request lacked required fields. Body: {\"other\":\"shape\"}", ex.getMessage());
     }
 
     @Test
-    public void test422FallsBackWhenMessageIsNull() {
+    public void test422FallsBackWhenMessageIsNullAndAppendsBody() {
         byte[] body = "{\"errors\":[{\"message\":null}]}".getBytes(StandardCharsets.UTF_8);
         StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, body)));
 
         UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
-        assertEquals("GET request lacked required fields.", ex.getMessage());
+        assertEquals("GET request lacked required fields. Body: {\"errors\":[{\"message\":null}]}", ex.getMessage());
     }
 
     @Test
-    public void test422FallsBackWhenErrorsArrayEmpty() {
+    public void test422FallsBackWhenErrorsArrayEmptyAndAppendsBody() {
         byte[] body = "{\"errors\":[]}".getBytes(StandardCharsets.UTF_8);
         StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, body)));
 
         UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
-        assertEquals("GET request lacked required fields.", ex.getMessage());
+        assertEquals("GET request lacked required fields. Body: {\"errors\":[]}", ex.getMessage());
+    }
+
+    @Test
+    public void testWhitespaceOnlyBodyYieldsEmptyBodyLabel() {
+        byte[] body = "   \n  ".getBytes(StandardCharsets.UTF_8);
+        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(422, body)));
+
+        UnprocessableEntityException ex = assertThrows(UnprocessableEntityException.class, () -> sender.send(new Request()));
+        assertEquals("GET request lacked required fields. Body:", ex.getMessage());
     }
 
     private void assertSend(int statusCode, Class<? extends Throwable> exceptionType) throws Exception {

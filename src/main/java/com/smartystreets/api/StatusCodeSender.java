@@ -6,6 +6,7 @@ import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class StatusCodeSender implements Sender {
     private static final JsonMapper MAPPER = JsonMapper.builder().build();
@@ -58,15 +59,21 @@ public class StatusCodeSender implements Sender {
     // canned message when the body is empty, unparseable, or missing the expected fields.
     private static String messageFrom(Response response, String fallback) {
         byte[] payload = response.getPayload();
-        if (payload == null || payload.length == 0) return fallback;
-        try {
-            JsonNode message = MAPPER.readTree(payload).path("errors").path(0).path("message");
-            if (!message.isTextual()) return fallback;
-            String text = message.asText();
-            return text.isBlank() ? fallback : text;
-        } catch (JacksonException ignored) {
-            return fallback;
+        String body = payload == null ? "" : new String(payload, StandardCharsets.UTF_8).trim();
+        if (!body.isEmpty()) {
+            try {
+                StringBuilder joined = new StringBuilder();
+                for (JsonNode error : MAPPER.readTree(body).path("errors")) {
+                    JsonNode message = error.path("message");
+                    if (!message.isString() || message.asString().isBlank()) continue;
+                    if (joined.length() > 0) joined.append(' ');
+                    joined.append(message.asString().trim());
+                }
+                if (joined.length() > 0) return joined.toString();
+            } catch (JacksonException ignored) {
+            }
         }
+        return (fallback + " Body: " + body).trim();
     }
 
     @Override
