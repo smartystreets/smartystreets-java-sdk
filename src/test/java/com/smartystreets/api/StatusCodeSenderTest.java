@@ -103,29 +103,14 @@ public class StatusCodeSenderTest {
     }
 
     @Test
-    public void test304CarriesResponseEtag() {
+    public void test304IsNotAnError() throws Exception {
         Headers headers = new Headers.Builder().add("Etag", "server-refreshed-etag").build();
         StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(304, null, headers)));
 
-        NotModifiedException ex = assertThrows(NotModifiedException.class, () -> sender.send(new Request()));
-        assertEquals("server-refreshed-etag", ex.getResponseEtag());
-    }
+        Response response = sender.send(new Request());
 
-    @Test
-    public void test304ResponseEtagCaseInsensitive() {
-        Headers headers = new Headers.Builder().add("ETag", "case-insensitive-etag").build();
-        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(304, null, headers)));
-
-        NotModifiedException ex = assertThrows(NotModifiedException.class, () -> sender.send(new Request()));
-        assertEquals("case-insensitive-etag", ex.getResponseEtag());
-    }
-
-    @Test
-    public void test304ResponseEtagNullWhenHeaderAbsent() {
-        StatusCodeSender sender = new StatusCodeSender(new MockSender(new Response(304, null)));
-
-        NotModifiedException ex = assertThrows(NotModifiedException.class, () -> sender.send(new Request()));
-        assertNull(ex.getResponseEtag());
+        assertEquals(304, response.getStatusCode());
+        assertEquals("server-refreshed-etag", response.getEtag());
     }
 
     @Test

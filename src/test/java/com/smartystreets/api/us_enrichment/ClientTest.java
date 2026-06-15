@@ -443,15 +443,17 @@ public class ClientTest {
     // ================ End-to-end 304 flow through StatusCodeSender ================
 
     @Test
-    public void testBusinessDetail304ThrowsNotModifiedWithResponseEtag() {
+    public void testBusinessDetail304IsSuccessWithRefreshedEtag() throws Exception {
         Headers headers = new Headers.Builder().add("Etag", "refreshed-etag").build();
         Sender pipeline = new StatusCodeSender(new MockSender(new Response(304, null, headers)));
         Client client = new Client(pipeline, new SmartySerializer());
 
         BusinessDetailLookup lookup = new BusinessDetailLookup("ABC");
-        NotModifiedException ex = assertThrows(NotModifiedException.class,
-                () -> client.sendBusinessDetail(lookup));
-        assertEquals("refreshed-etag", ex.getResponseEtag());
+        lookup.setRequestEtag("prior-etag");
+        client.sendBusinessDetail(lookup);
+
+        assertEquals("refreshed-etag", lookup.getResponseEtag());
+        assertNull(lookup.getResult());
     }
 
     // ================ Custom parameters on the common-path lookups ================

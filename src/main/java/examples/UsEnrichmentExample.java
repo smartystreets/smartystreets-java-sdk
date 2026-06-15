@@ -2,7 +2,6 @@ package examples;
 
 import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.exceptions.NotModifiedException;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_enrichment.*;
 import com.smartystreets.api.us_enrichment.lookup_types.property_principal.PropertyPrincipalLookup;
@@ -48,9 +47,6 @@ public class UsEnrichmentExample {
             PrincipalResponse[] principalResults = null;
             try {
                 principalResults = client.sendPropertyPrincipal(principalLookup);
-            } catch (NotModifiedException ex) {
-                System.out.println(ex.getMessage());
-                return;
             } catch (SmartyException | InterruptedException ex) {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
@@ -71,9 +67,6 @@ public class UsEnrichmentExample {
             GeoReferenceResponse[] geoReferenceResults = null;
             try {
                 geoReferenceResults = client.sendGeoReference(geoReferenceLookup);
-            } catch (NotModifiedException ex) {
-                System.out.println(ex.getMessage());
-                return;
             } catch (SmartyException | InterruptedException ex) {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
@@ -94,9 +87,6 @@ public class UsEnrichmentExample {
             SecondaryCountResponse[] secondaryCountResults = null;
             try {
                 secondaryCountResults = client.sendSecondaryCount(secondaryCountLookup);
-            } catch (NotModifiedException ex) {
-                System.out.println(ex.getMessage());
-                return;
             } catch (SmartyException | InterruptedException ex) {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
@@ -117,9 +107,6 @@ public class UsEnrichmentExample {
             SecondaryResponse[] secondaryResults = null;
             try {
                 secondaryResults = client.sendSecondary(secondaryLookup);
-            } catch (NotModifiedException ex) {
-                System.out.println(ex.getMessage());
-                return;
             } catch (SmartyException | InterruptedException ex) {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();

@@ -153,6 +153,10 @@ public class Client implements Closeable {
             lookup.setResponseEtag(etag);
         }
 
+        if (response.getStatusCode() == 304) {
+            return;
+        }
+
         lookup.deserializeAndSetResults(this.serializer, response.getPayload());
     }
 
