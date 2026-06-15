@@ -4,6 +4,7 @@ import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_autocomplete_pro.*;
 import com.smartystreets.api.ClientBuilder;
+import com.smartystreets.api.Source;
 
 import java.io.IOException;
 
@@ -33,7 +34,7 @@ public class UsAutocompleteProExample {
             lookup.addCityFilter("Orem,UT");
             lookup.addPreferState("CO");
             lookup.setPreferRatio(33);
-            lookup.setSource("all");
+            lookup.setSource(Source.ALL);
 
             client.send(lookup); // The client will also return the suggestions directly
 

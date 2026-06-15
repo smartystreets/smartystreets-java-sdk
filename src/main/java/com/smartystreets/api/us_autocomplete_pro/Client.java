@@ -53,7 +53,9 @@ public class Client implements Closeable {
             request.putParameter("prefer_geolocation", lookup.getGeolocateType().getName());
         }
         request.putParameter("selected", lookup.getSelected());
-        request.putParameter("source", lookup.getSource());
+        if (lookup.getSource() != null) {
+            request.putParameter("source", lookup.getSource().getName());
+        }
 
         return request;
     }

@@ -25,7 +25,9 @@ public class Client implements Closeable {
         DecimalFormat decimalFormat = new DecimalFormat("#.########");
         request.putParameter("latitude", decimalFormat.format(lookup.getLatitude()));
         request.putParameter("longitude", decimalFormat.format(lookup.getLongitude()));
-        request.putParameter("source", lookup.getSource());
+        if (lookup.getSource() != null) {
+            request.putParameter("source", lookup.getSource().getName());
+        }
 
         Response httpResponse = this.sender.send(request);
 

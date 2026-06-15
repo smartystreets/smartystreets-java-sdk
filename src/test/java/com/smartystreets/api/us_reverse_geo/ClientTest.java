@@ -1,5 +1,6 @@
 package com.smartystreets.api.us_reverse_geo;
 
+import com.smartystreets.api.Source;
 import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.RequestCapturingSender;
@@ -19,6 +20,46 @@ public class ClientTest {
 
         Lookup lookup = new Lookup(44.888888888, -111.111111111);
         client.send(lookup);
+
+        assertEquals("http://localhost/lookup?latitude=44.88888889&longitude=-111.11111111", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testSendingLookupWithSourcePostal() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/lookup", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup(44.888888888, -111.111111111);
+        lookup.setSource(Source.POSTAL);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/lookup?latitude=44.88888889&longitude=-111.11111111&source=postal", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testSendingLookupWithSourceAll() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/lookup", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup(44.888888888, -111.111111111);
+        lookup.setSource(Source.ALL);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/lookup?latitude=44.88888889&longitude=-111.11111111&source=all", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testSendingLookupWithNoSourceOmitsParameter() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/lookup", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+
+        client.send(new Lookup(44.888888888, -111.111111111));
 
         assertEquals("http://localhost/lookup?latitude=44.88888889&longitude=-111.11111111", capturingSender.getRequest().getUrl());
     }

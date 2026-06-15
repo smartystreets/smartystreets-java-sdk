@@ -1,6 +1,7 @@
 package com.smartystreets.api.us_autocomplete_pro;
 
 import com.smartystreets.api.GeolocateType;
+import com.smartystreets.api.Source;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Lookup {
     private int preferRatio;
     private GeolocateType preferGeolocation;
     private String selected;
-    private String source;
+    private Source source;
 
     //endregion
 
@@ -77,7 +78,7 @@ public class Lookup {
 
     public String getSelected() { return this.selected; }
 
-    public String getSource() { return this.source; }
+    public Source getSource() { return this.source; }
 
     public List<String> getCityFilter() {
         return this.cityFilter;
@@ -141,7 +142,7 @@ public class Lookup {
 
     public void setSelected(String selected) { this.selected = selected; }
 
-    public void setSource(String source) { this.source = source; }
+    public void setSource(Source source) { this.source = source; }
 
     public void setCityFilter(List<String> cityFilter) {
         this.cityFilter = cityFilter;
