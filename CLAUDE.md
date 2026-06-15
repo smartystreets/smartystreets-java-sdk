@@ -84,6 +84,7 @@ Test doubles are in `src/test/java/com/smartystreets/api/mocks/`:
 - US Street Address (`us_street/`)
 - US ZIP Code (`us_zipcode/`)
 - US Reverse Geo (`us_reverse_geo/`)
+- US Autocomplete (`us_autocomplete/`)
 - US Autocomplete Pro (`us_autocomplete_pro/`)
 - US Extract (`us_extract/`)
 - US Enrichment (`us_enrichment/`)
