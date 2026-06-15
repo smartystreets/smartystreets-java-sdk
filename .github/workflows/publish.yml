@@ -3,8 +3,7 @@ name: Publish Java
 on:
   push:
     tags:
-      - '*'
-      - '!**-dev**'
+      - '**'
 
 jobs:
   test:
