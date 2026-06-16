@@ -2,6 +2,8 @@ name: Java Tests
 
 on:
   push:
+    branches:
+      - '**'
 
 jobs:
   test:
