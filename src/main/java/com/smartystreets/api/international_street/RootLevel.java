@@ -18,10 +18,6 @@ public class RootLevel implements Serializable {
     private String address6;
     private String address7;
     private String address8;
-    private String address9;
-    private String address10;
-    private String address11;
-    private String address12;
 
     //endregion
 
@@ -64,22 +60,6 @@ public class RootLevel implements Serializable {
 
     public String getAddress8() {
         return address8;
-    }
-
-    public String getAddress9() {
-        return address9;
-    }
-
-    public String getAddress10() {
-        return address10;
-    }
-
-    public String getAddress11() {
-        return address11;
-    }
-
-    public String getAddress12() {
-        return address12;
     }
 
     //endregion

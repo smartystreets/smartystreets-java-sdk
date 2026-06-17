@@ -15,14 +15,15 @@ public class CandidateTest {
     public void testAllFieldsFilledCorrectly() throws IOException {
         String responsePayload = "[{\"input_id\":\"1234\",\"organization\":\"1\",\"address1\":\"2\",\"address2\":\"3\"," +
                 "\"address3\":\"4\",\"address4\":\"5\",\"address5\":\"6\",\"address6\":\"7\",\"address7\":\"8\"," +
-                "\"address8\":\"9\",\"address9\":\"10\",\"address10\":\"11\",\"address11\":\"12\",\"address12\":\"13\"," +
+                "\"address8\":\"9\"," +
                 "\"components\":{\"country_iso_3\":\"14\",\"super_administrative_area\":\"15\"," +
-                "\"administrative_area\":\"16\",\"administrative_area_iso2\":\"16.1\",\"administrative_area_short\":\"16.2\",\"administrative_area_long\":\"16.3\"," +
+                "\"administrative_area\":\"16\",\"administrative_area_iso2\":\"16.1\",\"attention\":\"119\"," +
                 "\"sub_administrative_area\":\"17\",\"dependent_locality\":\"18\"," +
                 "\"dependent_locality_name\":\"19\",\"double_dependent_locality\":\"20\",\"locality\":\"21\"," +
                 "\"postal_code\":\"22\",\"postal_code_short\":\"23\",\"postal_code_extra\":\"24\"," +
                 "\"premise\":\"25\",\"premise_extra\":\"26\",\"premise_number\":\"27\"," +
                 "\"premise_prefix_number\":\"27.5\",\"premise_type\":\"28\"," +
+                "\"short_address_code\":\"120\",\"sub_building_leading_type\":\"121\",\"sub_building_block\":\"122\",\"sub_building_door\":\"123\",\"sub_building_staircase\":\"124\"," +
                 "\"thoroughfare\":\"29\",\"thoroughfare_predirection\":\"30\",\"thoroughfare_postdirection\":\"31\"," +
                 "\"thoroughfare_name\":\"32\",\"thoroughfare_trailing_type\":\"33\",\"thoroughfare_type\":\"34\"," +
                 "\"dependent_thoroughfare\":\"35\",\"dependent_thoroughfare_predirection\":\"36\"," +
@@ -40,14 +41,16 @@ public class CandidateTest {
                 "\"analysis\":{\"verification_status\":\"57\",\"address_precision\":\"58\"," +
                 "\"max_address_precision\":\"59\",\"changes\":{\"organization\":\"60\"," +
                 "\"address1\":\"61\",\"address2\":\"62\",\"address3\":\"63\",\"address4\":\"64\",\"address5\":\"65\"," +
-                "\"address6\":\"66\",\"address7\":\"67\",\"address8\":\"68\",\"address9\":\"69\",\"address10\":\"70\"," +
-                "\"address11\":\"71\",\"address12\":\"72\",\"components\":{\"super_administrative_area\":\"73\"," +
-                "\"administrative_area\":\"74\",\"administrative_area_short\":\"74.1\",\"administrative_area_long\":\"74.2\"," +
+                "\"address6\":\"66\",\"address7\":\"67\",\"address8\":\"68\"," +
+                "\"components\":{\"super_administrative_area\":\"73\"," +
+                "\"administrative_area\":\"74\",\"attention\":\"126\"," +
                 "\"sub_administrative_area\":\"75\",\"building\":\"76\"," +
                 "\"dependent_locality\":\"77\",\"dependent_locality_name\":\"78\",\"double_dependent_locality\":\"79\"," +
                 "\"country_iso_3\":\"80\",\"locality\":\"81\",\"postal_code\":\"82\",\"postal_code_short\":\"83\"," +
                 "\"postal_code_extra\":\"84\",\"premise\":\"85\",\"premise_extra\":\"86\",\"premise_number\":\"87\"," +
-                "\"premise_type\":\"88\",\"premise_prefix_number\":\"89\",\"thoroughfare\":\"90\"," +
+                "\"premise_type\":\"88\",\"premise_prefix_number\":\"89\"," +
+                "\"short_address_code\":\"127\",\"sub_building_leading_type\":\"128\",\"sub_building_block\":\"129\",\"sub_building_door\":\"130\",\"sub_building_staircase\":\"131\"," +
+                "\"thoroughfare\":\"90\"," +
                 "\"thoroughfare_predirection\":\"91\",\"thoroughfare_postdirection\":\"92\"," +
                 "\"thoroughfare_name\":\"93\",\"thoroughfare_trailing_type\":\"94\",\"thoroughfare_type\":\"95\"," +
                 "\"dependent_thoroughfare\":\"96\",\"dependent_thoroughfare_predirection\":\"97\"," +
@@ -72,10 +75,6 @@ public class CandidateTest {
         assertEquals("7", candidate.getAddress6());
         assertEquals("8", candidate.getAddress7());
         assertEquals("9", candidate.getAddress8());
-        assertEquals("10", candidate.getAddress9());
-        assertEquals("11", candidate.getAddress10());
-        assertEquals("12", candidate.getAddress11());
-        assertEquals("13", candidate.getAddress12());
         //endregion
 
         //region [ Components ]
@@ -85,8 +84,7 @@ public class CandidateTest {
         assertEquals("15", components.getSuperAdministrativeArea());
         assertEquals("16", components.getAdministrativeArea());
         assertEquals("16.1", components.getAdministrativeAreaISO2());
-        assertEquals("16.2", components.getAdministrativeAreaShort());
-        assertEquals("16.3", components.getAdministrativeAreaLong());
+        assertEquals("119", components.getAttention());
         assertEquals("17", components.getSubAdministrativeArea());
         assertEquals("18", components.getDependentLocality());
         assertEquals("19", components.getDependentLocalityName());
@@ -100,6 +98,11 @@ public class CandidateTest {
         assertEquals("27", components.getPremiseNumber());
         assertEquals("27.5", components.getPremisePrefixNumber());
         assertEquals("28", components.getPremiseType());
+        assertEquals("120", components.getShortAddressCode());
+        assertEquals("121", components.getSubBuildingLeadingType());
+        assertEquals("122", components.getSubBuildingBlock());
+        assertEquals("123", components.getSubBuildingDoor());
+        assertEquals("124", components.getSubBuildingStaircase());
         assertEquals("29", components.getThoroughfare());
         assertEquals("30", components.getThoroughfarePredirection());
         assertEquals("31", components.getThoroughfarePostdirection());
@@ -165,18 +168,13 @@ public class CandidateTest {
         assertEquals("66", changes.getAddress6());
         assertEquals("67", changes.getAddress7());
         assertEquals("68", changes.getAddress8());
-        assertEquals("69", changes.getAddress9());
-        assertEquals("70", changes.getAddress10());
-        assertEquals("71", changes.getAddress11());
-        assertEquals("72", changes.getAddress12());
 
         //region [ Components ]
         Components ccomponents = changes.getComponents();
         assertNotNull(ccomponents);
         assertEquals("73", ccomponents.getSuperAdministrativeArea());
         assertEquals("74", ccomponents.getAdministrativeArea());
-        assertEquals("74.1", ccomponents.getAdministrativeAreaShort());
-        assertEquals("74.2", ccomponents.getAdministrativeAreaLong());
+        assertEquals("126", ccomponents.getAttention());
         assertEquals("75", ccomponents.getSubAdministrativeArea());
         assertEquals("76", ccomponents.getBuilding());
         assertEquals("77", ccomponents.getDependentLocality());
@@ -192,6 +190,11 @@ public class CandidateTest {
         assertEquals("87", ccomponents.getPremiseNumber());
         assertEquals("88", ccomponents.getPremiseType());
         assertEquals("89", ccomponents.getPremisePrefixNumber());
+        assertEquals("127", ccomponents.getShortAddressCode());
+        assertEquals("128", ccomponents.getSubBuildingLeadingType());
+        assertEquals("129", ccomponents.getSubBuildingBlock());
+        assertEquals("130", ccomponents.getSubBuildingDoor());
+        assertEquals("131", ccomponents.getSubBuildingStaircase());
         assertEquals("90", ccomponents.getThoroughfare());
         assertEquals("91", ccomponents.getThoroughfarePredirection());
         assertEquals("92", ccomponents.getThoroughfarePostdirection());
