@@ -17,6 +17,9 @@ public class SmartySerializer implements Serializer {
     }
 
     public <T> T deserialize(byte[] payload, Class<T> type) throws IOException {
+        if (payload == null || payload.length == 0) {
+            return null;
+        }
         JsonMapper mapper = JsonMapper.builder()
             .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
             .build();
