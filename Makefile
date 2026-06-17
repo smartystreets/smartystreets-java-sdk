@@ -13,7 +13,7 @@ test:
 integration-test:
 	mvn integration-test
 
-compile: clean test
+compile: clean
 	mvn compile
 
 publish: compile
@@ -57,7 +57,10 @@ us_reverse_geo_api:
 	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsReverseGeoExample"
 
 us_street_api:
-	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetSingleAddressExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetMultipleAddressesExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetComponentAnalysisExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetSingleAddressExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetMultipleAddressesExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetComponentAnalysisExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetLookupsWithMatchStrategyExamples"
+
+us_street_match_strategy_api:
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetLookupsWithMatchStrategyExamples"
 
 us_street_iana_timezone_api:
 	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsStreetIanaTimeZoneExample"
@@ -67,4 +70,4 @@ us_zipcode_api:
 
 examples: international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_enrichment_api us_enrichment_business_api us_enrichment_etag_api us_extract_api us_reverse_geo_api us_street_api us_zipcode_api
 
-.PHONY: clean test integration-test compile publish examples international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_enrichment_api us_enrichment_business_api us_enrichment_etag_api us_extract_api us_reverse_geo_api us_street_api us_street_iana_timezone_api us_zipcode_api
+.PHONY: clean test integration-test compile publish examples international_autocomplete_api international_street_api international_postal_code_api us_autocomplete_pro_api us_enrichment_api us_enrichment_business_api us_enrichment_etag_api us_extract_api us_reverse_geo_api us_street_api us_street_match_strategy_api us_street_iana_timezone_api us_zipcode_api

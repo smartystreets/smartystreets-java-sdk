@@ -14,8 +14,7 @@ public class Components implements Serializable {
     private String superAdministrativeArea;
     private String administrativeArea;
     private String administrativeAreaISO2;
-    private String administrativeAreaShort;
-    private String administrativeAreaLong;
+    private String attention;
     private String subAdministrativeArea;
     private String dependentLocality;
     private String dependentLocalityName;
@@ -29,6 +28,11 @@ public class Components implements Serializable {
     private String premiseNumber;
     private String premisePrefixNumber;
     private String premiseType;
+    private String shortAddressCode;
+    private String subBuildingLeadingType;
+    private String subBuildingBlock;
+    private String subBuildingDoor;
+    private String subBuildingStaircase;
     private String thoroughfare;
     private String thoroughfarePredirection;
     private String thoroughfarePostdirection;
@@ -120,14 +124,9 @@ public class Components implements Serializable {
         return administrativeAreaISO2;
     }
 
-    @JsonProperty("administrative_area_short")
-    public String getAdministrativeAreaShort() {
-        return administrativeAreaShort;
-    }
-
-    @JsonProperty("administrative_area_long")
-    public String getAdministrativeAreaLong() {
-        return administrativeAreaLong;
+    @JsonProperty("attention")
+    public String getAttention() {
+        return attention;
     }
 
     @JsonProperty("sub_administrative_area")
@@ -193,6 +192,31 @@ public class Components implements Serializable {
     @JsonProperty("premise_type")
     public String getPremiseType() {
         return premiseType;
+    }
+
+    @JsonProperty("short_address_code")
+    public String getShortAddressCode() {
+        return shortAddressCode;
+    }
+
+    @JsonProperty("sub_building_leading_type")
+    public String getSubBuildingLeadingType() {
+        return subBuildingLeadingType;
+    }
+
+    @JsonProperty("sub_building_block")
+    public String getSubBuildingBlock() {
+        return subBuildingBlock;
+    }
+
+    @JsonProperty("sub_building_door")
+    public String getSubBuildingDoor() {
+        return subBuildingDoor;
+    }
+
+    @JsonProperty("sub_building_staircase")
+    public String getSubBuildingStaircase() {
+        return subBuildingStaircase;
     }
 
     @JsonProperty("thoroughfare")
