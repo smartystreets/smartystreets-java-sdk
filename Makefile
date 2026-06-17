@@ -45,7 +45,7 @@ us_enrichment_api:
 	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsEnrichmentExample"
 
 us_enrichment_business_api:
-	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsEnrichmentBusinessExample"
+	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsEnrichmentBusinessExample" && mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsEnrichmentBusinessNameSearchExample"
 
 us_enrichment_etag_api:
 	mvn exec:java $(EXEC_OPTS) -Dexec.mainClass="examples.UsEnrichmentEtagExample"

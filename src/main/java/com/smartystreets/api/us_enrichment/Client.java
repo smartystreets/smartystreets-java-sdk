@@ -174,6 +174,7 @@ public class Client implements Closeable {
             request.putParameter("city", search.city());
             request.putParameter("state", search.state());
             request.putParameter("zipcode", search.zipcode());
+            request.putParameter("business_name", search.businessName());
         } else {
             request.setUrlComponents("/" + lookup.getSmartyKey() + "/" + dataSetUrl);
         }
@@ -208,7 +209,7 @@ public class Client implements Closeable {
 
     private static boolean hasAddressSearchContent(AddressSearch search) {
         if (search == null) return false;
-        return !isBlank(search.freeform()) || !isBlank(search.street());
+        return !isBlank(search.freeform()) || !isBlank(search.street()) || !isBlank(search.businessName());
     }
 
     @Override
