@@ -13,7 +13,7 @@ test:
 integration-test:
 	mvn integration-test
 
-compile: clean test
+compile: clean
 	mvn compile
 
 publish: compile
