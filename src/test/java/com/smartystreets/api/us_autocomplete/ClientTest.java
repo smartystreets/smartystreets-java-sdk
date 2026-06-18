@@ -50,6 +50,46 @@ public class ClientTest {
     }
 
     @Test
+    public void testSendingLookupWithSourceAll() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("1");
+        lookup.setSource(Source.ALL);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?search=1&prefer_geolocation=city&source=all", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testSendingLookupWithSourcePostal() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("1");
+        lookup.setSource(Source.POSTAL);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?search=1&prefer_geolocation=city&source=postal", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testSendingLookupWithNoSourceOmitsParameter() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+
+        client.send(new Lookup("1"));
+
+        assertEquals("http://localhost/?search=1&prefer_geolocation=city", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
     public void testSendingExclude() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);

@@ -30,7 +30,7 @@ public class Lookup {
     private GeolocateType preferGeolocation;
     private String selected;
     private String exclude;
-    private String source;
+    private Source source;
 
     //endregion
 
@@ -80,7 +80,7 @@ public class Lookup {
 
     public String getExclude() { return this.exclude; }
 
-    public String getSource() { return this.source; }
+    public Source getSource() { return this.source; }
 
     public List<String> getCityFilter() {
         return this.cityFilter;
@@ -146,7 +146,7 @@ public class Lookup {
 
     public void setExclude(String exclude) { this.exclude = exclude; }
 
-    public void setSource(String source) { this.source = source; }
+    public void setSource(Source source) { this.source = source; }
 
     public void setCityFilter(List<String> cityFilter) {
         this.cityFilter = cityFilter;
