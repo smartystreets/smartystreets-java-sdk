@@ -1,6 +1,7 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.UnprocessableEntityException;
+import com.smartystreets.api.us_autocomplete_pro.Source;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -99,7 +100,7 @@ public class SmartyApiIT {
         lookup.addPreferState("CO");
         lookup.setSelected("1042 W Center St Apt A (24) Orem UT 84057");
         lookup.setPreferRatio(33);
-        lookup.setSource("all");
+        lookup.setSource(Source.ALL);
 
         client.send(lookup);
 

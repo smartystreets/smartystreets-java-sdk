@@ -19,6 +19,7 @@ public class UsReverseGeoExample {
                 .buildUsReverseGeoClient()) {
 
             Lookup lookup = new Lookup(40.27644, -111.65747);
+            lookup.setSource(Source.ALL);
 
             client.send(lookup);
 
