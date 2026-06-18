@@ -1,7 +1,6 @@
 package com.smartystreets.api.us_autocomplete_pro;
 
 import com.smartystreets.api.GeolocateType;
-import com.smartystreets.api.Source;
 
 import java.util.ArrayList;
 import java.util.List;

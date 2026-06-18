@@ -4,7 +4,6 @@ import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.us_autocomplete_pro.*;
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.Source;
 
 import java.io.IOException;
 

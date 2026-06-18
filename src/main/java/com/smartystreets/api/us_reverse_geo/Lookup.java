@@ -1,6 +1,5 @@
 package com.smartystreets.api.us_reverse_geo;
 
-import com.smartystreets.api.Source;
 import java.io.Serializable;
 
 public class Lookup implements Serializable {

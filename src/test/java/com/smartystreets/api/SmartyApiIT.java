@@ -1,7 +1,7 @@
 package com.smartystreets.api;
 
 import com.smartystreets.api.exceptions.UnprocessableEntityException;
-import com.smartystreets.api.Source;
+import com.smartystreets.api.us_autocomplete_pro.Source;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.smartystreets.api;
+package com.smartystreets.api.us_autocomplete_pro;
 
 public enum Source {
     ALL("all"), POSTAL("postal");

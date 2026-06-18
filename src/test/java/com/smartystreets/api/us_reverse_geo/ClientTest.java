@@ -1,6 +1,5 @@
 package com.smartystreets.api.us_reverse_geo;
 
-import com.smartystreets.api.Source;
 import com.smartystreets.api.URLPrefixSender;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.RequestCapturingSender;

@@ -3,7 +3,6 @@ package examples;
 import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.ClientBuilder;
 import com.smartystreets.api.exceptions.SmartyException;
-import com.smartystreets.api.Source;
 import com.smartystreets.api.us_reverse_geo.*;
 
 import java.io.IOException;
