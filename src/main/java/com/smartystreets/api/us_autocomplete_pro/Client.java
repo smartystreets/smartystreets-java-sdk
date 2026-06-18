@@ -30,7 +30,7 @@ public class Client implements Closeable {
         Response response = this.sender.send(request);
 
         Result result = this.serializer.deserialize(response.getPayload(), Result.class);
-        Suggestion[] suggestions = result.getSuggestions();
+        Suggestion[] suggestions = result == null ? null : result.getSuggestions();
         lookup.setResult(suggestions);
 
         return suggestions;
