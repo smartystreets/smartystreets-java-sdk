@@ -29,7 +29,7 @@ public class Client implements Closeable {
 
         //Need to go through and fix all of these
         Result result = this.serializer.deserialize(response.getPayload(), Result.class);
-        Candidate[] candidates = result.getCandidates();
+        Candidate[] candidates = result == null ? null : result.getCandidates();
         lookup.setResult(candidates);
 
         return candidates;

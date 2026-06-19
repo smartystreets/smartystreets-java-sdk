@@ -2,7 +2,6 @@ package examples;
 
 import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.ClientBuilder;
-import com.smartystreets.api.exceptions.NotModifiedException;
 import com.smartystreets.api.us_enrichment.Client;
 import com.smartystreets.api.us_enrichment.lookup_types.business.BusinessDetailLookup;
 import com.smartystreets.api.us_enrichment.lookup_types.business.BusinessSummaryLookup;
@@ -50,9 +49,11 @@ public class UsEnrichmentEtagExample {
         second.setRequestEtag(capturedEtag);
         try {
             client.sendBusinessSummary(second);
-            System.out.println("  Call 2 (matching Etag): 200 — server did NOT honor the conditional. Etag=" + display(second.getResponseEtag()));
-        } catch (NotModifiedException ex) {
-            System.out.println("  Call 2 (matching Etag): 304 NotModifiedException — caller treats this as cache-valid. Refreshed Etag=" + display(ex.getResponseEtag()));
+            if (second.getResults() == null) {
+                System.out.println("  Call 2 (matching Etag): 304 not modified — cache is still valid. Refreshed Etag=" + display(second.getResponseEtag()));
+            } else {
+                System.out.println("  Call 2 (matching Etag): 200 — server did NOT honor the conditional. Etag=" + display(second.getResponseEtag()));
+            }
         } catch (Exception ex) {
             System.out.println("  Call 2 unexpected failure: " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             return null;
@@ -62,9 +63,11 @@ public class UsEnrichmentEtagExample {
         third.setRequestEtag(capturedEtag + "X");
         try {
             client.sendBusinessSummary(third);
-            System.out.println("  Call 3 (mutated Etag): 200 as expected. Etag=" + display(third.getResponseEtag()));
-        } catch (NotModifiedException ex) {
-            System.out.println("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+            if (third.getResults() == null) {
+                System.out.println("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+            } else {
+                System.out.println("  Call 3 (mutated Etag): 200 as expected. Etag=" + display(third.getResponseEtag()));
+            }
         } catch (Exception ex) {
             System.out.println("  Call 3 unexpected failure: " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
         }
@@ -97,9 +100,11 @@ public class UsEnrichmentEtagExample {
         second.setRequestEtag(capturedEtag);
         try {
             client.sendBusinessDetail(second);
-            System.out.println("  Call 2 (matching Etag): 200 — server did NOT honor the conditional. Etag=" + display(second.getResponseEtag()));
-        } catch (NotModifiedException ex) {
-            System.out.println("  Call 2 (matching Etag): 304 NotModifiedException — caller treats this as cache-valid. Refreshed Etag=" + display(ex.getResponseEtag()));
+            if (second.getResult() == null) {
+                System.out.println("  Call 2 (matching Etag): 304 not modified — cache is still valid. Refreshed Etag=" + display(second.getResponseEtag()));
+            } else {
+                System.out.println("  Call 2 (matching Etag): 200 — server did NOT honor the conditional. Etag=" + display(second.getResponseEtag()));
+            }
         } catch (Exception ex) {
             System.out.println("  Call 2 unexpected failure: " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             return;
@@ -109,9 +114,11 @@ public class UsEnrichmentEtagExample {
         third.setRequestEtag(capturedEtag + "X");
         try {
             client.sendBusinessDetail(third);
-            System.out.println("  Call 3 (mutated Etag): 200 as expected. Etag=" + display(third.getResponseEtag()));
-        } catch (NotModifiedException ex) {
-            System.out.println("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+            if (third.getResult() == null) {
+                System.out.println("  Call 3 (mutated Etag): 304 — UNEXPECTED. Server treated a different Etag as matching.");
+            } else {
+                System.out.println("  Call 3 (mutated Etag): 200 as expected. Etag=" + display(third.getResponseEtag()));
+            }
         } catch (Exception ex) {
             System.out.println("  Call 3 unexpected failure: " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
         }

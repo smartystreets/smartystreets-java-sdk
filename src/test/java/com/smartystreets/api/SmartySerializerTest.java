@@ -45,4 +45,10 @@ public class SmartySerializerTest {
         assertEquals("invalid_zipcode", results[2].getStatus());
         assertEquals("Invalid ZIP Code.", results[2].getReason());
     }
+
+    @Test
+    public void testDeserializeEmptyPayloadReturnsNull() throws Exception {
+        assertNull(smartySerializer.deserialize(new byte[0], Result[].class));
+        assertNull(smartySerializer.deserialize(null, Result[].class));
+    }
 }

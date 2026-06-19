@@ -137,6 +137,36 @@ public class ClientTest {
         assertEquals("http://localhost:8080/search/business?freeform=freeform", capturingSender.getRequest().getUrl());
     }
 
+    @Test
+    public void testSendingBusinessSummaryBusinessNameSearch() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost:8080", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new BusinessSummaryResponse[]{new BusinessSummaryResponse()});
+        Client client = new Client(sender, serializer);
+
+        BusinessSummaryLookup lookup = new BusinessSummaryLookup();
+        lookup.setAddressSearch(new AddressSearch()
+                .withBusinessName("Style Studio"));
+        client.sendBusinessSummary(lookup);
+
+        assertEquals("http://localhost:8080/search/business?business_name=Style+Studio", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testBusinessNameOmittedWhenNotSet() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost:8080", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new BusinessSummaryResponse[]{new BusinessSummaryResponse()});
+        Client client = new Client(sender, serializer);
+
+        BusinessSummaryLookup lookup = new BusinessSummaryLookup();
+        lookup.setAddressSearch(new AddressSearch()
+                .withFreeform("freeform"));
+        client.sendBusinessSummary(lookup);
+
+        assertFalse(capturingSender.getRequest().getUrl().contains("business_name"));
+    }
+
     // ================ Business.Detail URL tests ================
 
     @Test
@@ -443,15 +473,17 @@ public class ClientTest {
     // ================ End-to-end 304 flow through StatusCodeSender ================
 
     @Test
-    public void testBusinessDetail304ThrowsNotModifiedWithResponseEtag() {
+    public void testBusinessDetail304IsSuccessWithRefreshedEtag() throws Exception {
         Headers headers = new Headers.Builder().add("Etag", "refreshed-etag").build();
         Sender pipeline = new StatusCodeSender(new MockSender(new Response(304, null, headers)));
         Client client = new Client(pipeline, new SmartySerializer());
 
         BusinessDetailLookup lookup = new BusinessDetailLookup("ABC");
-        NotModifiedException ex = assertThrows(NotModifiedException.class,
-                () -> client.sendBusinessDetail(lookup));
-        assertEquals("refreshed-etag", ex.getResponseEtag());
+        lookup.setRequestEtag("prior-etag");
+        client.sendBusinessDetail(lookup);
+
+        assertEquals("refreshed-etag", lookup.getResponseEtag());
+        assertNull(lookup.getResult());
     }
 
     // ================ Custom parameters on the common-path lookups ================

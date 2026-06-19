@@ -10,6 +10,7 @@ public class AddressSearch {
     private String city;
     private String state;
     private String zipcode;
+    private String businessName;
 
     public String freeform() {
         return freeform;
@@ -53,6 +54,15 @@ public class AddressSearch {
 
     public AddressSearch withZipcode(String zipcode) {
         this.zipcode = zipcode;
+        return this;
+    }
+
+    public String businessName() {
+        return this.businessName;
+    }
+
+    public AddressSearch withBusinessName(String businessName) {
+        this.businessName = businessName;
         return this;
     }
 

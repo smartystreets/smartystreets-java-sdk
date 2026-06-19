@@ -30,7 +30,7 @@ public class Client implements Closeable {
         Response response = this.sender.send(request);
 
         Result result = this.serializer.deserialize(response.getPayload(), Result.class);
-        Suggestion[] suggestions = result.getSuggestions();
+        Suggestion[] suggestions = result == null ? null : result.getSuggestions();
         lookup.setResult(suggestions);
 
         return suggestions;
@@ -53,7 +53,9 @@ public class Client implements Closeable {
             request.putParameter("prefer_geolocation", lookup.getGeolocateType().getName());
         }
         request.putParameter("selected", lookup.getSelected());
-        request.putParameter("source", lookup.getSource());
+        if (lookup.getSource() != null) {
+            request.putParameter("source", lookup.getSource().getName());
+        }
 
         return request;
     }
