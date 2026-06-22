@@ -18,6 +18,7 @@ public class Suggestion implements Serializable {
     private String state;
     private String zipcode;
     private Integer entries;
+    private String source;
 
     //endregion
 
@@ -51,6 +52,8 @@ public class Suggestion implements Serializable {
     public String getZipcode() { return zipcode; }
 
     public Integer getEntries() { return entries; }
+
+    public String getSource() { return source; }
 
     //endregion
 }
