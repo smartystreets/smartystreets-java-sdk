@@ -8,6 +8,7 @@ import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;
 import com.smartystreets.api.mocks.RequestCapturingSender;
 import org.junit.Test;
+import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -42,7 +43,7 @@ public class ClientTest {
         lookup.setPreferRatio(60);
         lookup.setGeolocateType(GeolocateType.CITY);
         lookup.setSelected("5");
-        lookup.setExclude("6");
+        lookup.addExclude("6");
 
         client.send(lookup);
 
@@ -96,11 +97,11 @@ public class ClientTest {
         FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
         Lookup lookup = new Lookup("1");
-        lookup.setExclude("excludedAddress");
+        lookup.setExclude(List.of("excludedAddress", "excludedAddress2"));
 
         client.send(lookup);
 
-        assertEquals("http://localhost/?search=1&prefer_geolocation=city&exclude=excludedAddress", capturingSender.getRequest().getUrl());
+        assertEquals("http://localhost/?search=1&prefer_geolocation=city&exclude=excludedAddress%2CexcludedAddress2", capturingSender.getRequest().getUrl());
     }
 
     //endregion

@@ -29,7 +29,7 @@ public class Lookup {
     private int preferRatio;
     private GeolocateType preferGeolocation;
     private String selected;
-    private String exclude;
+    private List<String> exclude;
     private Source source;
 
     //endregion
@@ -49,6 +49,7 @@ public class Lookup {
         this.preferCity = new ArrayList<>();
         this.preferState = new ArrayList<>();
         this.preferZipcode = new ArrayList<>();
+        this.exclude = new ArrayList<>();
         this.preferRatio = this.PREFER_RATIO_DEFAULT;
     }
 
@@ -78,7 +79,7 @@ public class Lookup {
 
     public String getSelected() { return this.selected; }
 
-    public String getExclude() { return this.exclude; }
+    public List<String> getExclude() { return this.exclude; }
 
     public Source getSource() { return this.source; }
 
@@ -144,7 +145,9 @@ public class Lookup {
 
     public void setSelected(String selected) { this.selected = selected; }
 
-    public void setExclude(String exclude) { this.exclude = exclude; }
+    public void setExclude(List<String> exclude) { this.exclude = exclude; }
+
+    public void addExclude(String item) { this.exclude.add(item); }
 
     public void setSource(Source source) { this.source = source; }
 

@@ -53,7 +53,7 @@ public class Client implements Closeable {
             request.putParameter("prefer_geolocation", lookup.getGeolocateType().getName());
         }
         request.putParameter("selected", lookup.getSelected());
-        request.putParameter("exclude", lookup.getExclude());
+        request.putParameter("exclude", this.buildString(lookup.getExclude(), ","));
         if (lookup.getSource() != null) {
             request.putParameter("source", lookup.getSource().getName());
         }
@@ -63,6 +63,10 @@ public class Client implements Closeable {
 
     private String buildString(List<String> list) {
         return buildStringFromList(list, ";");
+    }
+
+    private String buildString(List<String> list, String separator) {
+        return buildStringFromList(list, separator);
     }
 
     private String buildStringFromList(List<String> list, String separator) {
