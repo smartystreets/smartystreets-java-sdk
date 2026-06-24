@@ -1,4 +1,4 @@
-package com.smartystreets.api.us_autocomplete_pro;
+package com.smartystreets.api.us_autocomplete;
 
 import com.smartystreets.api.GeolocateType;
 
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  *     will contain the result of the lookup after it comes back from the API.
- *     @see "https://smartystreets.com/docs/cloud/us-autocomplete-pro-api#http-request-input-fields"
+ *     @see "https://www.smarty.com/docs/apis/us-autocomplete-v2/reference#http-request-input-fields"
  */
 public class Lookup {
     final int PREFER_RATIO_DEFAULT = 100;
@@ -29,6 +29,7 @@ public class Lookup {
     private int preferRatio;
     private GeolocateType preferGeolocation;
     private String selected;
+    private List<String> exclude;
     private Source source;
 
     //endregion
@@ -36,7 +37,7 @@ public class Lookup {
     //region [ Constructors ]
 
     /**
-     * If you use this constructor, don't forget to set the <b>prefix</b>. It is required.
+     * If you use this constructor, don't forget to set the <b>search</b>. It is required.
      */
     public Lookup() {
         this.maxResults = this.MAX_RESULTS_DEFAULT;
@@ -48,6 +49,7 @@ public class Lookup {
         this.preferCity = new ArrayList<>();
         this.preferState = new ArrayList<>();
         this.preferZipcode = new ArrayList<>();
+        this.exclude = new ArrayList<>();
         this.preferRatio = this.PREFER_RATIO_DEFAULT;
     }
 
@@ -76,6 +78,8 @@ public class Lookup {
     }
 
     public String getSelected() { return this.selected; }
+
+    public List<String> getExclude() { return this.exclude; }
 
     public Source getSource() { return this.source; }
 
@@ -141,6 +145,10 @@ public class Lookup {
 
     public void setSelected(String selected) { this.selected = selected; }
 
+    public void setExclude(List<String> exclude) { this.exclude = exclude; }
+
+    public void addExclude(String item) { this.exclude.add(item); }
+
     public void setSource(Source source) { this.source = source; }
 
     public void setCityFilter(List<String> cityFilter) {
@@ -166,7 +174,6 @@ public class Lookup {
     /***
      * Sets the percentage of suggestions that are to be from preferred cities/states.
      * @param preferRatio An integer value, range [0, 100]. Default is 100.
-     * @see "https://smartystreets.com/docs/cloud/us-autocomplete-pro-api#preference"
      */
     public void setPreferRatio(int preferRatio) {
         this.preferRatio = preferRatio;
