@@ -12,6 +12,7 @@ public class Suggestion implements Serializable {
 
     private String smartyKey;
     private String entryId;
+    private String urbanization;
     private String streetLine;
     private String secondary;
     private String city;
@@ -33,6 +34,8 @@ public class Suggestion implements Serializable {
     public String getEntryId() {
         return entryId;
     }
+
+    public String getUrbanization() { return urbanization; }
 
     @JsonProperty("street_line")
     public String getStreetLine() {
