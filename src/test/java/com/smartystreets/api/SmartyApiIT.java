@@ -168,6 +168,7 @@ public class SmartyApiIT {
         address2.setStreet("123 Bogus Street");
         address2.setLastline("Pretend Lake, Oklahoma");
         address2.setMaxCandidates(1);
+        address2.setMatch(com.smartystreets.api.us_street.MatchType.STRICT); // default enhanced match returns a candidate even for bad addresses
 
         com.smartystreets.api.us_street.Lookup address3 = new com.smartystreets.api.us_street.Lookup();
         address3.setInputId("8675309");
