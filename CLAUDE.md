@@ -72,6 +72,7 @@ Single lookups are sent as GET with query parameters. Batch (2+) lookups use POS
 
 - `StaticCredentials`: Auth ID + Auth Token (server-to-server)
 - `SharedCredentials`: Web Token + Referer (browser/mobile)
+- Embedded/website keys are GET-only — not valid for batch (POST) requests or the US Extract API (POST-only): https://www.smarty.com/docs/cloud/authentication
 
 ### Test Mocks
 

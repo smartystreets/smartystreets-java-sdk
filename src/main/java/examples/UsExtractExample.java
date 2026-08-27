@@ -12,8 +12,8 @@ import java.io.IOException;
 public class UsExtractExample {
     public static void main(String[] args) {
         // We recommend storing your authentication credentials in environment variables.
-        // for client-side requests (browser/mobile), use this code:
-        // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
+        // The US Extract API is POST-only and embedded keys are restricted to GET, so this
+        // API requires secret keys: https://www.smarty.com/docs/cloud/authentication
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         try (Client client = new ClientBuilder(credentials).buildUsExtractApiClient()) {
