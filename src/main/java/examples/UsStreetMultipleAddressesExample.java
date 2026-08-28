@@ -12,8 +12,8 @@ import java.util.List;
 public class UsStreetMultipleAddressesExample {
     public static void main(String[] args) {
         // We recommend storing your authentication credentials in environment variables.
-        // for client-side requests (browser/mobile), use this code:
-        // SharedCredentials credentials = new SharedCredentials(System.getenv("SMARTY_AUTH_WEB"), System.getenv("SMARTY_AUTH_REFERER"));
+        // Batch requests are sent via HTTP POST. Embedded keys are restricted to GET, so
+        // batches require secret keys: https://www.smarty.com/docs/cloud/authentication
         BasicAuthCredentials credentials = new BasicAuthCredentials(System.getenv("SMARTY_AUTH_ID"), System.getenv("SMARTY_AUTH_TOKEN"));
 
         try (Client client = new ClientBuilder(credentials)
