@@ -51,6 +51,9 @@ public class Client implements Closeable {
         }
         request.putParameter("include_only_locality", lookup.getLocality());
         request.putParameter("include_only_postal_code", lookup.getPostalCode());
+        if (lookup.getLanguage() != null) {
+            request.putParameter("language", lookup.getLanguage().getName());
+        }
 
         return request;
     }
