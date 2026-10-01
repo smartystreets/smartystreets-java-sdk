@@ -2,7 +2,6 @@ package com.smartystreets.api.international_autocomplete;
 
 import com.smartystreets.api.Response;
 import com.smartystreets.api.URLPrefixSender;
-import com.smartystreets.api.international_street.LanguageMode;
 import com.smartystreets.api.mocks.FakeDeserializer;
 import com.smartystreets.api.mocks.FakeSerializer;
 import com.smartystreets.api.mocks.MockSender;

@@ -1,6 +1,5 @@
 package com.smartystreets.api.international_autocomplete;
 
-import com.smartystreets.api.international_street.LanguageMode;
 
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>

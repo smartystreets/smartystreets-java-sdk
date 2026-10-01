@@ -6,6 +6,7 @@ import com.smartystreets.api.exceptions.SmartyException;
 import com.smartystreets.api.international_autocomplete.Client;
 import com.smartystreets.api.international_autocomplete.Lookup;
 import com.smartystreets.api.international_autocomplete.Candidate;
+import com.smartystreets.api.international_autocomplete.LanguageMode;
 
 import java.io.IOException;
 
@@ -26,6 +27,7 @@ public class InternationalAutocompleteExample {
             lookup.setLocality("Paris");
             lookup.setMaxGroupResults(50);
             lookup.setGeolocation(true);
+            lookup.setLanguage(LanguageMode.NATIVE);
 
             client.send(lookup);
 
