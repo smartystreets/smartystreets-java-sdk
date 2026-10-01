@@ -1,5 +1,6 @@
 package com.smartystreets.api.international_autocomplete;
 
+
 /**
  * In addition to holding all of the input data for this lookup, this class also<br>
  * will contain the result of the lookup after it comes back from the API.
@@ -22,6 +23,7 @@ public class Lookup {
     private boolean geolocation;
     private String locality;
     private String postalCode;
+    private LanguageMode language;
 
 //endregion
 
@@ -87,6 +89,10 @@ public class Lookup {
         return this.postalCode;
     }
 
+    public LanguageMode getLanguage() {
+        return this.language;
+    }
+
     //endregion
 
     //region [ Setters ]
@@ -124,6 +130,10 @@ public class Lookup {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public void setLanguage(LanguageMode language) {
+        this.language = language;
     }
 
     //endregion

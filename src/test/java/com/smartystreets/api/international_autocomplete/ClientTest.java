@@ -52,13 +52,14 @@ public class ClientTest {
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
         FakeSerializer serializer = new FakeSerializer(new Result());
         Client client = new Client(sender, serializer);
-        String expectedURL = "http://localhost/?country=1&search=2&max_results=10&max_group_results=100&include_only_locality=4&include_only_postal_code=5";
+        String expectedURL = "http://localhost/?country=1&search=2&max_results=10&max_group_results=100&include_only_locality=4&include_only_postal_code=5&language=native";
         Lookup lookup = new Lookup();
         lookup.setCountry("1");
         lookup.setSearch("2");
         lookup.setMaxResults(10);
         lookup.setLocality("4");
         lookup.setPostalCode("5");
+        lookup.setLanguage(LanguageMode.NATIVE);
 
         client.send(lookup);
 
@@ -91,6 +92,47 @@ public class ClientTest {
         client.send(lookup);
 
         assertTrue(capturingSender.getRequest().getUrl().contains("max_group_results=50"));
+    }
+
+    @Test
+    public void testSendingLookupWithNativeLanguage() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("1");
+        lookup.setLanguage(LanguageMode.NATIVE);
+
+        client.send(lookup);
+
+        assertTrue(capturingSender.getRequest().getUrl().contains("language=native"));
+    }
+
+    @Test
+    public void testSendingLookupWithLatinLanguage() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("1");
+        lookup.setLanguage(LanguageMode.LATIN);
+
+        client.send(lookup);
+
+        assertTrue(capturingSender.getRequest().getUrl().contains("language=latin"));
+    }
+
+    @Test
+    public void testSendingLookupWithUnsetLanguageOmitsParameter() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(new Result());
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("1");
+
+        client.send(lookup);
+
+        assertFalse(capturingSender.getRequest().getUrl().contains("language"));
     }
 
     @Test
