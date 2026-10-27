@@ -4,6 +4,7 @@ import com.smartystreets.api.BasicAuthCredentials;
 import com.smartystreets.api.ClientBuilder;
 import com.smartystreets.api.international_postal_code.Candidate;
 import com.smartystreets.api.international_postal_code.Client;
+import com.smartystreets.api.international_postal_code.LanguageMode;
 import com.smartystreets.api.international_postal_code.Lookup;
 
 public class InternationalPostalCodeExample {
@@ -22,6 +23,8 @@ public class InternationalPostalCodeExample {
             lookup.setAdministrativeArea("SP");
             lookup.setCountry("Brazil");
             lookup.setPostalCode("02516");
+            // lookup.setLanguage(LanguageMode.NATIVE); // optional: NATIVE or LATIN
+            // lookup.setMaxResults(10);                // optional: limit the number of candidates
 
             client.send(lookup);
 
@@ -33,6 +36,7 @@ public class InternationalPostalCodeExample {
                 display(candidate.getLocality());
                 display(candidate.getDependentLocality());
                 display(candidate.getDoubleDependentLocality());
+                display(candidate.getThoroughfare());
                 display(candidate.getSubAdministrativeArea());
                 display(candidate.getAdministrativeArea());
                 display(candidate.getSuperAdministrativeArea());

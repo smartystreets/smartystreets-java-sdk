@@ -27,6 +27,7 @@ public class Lookup {
     private String administrativeArea;
     private String postalCode;
     private String features;
+    private int maxResults;
 
     //endregion
 
@@ -71,6 +72,12 @@ public class Lookup {
 
     private boolean fieldIsMissing(String field) {
         return field == null || field.isEmpty();
+    }
+
+    String getMaxResultsStringIfSet() {
+        if (this.maxResults <= 0)
+            return null;
+        return Integer.toString(this.maxResults);
     }
 
     //endregion
@@ -140,6 +147,10 @@ public class Lookup {
 
     public String getFeatures() {
         return features;
+    }
+
+    public int getMaxResults() {
+        return maxResults;
     }
 
     //endregion
@@ -216,6 +227,10 @@ public class Lookup {
 
     public void setFeatures(String features) {
         this.features = features;
+    }
+
+    public void setMaxResults(int maxResults) {
+        this.maxResults = maxResults;
     }
 
     //endregion
