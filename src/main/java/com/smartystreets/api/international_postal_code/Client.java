@@ -37,10 +37,12 @@ public class Client implements Closeable {
         request.putParameter("input_id", lookup.getInputId());
         request.putParameter("country", lookup.getCountry());
         request.putParameter("locality", lookup.getLocality());
-        //request.putParameter("language", lookup.getLanguage()); // future
+        if (lookup.getLanguage() != null)
+            request.putParameter("language", lookup.getLanguage().getName());
         //request.putParameter("features", lookup.getFeatures()); // future
         request.putParameter("administrative_area", lookup.getAdministrativeArea());
         request.putParameter("postal_code", lookup.getPostalCode());
+        request.putParameter("max_results", lookup.getMaxResultsStringIfSet());
         return request;
     }
 

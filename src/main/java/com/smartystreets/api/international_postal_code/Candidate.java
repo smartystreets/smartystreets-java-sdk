@@ -30,6 +30,8 @@ public class Candidate implements Serializable {
     private String postalCode;
     @JsonProperty("postal_code_extra")
     private String postalCodeExtra;
+    @JsonProperty("thoroughfare")
+    private String thoroughfare;
 
     // region [Getters]
     public String getInputId() { return inputId; }
@@ -43,5 +45,6 @@ public class Candidate implements Serializable {
     public String getDoubleDependentLocality() { return doubleDependentLocality; }
     public String getPostalCode() { return postalCode; }
     public String getPostalCodeExtra() { return postalCodeExtra; }
+    public String getThoroughfare() { return thoroughfare; }
     // endregion
 }

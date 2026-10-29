@@ -25,13 +25,96 @@ public class ClientTest {
         lookup.setLocality("Sao Paulo");
         lookup.setAdministrativeArea("SP");
         lookup.setPostalCode("02516");
+        lookup.setLanguage(LanguageMode.NATIVE);
+        lookup.setMaxResults(25);
 
         client.send(lookup);
         assertTrue(capturingSender.getRequest().getUrl().contains("input_id=foo"));
+        assertTrue(capturingSender.getRequest().getUrl().contains("language=native"));
+        assertTrue(capturingSender.getRequest().getUrl().contains("max_results=25"));
         assertTrue(capturingSender.getRequest().getUrl().contains("country=BR"));
         assertTrue(capturingSender.getRequest().getUrl().contains("locality=Sao+Paulo"));
         assertTrue(capturingSender.getRequest().getUrl().contains("administrative_area=SP"));
         assertTrue(capturingSender.getRequest().getUrl().contains("postal_code=02516"));
+    }
+
+    @Test
+    public void testSendingLookupWithNativeLanguage() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setCountry("BR");
+        lookup.setLocality("Sao Paulo");
+        lookup.setLanguage(LanguageMode.NATIVE);
+
+        client.send(lookup);
+
+        assertTrue(capturingSender.getRequest().getUrl().contains("language=native"));
+    }
+
+    @Test
+    public void testSendingLookupWithLatinLanguage() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setCountry("BR");
+        lookup.setLocality("Sao Paulo");
+        lookup.setLanguage(LanguageMode.LATIN);
+
+        client.send(lookup);
+
+        assertTrue(capturingSender.getRequest().getUrl().contains("language=latin"));
+    }
+
+    @Test
+    public void testSendingLookupWithUnsetLanguageOmitsParameter() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setCountry("BR");
+        lookup.setLocality("Sao Paulo");
+
+        client.send(lookup);
+
+        assertFalse(capturingSender.getRequest().getUrl().contains("language"));
+    }
+
+    @Test
+    public void testSendingLookupWithMaxResults() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setCountry("BR");
+        lookup.setLocality("Sao Paulo");
+        lookup.setMaxResults(1000);
+
+        client.send(lookup);
+
+        assertTrue(capturingSender.getRequest().getUrl().contains("max_results=1000"));
+    }
+
+    @Test
+    public void testSendingLookupWithUnsetMaxResultsOmitsParameter() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup();
+        lookup.setCountry("BR");
+        lookup.setLocality("Sao Paulo");
+        lookup.setMaxResults(0);
+
+        client.send(lookup);
+
+        assertFalse(capturingSender.getRequest().getUrl().contains("max_results"));
     }
 
     @Test

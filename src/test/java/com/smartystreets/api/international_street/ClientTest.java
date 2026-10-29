@@ -25,6 +25,34 @@ public class ClientTest {
     }
 
     @Test
+    public void testSendingLookupWithMaxResults() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("freeform", "USA");
+        lookup.setMaxResults(10);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?country=USA&freeform=freeform&max_results=10", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
+    public void testSendingLookupWithUnsetMaxResultsOmitsParameter() throws Exception {
+        RequestCapturingSender capturingSender = new RequestCapturingSender();
+        URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);
+        FakeSerializer serializer = new FakeSerializer(null);
+        Client client = new Client(sender, serializer);
+        Lookup lookup = new Lookup("freeform", "USA");
+        lookup.setMaxResults(0);
+
+        client.send(lookup);
+
+        assertEquals("http://localhost/?country=USA&freeform=freeform", capturingSender.getRequest().getUrl());
+    }
+
+    @Test
     public void testSendingSingleFullyPopulatedLookup() throws Exception {
         RequestCapturingSender capturingSender = new RequestCapturingSender();
         URLPrefixSender sender = new URLPrefixSender("http://localhost/", capturingSender);

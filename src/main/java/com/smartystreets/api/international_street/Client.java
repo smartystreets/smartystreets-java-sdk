@@ -52,6 +52,7 @@ public class Client implements Closeable {
         request.putParameter("administrative_area", lookup.getAdministrativeArea());
         request.putParameter("postal_code", lookup.getPostalCode());
         request.putParameter("features", lookup.getFeatures());
+        request.putParameter("max_results", lookup.getMaxResultsStringIfSet());
 
         return request;
     }
